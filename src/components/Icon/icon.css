@@ -1,0 +1,7 @@
+.icon {
+  display: inline-block;
+  /* Sits on the text baseline rather than hanging below it. */
+  vertical-align: -0.125em;
+  /* Never squashed when it is a flex child beside a long label. */
+  flex: none;
+}

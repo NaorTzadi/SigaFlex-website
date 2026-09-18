@@ -1,0 +1,64 @@
+/* A <dialog> opened with showModal() is centred by the browser and sits in the
+   top layer, so there is no positioning and no z-index here on purpose. */
+.cookieconsent {
+  width: min(28rem, calc(100% - var(--fa-gutter) * 2));
+  padding: var(--fa-space-8);
+  background: var(--fa-color-background);
+  color: var(--fa-color-text);
+  border: var(--fa-border-width) solid var(--fa-color-border);
+  border-radius: var(--fa-radius-lg);
+}
+
+.cookieconsent::backdrop {
+  background: rgb(0 0 0 / 0.5);
+}
+
+/* A modal dialog blocks clicks behind it but not the wheel, so the page would
+   scroll under the backdrop. Lock it while the box is open. */
+html:has(dialog.cookieconsent[open]) {
+  overflow: hidden;
+}
+
+.cookieconsent_title {
+  margin-bottom: var(--fa-space-3);
+  font-size: var(--fa-text-xl);
+}
+
+.cookieconsent_text {
+  margin: 0 0 var(--fa-space-6);
+  font-size: var(--fa-text-sm);
+}
+
+/* Stacked on a narrow screen, side by side once there is room. */
+.cookieconsent_actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--fa-space-3);
+}
+
+.cookieconsent_button {
+  min-height: 44px;
+  padding: var(--fa-space-2) var(--fa-space-6);
+  background: transparent;
+  color: inherit;
+  border: var(--fa-border-width) solid var(--fa-color-border);
+  border-radius: var(--fa-radius-md);
+  cursor: pointer;
+}
+
+.cookieconsent_button-accept {
+  background: var(--fa-color-accent);
+  color: var(--fa-color-accent-text);
+  border-color: var(--fa-color-accent);
+}
+
+@media (min-width: 640px) {
+  .cookieconsent_actions {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+
+  .cookieconsent_button {
+    min-width: 8rem;
+  }
+}

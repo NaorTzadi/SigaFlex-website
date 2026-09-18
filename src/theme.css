@@ -1,0 +1,207 @@
+/*
+ * The canvas.
+ *
+ * Every colour, size, space and font the site uses is named here and nowhere
+ * else. Component stylesheets reference these variables and never a literal.
+ * Choosing a real theme later means changing the values in this file only.
+ *
+ * The values below are deliberately neutral placeholders. They are not a design.
+ *
+ * Theme.ts writes data-theme onto <html>; the blocks below answer to it.
+ */
+
+/*
+ * Self-hosted, so no visitor's IP is handed to a font CDN. The product's whole
+ * claim is that nothing leaves your machine; the site should not contradict it.
+ *
+ * Both files are variable and Latin-1 subset: one file covers every weight from
+ * 100 to 700, and the site is English. Anything outside Latin-1 falls back to
+ * the next family in the stack. Italic is not loaded — nothing uses it yet.
+ */
+@font-face {
+  font-family: "IBM Plex Sans";
+  src: url("./assets/fonts/ibm-plex-sans-var.woff2") format("woff2");
+  font-weight: 100 700;
+  font-style: normal;
+  /* Text is readable in the fallback face while the font loads, never invisible. */
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("./assets/fonts/ibm-plex-mono-var.woff2") format("woff2");
+  font-weight: 100 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* Native widgets — scrollbars, form controls, the canvas behind the page —
+     follow this, not our variables. Without it they stay light in dark mode. */
+  color-scheme: light;
+
+  /* --- palette ------------------------------------------------------- */
+  --fa-color-background: #ffffff;
+  --fa-color-surface: #f5f5f5;
+  --fa-color-surface-raised: #ebebeb;
+  --fa-color-border: #d4d4d4;
+  --fa-color-text: #1a1a1a;
+  --fa-color-text-muted: #5c5c5c;
+  --fa-color-accent: #3a3a3a;
+  --fa-color-accent-text: #ffffff;
+  --fa-color-focus: #0b57d0;
+
+  /* --- type ---------------------------------------------------------- */
+  --fa-font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --fa-font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", "Consolas", monospace;
+
+  --fa-text-xs: 0.75rem;
+  --fa-text-sm: 0.875rem;
+  --fa-text-base: 1rem;
+  --fa-text-lg: 1.25rem;
+  --fa-text-xl: 1.5rem;
+  --fa-text-2xl: 2rem;
+  --fa-text-3xl: clamp(2rem, 5vw, 3.5rem);
+
+  --fa-line-body: 1.6;
+  --fa-line-heading: 1.2;
+
+  /* --- space --------------------------------------------------------- */
+  --fa-space-1: 0.25rem;
+  --fa-space-2: 0.5rem;
+  --fa-space-3: 0.75rem;
+  --fa-space-4: 1rem;
+  --fa-space-6: 1.5rem;
+  --fa-space-8: 2rem;
+  --fa-space-12: 3rem;
+  --fa-space-16: 4rem;
+
+  /* Vertical rhythm of a home-page section. */
+  --fa-section-padding-block: clamp(var(--fa-space-12), 8vw, var(--fa-space-16));
+
+  /* --- shape --------------------------------------------------------- */
+  --fa-radius-sm: 2px;
+  --fa-radius-md: 4px;
+  --fa-radius-lg: 8px;
+  --fa-border-width: 1px;
+
+  /* --- layout -------------------------------------------------------- */
+  --fa-content-width: 1120px;
+  --fa-gutter: clamp(var(--fa-space-4), 4vw, var(--fa-space-8));
+  --fa-header-height: 56px;
+
+  /* Mirrors BREAKPOINT in Theme.ts. Media queries cannot read a variable,
+     so the numbers are repeated there; keep the two in step. */
+  --fa-breakpoint-tablet: 640px;
+  --fa-breakpoint-desktop: 1024px;
+  --fa-breakpoint-wide: 1440px;
+
+  /* --- layering ------------------------------------------------------ */
+  --fa-layer-header: 100;
+  --fa-layer-skip-link: 200;
+
+  /* --- motion -------------------------------------------------------- */
+  --fa-duration-fast: 120ms;
+  --fa-duration-normal: 240ms;
+  /* A crossfade wants to be unhurried; a UI transition does not. */
+  --fa-duration-slow: 700ms;
+  --fa-easing: cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+/* On a large monitor the column widens a little, but not without limit:
+   past roughly 75 characters a line stops being readable. */
+@media (min-width: 1440px) {
+  :root {
+    --fa-content-width: 1180px;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --fa-color-background: #121212;
+  --fa-color-surface: #1c1c1c;
+  --fa-color-surface-raised: #262626;
+  --fa-color-border: #3a3a3a;
+  --fa-color-text: #f0f0f0;
+  --fa-color-text-muted: #a8a8a8;
+  --fa-color-accent: #e0e0e0;
+  --fa-color-accent-text: #121212;
+  --fa-color-focus: #8ab4f8;
+}
+
+/* --- reset ----------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  /* Anchored sections must clear the fixed header when jumped to. */
+  scroll-padding-top: var(--fa-header-height);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--fa-color-background);
+  color: var(--fa-color-text);
+  font-family: var(--fa-font-body);
+  font-size: var(--fa-text-base);
+  line-height: var(--fa-line-body);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0 0 var(--fa-space-4);
+  line-height: var(--fa-line-heading);
+  text-wrap: balance;
+}
+
+p {
+  margin: 0 0 var(--fa-space-4);
+  max-width: 68ch;
+}
+
+a {
+  color: inherit;
+}
+
+img,
+svg,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+/* One focus ring for the whole site. Visible on every interactive element. */
+:focus-visible {
+  outline: 2px solid var(--fa-color-focus);
+  outline-offset: 2px;
+  border-radius: var(--fa-radius-sm);
+}
+
+/* A focused landmark is a scroll target, not a control: no ring. */
+[tabindex="-1"]:focus {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

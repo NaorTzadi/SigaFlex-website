@@ -1,0 +1,42 @@
+/*
+ * Shared by the routed pages (Download, Licenses, NotFound), which are all the
+ * same shape: a title, a lead, and a column of prose. One stylesheet instead of
+ * three identical ones; a page that outgrows it gets its own.
+ */
+
+.page {
+  max-width: var(--fa-content-width);
+  margin-inline: auto;
+  padding: var(--fa-section-padding-block) var(--fa-gutter);
+}
+
+.page_title {
+  font-size: var(--fa-text-2xl);
+}
+
+.page_lead {
+  color: var(--fa-color-text-muted);
+  font-size: var(--fa-text-lg);
+}
+
+.page_block {
+  margin-top: var(--fa-space-8);
+}
+
+.page_block_title {
+  font-size: var(--fa-text-lg);
+}
+
+.page_placeholder {
+  margin: 0;
+  padding: var(--fa-space-8);
+  border: var(--fa-border-width) dashed var(--fa-color-border);
+  border-radius: var(--fa-radius-lg);
+  color: var(--fa-color-text-muted);
+}
+
+/* Spoken and shown: a link leaving the site says so before it is followed. */
+.page_external_note {
+  color: var(--fa-color-text-muted);
+  font-size: var(--fa-text-sm);
+}

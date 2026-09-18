@@ -1,0 +1,97 @@
+.showcase {
+  display: flex;
+  flex-direction: column;
+  gap: var(--fa-space-3);
+}
+
+/* The frame holds its own size, so crossfading never moves the page. */
+.showcase_frame {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  max-height: min(520px, 55vh);
+  border: var(--fa-border-width) solid var(--fa-color-border);
+  border-radius: var(--fa-radius-lg);
+  background: var(--fa-color-surface);
+  overflow: hidden;
+}
+
+.showcase_slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  opacity: 0;
+  transition: opacity var(--fa-duration-slow) var(--fa-easing);
+  /* An invisible slide is not a click target either. */
+  pointer-events: none;
+}
+
+.showcase_slide-current {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.showcase_controls {
+  display: flex;
+  align-items: center;
+  gap: var(--fa-space-4);
+}
+
+.showcase_play {
+  min-width: 5rem;
+  min-height: 44px;
+  padding: var(--fa-space-2) var(--fa-space-4);
+  background: transparent;
+  border: var(--fa-border-width) solid var(--fa-color-border);
+  border-radius: var(--fa-radius-md);
+  cursor: pointer;
+}
+
+.showcase_dots {
+  display: flex;
+  gap: var(--fa-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.showcase_dot {
+  /* A small mark, but a finger-sized target: the padding does the work. */
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.showcase_dot::before {
+  content: "";
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 50%;
+  border: var(--fa-border-width) solid var(--fa-color-text-muted);
+}
+
+/* Current slide is marked by a filled dot, not by colour alone. */
+.showcase_dot-current::before {
+  background: var(--fa-color-text);
+  border-color: var(--fa-color-text);
+}
+
+/* Named for a screen reader, invisible on screen — and still reachable by
+   keyboard, which `display: none` would not be. */
+.showcase_dot_label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
