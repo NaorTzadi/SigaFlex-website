@@ -51,3 +51,57 @@
 .section-nested .section_lead {
   font-size: var(--fa-text-base);
 }
+
+.section {
+  position: relative;
+  overflow: clip;
+}
+
+.section_inner {
+  position: relative;
+}
+
+.section_head {
+  margin-bottom: var(--fa-space-8);
+}
+
+.section_eyebrow {
+  margin: 0 0 var(--fa-space-4);
+}
+
+.section_title {
+  letter-spacing: -0.02em;
+}
+
+.section-raised {
+  background:
+    radial-gradient(60rem 30rem at 50% -20%, var(--fa-bloom-accent), transparent 70%),
+    var(--fa-color-surface);
+  box-shadow: var(--fa-shadow-inset-top);
+}
+
+.section-sunken {
+  background:
+    linear-gradient(var(--fa-grid-line) 1px, transparent 1px) 0 0 / 100% 3rem,
+    linear-gradient(90deg, var(--fa-grid-line) 1px, transparent 1px) 0 0 / 3rem 100%,
+    var(--fa-color-surface-sunken);
+}
+
+.section-nested .section_head {
+  margin-bottom: var(--fa-space-6);
+}
+
+.section-nested .section_title {
+  display: flex;
+  align-items: center;
+  gap: var(--fa-space-3);
+}
+
+.section-nested .section_title::before {
+  content: "";
+  flex: none;
+  width: 3px;
+  height: 1.1em;
+  background: var(--fa-color-accent);
+  border-radius: 999px;
+}

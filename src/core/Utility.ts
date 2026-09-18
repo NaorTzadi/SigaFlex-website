@@ -32,6 +32,37 @@ export function scrollToSection(id: string): void {
   if (!hadTabIndex) target.addEventListener("blur", () => target.removeAttribute("tabindex"), { once: true });
 }
 
+export function revealOnScroll(): () => void {
+  const targets = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
+  const show = (element: HTMLElement) => element.setAttribute("data-reveal", "shown");
+
+  if (prefersReducedMotion() || !("IntersectionObserver" in window)) {
+    targets.forEach(show);
+    return () => {};
+  }
+
+  document.documentElement.classList.add("has-reveal");
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        show(entry.target as HTMLElement);
+        observer.unobserve(entry.target);
+      });
+    },
+    { rootMargin: "0px 0px -5% 0px", threshold: 0 }
+  );
+
+  targets.forEach((target) => observer.observe(target));
+
+  return () => {
+    observer.disconnect();
+    document.documentElement.classList.remove("has-reveal");
+    targets.forEach(show);
+  };
+}
+
 /**
  * A deliberately loose address check: something, an @, something with a dot.
  * Anything stricter rejects valid addresses. The server decides for real.

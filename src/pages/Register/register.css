@@ -38,7 +38,7 @@
   padding: var(--fa-space-3);
   background: var(--fa-color-background);
   color: var(--fa-color-text);
-  border: var(--fa-border-width) solid var(--fa-color-border);
+  border: var(--fa-border-width) solid var(--fa-color-border-strong);
   border-radius: var(--fa-radius-md);
   font: inherit;
   /* 16px or larger, or iOS zooms the page when the field takes focus.

@@ -50,8 +50,8 @@ export default function CookieConsent() {
       </h2>
 
       <p className="cookieconsent_text">
-        This site stores a cookie to remember your theme. Nothing else is kept, and nothing is
-        shared.
+        This site stores nothing beyond your answer to this question. Anything we add later — a
+        preference, a measurement — is held to that answer.
       </p>
 
       <div className="cookieconsent_actions">

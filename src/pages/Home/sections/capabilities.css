@@ -1,0 +1,239 @@
+/* The frame echoes the application's inspector: a fixed header naming the
+   entry, a row of tabs, and one output area beneath them. */
+.capabilities {
+  margin-top: var(--fa-space-6);
+  background: var(--fa-color-surface);
+  border: var(--fa-border-width) solid var(--fa-color-border);
+  border-radius: var(--fa-radius-lg);
+  overflow: hidden;
+}
+
+.capabilities_head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--fa-space-3);
+  padding: var(--fa-space-3) var(--fa-space-4);
+  background: var(--fa-color-surface-raised);
+  border-bottom: var(--fa-border-width) solid var(--fa-color-border);
+}
+
+.capabilities_file {
+  font-weight: 600;
+}
+
+.capabilities_badge {
+  padding: 0 var(--fa-space-2);
+  background: var(--fa-color-accent);
+  color: var(--fa-color-accent-text);
+  border-radius: var(--fa-radius-sm);
+  font-family: var(--fa-font-mono);
+  font-size: var(--fa-text-xs);
+  letter-spacing: 0.04em;
+}
+
+.capabilities_summary {
+  color: var(--fa-color-text-muted);
+  font-size: var(--fa-text-sm);
+}
+
+/* The tab row scrolls sideways on a phone rather than wrapping: five views in
+   a fixed order read better as a strip than as two ragged lines. */
+.capabilities_tabs {
+  display: flex;
+  gap: var(--fa-space-1);
+  padding: 0 var(--fa-space-2);
+  border-bottom: var(--fa-border-width) solid var(--fa-color-border);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.capabilities_tab {
+  flex: none;
+  padding: var(--fa-space-3) var(--fa-space-4);
+  background: transparent;
+  border: 0;
+  /* The selected tab is underlined; the space is reserved on all of them so
+     nothing shifts when the selection moves. */
+  border-bottom: 2px solid transparent;
+  color: var(--fa-color-text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.capabilities_tab:hover {
+  color: var(--fa-color-text);
+}
+
+.capabilities_tab-current {
+  border-bottom-color: var(--fa-color-accent);
+  color: var(--fa-color-text);
+}
+
+.capabilities_panel {
+  /* One height for every view, so switching tabs never resizes the page. */
+  height: 22rem;
+  padding: var(--fa-space-4);
+  overflow: auto;
+}
+
+.capabilities_pre {
+  margin: 0;
+  font-family: var(--fa-font-mono);
+  font-size: var(--fa-text-sm);
+  line-height: 1.7;
+  white-space: pre;
+}
+
+.capabilities_row {
+  display: block;
+}
+
+/* Offsets and addresses are scaffolding: present, never competing with the
+   bytes they point at. */
+.capabilities_offset {
+  color: var(--fa-color-text-muted);
+  padding-right: var(--fa-space-4);
+}
+
+.capabilities_bytes {
+  color: var(--fa-color-text-muted);
+}
+
+.capabilities_ascii {
+  color: var(--fa-color-text-muted);
+}
+
+/* The application's own control-flow colours, from its Dark theme. */
+.capabilities_flow-jump {
+  color: var(--fa-color-flow-jump);
+}
+
+.capabilities_flow-call {
+  color: var(--fa-color-flow-call);
+}
+
+.capabilities_flow-return {
+  color: var(--fa-color-flow-return);
+}
+
+.capabilities_lines {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: line;
+  font-family: var(--fa-font-mono);
+  font-size: var(--fa-text-sm);
+  line-height: 1.8;
+}
+
+/* Numbered by CSS so the numbers cannot be selected and pasted along with the
+   strings — the strings are the content, the numbers are furniture. */
+.capabilities_line {
+  counter-increment: line;
+}
+
+.capabilities_line::before {
+  content: counter(line);
+  display: inline-block;
+  width: 2.5rem;
+  color: var(--fa-color-text-muted);
+  text-align: right;
+  padding-right: var(--fa-space-4);
+}
+
+.capabilities_facts {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--fa-space-3);
+}
+
+.capabilities_fact {
+  padding-bottom: var(--fa-space-3);
+  border-bottom: var(--fa-border-width) solid var(--fa-color-border);
+  font-family: var(--fa-font-mono);
+  font-size: var(--fa-text-sm);
+}
+
+.capabilities_fact:last-child {
+  border-bottom: 0;
+}
+
+.capabilities_table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fa-text-sm);
+}
+
+.capabilities_table th {
+  padding: 0 var(--fa-space-4) var(--fa-space-2) 0;
+  border-bottom: var(--fa-border-width) solid var(--fa-color-border);
+  color: var(--fa-color-text-muted);
+  font-size: var(--fa-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.capabilities_table td {
+  padding: var(--fa-space-2) var(--fa-space-4) var(--fa-space-2) 0;
+  border-bottom: var(--fa-border-width) solid var(--fa-color-border);
+  vertical-align: top;
+}
+
+.capabilities_table tr:last-child td {
+  border-bottom: 0;
+}
+
+.capabilities_type {
+  color: var(--fa-color-text-muted);
+  white-space: nowrap;
+}
+
+.capabilities_value {
+  font-family: var(--fa-font-mono);
+  word-break: break-all;
+}
+
+.capabilities {
+  background:
+    linear-gradient(var(--fa-color-surface), var(--fa-color-surface)) padding-box,
+    linear-gradient(160deg, var(--fa-color-border-strong), var(--fa-color-border)) border-box;
+  border-color: transparent;
+  box-shadow: var(--fa-shadow-md), var(--fa-shadow-inset-top);
+}
+
+.capabilities_head {
+  position: relative;
+}
+
+.capabilities_head::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--fa-color-accent), transparent 40%);
+}
+
+.capabilities_tab {
+  transition: color var(--fa-duration-fast) var(--fa-easing),
+    background var(--fa-duration-fast) var(--fa-easing);
+}
+
+.capabilities_tab:hover {
+  color: var(--fa-color-text);
+  background: var(--fa-color-surface-hover);
+}
+
+.capabilities_panel {
+  background: var(--fa-color-background);
+}
+
+.capabilities_offset {
+  color: var(--fa-color-text-muted);
+  font-variant-numeric: tabular-nums;
+}

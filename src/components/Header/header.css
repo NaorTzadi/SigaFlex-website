@@ -1,10 +1,18 @@
-/* Not sticky: the first screen belongs to the hero. One line to change if
-   that turns out to be the wrong call. */
+/* Sticky: on a one-page site the nav is the only way back out of a band, so it
+   stays reachable. Translucent, so the page reads as passing underneath it. */
 .header {
-  position: relative;
+  position: sticky;
+  top: 0;
   z-index: var(--fa-layer-header);
-  background: var(--fa-color-background);
+  background: var(--fa-backdrop);
+  backdrop-filter: blur(14px) saturate(140%);
   border-bottom: var(--fa-border-width) solid var(--fa-color-border);
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  .header {
+    background: var(--fa-color-background);
+  }
 }
 
 .header_bar {
@@ -27,7 +35,7 @@
 .header_toggle {
   padding: var(--fa-space-2) var(--fa-space-3);
   background: transparent;
-  border: var(--fa-border-width) solid var(--fa-color-border);
+  border: var(--fa-border-width) solid var(--fa-color-border-strong);
   border-radius: var(--fa-radius-md);
   cursor: pointer;
 }
@@ -58,7 +66,6 @@
 
 .header_nav_button,
 .header_nav_link,
-.header_theme_button,
 .header_flyout_link {
   display: block;
   width: 100%;
@@ -94,15 +101,6 @@
   gap: var(--fa-space-3);
 }
 
-.header_cta {
-  padding: var(--fa-space-2) var(--fa-space-6);
-  background: var(--fa-color-accent);
-  color: var(--fa-color-accent-text);
-  border: var(--fa-border-width) solid var(--fa-color-accent);
-  border-radius: var(--fa-radius-md);
-  text-decoration: none;
-}
-
 @media (min-width: 640px) {
   .header_toggle {
     display: none;
@@ -124,8 +122,7 @@
   }
 
   .header_nav_button,
-  .header_nav_link,
-  .header_theme_button {
+  .header_nav_link {
     width: auto;
     padding: 0;
     white-space: nowrap;
@@ -151,5 +148,81 @@
 
   .header_flyout_link {
     white-space: nowrap;
+  }
+}
+
+.header_brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--fa-space-2);
+  letter-spacing: -0.01em;
+}
+
+.header_brand_mark {
+  color: var(--fa-color-accent);
+  transition: transform var(--fa-duration-normal) var(--fa-easing);
+}
+
+.header_brand:hover .header_brand_mark {
+  transform: rotate(-8deg) scale(1.08);
+}
+
+@media (max-width: 639px) {
+  .header_toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--fa-space-2);
+    min-height: 40px;
+  }
+}
+
+.header_nav_button,
+.header_nav_link,
+.header_flyout_link {
+  position: relative;
+  color: var(--fa-color-text-secondary);
+  transition: color var(--fa-duration-fast) var(--fa-easing);
+}
+
+.header_nav_button:hover,
+.header_nav_link:hover,
+.header_flyout_link:hover,
+.header_nav_link-active {
+  color: var(--fa-color-text);
+}
+
+.header_flyout_link:hover {
+  background: var(--fa-color-surface-hover);
+}
+
+@media (min-width: 640px) {
+  .header_nav_button::after,
+  .header_nav_link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.5rem;
+    height: 2px;
+    background: var(--fa-color-accent);
+    border-radius: 999px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--fa-duration-normal) var(--fa-easing);
+  }
+
+  .header_nav_button:hover::after,
+  .header_nav_link:hover::after,
+  .header_nav_link-active::after {
+    transform: scaleX(1);
+  }
+
+  .header_flyout {
+    box-shadow: var(--fa-shadow-md);
+  }
+
+  .header_flyout_link {
+    padding: var(--fa-space-2) var(--fa-space-3);
+    border-radius: var(--fa-radius-md);
   }
 }

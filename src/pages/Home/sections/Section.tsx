@@ -31,31 +31,50 @@ type SectionProps = {
   /** Names the band when it has no visible title. */
   label?: string;
   lead?: string;
+  /** Short mono line above the title. */
+  eyebrow?: string;
+  /** A band that sits on its own surface instead of the page background. */
+  tone?: "raised" | "sunken";
   children?: ReactNode;
 };
 
-export default function Section({ id, title, level = "h2", label, lead, children }: SectionProps) {
+export default function Section({
+  id,
+  title,
+  level = "h2",
+  label,
+  lead,
+  eyebrow,
+  tone,
+  children
+}: SectionProps) {
   const headingId = `${id}-heading`;
   const Heading = level;
   const nested = level === "h3";
 
   return (
     <section
-      className={cx("section", nested && "section-nested")}
+      className={cx("section", nested && "section-nested", tone && `section-${tone}`)}
       id={id}
       aria-labelledby={title ? headingId : undefined}
       aria-label={title ? undefined : label}
     >
       <div className="section_inner">
-        {title && (
-          <Heading className="section_title" id={headingId}>
-            {title}
-          </Heading>
+        {(title || lead) && (
+          <div className="section_head" data-reveal="">
+            {eyebrow && <p className="section_eyebrow fa_eyebrow">{eyebrow}</p>}
+
+            {title && (
+              <Heading className="section_title" id={headingId}>
+                {title}
+              </Heading>
+            )}
+
+            {lead && <p className="section_lead">{lead}</p>}
+          </div>
         )}
 
-        {lead && <p className="section_lead">{lead}</p>}
-
-        <div className="section_body">
+        <div className="section_body" data-reveal="">
           {children ?? <p className="section_placeholder">Content goes here.</p>}
         </div>
       </div>

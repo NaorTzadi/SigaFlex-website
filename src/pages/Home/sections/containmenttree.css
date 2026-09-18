@@ -1,0 +1,167 @@
+.containmenttree {
+  margin-top: var(--fa-space-6);
+  background: var(--fa-color-surface);
+  border: var(--fa-border-width) solid var(--fa-color-border);
+  border-radius: var(--fa-radius-lg);
+  overflow: hidden;
+}
+
+/* One grid for the header and every row, so the columns cannot drift apart. */
+.containmenttree_columns,
+.containmenttree_row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 9rem 7rem 7rem;
+  gap: var(--fa-space-4);
+  align-items: center;
+  padding: var(--fa-space-2) var(--fa-space-4);
+}
+
+.containmenttree_columns {
+  background: var(--fa-color-surface-raised);
+  border-bottom: var(--fa-border-width) solid var(--fa-color-border);
+  color: var(--fa-color-text-muted);
+  font-size: var(--fa-text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.containmenttree_row {
+  cursor: default;
+}
+
+.containmenttree_row:hover {
+  background: var(--fa-color-surface-raised);
+}
+
+.containmenttree_row-active {
+  background: var(--fa-color-surface-raised);
+}
+
+.containmenttree_name {
+  display: flex;
+  align-items: center;
+  gap: var(--fa-space-2);
+  min-width: 0;
+}
+
+/* The chevron points down when open, right when closed — one glyph, rotated,
+   the way a file browser has always done it. */
+.containmenttree_twisty {
+  display: inline-flex;
+  width: 0.75em;
+  color: var(--fa-color-text-muted);
+  transform: rotate(-90deg);
+  transition: transform var(--fa-duration-fast) var(--fa-easing);
+}
+
+.containmenttree_twisty-open {
+  transform: rotate(0deg);
+}
+
+.containmenttree_label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* A container carries its format, the way the application badges the entry it
+   has opened. */
+.containmenttree_badge {
+  flex: none;
+  padding: 0 var(--fa-space-2);
+  background: var(--fa-color-accent);
+  color: var(--fa-color-accent-text);
+  border-radius: var(--fa-radius-sm);
+  font-family: var(--fa-font-mono);
+  font-size: var(--fa-text-xs);
+  letter-spacing: 0.04em;
+}
+
+.containmenttree_cell {
+  color: var(--fa-color-text-muted);
+  font-size: var(--fa-text-sm);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.containmenttree_num {
+  font-family: var(--fa-font-mono);
+  text-align: right;
+}
+
+.containmenttree_note {
+  margin: 0;
+  padding: var(--fa-space-4);
+  border-top: var(--fa-border-width) solid var(--fa-color-border);
+  color: var(--fa-color-text-muted);
+  font-size: var(--fa-text-sm);
+  max-width: none;
+}
+
+.containmenttree_mono {
+  color: var(--fa-color-text);
+  font-family: var(--fa-font-mono);
+}
+
+/* A phone cannot hold four columns. Type and the two sizes drop away; the
+   nesting, which is the whole point, stays. */
+@media (max-width: 767px) {
+  .containmenttree_columns,
+  .containmenttree_row {
+    grid-template-columns: minmax(0, 1fr) 5.5rem;
+  }
+
+  .containmenttree_columns span:nth-child(3),
+  .containmenttree_columns span:nth-child(4),
+  .containmenttree_cell:nth-of-type(2),
+  .containmenttree_cell:last-child {
+    display: none;
+  }
+}
+
+.containmenttree {
+  box-shadow: var(--fa-shadow-md), var(--fa-shadow-inset-top);
+}
+
+.containmenttree_row {
+  position: relative;
+  transition: background var(--fa-duration-fast) var(--fa-easing);
+}
+
+.containmenttree_row::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--fa-color-accent);
+  transform: scaleY(0);
+  transition: transform var(--fa-duration-fast) var(--fa-easing);
+}
+
+.containmenttree_row-active::before {
+  transform: scaleY(1);
+}
+
+.containmenttree_name > .icon {
+  flex: none;
+  color: var(--fa-color-file);
+}
+
+.containmenttree_row-folder .containmenttree_name > .icon {
+  color: var(--fa-color-folder);
+}
+
+.containmenttree_row-container .containmenttree_name > .icon {
+  color: var(--fa-color-root);
+}
+
+.containmenttree_badge {
+  box-shadow: var(--fa-shadow-sm);
+}
+
+.containmenttree_note {
+  background: var(--fa-color-background);
+}

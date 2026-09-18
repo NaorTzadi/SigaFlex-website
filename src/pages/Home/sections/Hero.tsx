@@ -43,23 +43,52 @@ const SLIDES: Slide[] = [
   }
 ];
 
+/** The claims worth making before a reader scrolls at all. */
+const FACTS: Array<{ value: string; label: string }> = [
+  { value: "94", label: "formats by content" },
+  { value: "Any", label: "levels of containment" },
+  { value: "0", label: "bytes written to disk" },
+  { value: "0", label: "network calls" }
+];
+
 export default function Hero() {
   return (
     <section className="hero" id={HOME_SECTIONS.HERO} aria-labelledby="hero-heading">
+      <div className="hero_backdrop" aria-hidden="true" />
+
       <div className="hero_inner">
-        <h1 className="hero_title" id="hero-heading">
-          {PRODUCT_NAME}
-        </h1>
+        <div className="hero_copy">
+          <p className="hero_eyebrow fa_eyebrow">Windows desktop · offline · read-only</p>
 
-        <p className="hero_tagline">{TAGLINE}</p>
+          <h1 className="hero_title" id="hero-heading">
+            {PRODUCT_NAME}
+          </h1>
 
-        <div className="hero_actions">
-          <Link className="hero_action hero_action-primary" to={ROUTES.DOWNLOAD}>
-            Download
-          </Link>
-          <Link className="hero_action" to={`${ROUTES.HOME}#${HOME_SECTIONS.HOW_IT_WORKS}`}>
-            How it works
-          </Link>
+          <p className="hero_tagline">{TAGLINE}</p>
+
+          <p className="hero_identity" aria-hidden="true">
+            <span className="hero_identity_bytes">4D 5A 90 00 03 00 00 00 04 00 00 00 FF FF</span>
+            <span className="hero_identity_arrow">→</span>
+            <span className="hero_identity_verdict">PE32 executable</span>
+          </p>
+
+          <div className="hero_actions">
+            <Link className="fa_button fa_button-primary" to={ROUTES.DOWNLOAD}>
+              Download
+            </Link>
+            <Link className="fa_button" to={`${ROUTES.HOME}#${HOME_SECTIONS.HOW_IT_WORKS}`}>
+              How it works
+            </Link>
+          </div>
+
+          <ul className="hero_facts">
+            {FACTS.map((fact) => (
+              <li className="hero_fact" key={fact.label}>
+                <span className="hero_fact_value">{fact.value}</span>
+                <span className="hero_fact_label">{fact.label}</span>
+              </li>
+            ))}
+          </ul>
         </div>
 
         <Showcase slides={SLIDES} label="File Analyzer screenshots" />

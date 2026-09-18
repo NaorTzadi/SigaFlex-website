@@ -1,6 +1,6 @@
 /**
  * Site header: the brand, a flyout menu over the home page's grouped bands,
- * the routed links, the theme switch and the call to action.
+ * the routed links and the call to action.
  *
  * The flyout is the one structural idea worth taking from a site with more
  * ground to cover than fits in a row of links: the top level stays short, and
@@ -17,9 +17,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 
+import Icon from "../Icon/Icon";
 import { ROUTES } from "../../Routing";
 import { HOME_SECTIONS, SITE_NAME } from "../../core/Constants";
-import * as Theme from "../../core/Theme";
 import { cx } from "../../core/Utility";
 import "./header.css";
 
@@ -40,7 +40,6 @@ const TOP_LEVEL: Array<{ id: string; label: string }> = [
 export default function Header() {
   const [open, setOpen] = useState(false);
   const [flyout, setFlyout] = useState(false);
-  const [mode, setMode] = useState<Theme.Mode>(() => Theme.current());
   const productRef = useRef<HTMLLIElement>(null);
 
   /* An open flyout closes on Escape and on a click anywhere outside it. */
@@ -68,16 +67,11 @@ export default function Header() {
     setFlyout(false);
   }
 
-  function toggleTheme() {
-    const next: Theme.Mode = mode === "dark" ? "light" : "dark";
-    Theme.apply(next);
-    setMode(next);
-  }
-
   return (
     <header className="header">
       <div className="header_bar">
         <Link className="header_brand" to={ROUTES.HOME} onClick={closeMenus}>
+          <Icon className="header_brand_mark" name="package" size="1.25em" />
           {SITE_NAME}
         </Link>
 
@@ -88,7 +82,8 @@ export default function Header() {
           aria-controls="header-nav"
           onClick={() => setOpen((wasOpen) => !wasOpen)}
         >
-          {open ? "Close menu" : "Menu"}
+          <Icon name={open ? "close" : "menu"} size="1.125em" />
+          {open ? "Close" : "Menu"}
         </button>
 
         <nav className={cx("header_nav", open && "header_nav-open")} id="header-nav" aria-label="Main">
@@ -143,11 +138,11 @@ export default function Header() {
           </ul>
 
           <div className="header_actions">
-            <button className="header_theme_button" type="button" onClick={toggleTheme}>
-              {mode === "dark" ? "Light theme" : "Dark theme"}
-            </button>
-
-            <Link className="header_cta" to={ROUTES.DOWNLOAD} onClick={closeMenus}>
+            <Link
+              className="fa_button fa_button-primary fa_button-small"
+              to={ROUTES.DOWNLOAD}
+              onClick={closeMenus}
+            >
               Download
             </Link>
           </div>

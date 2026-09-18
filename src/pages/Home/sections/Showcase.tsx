@@ -22,6 +22,7 @@
 
 import { useEffect, useState } from "react";
 
+import Icon from "../../../components/Icon/Icon";
 import { cx, prefersReducedMotion } from "../../../core/Utility";
 import "./showcase.css";
 
@@ -69,22 +70,33 @@ export default function Showcase({ slides, label, interval = 6000 }: ShowcasePro
       onFocus={() => setHeld(true)}
       onBlur={() => setHeld(false)}
     >
-      <div className="showcase_frame">
-        {slides.map((slide, i) => (
-          <img
-            className={cx("showcase_slide", i === index && "showcase_slide-current")}
-            key={slide.src}
-            src={slide.src}
-            alt={slide.alt}
-            width={3840}
-            height={2160}
-            aria-hidden={i !== index}
-            /* The first slide is above the fold; the rest can wait. */
-            fetchPriority={i === 0 ? "high" : "low"}
-            loading={i === 0 ? "eager" : "lazy"}
-            decoding="async"
-          />
-        ))}
+      <div className="showcase_window">
+        <div className="showcase_chrome" aria-hidden="true">
+          <Icon className="showcase_chrome_menu" name="menu" />
+          <span className="showcase_chrome_controls">
+            <Icon name="windowMinimize" />
+            <Icon name="windowMaximize" />
+            <Icon name="close" />
+          </span>
+        </div>
+
+        <div className="showcase_frame">
+          {slides.map((slide, i) => (
+            <img
+              className={cx("showcase_slide", i === index && "showcase_slide-current")}
+              key={slide.src}
+              src={slide.src}
+              alt={slide.alt}
+              width={3840}
+              height={2160}
+              aria-hidden={i !== index}
+              /* The first slide is above the fold; the rest can wait. */
+              fetchPriority={i === 0 ? "high" : "low"}
+              loading={i === 0 ? "eager" : "lazy"}
+              decoding="async"
+            />
+          ))}
+        </div>
       </div>
 
       <div className="showcase_controls">

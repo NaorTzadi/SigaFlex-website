@@ -16,8 +16,9 @@
 
 import { Link } from "react-router-dom";
 
+import Icon from "../Icon/Icon";
 import { ROUTES } from "../../Routing";
-import { HOME_SECTIONS, SITE_NAME } from "../../core/Constants";
+import { HOME_SECTIONS, SITE_NAME, TAGLINE } from "../../core/Constants";
 import "./footer.css";
 
 type Entry = { to: string; label: string };
@@ -56,6 +57,14 @@ export default function Footer() {
   return (
     <footer className="footer">
       <div className="footer_inner">
+        <div className="footer_brand">
+          <p className="footer_brand_name">
+            <Icon className="footer_brand_mark" name="package" size="1.25em" />
+            {SITE_NAME}
+          </p>
+          <p className="footer_brand_line">{TAGLINE}</p>
+        </div>
+
         <nav className="footer_nav" aria-label="Footer">
           <ul className="footer_columns">
             {COLUMNS.map((column) => (

@@ -8,9 +8,7 @@
 
 export const COOKIE = {
   /** "accepted" | "declined". Necessary: it records the answer itself. */
-  CONSENT: "fa_consent",
-  /** Theme mode the reader picked. Preference cookie. */
-  THEME: "fa_theme"
+  CONSENT: "fa_consent"
 } as const;
 
 export type CookieId = (typeof COOKIE)[keyof typeof COOKIE];

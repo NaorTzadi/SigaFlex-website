@@ -3,11 +3,9 @@
  *
  * Every colour, size, space and font the site uses is named here and nowhere
  * else. Component stylesheets reference these variables and never a literal.
- * Choosing a real theme later means changing the values in this file only.
  *
- * The values below are deliberately neutral placeholders. They are not a design.
- *
- * Theme.ts writes data-theme onto <html>; the blocks below answer to it.
+ * There is one theme. Changing the look of the site means changing the values
+ * in this file, and nothing else.
  */
 
 /*
@@ -38,18 +36,70 @@
 :root {
   /* Native widgets — scrollbars, form controls, the canvas behind the page —
      follow this, not our variables. Without it they stay light in dark mode. */
-  color-scheme: light;
+  color-scheme: dark;
 
-  /* --- palette ------------------------------------------------------- */
-  --fa-color-background: #ffffff;
-  --fa-color-surface: #f5f5f5;
-  --fa-color-surface-raised: #ebebeb;
-  --fa-color-border: #d4d4d4;
-  --fa-color-text: #1a1a1a;
-  --fa-color-text-muted: #5c5c5c;
-  --fa-color-accent: #3a3a3a;
-  --fa-color-accent-text: #ffffff;
-  --fa-color-focus: #0b57d0;
+  /* --- palette -------------------------------------------------------
+     Amber on graphite. The greys and the amber are the application's own
+     Dark theme, not new colours: #1e1f22 and #17181a are its backgrounds,
+     #e0a341 is what it paints a jump instruction and a folder icon. The
+     site looks like the product because it is wearing the product's palette.
+
+     There is one theme and it is dark. This is a tool for people who work in
+     dark editors all day, and the site should not open white in front of them.
+     JetBrains ships no light mode on their site either. */
+  --fa-color-background: #17181a;
+  --fa-color-surface: #1e1f22;
+  --fa-color-surface-raised: #232528;
+  --fa-color-border: #33363b;
+  /* The boundary of a control is the only thing telling you where the control
+     is, so it has to clear 3:1 against every surface it sits on (WCAG 1.4.11).
+     --fa-color-border is for rules and dividers, which carry no such duty. */
+  --fa-color-border-strong: #6a707a;
+  --fa-color-text: #e6e8eb;
+  --fa-color-text-bright: #ffffff;
+  --fa-color-text-secondary: #b9bfc7;
+  --fa-color-text-muted: #8b929c;
+  --fa-color-accent: #e0a341;
+  /* Amber is a light colour: what sits on it has to be dark. */
+  --fa-color-accent-text: #17181a;
+  --fa-color-focus: #f0b455;
+
+  --fa-color-surface-hover: #2c2f33;
+  --fa-color-surface-pressed: #34383d;
+  --fa-color-surface-sunken: #131416;
+  --fa-color-accent-strong: #f0b455;
+  --fa-color-accent-soft: #3a2f1c;
+
+  --fa-color-root: #8fa3bd;
+  --fa-color-folder: #e0a72c;
+  --fa-color-file: #98a2b0;
+  --fa-color-structure: #9b8bec;
+  --fa-color-code: #3fbfae;
+  --fa-color-resource: #cd7fd8;
+  --fa-color-info: #6ba3f5;
+  --fa-color-success: #55c98a;
+  --fa-color-danger: #f07167;
+
+  --fa-color-region-explained: #3f444c;
+  --fa-color-region-strong: #565d68;
+  --fa-color-region-hatch: #4a4f57;
+
+  --fa-color-flow-call: #c58af9;
+  --fa-color-flow-jump: #e0a341;
+  --fa-color-flow-return: #f07167;
+
+  /* --- depth ---------------------------------------------------------- */
+  --fa-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+  --fa-shadow-md: 0 10px 28px -14px rgb(0 0 0 / 0.75), 0 2px 6px rgb(0 0 0 / 0.35);
+  --fa-shadow-lg: 0 40px 72px -28px rgb(0 0 0 / 0.85), 0 10px 28px -14px rgb(0 0 0 / 0.55);
+  --fa-shadow-inset-top: inset 0 1px 0 rgb(255 255 255 / 0.05);
+  --fa-shadow-well: inset 0 1px 3px rgb(0 0 0 / 0.5);
+  --fa-glow-accent: 0 10px 34px -14px rgb(224 163 65 / 0.55);
+
+  --fa-backdrop: rgb(23 24 26 / 0.78);
+  --fa-grid-line: rgb(255 255 255 / 0.028);
+  --fa-bloom-accent: rgb(224 163 65 / 0.13);
+  --fa-bloom-info: rgb(107 163 245 / 0.10);
 
   /* --- type ---------------------------------------------------------- */
   --fa-font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -90,8 +140,8 @@
   --fa-gutter: clamp(var(--fa-space-4), 4vw, var(--fa-space-8));
   --fa-header-height: 56px;
 
-  /* Mirrors BREAKPOINT in Theme.ts. Media queries cannot read a variable,
-     so the numbers are repeated there; keep the two in step. */
+  /* Recorded for reference. A media query cannot read a variable, so the same
+     numbers appear literally in the component stylesheets. */
   --fa-breakpoint-tablet: 640px;
   --fa-breakpoint-desktop: 1024px;
   --fa-breakpoint-wide: 1440px;
@@ -114,20 +164,6 @@
   :root {
     --fa-content-width: 1180px;
   }
-}
-
-:root[data-theme="dark"] {
-  color-scheme: dark;
-
-  --fa-color-background: #121212;
-  --fa-color-surface: #1c1c1c;
-  --fa-color-surface-raised: #262626;
-  --fa-color-border: #3a3a3a;
-  --fa-color-text: #f0f0f0;
-  --fa-color-text-muted: #a8a8a8;
-  --fa-color-accent: #e0e0e0;
-  --fa-color-accent-text: #121212;
-  --fa-color-focus: #8ab4f8;
 }
 
 /* --- reset ----------------------------------------------------------- */
@@ -204,4 +240,120 @@ button {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+::selection {
+  background: var(--fa-color-accent-soft);
+  color: var(--fa-color-text);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--fa-color-border-strong) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--fa-color-border-strong);
+  border: 2px solid var(--fa-color-background);
+  border-radius: 999px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--fa-color-text-muted);
+}
+
+.fa_button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--fa-space-2);
+  min-height: 44px;
+  padding: var(--fa-space-3) var(--fa-space-6);
+  background: var(--fa-color-surface-raised);
+  border: var(--fa-border-width) solid var(--fa-color-border-strong);
+  border-radius: var(--fa-radius-md);
+  box-shadow: var(--fa-shadow-inset-top), var(--fa-shadow-sm);
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background var(--fa-duration-fast) var(--fa-easing),
+    border-color var(--fa-duration-fast) var(--fa-easing),
+    box-shadow var(--fa-duration-fast) var(--fa-easing),
+    transform var(--fa-duration-fast) var(--fa-easing);
+}
+
+.fa_button:hover {
+  background: var(--fa-color-surface-hover);
+  border-color: var(--fa-color-text-muted);
+  transform: translateY(-1px);
+}
+
+.fa_button:active {
+  background: var(--fa-color-surface-pressed);
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.fa_button-primary {
+  background: var(--fa-color-accent);
+  color: var(--fa-color-accent-text);
+  border-color: var(--fa-color-accent);
+  box-shadow: var(--fa-glow-accent);
+}
+
+.fa_button-primary:hover {
+  background: var(--fa-color-accent-strong);
+  border-color: var(--fa-color-accent-strong);
+  box-shadow: 0 14px 40px -12px rgb(224 163 65 / 0.7);
+}
+
+.fa_button-primary:active {
+  background: var(--fa-color-accent);
+  box-shadow: none;
+}
+
+.fa_button-small {
+  min-height: 36px;
+  padding: var(--fa-space-2) var(--fa-space-4);
+  font-size: var(--fa-text-sm);
+}
+
+.fa_eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--fa-space-2);
+  color: var(--fa-color-text-muted);
+  font-family: var(--fa-font-mono);
+  font-size: var(--fa-text-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.fa_eyebrow::before {
+  content: "";
+  width: var(--fa-space-6);
+  height: 1px;
+  background: linear-gradient(90deg, var(--fa-color-accent), transparent);
+}
+
+.has-reveal [data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity var(--fa-duration-slow) var(--fa-easing),
+    transform var(--fa-duration-slow) var(--fa-easing);
+}
+
+.has-reveal [data-reveal="shown"] {
+  opacity: 1;
+  transform: none;
 }

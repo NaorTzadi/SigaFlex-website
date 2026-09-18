@@ -40,3 +40,35 @@
   color: var(--fa-color-text-muted);
   font-size: var(--fa-text-sm);
 }
+
+.page {
+  position: relative;
+  background: radial-gradient(44rem 18rem at 20% 0%, var(--fa-bloom-accent), transparent 70%)
+    no-repeat top left / 100% 22rem;
+}
+
+.page_title {
+  font-size: clamp(var(--fa-text-2xl), 5vw, 3rem);
+  letter-spacing: -0.025em;
+}
+
+.page_block_title {
+  display: flex;
+  align-items: center;
+  gap: var(--fa-space-3);
+}
+
+.page_block_title::before {
+  content: "";
+  flex: none;
+  width: 3px;
+  height: 1.1em;
+  background: var(--fa-color-accent);
+  border-radius: 999px;
+}
+
+.page_placeholder {
+  background: var(--fa-color-surface);
+  font-family: var(--fa-font-mono);
+  font-size: var(--fa-text-sm);
+}

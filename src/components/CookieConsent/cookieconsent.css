@@ -41,7 +41,7 @@ html:has(dialog.cookieconsent[open]) {
   padding: var(--fa-space-2) var(--fa-space-6);
   background: transparent;
   color: inherit;
-  border: var(--fa-border-width) solid var(--fa-color-border);
+  border: var(--fa-border-width) solid var(--fa-color-border-strong);
   border-radius: var(--fa-radius-md);
   cursor: pointer;
 }
@@ -61,4 +61,42 @@ html:has(dialog.cookieconsent[open]) {
   .cookieconsent_button {
     min-width: 8rem;
   }
+}
+
+.cookieconsent {
+  box-shadow: var(--fa-shadow-lg), var(--fa-shadow-inset-top);
+}
+
+.cookieconsent_title {
+  display: flex;
+  align-items: center;
+  gap: var(--fa-space-3);
+}
+
+.cookieconsent_title::before {
+  content: "";
+  flex: none;
+  width: 3px;
+  height: 1.1em;
+  background: var(--fa-color-accent);
+  border-radius: 999px;
+}
+
+.cookieconsent_button {
+  transition: background var(--fa-duration-fast) var(--fa-easing),
+    border-color var(--fa-duration-fast) var(--fa-easing);
+}
+
+.cookieconsent_button:hover {
+  background: var(--fa-color-surface-hover);
+  border-color: var(--fa-color-text-muted);
+}
+
+.cookieconsent_button-accept:hover {
+  background: var(--fa-color-accent-strong);
+  border-color: var(--fa-color-accent-strong);
+}
+
+.cookieconsent::backdrop {
+  backdrop-filter: blur(3px);
 }
