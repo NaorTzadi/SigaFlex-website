@@ -75,7 +75,6 @@ Do not add dependencies, libraries, SDKs, tools, assets, models, or other third-
     - require payment, a subscription, a paid license, or usage fees for the intended functionality;
     - require an online service, API, account, authentication, or license server;
     - have licensing terms that would require the project to disclose or relicense its proprietary source code.
-Do not write code that would require the program to access the internet.
 
 Only implement the requested production code.
 After implementation:

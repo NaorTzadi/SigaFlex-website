@@ -17,6 +17,8 @@ import { useEffect, useRef, useState } from "react";
 import type { FormEvent } from "react";
 import { Link } from "react-router-dom";
 
+import Icon from "../../components/Icon/Icon";
+import type { GlyphName } from "../../components/Icon/glyphs";
 import { PASSWORD_MIN_LENGTH } from "../../core/Constants";
 import * as ServerBridge from "../../core/ServerBridge";
 import { cx, isEmail } from "../../core/Utility";
@@ -34,6 +36,25 @@ type Values = {
 type Errors = Partial<Record<keyof Values, string>>;
 
 const EMPTY: Values = { email: "", password: "", confirm: "", terms: false };
+
+/** What a reader should know before handing over an address. */
+const NOTES: Array<{ glyph: GlyphName; title: string; body: string }> = [
+  {
+    glyph: "seal",
+    title: "For the site, not the app",
+    body: "File Analyzer runs offline and opens files read-only. Nothing here is needed to use it."
+  },
+  {
+    glyph: "info",
+    title: "What is stored",
+    body: "Your address, and a password the server hashes. No file you open ever leaves your machine."
+  },
+  {
+    glyph: "success",
+    title: "No tracking",
+    body: "This site sets one cookie, and only the one you agreed to. There is nothing else to opt out of."
+  }
+];
 
 const FIELD_LABEL: Record<keyof Values, string> = {
   email: "E-mail address",
@@ -65,6 +86,8 @@ export default function Register() {
   /** Errors are only shown once the reader has tried to submit at least once. */
   const [submitted, setSubmitted] = useState(false);
   const [busy, setBusy] = useState(false);
+  /* The honeypot. A person never sees this field and never fills it. */
+  const [trap, setTrap] = useState("");
   const [serverMessage, setServerMessage] = useState("");
   const [done, setDone] = useState(false);
 
@@ -92,6 +115,15 @@ export default function Register() {
     event.preventDefault();
     setSubmitted(true);
     setServerMessage("");
+
+    /* Something filled the hidden field, so nothing human is submitting this.
+       It gets the answer a success would give and the server is never called:
+       being told it was caught is exactly what a bot would use to adapt. */
+    if (trap) {
+      setServerMessage("Check your e-mail to confirm the address.");
+      setDone(true);
+      return;
+    }
 
     const found = validate(values);
     setErrors(found);
@@ -129,40 +161,48 @@ export default function Register() {
     return (
       <article className="page">
         <div className="register_done" ref={doneRef} tabIndex={-1}>
+          <Icon className="register_done_glyph" name="success" size="2.5em" />
           <h1 className="page_title">Registered</h1>
           <p className="page_lead">{serverMessage}</p>
-          <p>
-            <Link to={ROUTES.HOME}>Back to the home page</Link>
-          </p>
+          <Link className="fa_button" to={ROUTES.HOME}>
+            Back to the home page
+          </Link>
         </div>
       </article>
     );
   }
 
   return (
-    <article className="page">
-      <h1 className="page_title">Register</h1>
-      <p className="page_lead">An account is for the site — the application itself never asks for one.</p>
+    <article className="page register">
+      <div className="register_main">
+        <p className="register_eyebrow fa_eyebrow">Account</p>
+        <h1 className="page_title">Register</h1>
+        <p className="page_lead">
+          An account is for the site — the application itself never asks for one.
+        </p>
 
-      {/* Announced when it appears, and focused, so a correction is never missed. */}
-      <div
-        className="register_summary"
-        ref={summaryRef}
-        tabIndex={-1}
-        role="alert"
-        hidden={errorCount === 0}
-      >
-        <h2 className="register_summary_title">There is a problem</h2>
-        <ul className="register_summary_list">
-          {shownList.map((key) => (
-            <li key={key}>
-              <a href={"#register-" + key}>{shown[key]}</a>
-            </li>
-          ))}
-        </ul>
-      </div>
+        {/* Announced when it appears, and focused, so a correction is never missed. */}
+        <div
+          className="register_summary"
+          ref={summaryRef}
+          tabIndex={-1}
+          role="alert"
+          hidden={errorCount === 0}
+        >
+          <h2 className="register_summary_title">
+            <Icon name="warning" size="1.125em" />
+            There is a problem
+          </h2>
+          <ul className="register_summary_list">
+            {shownList.map((key) => (
+              <li key={key}>
+                <a href={"#register-" + key}>{shown[key]}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
 
-      <form className="register_form" onSubmit={submit} noValidate>
+        <form className="register_form" onSubmit={submit} noValidate>
         <Field
           name="email"
           type="email"
@@ -176,6 +216,7 @@ export default function Register() {
           name="password"
           type="password"
           autoComplete="new-password"
+          meter
           hint={"At least " + PASSWORD_MIN_LENGTH + " characters."}
           value={values.password}
           error={shown.password}
@@ -190,6 +231,19 @@ export default function Register() {
           error={shown.confirm}
           onChange={(value) => change("confirm", value)}
         />
+
+        <div className="register_trap" aria-hidden="true">
+          <label htmlFor="register-website">Leave this field empty</label>
+          <input
+            id="register-website"
+            name="website"
+            type="text"
+            value={trap}
+            tabIndex={-1}
+            autoComplete="off"
+            onChange={(event) => setTrap(event.target.value)}
+          />
+        </div>
 
         <div className="register_field">
           <div className="register_check">
@@ -209,12 +263,17 @@ export default function Register() {
 
           {shown.terms && (
             <p className="register_error" id="register-terms-error">
+              <Icon name="warning" size="1em" />
               {shown.terms}
             </p>
           )}
         </div>
 
-        <button className="register_submit" type="submit" disabled={busy}>
+        <button
+          className="fa_button fa_button-primary register_submit"
+          type="submit"
+          disabled={busy}
+        >
           {busy ? "Registering…" : "Register"}
         </button>
 
@@ -222,7 +281,28 @@ export default function Register() {
         <p className="register_status" role="status" aria-live="polite">
           {serverMessage}
         </p>
-      </form>
+        </form>
+      </div>
+
+      <aside className="register_aside" aria-labelledby="register-aside-heading">
+        <h2 className="register_aside_title" id="register-aside-heading">
+          Before you do
+        </h2>
+
+        <ul className="register_notes">
+          {NOTES.map((note) => (
+            <li className="register_note" key={note.title}>
+              <Icon className="register_note_glyph" name={note.glyph} size="1.25em" />
+              <span className="register_note_title">{note.title}</span>
+              <span className="register_note_body">{note.body}</span>
+            </li>
+          ))}
+        </ul>
+
+        <p className="register_aside_link">
+          <Link to={ROUTES.LICENSES}>Third-Party Licenses</Link>
+        </p>
+      </aside>
     </article>
   );
 }
@@ -238,20 +318,38 @@ type FieldProps = {
   value: string;
   error?: string;
   hint?: string;
+  /** Draws how far the value is from the minimum length. Password only. */
+  meter?: boolean;
   onChange: (value: string) => void;
 };
 
-function Field({ name, type, autoComplete, value, error, hint, onChange }: FieldProps) {
+function Field({ name, type, autoComplete, value, error, hint, meter, onChange }: FieldProps) {
+  const [revealed, setRevealed] = useState(false);
   const id = "register-" + name;
   const hintId = id + "-hint";
   const errorId = id + "-error";
   const described = [hint ? hintId : "", error ? errorId : ""].filter(Boolean).join(" ");
+  const reached = Math.min(value.length / PASSWORD_MIN_LENGTH, 1);
 
   return (
     <div className="register_field">
-      <label className="register_label" htmlFor={id}>
-        {FIELD_LABEL[name]}
-      </label>
+      <div className="register_field_head">
+        <label className="register_label" htmlFor={id}>
+          {FIELD_LABEL[name]}
+        </label>
+
+        {type === "password" && (
+          <button
+            className="register_reveal"
+            type="button"
+            aria-pressed={revealed}
+            aria-controls={id}
+            onClick={() => setRevealed((wasRevealed) => !wasRevealed)}
+          >
+            {revealed ? "Hide" : "Show"}
+          </button>
+        )}
+      </div>
 
       {hint && (
         <p className="register_hint" id={hintId}>
@@ -263,7 +361,7 @@ function Field({ name, type, autoComplete, value, error, hint, onChange }: Field
         className={cx("register_input", error && "register_input-invalid")}
         id={id}
         name={name}
-        type={type}
+        type={revealed ? "text" : type}
         value={value}
         autoComplete={autoComplete}
         aria-invalid={Boolean(error)}
@@ -271,8 +369,17 @@ function Field({ name, type, autoComplete, value, error, hint, onChange }: Field
         onChange={(event) => onChange(event.target.value)}
       />
 
+      {/* The length rule is already stated in the hint and enforced in the
+          error; the bar is the same fact, drawn. */}
+      {meter && (
+        <div className={cx("register_meter", reached === 1 && "register_meter-met")} aria-hidden="true">
+          <span className="register_meter_fill" style={{ transform: `scaleX(${reached})` }} />
+        </div>
+      )}
+
       {error && (
         <p className="register_error" id={errorId}>
+          <Icon name="warning" size="1em" />
           {error}
         </p>
       )}

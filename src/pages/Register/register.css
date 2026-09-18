@@ -1,10 +1,31 @@
+.register {
+  display: grid;
+  gap: var(--fa-space-12);
+  align-items: start;
+}
+
+.register_eyebrow {
+  margin: 0 0 var(--fa-space-4);
+}
+
+.register_main {
+  min-width: 0;
+}
+
 /* One column on every screen; the form just stops growing on a wide one. */
 .register_form {
   display: flex;
   flex-direction: column;
   gap: var(--fa-space-6);
-  max-width: 28rem;
+  max-width: 30rem;
   margin-top: var(--fa-space-8);
+  padding: var(--fa-space-8);
+  background:
+    radial-gradient(26rem 12rem at 100% 0%, var(--fa-bloom-accent), transparent 70%),
+    var(--fa-color-surface);
+  border: var(--fa-border-width) solid var(--fa-color-border);
+  border-radius: var(--fa-radius-lg);
+  box-shadow: var(--fa-shadow-md), var(--fa-shadow-inset-top);
 }
 
 .register_field {
@@ -13,8 +34,30 @@
   gap: var(--fa-space-2);
 }
 
+.register_field_head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--fa-space-4);
+}
+
 .register_label {
   font-weight: 600;
+}
+
+.register_reveal {
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: var(--fa-radius-sm);
+  color: var(--fa-color-accent);
+  font-size: var(--fa-text-sm);
+  cursor: pointer;
+}
+
+.register_reveal:hover {
+  color: var(--fa-color-accent-strong);
+  text-decoration: underline;
 }
 
 .register_hint,
@@ -28,10 +71,18 @@
   color: var(--fa-color-text-muted);
 }
 
-/* Never colour alone: the message says what is wrong, and the field beside it
-   carries a thicker border. */
+/* Never colour alone: the message says what is wrong, it carries a mark, and
+   the field beside it carries a thicker border. */
 .register_error {
+  display: flex;
+  align-items: center;
+  gap: var(--fa-space-2);
+  color: var(--fa-color-danger);
   font-weight: 600;
+}
+
+.register_error svg {
+  flex: none;
 }
 
 .register_input {
@@ -44,10 +95,45 @@
   /* 16px or larger, or iOS zooms the page when the field takes focus.
      If the base size is ever set below 16px, pin this one at 1rem. */
   font-size: var(--fa-text-base);
+  transition: border-color var(--fa-duration-fast) var(--fa-easing),
+    box-shadow var(--fa-duration-fast) var(--fa-easing);
+}
+
+.register_input:hover {
+  border-color: var(--fa-color-text-muted);
+}
+
+.register_input:focus {
+  border-color: var(--fa-color-accent);
+  box-shadow: var(--fa-glow-accent);
+  outline: none;
 }
 
 .register_input-invalid {
   border-width: 2px;
+  border-color: var(--fa-color-danger);
+}
+
+.register_meter {
+  height: 3px;
+  background: var(--fa-color-surface-raised);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.register_meter_fill {
+  display: block;
+  height: 100%;
+  background: var(--fa-color-accent);
+  border-radius: inherit;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--fa-duration-normal) var(--fa-easing),
+    background var(--fa-duration-normal) var(--fa-easing);
+}
+
+.register_meter-met .register_meter_fill {
+  background: var(--fa-color-success);
 }
 
 .register_check {
@@ -62,45 +148,128 @@
   height: 1.25rem;
   margin: 0;
   flex: 0 0 auto;
+  accent-color: var(--fa-color-accent);
 }
 
 .register_submit {
-  align-self: flex-start;
-  min-height: 44px;
-  padding: var(--fa-space-3) var(--fa-space-8);
-  background: var(--fa-color-accent);
-  color: var(--fa-color-accent-text);
-  border: var(--fa-border-width) solid var(--fa-color-accent);
-  border-radius: var(--fa-radius-md);
-  cursor: pointer;
+  width: 100%;
 }
 
-.register_submit:disabled {
-  cursor: progress;
-  opacity: 0.7;
+.register_status:empty {
+  display: none;
 }
 
 .register_summary {
-  max-width: 28rem;
+  max-width: 30rem;
   margin-top: var(--fa-space-6);
   padding: var(--fa-space-4);
   background: var(--fa-color-surface);
-  border: 2px solid var(--fa-color-border);
+  border: 2px solid var(--fa-color-danger);
   border-radius: var(--fa-radius-md);
+  box-shadow: var(--fa-shadow-sm);
 }
 
 .register_summary_title {
+  display: flex;
+  align-items: center;
+  gap: var(--fa-space-2);
   margin-bottom: var(--fa-space-2);
+  color: var(--fa-color-danger);
   font-size: var(--fa-text-lg);
 }
 
 .register_summary_list {
   margin: 0;
   padding-left: var(--fa-space-6);
+  font-size: var(--fa-text-sm);
 }
 
-@media (min-width: 640px) {
-  .register_submit {
-    min-width: 12rem;
+.register_aside {
+  padding: var(--fa-space-6);
+  background: var(--fa-color-surface-raised);
+  border: var(--fa-border-width) solid var(--fa-color-border);
+  border-radius: var(--fa-radius-lg);
+  box-shadow: var(--fa-shadow-inset-top);
+}
+
+.register_aside_title {
+  margin-bottom: var(--fa-space-6);
+  font-size: var(--fa-text-base);
+  font-family: var(--fa-font-mono);
+  color: var(--fa-color-text-muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.register_notes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--fa-space-6);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.register_note {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--fa-space-1) var(--fa-space-3);
+}
+
+.register_note_glyph {
+  grid-row: span 2;
+  margin-top: 0.15em;
+  color: var(--fa-color-accent);
+}
+
+.register_note_title {
+  font-weight: 600;
+}
+
+.register_note_body {
+  color: var(--fa-color-text-muted);
+  font-size: var(--fa-text-sm);
+}
+
+.register_aside_link {
+  margin: var(--fa-space-6) 0 0;
+  padding-top: var(--fa-space-4);
+  border-top: var(--fa-border-width) solid var(--fa-color-border);
+  font-size: var(--fa-text-sm);
+}
+
+.register_done {
+  max-width: 34rem;
+  padding: var(--fa-space-8);
+  background:
+    radial-gradient(26rem 12rem at 0% 0%, var(--fa-bloom-accent), transparent 70%),
+    var(--fa-color-surface);
+  border: var(--fa-border-width) solid var(--fa-color-border);
+  border-radius: var(--fa-radius-lg);
+  box-shadow: var(--fa-shadow-md), var(--fa-shadow-inset-top);
+}
+
+.register_done_glyph {
+  display: block;
+  margin-bottom: var(--fa-space-4);
+  color: var(--fa-color-success);
+}
+
+@media (min-width: 1024px) {
+  .register {
+    grid-template-columns: minmax(0, 30rem) minmax(0, 22rem);
   }
+}
+
+/* Present in the DOM, reachable by nothing: not drawn, not in the tab order,
+   not announced. Only something filling every input finds it. */
+.register_trap {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
