@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 import Contents from "../../components/Contents/Contents";
+import Icon from "../../components/Icon/Icon";
 import {
   CONTACT_EMAIL,
   POLICY_UPDATED,
@@ -124,7 +125,10 @@ export default function Terms() {
       <p className="page_lead">
         The arrangement between you and {SITE_OPERATOR} for this site and for {PRODUCT_NAME}.
       </p>
-      <p className="page_meta">Last updated {POLICY_UPDATED}</p>
+      <p className="page_meta">
+        <Icon name="calendar" size="1em" />
+        Last updated {POLICY_UPDATED}
+      </p>
 
       <div className="page_layout">
         <Contents

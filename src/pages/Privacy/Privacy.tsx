@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 import Contents from "../../components/Contents/Contents";
+import Icon from "../../components/Icon/Icon";
 import { CONTACT_EMAIL, POLICY_UPDATED, SITE_NAME, SITE_OPERATOR } from "../../core/Constants";
 import { ROUTES } from "../../Routing";
 import "../page.css";
@@ -131,7 +132,10 @@ export default function Privacy() {
       <p className="page_lead">
         What this site stores, why, and for how long. Written against what the code actually does.
       </p>
-      <p className="page_meta">Last updated {POLICY_UPDATED}</p>
+      <p className="page_meta">
+        <Icon name="calendar" size="1em" />
+        Last updated {POLICY_UPDATED}
+      </p>
 
       <div className="page_layout">
         <Contents

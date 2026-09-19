@@ -46,3 +46,12 @@
     flex: 1 1 100%;
   }
 }
+
+.confirm_working {
+  justify-content: center;
+  min-height: 12rem;
+}
+
+.confirm_working .fa_loading {
+  margin: 0;
+}

@@ -21,7 +21,6 @@
   flex-wrap: wrap;
   align-items: center;
   gap: var(--fa-space-4);
-  margin-top: var(--fa-space-8);
   padding: var(--fa-space-6);
   background:
     radial-gradient(26rem 12rem at 100% 0%, var(--fa-bloom-accent), transparent 70%),
@@ -89,8 +88,8 @@
 }
 
 .profile_badge-warn {
-  border-color: var(--fa-color-danger);
-  color: var(--fa-color-danger);
+  border-color: var(--fa-color-accent);
+  color: var(--fa-color-accent);
 }
 
 /* The one thing on the page that is waiting on the reader. It sits above the
@@ -145,6 +144,7 @@
   border: var(--fa-border-width) solid var(--fa-color-border);
   border-radius: var(--fa-radius-lg);
   box-shadow: var(--fa-shadow-inset-top);
+  scroll-margin-top: calc(var(--fa-header-height) + var(--fa-space-6));
 }
 
 /* What deletes things is kept apart from what changes them: its own card, at
@@ -155,8 +155,19 @@
 }
 
 .profile_block_title {
+  display: flex;
+  align-items: center;
+  gap: var(--fa-space-3);
   margin: 0;
   font-size: var(--fa-text-lg);
+}
+
+.profile_block_glyph {
+  color: var(--fa-color-text-muted);
+}
+
+.profile_block-danger .profile_block_glyph {
+  color: inherit;
 }
 
 /* The one card that destroys something says so in its heading as well as its

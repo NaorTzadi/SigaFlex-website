@@ -59,7 +59,7 @@ export default function Contact() {
 
         {/* The address is drawn, not only linked: not everyone reads this in a
             browser that has a mail client behind it. */}
-        <span className={`${className}_address`}>
+        <span className={cx(`${className}_address`, copied && `${className}_address-done`)}>
           <code className={`${className}_address_value`}>{CONTACT_EMAIL}</code>
           <button
             className={cx(`${className}_copy`, copied && `${className}_copy-done`)}
@@ -83,9 +83,16 @@ export default function Contact() {
         </h2>
         <ul className="page_cards">
           {REASONS.map((reason) => (
-            <li className="page_card" key={reason.title}>
+            <li className={`page_card ${className}_reason`} key={reason.title}>
               <p className="page_card_title">{reason.title}</p>
               <p className="page_card_body">{reason.body}</p>
+              <a
+                className={`${className}_reason_link`}
+                href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(reason.title)}`}
+              >
+                <Icon name="mail" size="0.875em" />
+                Write about this
+              </a>
             </li>
           ))}
         </ul>

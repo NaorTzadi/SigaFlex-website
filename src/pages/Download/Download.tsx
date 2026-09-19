@@ -81,6 +81,24 @@ export default function Download() {
         </div>
       </div>
 
+      <section className="page_block" aria-labelledby="download-requirements">
+        <h2 className="page_block_title" id="download-requirements">
+          System requirements
+        </h2>
+
+        <ul className={`${className}_requirements`}>
+          {REQUIREMENTS.map((requirement) => (
+            <li
+              className={cx(`${className}_requirement`, `${className}_requirement-${requirement.glyph}`)}
+              key={requirement.text}
+            >
+              <Icon name={requirement.glyph} size="1em" />
+              {requirement.text}
+            </li>
+          ))}
+        </ul>
+      </section>
+
       <section className="page_block" aria-labelledby="download-platforms">
         <h2 className="page_block_title" id="download-platforms">
           Other platforms
@@ -97,24 +115,6 @@ export default function Download() {
               <Icon className={`${className}_planned_glyph`} name={platform.glyph} size="1.25em" />
               <span className={`${className}_planned_name`}>{platform.name}</span>
               <span className="fa_tag">{platform.note}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <section className="page_block" aria-labelledby="download-requirements">
-        <h2 className="page_block_title" id="download-requirements">
-          System requirements
-        </h2>
-
-        <ul className={`${className}_requirements`}>
-          {REQUIREMENTS.map((requirement) => (
-            <li
-              className={cx(`${className}_requirement`, `${className}_requirement-${requirement.glyph}`)}
-              key={requirement.text}
-            >
-              <Icon name={requirement.glyph} size="1em" />
-              {requirement.text}
             </li>
           ))}
         </ul>

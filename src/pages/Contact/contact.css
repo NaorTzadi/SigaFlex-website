@@ -71,6 +71,34 @@
   color: var(--fa-color-success);
 }
 
+.contact_address-done,
+.contact_address-done:hover {
+  border-color: var(--fa-color-success);
+}
+
+.contact_reason {
+  gap: var(--fa-space-2);
+}
+
+.contact_reason_link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--fa-space-2);
+  align-self: flex-start;
+  margin-top: auto;
+  padding-top: var(--fa-space-2);
+  color: var(--fa-color-accent);
+  font-size: var(--fa-text-sm);
+  font-weight: 500;
+  text-decoration: none;
+  transition: color var(--fa-duration-fast) var(--fa-easing);
+}
+
+.contact_reason_link:hover {
+  color: var(--fa-color-accent-strong);
+  text-decoration: underline;
+}
+
 @media (max-width: 639px) {
   .contact_actions {
     flex-direction: column;

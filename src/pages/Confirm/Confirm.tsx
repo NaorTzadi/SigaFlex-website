@@ -78,10 +78,12 @@ export default function Confirm() {
       <h1 className="page_title">{state === "working" ? "Confirming…" : good ? "Confirmed" : "Not confirmed"}</h1>
 
       {state === "working" && (
-        <p className="fa_loading account_loading">
-          <span className="fa_spinner" aria-hidden="true" />
-          Checking your link…
-        </p>
+        <div className={cx("account_card", `${className}_working`)} aria-busy="true">
+          <p className="fa_loading">
+            <span className="fa_spinner" aria-hidden="true" />
+            Checking your link…
+          </p>
+        </div>
       )}
 
       {state !== "working" && (
