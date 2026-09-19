@@ -1,0 +1,200 @@
+/*
+ * Shared by the three small account pages -- Login, Password, Confirm -- which
+ * are all the same shape: a short heading, one card, a few fields. One
+ * stylesheet instead of three identical ones, the same way page.css serves the
+ * prose pages. Register has its own: it is twice the size and carries an aside.
+ */
+
+.account {
+  max-width: 30rem;
+}
+
+.account_eyebrow {
+  margin: 0 0 var(--fa-space-4);
+}
+
+.account_card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--fa-space-6);
+  max-width: 30rem;
+  margin-top: var(--fa-space-8);
+  padding: var(--fa-space-8);
+  background:
+    radial-gradient(26rem 12rem at 100% 0%, var(--fa-bloom-accent), transparent 70%),
+    var(--fa-color-surface);
+  border: var(--fa-border-width) solid var(--fa-color-border);
+  border-radius: var(--fa-radius-lg);
+  box-shadow: var(--fa-shadow-md), var(--fa-shadow-inset-top);
+}
+
+.account_field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--fa-space-2);
+}
+
+.account_field_head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--fa-space-4);
+}
+
+.account_label {
+  font-weight: 600;
+}
+
+.account_reveal {
+  padding: 0;
+  background: transparent;
+  border: 0;
+  color: var(--fa-color-accent);
+  font-size: var(--fa-text-sm);
+  cursor: pointer;
+}
+
+.account_reveal:hover {
+  text-decoration: underline;
+}
+
+.account_input {
+  padding: var(--fa-space-3);
+  background: var(--fa-color-background);
+  color: var(--fa-color-text);
+  border: var(--fa-border-width) solid var(--fa-color-border-strong);
+  border-radius: var(--fa-radius-md);
+  font: inherit;
+  font-size: var(--fa-text-base);
+  transition: border-color var(--fa-duration-fast) var(--fa-easing),
+    box-shadow var(--fa-duration-fast) var(--fa-easing);
+}
+
+.account_input:hover {
+  border-color: var(--fa-color-text-muted);
+}
+
+.account_input:focus {
+  border-color: var(--fa-color-accent);
+  box-shadow: var(--fa-glow-accent);
+  outline: none;
+}
+
+.account_input-invalid {
+  border-width: 2px;
+  border-color: var(--fa-color-danger);
+}
+
+.account_hint {
+  margin: 0;
+  color: var(--fa-color-text-muted);
+  font-size: var(--fa-text-sm);
+}
+
+.account_error {
+  display: flex;
+  align-items: center;
+  gap: var(--fa-space-2);
+  margin: 0;
+  color: var(--fa-color-danger);
+  font-size: var(--fa-text-sm);
+  font-weight: 600;
+}
+
+.account_error svg {
+  flex: none;
+}
+
+.account_error:empty {
+  display: none;
+}
+
+.account_note {
+  display: flex;
+  align-items: baseline;
+  gap: var(--fa-space-2);
+  margin: 0;
+  color: var(--fa-color-text-muted);
+  font-size: var(--fa-text-sm);
+}
+
+.account_note svg {
+  flex: none;
+  color: var(--fa-color-info);
+}
+
+.account_submit {
+  width: 100%;
+}
+
+.account_links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--fa-space-4);
+  margin: 0;
+  padding-top: var(--fa-space-4);
+  border-top: var(--fa-border-width) solid var(--fa-color-border);
+  font-size: var(--fa-text-sm);
+}
+
+.account_outcome {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--fa-space-3);
+  margin: 0;
+}
+
+.account_outcome svg {
+  flex: none;
+  margin-top: 0.15em;
+}
+
+.account_outcome-good svg {
+  color: var(--fa-color-success);
+}
+
+.account_outcome-bad svg {
+  color: var(--fa-color-danger);
+}
+
+/*
+ * Sign in and register are one page with two tabs, so the two never sit beside
+ * each other in the header pointing at different places. The tabs are links,
+ * not scripted tabs: each one is a real route a reader can open or copy.
+ *
+ * The page keeps the full content width on both tabs, and the card keeps its
+ * own width inside it, so the fields do not jump sideways when the tab changes.
+ */
+.account_page {
+  max-width: var(--fa-content-width);
+}
+
+.account_tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--fa-space-1);
+  margin-top: var(--fa-space-6);
+  border-bottom: var(--fa-border-width) solid var(--fa-color-border);
+}
+
+.account_tab {
+  padding: var(--fa-space-3) var(--fa-space-4);
+  border-bottom: 2px solid transparent;
+  color: var(--fa-color-text-secondary);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color var(--fa-duration-fast) var(--fa-easing),
+    background var(--fa-duration-fast) var(--fa-easing),
+    border-color var(--fa-duration-fast) var(--fa-easing);
+}
+
+.account_tab:hover {
+  background: var(--fa-color-surface-hover);
+  color: var(--fa-color-text);
+}
+
+.account_tab-current {
+  border-bottom-color: var(--fa-color-accent);
+  color: var(--fa-color-accent);
+}

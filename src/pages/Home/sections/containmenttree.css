@@ -106,7 +106,7 @@
 
 /* A phone cannot hold four columns. Type and the two sizes drop away; the
    nesting, which is the whole point, stays. */
-@media (max-width: 767px) {
+@media (max-width: 639px) {
   .containmenttree_columns,
   .containmenttree_row {
     grid-template-columns: minmax(0, 1fr) 5.5rem;

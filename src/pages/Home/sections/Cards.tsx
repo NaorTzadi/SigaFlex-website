@@ -4,6 +4,8 @@ import Icon from "../../../components/Icon/Icon";
 import type { GlyphName } from "../../../components/Icon/glyphs";
 import "./cards.css";
 
+const className = "cards";
+
 export type Card = {
   glyph: GlyphName;
   title: string;
@@ -14,15 +16,15 @@ export type Card = {
 
 export default function Cards({ items }: { items: Card[] }) {
   return (
-    <ul className="cards">
+    <ul className={className}>
       {items.map((card) => {
         const inside = (
           <>
-            <Icon className="cards_glyph" name={card.glyph} size="1.5em" />
-            <span className="cards_title">{card.title}</span>
-            <span className="cards_body">{card.body}</span>
+            <Icon className={`${className}_glyph`} name={card.glyph} size="1.5em" />
+            <span className={`${className}_title`}>{card.title}</span>
+            <span className={`${className}_body`}>{card.body}</span>
             {card.to && (
-              <span className="cards_go">
+              <span className={`${className}_go`}>
                 Open <Icon name="doubleArrowRight" size="0.875em" />
               </span>
             )}
@@ -30,13 +32,13 @@ export default function Cards({ items }: { items: Card[] }) {
         );
 
         return (
-          <li className="cards_item" key={card.title}>
+          <li className={`${className}_item`} key={card.title}>
             {card.to ? (
-              <Link className="cards_card cards_card-link" to={card.to}>
+              <Link className={`${className}_card ${className}_card-link`} to={card.to}>
                 {inside}
               </Link>
             ) : (
-              <div className="cards_card">{inside}</div>
+              <div className={`${className}_card`}>{inside}</div>
             )}
           </li>
         );

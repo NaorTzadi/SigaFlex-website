@@ -1,6 +1,8 @@
 import Icon from "../../../components/Icon/Icon";
 import "./signatures.css";
 
+const className = "signatures";
+
 type Claim = {
   file: string;
   bytes: string;
@@ -43,28 +45,28 @@ const CLAIMS: Claim[] = [
 
 export default function Signatures() {
   return (
-    <div className="signatures">
-      <ul className="signatures_list">
+    <div className={className}>
+      <ul className={`${className}_list`}>
         {CLAIMS.map((claim) => (
-          <li className="signatures_row" key={claim.file}>
-            <span className="signatures_claimed">
-              <Icon className="signatures_glyph" name="file" />
+          <li className={`${className}_row`} key={claim.file}>
+            <span className={`${className}_claimed`}>
+              <Icon className={`${className}_glyph`} name="file" />
               {claim.file}
             </span>
 
-            <span className="signatures_bytes">{claim.bytes}</span>
+            <span className={`${className}_bytes`}>{claim.bytes}</span>
 
-            <span className="signatures_verdict">
+            <span className={`${className}_verdict`}>
               <Icon name="doubleArrowRight" size="0.875em" />
               {claim.verdict}
             </span>
 
-            <span className="signatures_detail">{claim.detail}</span>
+            <span className={`${className}_detail`}>{claim.detail}</span>
           </li>
         ))}
       </ul>
 
-      <p className="signatures_note">
+      <p className={`${className}_note`}>
         <Icon name="info" size="1em" /> Nothing here is decided by the name. The first bytes are
         read, the structure they promise is checked, and the file is opened as what it turned out
         to be.

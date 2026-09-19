@@ -21,6 +21,7 @@ import CoverageMap from "./sections/CoverageMap";
 import FormatFinder from "./sections/FormatFinder";
 import Hero from "./sections/Hero";
 import Problem from "./sections/Problem";
+import Reviews from "./sections/Reviews";
 import Section from "./sections/Section";
 import Signatures from "./sections/Signatures";
 import { ROUTES } from "../../Routing";
@@ -152,8 +153,18 @@ export default function Home() {
         <CoverageMap />
       </Section>
 
+      <Section
+        id={HOME_SECTIONS.REVIEWS}
+        eyebrow="04 — The verdict"
+        title="What people say"
+        lead="Reviews left by people with an account. One each, and they can change or remove their own."
+        tone="sunken"
+      >
+        <Reviews />
+      </Section>
+
       {/* The closing band: where the reader goes next. */}
-      <Section id={HOME_SECTIONS.DISCOVER} eyebrow="04 — Next" title="Discover more">
+      <Section id={HOME_SECTIONS.DISCOVER} eyebrow="05 — Next" title="Discover more">
         <Cards items={discover} />
       </Section>
     </>

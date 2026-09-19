@@ -14,20 +14,30 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { SyntheticEvent } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 import * as CookiesManager from "../../core/CookiesManager";
+import { ROUTES } from "../../Routing";
 import { setGlobal } from "../../core/Globals";
 import "./cookieconsent.css";
+
+const className = "cookieconsent";
 
 export default function CookieConsent() {
   const [answered, setAnswered] = useState(() => CookiesManager.consent() !== null);
   const ref = useRef<HTMLDialogElement>(null);
+  const reading = useLocation().pathname === ROUTES.PRIVACY;
 
   /* A modal dialog has to be opened imperatively; the open attribute alone
-     gives a non-modal one, with no focus trap and no backdrop. */
+     gives a non-modal one, with no focus trap and no backdrop.
+
+     It steps aside on the privacy page, which is the one page the question
+     itself sends people to, and asks again everywhere else until answered. */
   useEffect(() => {
-    if (!answered) ref.current?.showModal();
-  }, [answered]);
+    if (answered) return;
+    if (reading) ref.current?.close();
+    else ref.current?.showModal();
+  }, [answered, reading]);
 
   if (answered) return null;
 
@@ -40,23 +50,29 @@ export default function CookieConsent() {
 
   return (
     <dialog
-      className="cookieconsent"
+      className={className}
       ref={ref}
       aria-labelledby="cookieconsent-title"
       onCancel={(event: SyntheticEvent) => event.preventDefault()}
     >
-      <h2 className="cookieconsent_title" id="cookieconsent-title">
+      <h2 className={`${className}_title`} id="cookieconsent-title">
         Cookies
       </h2>
 
-      <p className="cookieconsent_text">
+      <p className={`${className}_text`}>
         This site stores nothing beyond your answer to this question. Anything we add later — a
         preference, a measurement — is held to that answer.
       </p>
 
-      <div className="cookieconsent_actions">
+      <p className={`${className}_text`}>
+        <Link className={`${className}_link`} to={ROUTES.PRIVACY}>
+          What is stored, in full
+        </Link>
+      </p>
+
+      <div className={`${className}_actions`}>
         <button
-          className="cookieconsent_button cookieconsent_button-accept"
+          className={`${className}_button ${className}_button-accept`}
           type="button"
           /* The first thing focused when the box opens. */
           autoFocus
@@ -64,7 +80,7 @@ export default function CookieConsent() {
         >
           Accept
         </button>
-        <button className="cookieconsent_button" type="button" onClick={() => answer("declined")}>
+        <button className={`${className}_button`} type="button" onClick={() => answer("declined")}>
           Decline
         </button>
       </div>

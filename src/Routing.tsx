@@ -10,20 +10,38 @@
  */
 
 import { useEffect } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import type { ReactElement } from "react";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 
 import Home from "./pages/Home/Home";
 import Download from "./pages/Download/Download";
-import Register from "./pages/Register/Register";
+import Account from "./pages/Account/Account";
+import Profile from "./pages/Profile/Profile";
+import Password from "./pages/Password/Password";
+import Confirm from "./pages/Confirm/Confirm";
+import Contact from "./pages/Contact/Contact";
+import Privacy from "./pages/Privacy/Privacy";
+import Terms from "./pages/Terms/Terms";
 import Licenses from "./pages/Licenses/Licenses";
 import NotFound from "./pages/NotFound/NotFound";
 import { MAIN_CONTENT_ID, SITE_NAME } from "./core/Constants";
+import { useGlobal } from "./core/Globals";
 import { prefersReducedMotion, scrollToSection } from "./core/Utility";
 
 export const ROUTES = {
   HOME: "/",
   DOWNLOAD: "/download",
+  /** Register and sign in are two tabs of one page; the route picks the tab. */
   REGISTER: "/register",
+  LOGIN: "/login",
+  ACCOUNT: "/account",
+  /** Both halves of a password reset: with a token it sets one, without it asks. */
+  PASSWORD: "/reset-password",
+  /** Where a confirmation mail lands. Carries the token in the query. */
+  CONFIRM: "/confirm",
+  CONTACT: "/contact",
+  PRIVACY: "/privacy",
+  TERMS: "/terms",
   /** Mandatory: the FFmpeg distribution obliges us to publish this. Never drop it. */
   LICENSES: "/licenses",
   NOT_FOUND: "*"
@@ -34,6 +52,13 @@ const TITLE: Record<string, string> = {
   [ROUTES.HOME]: SITE_NAME,
   [ROUTES.DOWNLOAD]: `Download — ${SITE_NAME}`,
   [ROUTES.REGISTER]: `Register — ${SITE_NAME}`,
+  [ROUTES.LOGIN]: `Sign in — ${SITE_NAME}`,
+  [ROUTES.ACCOUNT]: `Your account — ${SITE_NAME}`,
+  [ROUTES.PASSWORD]: `Reset your password — ${SITE_NAME}`,
+  [ROUTES.CONFIRM]: `Confirm your address — ${SITE_NAME}`,
+  [ROUTES.CONTACT]: `Contact — ${SITE_NAME}`,
+  [ROUTES.PRIVACY]: `Privacy — ${SITE_NAME}`,
+  [ROUTES.TERMS]: `Terms — ${SITE_NAME}`,
   [ROUTES.LICENSES]: `Third-Party Licenses — ${SITE_NAME}`
 };
 
@@ -63,6 +88,21 @@ function RouteChange() {
   return null;
 }
 
+function SessionGate({ needed, children }: { needed: boolean; children: ReactElement }) {
+  const signedIn = useGlobal("signedIn");
+  const checked = useGlobal("sessionChecked");
+  const { pathname } = useLocation();
+
+  if (!checked) return null;
+  if (signedIn === needed) return children;
+
+  return needed ? (
+    <Navigate to={ROUTES.LOGIN} replace state={{ from: pathname }} />
+  ) : (
+    <Navigate to={ROUTES.ACCOUNT} replace />
+  );
+}
+
 export default function Routing() {
   return (
     <>
@@ -70,7 +110,35 @@ export default function Routing() {
       <Routes>
         <Route path={ROUTES.HOME} element={<Home />} />
         <Route path={ROUTES.DOWNLOAD} element={<Download />} />
-        <Route path={ROUTES.REGISTER} element={<Register />} />
+        <Route
+          path={ROUTES.REGISTER}
+          element={
+            <SessionGate needed={false}>
+              <Account />
+            </SessionGate>
+          }
+        />
+        <Route
+          path={ROUTES.LOGIN}
+          element={
+            <SessionGate needed={false}>
+              <Account />
+            </SessionGate>
+          }
+        />
+        <Route
+          path={ROUTES.ACCOUNT}
+          element={
+            <SessionGate needed>
+              <Profile />
+            </SessionGate>
+          }
+        />
+        <Route path={ROUTES.PASSWORD} element={<Password />} />
+        <Route path={ROUTES.CONFIRM} element={<Confirm />} />
+        <Route path={ROUTES.CONTACT} element={<Contact />} />
+        <Route path={ROUTES.PRIVACY} element={<Privacy />} />
+        <Route path={ROUTES.TERMS} element={<Terms />} />
         <Route path={ROUTES.LICENSES} element={<Licenses />} />
         <Route path={ROUTES.NOT_FOUND} element={<NotFound />} />
       </Routes>

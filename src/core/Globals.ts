@@ -10,11 +10,19 @@ export type Globals = {
   cookieConsentAnswered: boolean;
   /** True while a ServerBridge call is outstanding. */
   serverBusy: boolean;
+  /** Whether a session is currently held. ServerBridge owns this. */
+  signedIn: boolean;
+  /** The signed-in address, for the header. Empty when signed out. */
+  accountEmail: string;
+  sessionChecked: boolean;
 };
 
 const globals: Globals = {
   cookieConsentAnswered: false,
-  serverBusy: false
+  serverBusy: false,
+  signedIn: false,
+  accountEmail: "",
+  sessionChecked: false
 };
 
 const listeners = new Set<() => void>();

@@ -21,6 +21,8 @@ import type { GlyphName } from "../../../components/Icon/glyphs";
 import { cx } from "../../../core/Utility";
 import "./containmenttree.css";
 
+const className = "containmenttree";
+
 type Node = {
   id: string;
   name: string;
@@ -187,15 +189,15 @@ export default function ContainmentTree() {
   }
 
   return (
-    <div className="containmenttree">
-      <div className="containmenttree_columns" aria-hidden="true">
+    <div className={className}>
+      <div className={`${className}_columns`} aria-hidden="true">
         <span>Name</span>
         <span>Type</span>
         <span>Uncompressed</span>
         <span>Compressed</span>
       </div>
 
-      <div className="containmenttree_tree" role="tree" aria-label="installer.exe, expanded">
+      <div className={`${className}_tree`} role="tree" aria-label="installer.exe, expanded">
         {rows.map((row) => {
           const { node, level } = row;
           const expandable = Boolean(node.children);
@@ -204,9 +206,9 @@ export default function ContainmentTree() {
           return (
             <div
               className={cx(
-                "containmenttree_row",
-                `containmenttree_row-${node.kind}`,
-                node.id === active && "containmenttree_row-active"
+                `${className}_row`,
+                `${className}_row-${node.kind}`,
+                node.id === active && `${className}_row-active`
               )}
               key={node.id}
               ref={(element) => {
@@ -225,28 +227,28 @@ export default function ContainmentTree() {
               onKeyDown={(event) => onKeyDown(event, row)}
             >
               <span
-                className="containmenttree_name"
+                className={`${className}_name`}
                 /* Indent is presentation; aria-level carries the depth. */
                 style={{ paddingLeft: `calc(${level - 1} * var(--fa-space-6))` }}
               >
-                <span className={cx("containmenttree_twisty", isOpen && "containmenttree_twisty-open")}>
+                <span className={cx(`${className}_twisty`, isOpen && `${className}_twisty-open`)}>
                   {expandable ? <Icon name="arrowDown" size="0.75em" /> : null}
                 </span>
                 <Icon name={node.glyph} />
-                <span className="containmenttree_label">{node.name}</span>
-                {node.format && <span className="containmenttree_badge">{node.format}</span>}
+                <span className={`${className}_label`}>{node.name}</span>
+                {node.format && <span className={`${className}_badge`}>{node.format}</span>}
               </span>
 
-              <span className="containmenttree_cell">{node.type}</span>
-              <span className="containmenttree_cell containmenttree_num">{node.size}</span>
-              <span className="containmenttree_cell containmenttree_num">{node.compressed ?? "—"}</span>
+              <span className={`${className}_cell`}>{node.type}</span>
+              <span className={`${className}_cell ${className}_num`}>{node.size}</span>
+              <span className={`${className}_cell ${className}_num`}>{node.compressed ?? "—"}</span>
             </div>
           );
         })}
       </div>
 
-      <p className="containmenttree_note">
-        Four formats deep — <span className="containmenttree_mono">PE → ZIP → JAR → class</span> — and
+      <p className={`${className}_note`}>
+        Four formats deep — <span className={`${className}_mono`}>PE → ZIP → JAR → class</span> — and
         nothing was written to disk to get there. Each level is decompressed in memory when you open
         it, and thrown away when you close it.
       </p>

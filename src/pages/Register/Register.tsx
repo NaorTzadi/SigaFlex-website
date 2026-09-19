@@ -26,6 +26,8 @@ import { ROUTES } from "../../Routing";
 import "../page.css";
 import "./register.css";
 
+const className = "register";
+
 type Values = {
   email: string;
   password: string;
@@ -138,7 +140,8 @@ export default function Register() {
     try {
       const result = await ServerBridge.register({
         email: values.email.trim(),
-        password: values.password
+        password: values.password,
+        termsAccepted: values.terms
       });
       setServerMessage(
         result.confirmationRequired
@@ -149,6 +152,13 @@ export default function Register() {
     } catch (error) {
       if (error instanceof ServerBridge.ServerError && error.status === 409) {
         setErrors({ email: "That address is already registered." });
+      } else if (error instanceof ServerBridge.ServerError && error.status === 422) {
+        /* The server keeps its own password rules and explains which one failed. */
+        setErrors({ password: error.message });
+      } else if (error instanceof ServerBridge.ServerError && error.status === 400) {
+        /* The server enforces its own rules and does not have to agree with the
+           client's. When it refuses, say that rather than blaming the network. */
+        setServerMessage("The server would not accept those details. Check the address and the password.");
       } else {
         setServerMessage("The server could not be reached. Try again in a moment.");
       }
@@ -159,23 +169,20 @@ export default function Register() {
 
   if (done) {
     return (
-      <article className="page">
-        <div className="register_done" ref={doneRef} tabIndex={-1}>
-          <Icon className="register_done_glyph" name="success" size="2.5em" />
-          <h1 className="page_title">Registered</h1>
-          <p className="page_lead">{serverMessage}</p>
-          <Link className="fa_button" to={ROUTES.HOME}>
-            Back to the home page
-          </Link>
-        </div>
-      </article>
+      <div className={`${className}_done`} ref={doneRef} tabIndex={-1}>
+        <Icon className={`${className}_done_glyph`} name="success" size="2.5em" />
+        <h1 className="page_title">Registered</h1>
+        <p className="page_lead">{serverMessage}</p>
+        <Link className="fa_button" to={ROUTES.HOME}>
+          Back to the home page
+        </Link>
+      </div>
     );
   }
 
   return (
-    <article className="page register">
-      <div className="register_main">
-        <p className="register_eyebrow fa_eyebrow">Account</p>
+    <div className={className}>
+      <div className={`${className}_main`}>
         <h1 className="page_title">Register</h1>
         <p className="page_lead">
           An account is for the site — the application itself never asks for one.
@@ -183,17 +190,17 @@ export default function Register() {
 
         {/* Announced when it appears, and focused, so a correction is never missed. */}
         <div
-          className="register_summary"
+          className={`${className}_summary`}
           ref={summaryRef}
           tabIndex={-1}
           role="alert"
           hidden={errorCount === 0}
         >
-          <h2 className="register_summary_title">
+          <h2 className={`${className}_summary_title`}>
             <Icon name="warning" size="1.125em" />
             There is a problem
           </h2>
-          <ul className="register_summary_list">
+          <ul className={`${className}_summary_list`}>
             {shownList.map((key) => (
               <li key={key}>
                 <a href={"#register-" + key}>{shown[key]}</a>
@@ -202,7 +209,7 @@ export default function Register() {
           </ul>
         </div>
 
-        <form className="register_form" onSubmit={submit} noValidate>
+        <form className={`${className}_form`} onSubmit={submit} noValidate>
         <Field
           name="email"
           type="email"
@@ -232,7 +239,7 @@ export default function Register() {
           onChange={(value) => change("confirm", value)}
         />
 
-        <div className="register_trap" aria-hidden="true">
+        <div className={`${className}_trap`} aria-hidden="true">
           <label htmlFor="register-website">Leave this field empty</label>
           <input
             id="register-website"
@@ -245,10 +252,10 @@ export default function Register() {
           />
         </div>
 
-        <div className="register_field">
-          <div className="register_check">
+        <div className={`${className}_field`}>
+          <div className={`${className}_check`}>
             <input
-              className="register_check_input"
+              className={`${className}_check_input`}
               id="register-terms"
               type="checkbox"
               checked={values.terms}
@@ -256,13 +263,14 @@ export default function Register() {
               aria-describedby={shown.terms ? "register-terms-error" : undefined}
               onChange={(event) => change("terms", event.target.checked)}
             />
-            <label className="register_check_label" htmlFor="register-terms">
-              I accept the terms.
+            <label className={`${className}_check_label`} htmlFor="register-terms">
+              I accept the <Link to={ROUTES.TERMS}>terms</Link> and the{" "}
+              <Link to={ROUTES.PRIVACY}>privacy</Link> page.
             </label>
           </div>
 
           {shown.terms && (
-            <p className="register_error" id="register-terms-error">
+            <p className={`${className}_error`} id="register-terms-error">
               <Icon name="warning" size="1em" />
               {shown.terms}
             </p>
@@ -270,7 +278,7 @@ export default function Register() {
         </div>
 
         <button
-          className="fa_button fa_button-primary register_submit"
+          className={`fa_button fa_button-primary ${className}_submit`}
           type="submit"
           disabled={busy}
         >
@@ -278,32 +286,32 @@ export default function Register() {
         </button>
 
         {/* The server's answer, spoken without stealing focus. */}
-        <p className="register_status" role="status" aria-live="polite">
+        <p className={`${className}_status`} role="status" aria-live="polite">
           {serverMessage}
         </p>
         </form>
       </div>
 
-      <aside className="register_aside" aria-labelledby="register-aside-heading">
-        <h2 className="register_aside_title" id="register-aside-heading">
+      <aside className={`${className}_aside`} aria-labelledby="register-aside-heading">
+        <h2 className={`${className}_aside_title`} id="register-aside-heading">
           Before you do
         </h2>
 
-        <ul className="register_notes">
+        <ul className={`${className}_notes`}>
           {NOTES.map((note) => (
-            <li className="register_note" key={note.title}>
-              <Icon className="register_note_glyph" name={note.glyph} size="1.25em" />
-              <span className="register_note_title">{note.title}</span>
-              <span className="register_note_body">{note.body}</span>
+            <li className={`${className}_note`} key={note.title}>
+              <Icon className={`${className}_note_glyph`} name={note.glyph} size="1.25em" />
+              <span className={`${className}_note_title`}>{note.title}</span>
+              <span className={`${className}_note_body`}>{note.body}</span>
             </li>
           ))}
         </ul>
 
-        <p className="register_aside_link">
+        <p className={`${className}_aside_link`}>
           <Link to={ROUTES.LICENSES}>Third-Party Licenses</Link>
         </p>
       </aside>
-    </article>
+    </div>
   );
 }
 
@@ -332,15 +340,15 @@ function Field({ name, type, autoComplete, value, error, hint, meter, onChange }
   const reached = Math.min(value.length / PASSWORD_MIN_LENGTH, 1);
 
   return (
-    <div className="register_field">
-      <div className="register_field_head">
-        <label className="register_label" htmlFor={id}>
+    <div className={`${className}_field`}>
+      <div className={`${className}_field_head`}>
+        <label className={`${className}_label`} htmlFor={id}>
           {FIELD_LABEL[name]}
         </label>
 
         {type === "password" && (
           <button
-            className="register_reveal"
+            className={`${className}_reveal`}
             type="button"
             aria-pressed={revealed}
             aria-controls={id}
@@ -352,13 +360,13 @@ function Field({ name, type, autoComplete, value, error, hint, meter, onChange }
       </div>
 
       {hint && (
-        <p className="register_hint" id={hintId}>
+        <p className={`${className}_hint`} id={hintId}>
           {hint}
         </p>
       )}
 
       <input
-        className={cx("register_input", error && "register_input-invalid")}
+        className={cx(`${className}_input`, error && `${className}_input-invalid`)}
         id={id}
         name={name}
         type={revealed ? "text" : type}
@@ -372,13 +380,13 @@ function Field({ name, type, autoComplete, value, error, hint, meter, onChange }
       {/* The length rule is already stated in the hint and enforced in the
           error; the bar is the same fact, drawn. */}
       {meter && (
-        <div className={cx("register_meter", reached === 1 && "register_meter-met")} aria-hidden="true">
-          <span className="register_meter_fill" style={{ transform: `scaleX(${reached})` }} />
+        <div className={cx(`${className}_meter`, reached === 1 && `${className}_meter-met`)} aria-hidden="true">
+          <span className={`${className}_meter_fill`} style={{ transform: `scaleX(${reached})` }} />
         </div>
       )}
 
       {error && (
-        <p className="register_error" id={errorId}>
+        <p className={`${className}_error`} id={errorId}>
           <Icon name="warning" size="1em" />
           {error}
         </p>

@@ -34,15 +34,17 @@ import {
 } from "./capabilitiesSample";
 import "./capabilities.css";
 
+const className = "capabilities";
+
 const TABS = ["Display", "Readable", "Raw", "Patterns", "Disassembly"] as const;
 type Tab = (typeof TABS)[number];
 
 /** Which instructions get the application's control-flow colours. */
 function flowClass(text: string): string | false {
   const mnemonic = text.split(/\s+/)[0];
-  if (mnemonic === "call") return "capabilities_flow-call";
-  if (mnemonic === "ret") return "capabilities_flow-return";
-  if (mnemonic.startsWith("j")) return "capabilities_flow-jump";
+  if (mnemonic === "call") return `${className}_flow-call`;
+  if (mnemonic === "ret") return `${className}_flow-return`;
+  if (mnemonic.startsWith("j")) return `${className}_flow-jump`;
   return false;
 }
 
@@ -66,18 +68,18 @@ export default function Capabilities() {
   }
 
   return (
-    <div className="capabilities">
+    <div className={className}>
       {/* The header never changes. That is the point: one entry, five views. */}
-      <div className="capabilities_head">
-        <span className="capabilities_file">{SAMPLE_FILE}</span>
-        <span className="capabilities_badge">PE</span>
-        <span className="capabilities_summary">{SAMPLE_SUMMARY}</span>
+      <div className={`${className}_head`}>
+        <span className={`${className}_file`}>{SAMPLE_FILE}</span>
+        <span className={`${className}_badge`}>PE</span>
+        <span className={`${className}_summary`}>{SAMPLE_SUMMARY}</span>
       </div>
 
-      <div className="capabilities_tabs" role="tablist" aria-label="Views of the same entry">
+      <div className={`${className}_tabs`} role="tablist" aria-label="Views of the same entry">
         {TABS.map((name, i) => (
           <button
-            className={cx("capabilities_tab", name === tab && "capabilities_tab-current")}
+            className={cx(`${className}_tab`, name === tab && `${className}_tab-current`)}
             key={name}
             ref={(element) => {
               tabRefs.current[i] = element;
@@ -97,7 +99,7 @@ export default function Capabilities() {
       </div>
 
       <div
-        className="capabilities_panel"
+        className={`${className}_panel`}
         id={`capabilities-panel-${tab}`}
         role="tabpanel"
         aria-labelledby={`capabilities-tab-${tab}`}
@@ -105,9 +107,9 @@ export default function Capabilities() {
         tabIndex={0}
       >
         {tab === "Display" && (
-          <dl className="capabilities_facts">
+          <dl className={`${className}_facts`}>
             {DISPLAY.map((line) => (
-              <div className="capabilities_fact" key={line}>
+              <div className={`${className}_fact`} key={line}>
                 {line}
               </div>
             ))}
@@ -115,9 +117,9 @@ export default function Capabilities() {
         )}
 
         {tab === "Readable" && (
-          <ol className="capabilities_lines">
+          <ol className={`${className}_lines`}>
             {READABLE.map((line) => (
-              <li className="capabilities_line" key={line}>
+              <li className={`${className}_line`} key={line}>
                 {line}
               </li>
             ))}
@@ -125,16 +127,16 @@ export default function Capabilities() {
         )}
 
         {tab === "Raw" && (
-          <pre className="capabilities_pre">
+          <pre className={`${className}_pre`}>
             {RAW.map((line) => {
               const offset = line.slice(0, 8);
               const hex = line.slice(8, 60);
               const ascii = line.slice(60);
               return (
-                <span className="capabilities_row" key={offset}>
-                  <span className="capabilities_offset">{offset}</span>
+                <span className={`${className}_row`} key={offset}>
+                  <span className={`${className}_offset`}>{offset}</span>
                   {hex}
-                  <span className="capabilities_ascii">{ascii}</span>
+                  <span className={`${className}_ascii`}>{ascii}</span>
                   {"\n"}
                 </span>
               );
@@ -143,7 +145,7 @@ export default function Capabilities() {
         )}
 
         {tab === "Patterns" && (
-          <table className="capabilities_table">
+          <table className={`${className}_table`}>
             <thead>
               <tr>
                 <th scope="col">Type</th>
@@ -154,9 +156,9 @@ export default function Capabilities() {
             <tbody>
               {PATTERNS.map((row) => (
                 <tr key={row.offset}>
-                  <td className="capabilities_type">{row.type}</td>
-                  <td className="capabilities_value">{row.value}</td>
-                  <td className="capabilities_offset">{row.offset}</td>
+                  <td className={`${className}_type`}>{row.type}</td>
+                  <td className={`${className}_value`}>{row.value}</td>
+                  <td className={`${className}_offset`}>{row.offset}</td>
                 </tr>
               ))}
             </tbody>
@@ -164,11 +166,11 @@ export default function Capabilities() {
         )}
 
         {tab === "Disassembly" && (
-          <pre className="capabilities_pre">
+          <pre className={`${className}_pre`}>
             {DISASSEMBLY.map((row) => (
-              <span className="capabilities_row" key={row.address}>
-                <span className="capabilities_offset">{row.address}</span>
-                <span className="capabilities_bytes">{row.bytes.padEnd(18)}</span>
+              <span className={`${className}_row`} key={row.address}>
+                <span className={`${className}_offset`}>{row.address}</span>
+                <span className={`${className}_bytes`}>{row.bytes.padEnd(18)}</span>
                 <span className={cx(flowClass(row.text))}>{row.text}</span>
                 {"\n"}
               </span>

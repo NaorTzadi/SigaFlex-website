@@ -7,13 +7,17 @@ import { Link } from "react-router-dom";
 
 import { ROUTES } from "../../../Routing";
 import { HOME_SECTIONS, PRODUCT_NAME, TAGLINE } from "../../../core/Constants";
+import FileProbe from "./FileProbe";
 import Showcase from "./Showcase";
 import type { Slide } from "./Showcase";
 import treeView from "../../../assets/images/screenshots/tree-zip-nested.png";
 import disassembly from "../../../assets/images/screenshots/inspector-disassembly.png";
+import details from "../../../assets/images/screenshots/details-pe-structure.png";
 import colors from "../../../assets/images/screenshots/colors-photo.png";
 import model from "../../../assets/images/screenshots/display-3d-model.png";
 import "./hero.css";
+
+const className = "hero";
 
 /** The rotating set. Order is the order a reader meets the product in. */
 const SLIDES: Slide[] = [
@@ -28,6 +32,13 @@ const SLIDES: Slide[] = [
     alt:
       "The Disassembly tab listing decoded x86 instructions with their addresses and raw bytes, " +
       "beside a panel of the PE file's entry point, image base and section sizes."
+  },
+  {
+    src: details,
+    alt:
+      "The Details panel listing a PE file's linker version, entry point, image base and section " +
+      "sizes, beside its decoded strings, with the whole structure tree — headers, data " +
+      "directories, sections and imports — printed in the terminal below."
   },
   {
     src: colors,
@@ -45,7 +56,7 @@ const SLIDES: Slide[] = [
 
 /** The claims worth making before a reader scrolls at all. */
 const FACTS: Array<{ value: string; label: string }> = [
-  { value: "94", label: "formats by content" },
+  { value: "100", label: "formats by content" },
   { value: "Any", label: "levels of containment" },
   { value: "0", label: "bytes written to disk" },
   { value: "0", label: "network calls" }
@@ -53,26 +64,22 @@ const FACTS: Array<{ value: string; label: string }> = [
 
 export default function Hero() {
   return (
-    <section className="hero" id={HOME_SECTIONS.HERO} aria-labelledby="hero-heading">
-      <div className="hero_backdrop" aria-hidden="true" />
+    <section className={className} id={HOME_SECTIONS.HERO} aria-labelledby="hero-heading">
+      <div className={`${className}_backdrop`} aria-hidden="true" />
 
-      <div className="hero_inner">
-        <div className="hero_copy">
-          <p className="hero_eyebrow fa_eyebrow">Windows desktop · offline · read-only</p>
+      <div className={`${className}_inner`}>
+        <div className={`${className}_copy`}>
+          <p className={`${className}_eyebrow fa_eyebrow`}>Windows desktop · offline · read-only</p>
 
-          <h1 className="hero_title" id="hero-heading">
+          <h1 className={`${className}_title`} id="hero-heading">
             {PRODUCT_NAME}
           </h1>
 
-          <p className="hero_tagline">{TAGLINE}</p>
+          <p className={`${className}_tagline`}>{TAGLINE}</p>
 
-          <p className="hero_identity" aria-hidden="true">
-            <span className="hero_identity_bytes">4D 5A 90 00 03 00 00 00 04 00 00 00 FF FF</span>
-            <span className="hero_identity_arrow">→</span>
-            <span className="hero_identity_verdict">PE32 executable</span>
-          </p>
+          <FileProbe />
 
-          <div className="hero_actions">
+          <div className={`${className}_actions`}>
             <Link className="fa_button fa_button-primary" to={ROUTES.DOWNLOAD}>
               Download
             </Link>
@@ -81,11 +88,11 @@ export default function Hero() {
             </Link>
           </div>
 
-          <ul className="hero_facts">
+          <ul className={`${className}_facts`}>
             {FACTS.map((fact) => (
-              <li className="hero_fact" key={fact.label}>
-                <span className="hero_fact_value">{fact.value}</span>
-                <span className="hero_fact_label">{fact.label}</span>
+              <li className={`${className}_fact`} key={fact.label}>
+                <span className={`${className}_fact_value`}>{fact.value}</span>
+                <span className={`${className}_fact_label`}>{fact.label}</span>
               </li>
             ))}
           </ul>

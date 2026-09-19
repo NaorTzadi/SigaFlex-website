@@ -8,6 +8,7 @@ outside URL is written inline in a component.
 
 | URL | Where we link to it | Why |
 | --- | --- | --- |
+| mailto:holder@gmail.com | `src/pages/Contact/Contact.tsx`, `src/pages/Privacy/Privacy.tsx`, `src/pages/Terms/Terms.tsx` | The only way to reach us. It hands the reader off to their own mail client, which is outside the site. Declared as `Constants.CONTACT_EMAIL`; the address is a placeholder until the real one is chosen. |
 | https://ffmpeg.org/download.html | `src/pages/Licenses/Licenses.tsx`, "Corresponding FFmpeg source" | The LGPL obliges us to give access to the exact corresponding source of the FFmpeg build the application distributes. |
 
 ## Rules

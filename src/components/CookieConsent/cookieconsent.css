@@ -100,3 +100,8 @@ html:has(dialog.cookieconsent[open]) {
 .cookieconsent::backdrop {
   backdrop-filter: blur(3px);
 }
+
+.cookieconsent_link {
+  color: var(--fa-color-accent);
+  font-size: var(--fa-text-sm);
+}

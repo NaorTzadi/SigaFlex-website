@@ -1,80 +1,95 @@
-## General Working rules
 
+# specific project working rules/guidlines
 
 Device compatability
 the skeleton must support desktop/mobile layouts even before actual styling is chosen.
 
-Concept desgin
-One page desgin meaning one page which is the home page that you can scroll through with a few additions of pages that you get routed to when doing something.
+Concept design
+One page design meaning one page which is the home page that you can scroll through with a few additions of pages that you get routed to when doing something.
 We are not reinventing the wheel. The same design concept exists in many modern websites.
 
-Classes
+## Classes
 
-CookiesManager
-It stores and fetches coockies.
+- CookiesManager
+It stores and fetches cookies.
 It holds the cookies names/ids while other classes use the cookie name/id to store and fetch the cookie they need.
 It would hold cookies consent of the user.
 
-Constants
+- Constants
 It holds static final variables that multiple classes need access to.
 
-Globals
-It holds non final vairables that change during the run and multiple classes need access to.
+- Globals
+It holds non final variables that change during the run and multiple classes need access to.
 
-Utility
-It holds general static functions/methods that mutliple classes need acces to.
+- Utility
+It holds general static functions/methods that multiple classes need access to.
 
-Theme
+- Theme
 It dictates and guide the entire theme of the website so it would be as easy as possible to change the theme later on and also have components/views/pages sticking to it.
 
-ServerBridge
+- ServerBridge
 Anything that needs something from the server passes through this class only. This class forwards other classes calls to the server and return what the server gave.
 
-Routing
+- Routing
 We dont really need a class for this even due it would be nice. What we need is to have it in one dedicated spot so we can see where all the rouths are being handled. Its to prevent cases where you would follow routing through mutliple classes and the web page inspection console like some mad man. Im not joking, routing cam get very nasty of not handled right and especially when working with react.
 
-Rules
-WCAG compliant
 
-Css naming issues pervention
-Every class/component css file would have the class/component name before the element name.
+## WCAG compliant
 
-For example: class called "testclass"
-The testclass.css would have "testclass_menu_button"
+## Css naming issues prevention
+Every class name in a component's own stylesheet starts with that component's name, so two
+components can never define the same class. TestClass owns testclass.css, and every selector
+in it reads testclass_menu_button. The separator is an underscore; a variant of an element
+is appended with a hyphen, as in testclass_menu_button-current.
 
-Third parties md file
+The component never writes that prefix as a literal. It declares its name once, at module
+level below the imports, and builds every name from it:
+
+    const className = "testclass";
+
+    <div className={className}>
+      <button className={`${className}_menu_button`}>
+
+Module level rather than inside the function, because helper components in the same file
+need it too. The root element is className={className} on its own.
+
+Shared stylesheets are the exception, because their prefix belongs to the sheet and not to
+any one component: page_* from page.css, fa_* from theme.css, and account_* from account.css
+wherever Account itself is not the component. Those stay literal strings. Icon is the other
+exception: it takes a className prop from its callers, so a const of that name would shadow
+it, and its single class is already its own name.
+
+## Third parties md file
 If for any reason we need to use third parties then we should add their name, where they are used and why.
 
-Routing outside the main domain md file
+## Routing outside the main domain md file
 If we route a user to a url path outside the website domain they we need to add the outside url path, where we route to it, and why.
 
-API keys
+## API keys
 Used as environment variables only.
 
 
-DO:
-- start every response with my name "Naor"
+# General Working rules
 
-Do not:
+Do not perform any of the following unless explicitly requested by the user:
 - run `git rm`
 - write comments
-- stage changes
-- commit changes
-- push changes
+- stage, commit or push changes
 - run Git commands unless explicitly requested
-- run the applicationas 
+- run the application
 - run tests
 - create or modify tests unless explicitly requested
 - rename files or classes without approval
-- clean up unrelated or unused files
+- clean up or modify unrelated or unused files
 - add documentation unless requested
-- inspect, create, or modify `CLAUDE_HISTORY.md` unless the exact command `overwrite history` is given
+- Do not write code that would require the program to access the internet.
 
 Do not add dependencies, libraries, SDKs, tools, assets, models, or other third-party components that:
-    - prohibit or restrict commercial use;
-    - require payment, a subscription, a paid license, or usage fees for the intended functionality;
-    - require an online service, API, account, authentication, or license server;
-    - have licensing terms that would require the project to disclose or relicense its proprietary source code.
+- prohibit or restrict commercial use;
+- require payment, a subscription, a paid license, or usage fees for the intended functionality;
+- require an online service, API, account, authentication, or license server;
+- have licensing terms that would require the project to disclose or relicense its proprietary source code.
+
 
 Only implement the requested production code.
 After implementation:
@@ -154,18 +169,20 @@ If the answer is yes, simplify it before finishing.
 Do not perform unrelated large-scale refactoring simply to reduce code. Preserve useful abstractions and boundaries. The objective is not the smallest codebase; it is the smallest reasonably clean architecture for the actual requirements.
 
 ## Claude response to the user
-Respond like a competent human, not an AI assistant.
-
-* be brief, simple and on point.
-* No filler, praise, throat-clearing, or restating my question.
-* Don't say things like "Absolutely", "Great question", "You're right", or "Let's dive in."
-* Prefer plain language over polished corporate language.
-* Keep responses concise unless detail is genuinely useful.
-* Don't add summaries or conclusions that repeat what you already said.
-* Don't use headings or bullet lists unless they improve readability.
-* Vary sentence length naturally.
-* It's okay to be direct.
-* If the answer is one sentence, give me one sentence.
+* Start every response with `Naor`.
+* Be concise, direct, and practical.
+* Answer the actual question immediately.
+* Do not use filler, praise, conversational padding, or artificial enthusiasm.
+* Do not restate or paraphrase the user's request unless clarification is necessary.
+* Avoid phrases such as `Absolutely`, `Great question`, `You're right`, `Let's dive in`, or similar opening filler.
+* Prefer plain, natural language over corporate, overly polished, or AI-style wording.
+* Use headings, bullets, tables, or numbered steps only when they make the response easier to understand.
+* Do not create sections merely to make a short answer look structured.
+* Keep simple answers short. If one sentence fully answers the question, use one sentence.
+* Give additional explanation only when it materially helps with correctness, implementation, tradeoffs, risks, or decision-making.
+* When reporting completed implementation work, include only the information required by the working rules and anything important the user should know.
+* Do not repeat the same information in a summary or conclusion after already explaining it.
+* Be direct when something is wrong, uncertain, unsupported, or cannot be verified.
 
 
 ## Session history command

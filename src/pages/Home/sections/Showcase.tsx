@@ -26,6 +26,8 @@ import Icon from "../../../components/Icon/Icon";
 import { cx, prefersReducedMotion } from "../../../core/Utility";
 import "./showcase.css";
 
+const className = "showcase";
+
 export type Slide = { src: string; alt: string };
 
 type ShowcaseProps = {
@@ -61,7 +63,7 @@ export default function Showcase({ slides, label, interval = 6000 }: ShowcasePro
 
   return (
     <div
-      className="showcase"
+      className={className}
       role="group"
       aria-roledescription="carousel"
       aria-label={label}
@@ -70,20 +72,20 @@ export default function Showcase({ slides, label, interval = 6000 }: ShowcasePro
       onFocus={() => setHeld(true)}
       onBlur={() => setHeld(false)}
     >
-      <div className="showcase_window">
-        <div className="showcase_chrome" aria-hidden="true">
-          <Icon className="showcase_chrome_menu" name="menu" />
-          <span className="showcase_chrome_controls">
+      <div className={`${className}_window`}>
+        <div className={`${className}_chrome`} aria-hidden="true">
+          <Icon className={`${className}_chrome_menu`} name="menu" />
+          <span className={`${className}_chrome_controls`}>
             <Icon name="windowMinimize" />
             <Icon name="windowMaximize" />
             <Icon name="close" />
           </span>
         </div>
 
-        <div className="showcase_frame">
+        <div className={`${className}_frame`}>
           {slides.map((slide, i) => (
             <img
-              className={cx("showcase_slide", i === index && "showcase_slide-current")}
+              className={cx(`${className}_slide`, i === index && `${className}_slide-current`)}
               key={slide.src}
               src={slide.src}
               alt={slide.alt}
@@ -99,10 +101,10 @@ export default function Showcase({ slides, label, interval = 6000 }: ShowcasePro
         </div>
       </div>
 
-      <div className="showcase_controls">
+      <div className={`${className}_controls`}>
         {!reduced && (
           <button
-            className="showcase_play"
+            className={`${className}_play`}
             type="button"
             onClick={() => setPlaying((wasPlaying) => !wasPlaying)}
           >
@@ -110,17 +112,17 @@ export default function Showcase({ slides, label, interval = 6000 }: ShowcasePro
           </button>
         )}
 
-        <ul className="showcase_dots">
+        <ul className={`${className}_dots`}>
           {slides.map((slide, i) => (
             <li key={slide.src}>
               <button
-                className={cx("showcase_dot", i === index && "showcase_dot-current")}
+                className={cx(`${className}_dot`, i === index && `${className}_dot-current`)}
                 type="button"
                 aria-current={i === index}
                 onClick={() => show(i)}
               >
                 {/* The dot is a shape; its name is what it goes to. */}
-                <span className="showcase_dot_label">{`Screenshot ${i + 1} of ${slides.length}`}</span>
+                <span className={`${className}_dot_label`}>{`Screenshot ${i + 1} of ${slides.length}`}</span>
               </button>
             </li>
           ))}

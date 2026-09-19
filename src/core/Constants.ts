@@ -11,6 +11,19 @@ export const TAGLINE =
   "Opens any file, tells you what it actually is, and shows you everything inside it.";
 
 /**
+ * Everything about the site that is not decided yet. Every value here is a
+ * placeholder carrying the word "holder", so one grep finds all of them when
+ * the real domain, address and operator are known.
+ */
+export const SITE_URL = "https://holder.com";
+export const CONTACT_EMAIL = "holder@gmail.com";
+export const SITE_OPERATOR = "Holder";
+export const SITE_JURISDICTION = "Holder";
+
+/** Shown on the Terms and the Privacy pages as the date they last changed. */
+export const POLICY_UPDATED = "19 September 2026";
+
+/**
  * Every link that leaves this domain. Adding one here is not enough:
  * it must also be recorded in OUTSIDE_ROUTES.md.
  */
@@ -35,6 +48,7 @@ export const HOME_SECTIONS = {
   FORMATS: "formats",
   BEYOND: "beyond",
   ANALYSTS: "analysts",
+  REVIEWS: "reviews",
   DISCOVER: "discover"
 } as const;
 
@@ -46,3 +60,8 @@ export const MAIN_CONTENT_ID = "main-content";
  * The server enforces its own; these only spare the reader a round trip.
  */
 export const PASSWORD_MIN_LENGTH = 12;
+
+/** Review limits, matching what the server enforces. */
+export const REVIEW_NAME_MAX_LENGTH = 60;
+export const REVIEW_BODY_MAX_LENGTH = 2000;
+export const REVIEW_RATINGS = [1, 2, 3, 4, 5] as const;

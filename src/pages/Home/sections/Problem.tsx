@@ -3,6 +3,8 @@ import type { GlyphName } from "../../../components/Icon/glyphs";
 import { PRODUCT_NAME } from "../../../core/Constants";
 import "./problem.css";
 
+const className = "problem";
+
 type Tool = { glyph: GlyphName; name: string; gives: string; misses: string };
 
 const TOOLS: Tool[] = [
@@ -51,14 +53,14 @@ const ANSWERS = [
 
 export default function Problem() {
   return (
-    <div className="problem">
-      <ul className="problem_tools">
+    <div className={className}>
+      <ul className={`${className}_tools`}>
         {TOOLS.map((tool) => (
-          <li className="problem_tool" key={tool.name}>
-            <Icon className="problem_tool_glyph" name={tool.glyph} size="1.25em" />
-            <span className="problem_tool_name">{tool.name}</span>
-            <span className="problem_tool_gives">{tool.gives}</span>
-            <span className="problem_tool_misses">
+          <li className={`${className}_tool`} key={tool.name}>
+            <Icon className={`${className}_tool_glyph`} name={tool.glyph} size="1.25em" />
+            <span className={`${className}_tool_name`}>{tool.name}</span>
+            <span className={`${className}_tool_gives`}>{tool.gives}</span>
+            <span className={`${className}_tool_misses`}>
               <Icon name="close" size="0.75em" />
               {tool.misses}
             </span>
@@ -66,22 +68,22 @@ export default function Problem() {
         ))}
       </ul>
 
-      <div className="problem_answer">
-        <p className="problem_answer_head">
-          <Icon className="problem_answer_glyph" name="inspect" size="1.25em" />
+      <div className={`${className}_answer`}>
+        <p className={`${className}_answer_head`}>
+          <Icon className={`${className}_answer_glyph`} name="inspect" size="1.25em" />
           {PRODUCT_NAME}
         </p>
 
-        <ul className="problem_answer_list">
+        <ul className={`${className}_answer_list`}>
           {ANSWERS.map((answer) => (
-            <li className="problem_answer_item" key={answer}>
+            <li className={`${className}_answer_item`} key={answer}>
               <Icon name="success" size="0.875em" />
               {answer}
             </li>
           ))}
         </ul>
 
-        <p className="problem_answer_note">
+        <p className={`${className}_answer_note`}>
           One window, one file, every answer at once — and the file is never written back to.
         </p>
       </div>

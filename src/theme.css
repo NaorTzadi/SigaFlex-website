@@ -99,6 +99,7 @@
   --fa-backdrop: rgb(23 24 26 / 0.78);
   --fa-grid-line: rgb(255 255 255 / 0.028);
   --fa-bloom-accent: rgb(224 163 65 / 0.13);
+  --fa-color-accent-glow: rgb(224 163 65 / 0.35);
   --fa-bloom-info: rgb(107 163 245 / 0.10);
 
   /* --- type ---------------------------------------------------------- */
@@ -112,6 +113,8 @@
   --fa-text-xl: 1.5rem;
   --fa-text-2xl: 2rem;
   --fa-text-3xl: clamp(2rem, 5vw, 3.5rem);
+  /* The hero headline, and nothing else. Larger than any heading a page uses. */
+  --fa-text-display: clamp(2.75rem, 8vw, 5rem);
 
   --fa-line-body: 1.6;
   --fa-line-heading: 1.2;
@@ -140,8 +143,18 @@
   --fa-gutter: clamp(var(--fa-space-4), 4vw, var(--fa-space-8));
   --fa-header-height: 56px;
 
-  /* Recorded for reference. A media query cannot read a variable, so the same
-     numbers appear literally in the component stylesheets. */
+  /* The site has three breakpoints and no others. A media query cannot read a
+     variable, so the numbers are typed literally in the component stylesheets;
+     these are here so there is still one place that says what they are.
+
+     A component stylesheet may write only these six queries, exactly as spelt:
+
+       @media (min-width: 640px)    @media (max-width: 639px)
+       @media (min-width: 1024px)   @media (max-width: 1023px)
+       @media (min-width: 1440px)   @media (max-width: 1439px)
+
+     No rem spellings, and no number in between. A layout that seems to need a
+     fourth breakpoint is a layout to fix, not a breakpoint to add. */
   --fa-breakpoint-tablet: 640px;
   --fa-breakpoint-desktop: 1024px;
   --fa-breakpoint-wide: 1440px;

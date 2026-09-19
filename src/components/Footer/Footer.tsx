@@ -21,6 +21,8 @@ import { ROUTES } from "../../Routing";
 import { HOME_SECTIONS, SITE_NAME, TAGLINE } from "../../core/Constants";
 import "./footer.css";
 
+const className = "footer";
+
 type Entry = { to: string; label: string };
 
 const COLUMNS: Array<{ title: string; entries: Entry[] }> = [
@@ -44,36 +46,41 @@ const COLUMNS: Array<{ title: string; entries: Entry[] }> = [
     title: "Get it",
     entries: [
       { to: ROUTES.DOWNLOAD, label: "Download" },
-      { to: ROUTES.REGISTER, label: "Register" }
+      { to: ROUTES.REGISTER, label: "Register" },
+      { to: ROUTES.CONTACT, label: "Contact" }
     ]
   },
   {
     title: "Legal",
-    entries: [{ to: ROUTES.LICENSES, label: "Third-Party Licenses" }]
+    entries: [
+      { to: ROUTES.PRIVACY, label: "Privacy" },
+      { to: ROUTES.TERMS, label: "Terms" },
+      { to: ROUTES.LICENSES, label: "Third-Party Licenses" }
+    ]
   }
 ];
 
 export default function Footer() {
   return (
-    <footer className="footer">
-      <div className="footer_inner">
-        <div className="footer_brand">
-          <p className="footer_brand_name">
-            <Icon className="footer_brand_mark" name="package" size="1.25em" />
+    <footer className={className}>
+      <div className={`${className}_inner`}>
+        <div className={`${className}_brand`}>
+          <p className={`${className}_brand_name`}>
+            <Icon className={`${className}_brand_mark`} name="package" size="1.25em" />
             {SITE_NAME}
           </p>
-          <p className="footer_brand_line">{TAGLINE}</p>
+          <p className={`${className}_brand_line`}>{TAGLINE}</p>
         </div>
 
-        <nav className="footer_nav" aria-label="Footer">
-          <ul className="footer_columns">
+        <nav className={`${className}_nav`} aria-label="Footer">
+          <ul className={`${className}_columns`}>
             {COLUMNS.map((column) => (
-              <li className="footer_column" key={column.title}>
-                <h2 className="footer_column_title">{column.title}</h2>
-                <ul className="footer_column_list">
+              <li className={`${className}_column`} key={column.title}>
+                <h2 className={`${className}_column_title`}>{column.title}</h2>
+                <ul className={`${className}_column_list`}>
                   {column.entries.map((entry) => (
                     <li key={entry.label}>
-                      <Link className="footer_link" to={entry.to}>
+                      <Link className={`${className}_link`} to={entry.to}>
                         {entry.label}
                       </Link>
                     </li>
@@ -84,7 +91,7 @@ export default function Footer() {
           </ul>
         </nav>
 
-        <p className="footer_note">{SITE_NAME} — Windows desktop. Read-only, offline.</p>
+        <p className={`${className}_note`}>{SITE_NAME} — Windows desktop. Read-only, offline.</p>
       </div>
     </footer>
   );

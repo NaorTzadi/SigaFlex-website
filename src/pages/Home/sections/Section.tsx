@@ -23,6 +23,8 @@ import type { ReactNode } from "react";
 import { cx } from "../../../core/Utility";
 import "./section.css";
 
+const className = "section";
+
 type SectionProps = {
   id: string;
   title?: string;
@@ -54,28 +56,28 @@ export default function Section({
 
   return (
     <section
-      className={cx("section", nested && "section-nested", tone && `section-${tone}`)}
+      className={cx(className, nested && "section-nested", tone && `section-${tone}`)}
       id={id}
       aria-labelledby={title ? headingId : undefined}
       aria-label={title ? undefined : label}
     >
-      <div className="section_inner">
+      <div className={`${className}_inner`}>
         {(title || lead) && (
-          <div className="section_head" data-reveal="">
-            {eyebrow && <p className="section_eyebrow fa_eyebrow">{eyebrow}</p>}
+          <div className={`${className}_head`} data-reveal="">
+            {eyebrow && <p className={`${className}_eyebrow fa_eyebrow`}>{eyebrow}</p>}
 
             {title && (
-              <Heading className="section_title" id={headingId}>
+              <Heading className={`${className}_title`} id={headingId}>
                 {title}
               </Heading>
             )}
 
-            {lead && <p className="section_lead">{lead}</p>}
+            {lead && <p className={`${className}_lead`}>{lead}</p>}
           </div>
         )}
 
-        <div className="section_body" data-reveal="">
-          {children ?? <p className="section_placeholder">Content goes here.</p>}
+        <div className={`${className}_body`} data-reveal="">
+          {children ?? <p className={`${className}_placeholder`}>Content goes here.</p>}
         </div>
       </div>
     </section>

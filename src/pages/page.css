@@ -48,7 +48,7 @@
 }
 
 .page_title {
-  font-size: clamp(var(--fa-text-2xl), 5vw, 3rem);
+  font-size: var(--fa-text-3xl);
   letter-spacing: -0.025em;
 }
 
@@ -71,4 +71,19 @@
   background: var(--fa-color-surface);
   font-family: var(--fa-font-mono);
   font-size: var(--fa-text-sm);
+}
+
+.page_definitions {
+  display: grid;
+  gap: var(--fa-space-4);
+  margin: 0;
+}
+
+.page_definition dt {
+  font-weight: 600;
+}
+
+.page_definition dd {
+  margin: var(--fa-space-1) 0 0;
+  color: var(--fa-color-text-muted);
 }

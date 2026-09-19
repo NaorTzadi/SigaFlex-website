@@ -21,6 +21,8 @@ import { useState } from "react";
 import { cx } from "../../../core/Utility";
 import "./coveragemap.css";
 
+const className = "coveragemap";
+
 /** How strongly the engine can vouch for what a region is. */
 type Strength = "container" | "structure" | "signature" | "unidentified";
 
@@ -89,21 +91,21 @@ export default function CoverageMap() {
   const enlarged = REGIONS.filter((r) => (r.size / TOTAL) * 100 < MIN_VISIBLE_PERCENT).length;
 
   return (
-    <div className="coveragemap">
-      <div className="coveragemap_head">
-        <span className="coveragemap_file">installer.exe</span>
-        <span className="coveragemap_total">{bytes(TOTAL)} accounted for</span>
+    <div className={className}>
+      <div className={`${className}_head`}>
+        <span className={`${className}_file`}>installer.exe</span>
+        <span className={`${className}_total`}>{bytes(TOTAL)} accounted for</span>
       </div>
 
-      <div className="coveragemap_bar" role="group" aria-label="Byte coverage of installer.exe">
+      <div className={`${className}_bar`} role="group" aria-label="Byte coverage of installer.exe">
         {REGIONS.map((r, i) => {
           const percent = (r.size / TOTAL) * 100;
           return (
             <button
               className={cx(
-                "coveragemap_region",
-                `coveragemap_region-${r.strength}`,
-                i === selected && "coveragemap_region-current"
+                `${className}_region`,
+                `${className}_region-${r.strength}`,
+                i === selected && `${className}_region-current`
               )}
               key={r.name}
               type="button"
@@ -119,7 +121,7 @@ export default function CoverageMap() {
               }}
               onBlur={() => setKeyboard(false)}
             >
-              <span className="coveragemap_region_label">
+              <span className={`${className}_region_label`}>
                 {`${r.name}, ${STRENGTH_LABEL[r.strength]}, ${bytes(r.size)}, ${percentOfFile(r.size)} of the file`}
               </span>
             </button>
@@ -127,39 +129,39 @@ export default function CoverageMap() {
         })}
       </div>
 
-      <dl className="coveragemap_detail" aria-live="polite">
-        <div className="coveragemap_detail_row">
+      <dl className={`${className}_detail`} aria-live="polite">
+        <div className={`${className}_detail_row`}>
           <dt>Region</dt>
-          <dd className="coveragemap_detail_name">{region.name}</dd>
+          <dd className={`${className}_detail_name`}>{region.name}</dd>
         </div>
-        <div className="coveragemap_detail_row">
+        <div className={`${className}_detail_row`}>
           <dt>Offsets</dt>
-          <dd className="coveragemap_mono">
+          <dd className={`${className}_mono`}>
             {hex(region.start)} – {hex(region.start + region.size - 1)}
           </dd>
         </div>
-        <div className="coveragemap_detail_row">
+        <div className={`${className}_detail_row`}>
           <dt>Size</dt>
-          <dd className="coveragemap_mono">
+          <dd className={`${className}_mono`}>
             {bytes(region.size)} · {percentOfFile(region.size)}
           </dd>
         </div>
-        <div className="coveragemap_detail_row">
+        <div className={`${className}_detail_row`}>
           <dt>Evidence</dt>
           <dd>
-            <span className={cx("coveragemap_chip", `coveragemap_region-${region.strength}`)}>
+            <span className={cx(`${className}_chip`, `${className}_region-${region.strength}`)}>
               {STRENGTH_LABEL[region.strength]}
             </span>
           </dd>
         </div>
-        <div className="coveragemap_detail_row">
+        <div className={`${className}_detail_row`}>
           <dt>What explained it</dt>
           <dd>{region.note}</dd>
         </div>
       </dl>
 
       {enlarged > 0 && (
-        <p className="coveragemap_footnote">
+        <p className={`${className}_footnote`}>
           Drawn to scale. {enlarged} regions are smaller than the bar can show and are widened to
           stay reachable — their real size is in the panel.
         </p>

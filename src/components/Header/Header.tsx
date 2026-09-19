@@ -20,8 +20,12 @@ import { Link, NavLink } from "react-router-dom";
 import Icon from "../Icon/Icon";
 import { ROUTES } from "../../Routing";
 import { HOME_SECTIONS, SITE_NAME } from "../../core/Constants";
+import { useGlobal } from "../../core/Globals";
+import * as ServerBridge from "../../core/ServerBridge";
 import { cx } from "../../core/Utility";
 import "./header.css";
+
+const className = "header";
 
 /** The bands behind the flyout. */
 const PRODUCT_MENU: Array<{ id: string; label: string }> = [
@@ -41,6 +45,8 @@ export default function Header() {
   const [open, setOpen] = useState(false);
   const [flyout, setFlyout] = useState(false);
   const productRef = useRef<HTMLLIElement>(null);
+  const signedIn = useGlobal("signedIn");
+  const accountEmail = useGlobal("accountEmail");
 
   /* An open flyout closes on Escape and on a click anywhere outside it. */
   useEffect(() => {
@@ -68,15 +74,15 @@ export default function Header() {
   }
 
   return (
-    <header className="header">
-      <div className="header_bar">
-        <Link className="header_brand" to={ROUTES.HOME} onClick={closeMenus}>
-          <Icon className="header_brand_mark" name="package" size="1.25em" />
+    <header className={className}>
+      <div className={`${className}_bar`}>
+        <Link className={`${className}_brand`} to={ROUTES.HOME} onClick={closeMenus}>
+          <Icon className={`${className}_brand_mark`} name="package" size="1.25em" />
           {SITE_NAME}
         </Link>
 
         <button
-          className="header_toggle"
+          className={`${className}_toggle`}
           type="button"
           aria-expanded={open}
           aria-controls="header-nav"
@@ -86,11 +92,11 @@ export default function Header() {
           {open ? "Close" : "Menu"}
         </button>
 
-        <nav className={cx("header_nav", open && "header_nav-open")} id="header-nav" aria-label="Main">
-          <ul className="header_nav_list">
-            <li className="header_nav_item" ref={productRef}>
+        <nav className={cx(`${className}_nav`, open && `${className}_nav-open`)} id="header-nav" aria-label="Main">
+          <ul className={`${className}_nav_list`}>
+            <li className={`${className}_nav_item`} ref={productRef}>
               <button
-                className="header_nav_button"
+                className={`${className}_nav_button`}
                 type="button"
                 aria-expanded={flyout}
                 aria-controls="header-flyout"
@@ -99,11 +105,11 @@ export default function Header() {
                 Product
               </button>
 
-              <ul className={cx("header_flyout", flyout && "header_flyout-open")} id="header-flyout">
+              <ul className={cx(`${className}_flyout`, flyout && `${className}_flyout-open`)} id="header-flyout">
                 {PRODUCT_MENU.map((entry) => (
                   <li key={entry.id}>
                     <Link
-                      className="header_flyout_link"
+                      className={`${className}_flyout_link`}
                       to={`${ROUTES.HOME}#${entry.id}`}
                       onClick={closeMenus}
                     >
@@ -115,9 +121,9 @@ export default function Header() {
             </li>
 
             {TOP_LEVEL.map((entry) => (
-              <li className="header_nav_item" key={entry.id}>
+              <li className={`${className}_nav_item`} key={entry.id}>
                 <Link
-                  className="header_nav_link"
+                  className={`${className}_nav_link`}
                   to={`${ROUTES.HOME}#${entry.id}`}
                   onClick={closeMenus}
                 >
@@ -126,18 +132,45 @@ export default function Header() {
               </li>
             ))}
 
-            <li className="header_nav_item">
-              <NavLink
-                className={({ isActive }) => cx("header_nav_link", isActive && "header_nav_link-active")}
-                to={ROUTES.REGISTER}
-                onClick={closeMenus}
-              >
-                Register
-              </NavLink>
+            {signedIn && (
+              <li className={`${className}_nav_item`}>
+                <NavLink
+                  className={({ isActive }) => cx(`${className}_nav_link`, isActive && `${className}_nav_link-active`)}
+                  to={ROUTES.ACCOUNT}
+                  title={accountEmail}
+                  onClick={closeMenus}
+                >
+                  Account
+                </NavLink>
+              </li>
+            )}
+
+            <li className={`${className}_nav_item`}>
+              {signedIn ? (
+                <button
+                  className={`${className}_nav_button`}
+                  type="button"
+                  title={accountEmail}
+                  onClick={() => {
+                    closeMenus();
+                    void ServerBridge.logout();
+                  }}
+                >
+                  Sign out
+                </button>
+              ) : (
+                <NavLink
+                  className={({ isActive }) => cx(`${className}_nav_link`, isActive && `${className}_nav_link-active`)}
+                  to={ROUTES.LOGIN}
+                  onClick={closeMenus}
+                >
+                  Sign in
+                </NavLink>
+              )}
             </li>
           </ul>
 
-          <div className="header_actions">
+          <div className={`${className}_actions`}>
             <Link
               className="fa_button fa_button-primary fa_button-small"
               to={ROUTES.DOWNLOAD}
