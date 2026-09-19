@@ -15,6 +15,7 @@ import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 
 import Home from "./pages/Home/Home";
 import Download from "./pages/Download/Download";
+import Pricing from "./pages/Pricing/Pricing";
 import Account from "./pages/Account/Account";
 import Profile from "./pages/Profile/Profile";
 import Password from "./pages/Password/Password";
@@ -31,6 +32,7 @@ import { prefersReducedMotion, scrollToSection } from "./core/Utility";
 export const ROUTES = {
   HOME: "/",
   DOWNLOAD: "/download",
+  PRICING: "/pricing",
   /** Register and sign in are two tabs of one page; the route picks the tab. */
   REGISTER: "/register",
   LOGIN: "/login",
@@ -51,6 +53,7 @@ export const ROUTES = {
 const TITLE: Record<string, string> = {
   [ROUTES.HOME]: SITE_NAME,
   [ROUTES.DOWNLOAD]: `Download — ${SITE_NAME}`,
+  [ROUTES.PRICING]: `Pricing — ${SITE_NAME}`,
   [ROUTES.REGISTER]: `Register — ${SITE_NAME}`,
   [ROUTES.LOGIN]: `Sign in — ${SITE_NAME}`,
   [ROUTES.ACCOUNT]: `Your account — ${SITE_NAME}`,
@@ -93,7 +96,17 @@ function SessionGate({ needed, children }: { needed: boolean; children: ReactEle
   const checked = useGlobal("sessionChecked");
   const { pathname } = useLocation();
 
-  if (!checked) return null;
+  if (!checked) {
+    return (
+      <div className="page page_waiting">
+        <p className="fa_loading">
+          <span className="fa_spinner" aria-hidden="true" />
+          Checking your session…
+        </p>
+      </div>
+    );
+  }
+
   if (signedIn === needed) return children;
 
   return needed ? (
@@ -110,6 +123,7 @@ export default function Routing() {
       <Routes>
         <Route path={ROUTES.HOME} element={<Home />} />
         <Route path={ROUTES.DOWNLOAD} element={<Download />} />
+        <Route path={ROUTES.PRICING} element={<Pricing />} />
         <Route
           path={ROUTES.REGISTER}
           element={

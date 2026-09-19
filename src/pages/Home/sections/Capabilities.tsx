@@ -19,7 +19,7 @@
  * so Tab steps over the row into the output rather than through five buttons.
  */
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { KeyboardEvent } from "react";
 
 import { cx } from "../../../core/Utility";
@@ -51,6 +51,11 @@ function flowClass(text: string): string | false {
 export default function Capabilities() {
   const [tab, setTab] = useState<Tab>("Raw");
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (panelRef.current) panelRef.current.scrollTop = 0;
+  }, [tab]);
 
   function onKeyDown(event: KeyboardEvent<HTMLButtonElement>) {
     const index = TABS.indexOf(tab);
@@ -101,82 +106,85 @@ export default function Capabilities() {
       <div
         className={`${className}_panel`}
         id={`capabilities-panel-${tab}`}
+        ref={panelRef}
         role="tabpanel"
         aria-labelledby={`capabilities-tab-${tab}`}
         /* A scrollable region has to be reachable by keyboard. */
         tabIndex={0}
       >
-        {tab === "Display" && (
-          <dl className={`${className}_facts`}>
-            {DISPLAY.map((line) => (
-              <div className={`${className}_fact`} key={line}>
-                {line}
-              </div>
-            ))}
-          </dl>
-        )}
+        <div className={`${className}_view`} key={tab}>
+          {tab === "Display" && (
+            <dl className={`${className}_facts`}>
+              {DISPLAY.map((line) => (
+                <div className={`${className}_fact`} key={line}>
+                  {line}
+                </div>
+              ))}
+            </dl>
+          )}
 
-        {tab === "Readable" && (
-          <ol className={`${className}_lines`}>
-            {READABLE.map((line) => (
-              <li className={`${className}_line`} key={line}>
-                {line}
-              </li>
-            ))}
-          </ol>
-        )}
+          {tab === "Readable" && (
+            <ol className={`${className}_lines`}>
+              {READABLE.map((line) => (
+                <li className={`${className}_line`} key={line}>
+                  {line}
+                </li>
+              ))}
+            </ol>
+          )}
 
-        {tab === "Raw" && (
-          <pre className={`${className}_pre`}>
-            {RAW.map((line) => {
-              const offset = line.slice(0, 8);
-              const hex = line.slice(8, 60);
-              const ascii = line.slice(60);
-              return (
-                <span className={`${className}_row`} key={offset}>
-                  <span className={`${className}_offset`}>{offset}</span>
-                  {hex}
-                  <span className={`${className}_ascii`}>{ascii}</span>
+          {tab === "Raw" && (
+            <pre className={`${className}_pre`}>
+              {RAW.map((line) => {
+                const offset = line.slice(0, 8);
+                const hex = line.slice(8, 60);
+                const ascii = line.slice(60);
+                return (
+                  <span className={`${className}_row`} key={offset}>
+                    <span className={`${className}_offset`}>{offset}</span>
+                    {hex}
+                    <span className={`${className}_ascii`}>{ascii}</span>
+                    {"\n"}
+                  </span>
+                );
+              })}
+            </pre>
+          )}
+
+          {tab === "Patterns" && (
+            <table className={`${className}_table`}>
+              <thead>
+                <tr>
+                  <th scope="col">Type</th>
+                  <th scope="col">Value</th>
+                  <th scope="col">Offset</th>
+                </tr>
+              </thead>
+              <tbody>
+                {PATTERNS.map((row) => (
+                  <tr key={row.offset}>
+                    <td className={`${className}_type`}>{row.type}</td>
+                    <td className={`${className}_value`}>{row.value}</td>
+                    <td className={`${className}_offset`}>{row.offset}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+
+          {tab === "Disassembly" && (
+            <pre className={`${className}_pre`}>
+              {DISASSEMBLY.map((row) => (
+                <span className={`${className}_row`} key={row.address}>
+                  <span className={`${className}_offset`}>{row.address}</span>
+                  <span className={`${className}_bytes`}>{row.bytes.padEnd(18)}</span>
+                  <span className={cx(flowClass(row.text))}>{row.text}</span>
                   {"\n"}
                 </span>
-              );
-            })}
-          </pre>
-        )}
-
-        {tab === "Patterns" && (
-          <table className={`${className}_table`}>
-            <thead>
-              <tr>
-                <th scope="col">Type</th>
-                <th scope="col">Value</th>
-                <th scope="col">Offset</th>
-              </tr>
-            </thead>
-            <tbody>
-              {PATTERNS.map((row) => (
-                <tr key={row.offset}>
-                  <td className={`${className}_type`}>{row.type}</td>
-                  <td className={`${className}_value`}>{row.value}</td>
-                  <td className={`${className}_offset`}>{row.offset}</td>
-                </tr>
               ))}
-            </tbody>
-          </table>
-        )}
-
-        {tab === "Disassembly" && (
-          <pre className={`${className}_pre`}>
-            {DISASSEMBLY.map((row) => (
-              <span className={`${className}_row`} key={row.address}>
-                <span className={`${className}_offset`}>{row.address}</span>
-                <span className={`${className}_bytes`}>{row.bytes.padEnd(18)}</span>
-                <span className={cx(flowClass(row.text))}>{row.text}</span>
-                {"\n"}
-              </span>
-            ))}
-          </pre>
-        )}
+            </pre>
+          )}
+        </div>
       </div>
     </div>
   );

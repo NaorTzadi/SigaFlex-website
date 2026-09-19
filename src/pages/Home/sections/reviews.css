@@ -182,8 +182,30 @@
 }
 
 .reviews_empty {
+  display: grid;
+  justify-items: center;
+  gap: var(--fa-space-1);
+  padding: var(--fa-space-12) var(--fa-space-6);
+  background: var(--fa-color-surface);
+  border: var(--fa-border-width) dashed var(--fa-color-border-strong);
+  border-radius: var(--fa-radius-lg);
+  text-align: center;
+}
+
+.reviews_empty_glyph {
+  margin-bottom: var(--fa-space-2);
+  color: var(--fa-color-text-muted);
+}
+
+.reviews_empty_title {
+  margin: 0;
+  font-weight: 600;
+}
+
+.reviews_empty_body {
   margin: 0;
   color: var(--fa-color-text-muted);
+  font-size: var(--fa-text-sm);
 }
 
 .reviews_list {
@@ -248,4 +270,96 @@
   .reviews_form {
     padding: var(--fa-space-4);
   }
+}
+
+/* Hovering the row previews the rating the pointer is about to choose. */
+.reviews_rating_row:hover .reviews_star {
+  color: var(--fa-color-accent);
+}
+
+.reviews_rating_row .reviews_star:hover ~ .reviews_star {
+  color: var(--fa-color-text-muted);
+}
+
+.reviews_star:active {
+  background: var(--fa-color-surface-pressed);
+}
+
+.reviews_confirm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--fa-space-3);
+  padding: var(--fa-space-4);
+  background: var(--fa-color-background);
+  border: var(--fa-border-width) solid var(--fa-color-danger);
+  border-radius: var(--fa-radius-md);
+  animation: reviews_confirm_in var(--fa-duration-fast) var(--fa-easing);
+}
+
+@keyframes reviews_confirm_in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+.reviews_confirm_text {
+  display: flex;
+  align-items: center;
+  gap: var(--fa-space-2);
+  margin: 0;
+  font-size: var(--fa-text-sm);
+}
+
+.reviews_confirm_text svg {
+  flex: none;
+  color: var(--fa-color-danger);
+}
+
+.reviews_confirm_yes {
+  border-color: var(--fa-color-danger);
+  color: var(--fa-color-danger);
+}
+
+.reviews_outcome {
+  display: flex;
+  align-items: center;
+  gap: var(--fa-space-2);
+  margin: 0;
+  color: var(--fa-color-success);
+  font-size: var(--fa-text-sm);
+  font-weight: 600;
+}
+
+.reviews_outcome:empty {
+  display: none;
+}
+
+.reviews_outcome svg {
+  flex: none;
+}
+
+.reviews_loading {
+  margin: 0;
+  font-size: var(--fa-text-sm);
+}
+
+.reviews_item {
+  transition: border-color var(--fa-duration-fast) var(--fa-easing),
+    background var(--fa-duration-fast) var(--fa-easing);
+}
+
+.reviews_item:hover {
+  background: var(--fa-color-surface-raised);
+}
+
+.reviews_confirm_yes:hover {
+  background: var(--fa-color-surface-hover);
+  border-color: var(--fa-color-danger);
+  color: var(--fa-color-danger);
+}
+
+.reviews_hint-near {
+  color: var(--fa-color-accent);
+  font-weight: 600;
 }

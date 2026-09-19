@@ -138,3 +138,24 @@
 .showcase_controls {
   justify-content: flex-end;
 }
+
+.showcase_play:active {
+  background: var(--fa-color-surface-pressed);
+}
+
+/* A dot has to answer the pointer before it is pressed, or there is nothing
+   saying it is a control. */
+.showcase_dot::before {
+  transition: background var(--fa-duration-fast) var(--fa-easing),
+    border-color var(--fa-duration-fast) var(--fa-easing),
+    transform var(--fa-duration-fast) var(--fa-easing);
+}
+
+.showcase_dot:hover::before {
+  border-color: var(--fa-color-text);
+  transform: scale(1.2);
+}
+
+.showcase_dot:active::before {
+  transform: scale(1);
+}

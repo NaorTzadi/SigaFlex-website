@@ -17,6 +17,9 @@ import { cx } from "../../core/Utility";
 import { ROUTES } from "../../Routing";
 import "../page.css";
 import "../account.css";
+import "./confirm.css";
+
+const className = "confirm";
 
 type State = "working" | "confirmed" | "spent" | "missing" | "unreachable";
 
@@ -30,6 +33,8 @@ const MESSAGE: Record<Exclude<State, "working">, string> = {
 export default function Confirm() {
   const [params] = useSearchParams();
   const [state, setState] = useState<State>("working");
+  /** Bumped by the retry button, which is the only thing that spends the token twice. */
+  const [attempt, setAttempt] = useState(0);
   const announceRef = useRef<HTMLDivElement>(null);
 
   const token = params.get("token");
@@ -54,7 +59,7 @@ export default function Confirm() {
     return () => {
       current = false;
     };
-  }, [token]);
+  }, [token, attempt]);
 
   useEffect(() => {
     if (state !== "working") announceRef.current?.focus();
@@ -62,28 +67,55 @@ export default function Confirm() {
 
   const good = state === "confirmed";
 
+  function retry() {
+    setState("working");
+    setAttempt((made) => made + 1);
+  }
+
   return (
     <article className="page account_page">
       <p className="account_eyebrow fa_eyebrow">Account</p>
       <h1 className="page_title">{state === "working" ? "Confirming…" : good ? "Confirmed" : "Not confirmed"}</h1>
 
-      {state !== "working" && (
-        <>
-          <div
-            className={cx("account_card", "account_outcome", good ? "account_outcome-good" : "account_outcome-bad")}
-            ref={announceRef}
-            tabIndex={-1}
-            role="status"
-          >
-            <Icon name={good ? "success" : "warning"} size="1.5em" />
-            <span>{MESSAGE[state]}</span>
-          </div>
+      {state === "working" && (
+        <p className="fa_loading account_loading">
+          <span className="fa_spinner" aria-hidden="true" />
+          Checking your link…
+        </p>
+      )}
 
-          <p className="account_links">
-            <Link to={ROUTES.LOGIN}>Sign in</Link>
-            <Link to={ROUTES.HOME}>Back to the home page</Link>
-          </p>
-        </>
+      {state !== "working" && (
+        <div
+          className={cx("account_card", `${className}_outcome`)}
+          ref={announceRef}
+          tabIndex={-1}
+          role="status"
+        >
+          <Icon
+            className={cx(`${className}_mark`, good ? `${className}_mark-good` : `${className}_mark-bad`)}
+            name={good ? "success" : "warning"}
+            size="2.5em"
+          />
+          <p className={`${className}_message`}>{MESSAGE[state]}</p>
+
+          {/* Every outcome leaves with something to press. An unreachable
+              server in particular is not a dead end: the same link can be
+              spent again once it answers. */}
+          <div className={`${className}_actions`}>
+            {state === "unreachable" ? (
+              <button className="fa_button fa_button-primary" type="button" onClick={retry}>
+                Try again
+              </button>
+            ) : (
+              <Link className="fa_button fa_button-primary" to={ROUTES.LOGIN}>
+                Sign in
+              </Link>
+            )}
+            <Link className="fa_button" to={ROUTES.HOME}>
+              Back to the home page
+            </Link>
+          </div>
+        </div>
       )}
     </article>
   );

@@ -1,0 +1,84 @@
+/*
+ * The row of controls under the introduction: the button that opens a mail
+ * client, and the address itself beside it with a copy control built into its
+ * end. The two read as one group, and the address is always visible -- a copy
+ * button over an address nobody can see is a button nobody trusts.
+ */
+
+.contact_actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: var(--fa-space-3);
+  margin-top: var(--fa-space-6);
+}
+
+.contact_address {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  background: var(--fa-color-surface-sunken);
+  border: var(--fa-border-width) solid var(--fa-color-border-strong);
+  border-radius: var(--fa-radius-md);
+  box-shadow: var(--fa-shadow-well);
+  transition: border-color var(--fa-duration-fast) var(--fa-easing);
+}
+
+.contact_address:hover {
+  border-color: var(--fa-color-text-muted);
+}
+
+.contact_address_value {
+  padding: 0 var(--fa-space-3);
+  color: var(--fa-color-text-secondary);
+  font-family: var(--fa-font-mono);
+  font-size: var(--fa-text-sm);
+  overflow-wrap: anywhere;
+}
+
+/* Square, its own height taken from the group it sits in, and divided from the
+   address by the same rule that draws the group. */
+.contact_copy {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  width: 44px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-left: var(--fa-border-width) solid var(--fa-color-border);
+  border-radius: 0 var(--fa-radius-md) var(--fa-radius-md) 0;
+  color: var(--fa-color-text-secondary);
+  cursor: pointer;
+  transition: background var(--fa-duration-fast) var(--fa-easing),
+    color var(--fa-duration-fast) var(--fa-easing);
+}
+
+.contact_copy:hover {
+  background: var(--fa-color-surface-hover);
+  color: var(--fa-color-text-bright);
+}
+
+.contact_copy:active {
+  background: var(--fa-color-surface-pressed);
+}
+
+/* Copying happens under the pointer, so the hover colour has to give way. */
+.contact_copy-done,
+.contact_copy-done:hover {
+  color: var(--fa-color-success);
+}
+
+@media (max-width: 639px) {
+  .contact_actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .contact_address {
+    justify-content: space-between;
+    min-height: 44px;
+  }
+}

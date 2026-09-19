@@ -16,6 +16,7 @@ come from the product, not from this file.
 | typescript, @types/react, @types/react-dom | Build only. Not shipped to the browser. | The language and its React type definitions. |
 | IBM Plex Sans (variable, Latin-1) | `src/assets/fonts/ibm-plex-sans-var.woff2`, declared in `theme.css`. | Body and heading face. SIL OFL 1.1; licence text kept beside the font as `IBM-Plex-LICENSE.txt`. Self-hosted, so no request leaves our domain. |
 | IBM Plex Mono (variable, Latin-1) | `src/assets/fonts/ibm-plex-mono-var.woff2`, declared in `theme.css`. | Monospace face for disassembly, hex, strings and pattern output. Same licence and licence file. |
+| YouTube embedded player (youtube-nocookie.com) | `src/pages/Home/sections/Demo.tsx`, the "See it in action" band. Nothing is installed; the browser loads the frame. | The demonstration video is hosted on YouTube so the file is not carried in the repository. It is the one thing on this site the browser fetches from a domain that is not ours: the no-cookie host is used, the frame is lazy, and it never autoplays. |
 
 ## Rule
 

@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 
 import Icon from "../../components/Icon/Icon";
 import type { GlyphName } from "../../components/Icon/glyphs";
+import { cx } from "../../core/Utility";
 import { ROUTES } from "../../Routing";
 import "../page.css";
 import "./download.css";
@@ -19,11 +20,13 @@ const className = "download";
 const BUILD: { version: string; released: string; size: string; sha256: string; url: string } | null =
   null;
 
-const REQUIREMENTS: string[] = [
-  "Windows 10 or Windows 11, 64-bit",
-  "No account, and no internet connection — the application never calls out",
-  "Files are opened read-only; nothing is ever written back to them",
-  "Microsoft Word or Excel, only if you want Office documents converted"
+/* A tick is a promise the application keeps. The last line is a condition on
+   the reader's machine, not something we guarantee, so it is not ticked. */
+const REQUIREMENTS: Array<{ glyph: GlyphName; text: string }> = [
+  { glyph: "success", text: "Windows 10 or Windows 11, 64-bit" },
+  { glyph: "success", text: "No account, and no internet connection — the application never calls out" },
+  { glyph: "success", text: "Files are opened read-only; nothing is ever written back to them" },
+  { glyph: "info", text: "Microsoft Word or Excel, only if you want Office documents converted" }
 ];
 
 const PLANNED: Array<{ glyph: GlyphName; name: string; note: string }> = [
@@ -34,7 +37,7 @@ const PLANNED: Array<{ glyph: GlyphName; name: string; note: string }> = [
 export default function Download() {
   return (
     <article className={`page ${className}`}>
-      <p className={`${className}_eyebrow fa_eyebrow`}>Get it</p>
+      <p className="page_eyebrow fa_eyebrow">Get it</p>
       <h1 className="page_title">Download</h1>
       <p className="page_lead">Windows desktop. No account, no cloud.</p>
 
@@ -42,7 +45,12 @@ export default function Download() {
         <Icon className={`${className}_mark`} name="windows" size="3.5em" />
 
         <div className={`${className}_build_body`}>
-          <h2 className={`${className}_build_title`}>Windows</h2>
+          <h2 className={`${className}_build_title`}>
+            Windows
+            <span className={BUILD ? "fa_tag fa_tag-good" : "fa_tag fa_tag-accent"}>
+              {BUILD ? "Available" : "In development"}
+            </span>
+          </h2>
           <p className={`${className}_build_detail`}>Windows 10 and 11, 64-bit</p>
 
           {BUILD ? (
@@ -62,10 +70,12 @@ export default function Download() {
               </dl>
             </>
           ) : (
-            <p className={`${className}_pending`}>
+            /* No button: a control that can never be pressed is worse than
+               nothing where the eye lands looking for the download. */
+            <p className="page_note">
               <Icon name="info" size="1em" />
-              The installer is not published yet. The version, the size and its SHA-256 will be here
-              when it is.
+              The installer is not published yet. The version, the size and its SHA-256 will be
+              here when it is.
             </p>
           )}
         </div>
@@ -86,7 +96,7 @@ export default function Download() {
             <li className={`${className}_planned_item`} key={platform.name}>
               <Icon className={`${className}_planned_glyph`} name={platform.glyph} size="1.25em" />
               <span className={`${className}_planned_name`}>{platform.name}</span>
-              <span className={`${className}_planned_note`}>{platform.note}</span>
+              <span className="fa_tag">{platform.note}</span>
             </li>
           ))}
         </ul>
@@ -98,17 +108,22 @@ export default function Download() {
         </h2>
 
         <ul className={`${className}_requirements`}>
-          {REQUIREMENTS.map((line) => (
-            <li className={`${className}_requirement`} key={line}>
-              <Icon name="success" size="1em" />
-              {line}
+          {REQUIREMENTS.map((requirement) => (
+            <li
+              className={cx(`${className}_requirement`, `${className}_requirement-${requirement.glyph}`)}
+              key={requirement.text}
+            >
+              <Icon name={requirement.glyph} size="1em" />
+              {requirement.text}
             </li>
           ))}
         </ul>
 
         <p className={`${className}_licences`}>
           Everything bundled with the application, and the terms it ships under, are listed under{" "}
-          <Link to={ROUTES.LICENSES}>Third-Party Licenses</Link>.
+          <Link to={ROUTES.LICENSES}>Third-Party Licenses</Link>. It is free to use while it is in
+          development — what comes after that is on the <Link to={ROUTES.PRICING}>pricing</Link>{" "}
+          page.
         </p>
       </section>
     </article>

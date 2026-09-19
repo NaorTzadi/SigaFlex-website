@@ -50,6 +50,8 @@
   align-items: center;
   justify-content: center;
   align-self: center;
+  min-width: 36px;
+  min-height: 36px;
   padding: var(--fa-space-1);
   background: transparent;
   border: 0;
@@ -65,7 +67,7 @@
 }
 
 .register_reveal:focus-visible {
-  outline: var(--fa-border-width) solid var(--fa-color-accent);
+  outline: 2px solid var(--fa-color-focus);
   outline-offset: 2px;
 }
 

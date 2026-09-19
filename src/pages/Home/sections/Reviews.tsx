@@ -28,7 +28,7 @@ function Stars({ rating }: { rating: number }) {
 }
 
 function dateOf(stamp: string): string {
-  return new Date(stamp).toLocaleDateString(undefined, {
+  return new Date(stamp).toLocaleDateString("en-GB", {
     year: "numeric",
     month: "short",
     day: "numeric"
@@ -91,6 +91,8 @@ export default function Reviews() {
   const [rating, setRating] = useState(0);
   const [body, setBody] = useState("");
   const [problem, setProblem] = useState<{ text: string; signIn?: boolean } | null>(null);
+  const [outcome, setOutcome] = useState("");
+  const [removing, setRemoving] = useState(false);
   const [busy, setBusy] = useState(false);
 
   const fieldId = useId();
@@ -158,6 +160,8 @@ export default function Reviews() {
   async function submit(event: FormEvent) {
     event.preventDefault();
     setProblem(null);
+    setOutcome("");
+    setRemoving(false);
 
     if (!displayName.trim()) {
       setProblem({ text: "Enter the name to show with your review." });
@@ -188,6 +192,7 @@ export default function Reviews() {
         body: body.trim()
       });
       setWritten((all) => [stored, ...all.filter((review) => review.id !== stored.id)]);
+      setOutcome(mine ? "Your review is updated." : "Your review is posted.");
       dropDraft();
     } catch (error) {
       if (error instanceof ServerBridge.ServerError && error.status === 401) {
@@ -203,12 +208,15 @@ export default function Reviews() {
 
   async function withdraw() {
     setProblem(null);
+    setOutcome("");
     setBusy(true);
     try {
       await ServerBridge.withdrawReview();
       setWritten((all) => all.filter((review) => !review.mine));
       setRating(0);
       setBody("");
+      setRemoving(false);
+      setOutcome("Your review is removed.");
     } catch {
       setProblem({ text: "The review could not be removed. Try again in a moment." });
     } finally {
@@ -310,27 +318,92 @@ export default function Reviews() {
               maxLength={REVIEW_BODY_MAX_LENGTH}
               onChange={(event) => setBody(event.target.value)}
             />
-            <p className={`${className}_hint`}>
+            <p
+              className={cx(
+                `${className}_hint`,
+                body.length > REVIEW_BODY_MAX_LENGTH - 100 && `${className}_hint-near`
+              )}
+            >
               {`${body.length} of ${REVIEW_BODY_MAX_LENGTH} characters. One review per account: posting again replaces the one you left.`}
             </p>
           </div>
 
           <div className={`${className}_actions`}>
             <button className="fa_button fa_button-primary" type="submit" disabled={busy}>
-              {mine ? "Update review" : "Post review"}
+              {busy && <span className="fa_spinner" aria-hidden="true" />}
+              {busy ? (mine ? "Updating…" : "Posting…") : mine ? "Update review" : "Post review"}
             </button>
-            {mine && (
-              <button className="fa_button" type="button" disabled={busy} onClick={withdraw}>
+            {mine && !removing && (
+              <button
+                className="fa_button"
+                type="button"
+                disabled={busy}
+                onClick={() => setRemoving(true)}
+              >
                 Remove
               </button>
             )}
           </div>
+
+          {/* Withdrawing cannot be undone, so it is asked rather than done. */}
+          {mine && removing && (
+            <div className={`${className}_confirm`} role="group" aria-label="Remove your review">
+              <p className={`${className}_confirm_text`}>
+                <Icon name="warning" size="1em" />
+                Remove your review? This cannot be undone.
+              </p>
+              <div className={`${className}_actions`}>
+                <button
+                  className={`fa_button fa_button-small ${className}_confirm_yes`}
+                  type="button"
+                  disabled={busy}
+                  onClick={() => void withdraw()}
+                >
+                  {busy && <span className="fa_spinner" aria-hidden="true" />}
+                  {busy ? "Removing…" : "Remove it"}
+                </button>
+                <button
+                  className="fa_button fa_button-small"
+                  type="button"
+                  disabled={busy}
+                  onClick={() => setRemoving(false)}
+                >
+                  Keep it
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* What happened, once it has: spoken, and left in place to be read. */}
+          <p className={`${className}_outcome`} role="status" aria-live="polite">
+            {outcome && (
+              <>
+                <Icon name="success" size="1em" />
+                {outcome}
+              </>
+            )}
+          </p>
         </form>
       )}
 
-      {loaded && written.length === 0 ? (
-        <p className={`${className}_empty`}>No reviews yet.</p>
-      ) : (
+      {!loaded && (
+        <p className={`fa_loading ${className}_loading`}>
+          <span className="fa_spinner" aria-hidden="true" />
+          Loading reviews…
+        </p>
+      )}
+
+      {loaded && written.length === 0 && ServerBridge.isConfigured() && (
+        <div className={`${className}_empty`}>
+          <Icon className={`${className}_empty_glyph`} name="clipboard" size="1.75em" />
+          <p className={`${className}_empty_title`}>No reviews yet</p>
+          <p className={`${className}_empty_body`}>
+            Yours would be the first. Say what it got right, and what it did not.
+          </p>
+        </div>
+      )}
+
+      {loaded && written.length > 0 && (
         <ul className={`${className}_list`}>
           {written.map((review) => (
             <li className={cx(`${className}_item`, review.mine && `${className}_item-mine`)} key={review.id}>

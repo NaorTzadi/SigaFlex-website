@@ -72,7 +72,7 @@ export default function CookieConsent() {
 
       <div className={`${className}_actions`}>
         <button
-          className={`${className}_button ${className}_button-accept`}
+          className={`fa_button fa_button-primary ${className}_button`}
           type="button"
           /* The first thing focused when the box opens. */
           autoFocus
@@ -80,7 +80,11 @@ export default function CookieConsent() {
         >
           Accept
         </button>
-        <button className={`${className}_button`} type="button" onClick={() => answer("declined")}>
+        <button
+          className={`fa_button ${className}_button`}
+          type="button"
+          onClick={() => answer("declined")}
+        >
           Decline
         </button>
       </div>

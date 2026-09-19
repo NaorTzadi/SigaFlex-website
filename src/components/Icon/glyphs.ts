@@ -2,9 +2,11 @@
  * The application's own glyphs, as path data on a 16x16 grid.
  *
  * Lifted verbatim from the desktop app's Constants.Glyphs so the site and the
- * product draw the same shapes, except for `eye` and `eyeOff`, which are drawn
- * here because only the website has a password to reveal. Nothing here is a
- * third party: no icon set to license, no request to make.
+ * product draw the same shapes, except for `eye`, `eyeOff`, `mail`, `youtube`
+ * and `externalLink`, which are drawn here because only the website has a
+ * password to reveal, an address to write to, a channel to link and a link that
+ * leaves the site. Nothing here is a third party: no icon set to license, no
+ * request to make.
  *
  * Regenerate rather than edit by hand if the app's glyphs change.
  */
@@ -43,6 +45,9 @@ export const GLYPHS = {
   inspect: "M3.6 1.6h5.3L13 5.7v2.1a5.4 5.4 0 0 0-6.7 6.6H3.6c-.3 0-.5-.2-.5-.5V2.1c0-.3.2-.5.5-.5zM11.3 8.8a3.6 3.6 0 1 0 2.1 6.5l1.5 1.5 1.1-1.1-1.5-1.5a3.6 3.6 0 0 0-3.2-5.4zm0 1.5a2.1 2.1 0 1 1 0 4.2 2.1 2.1 0 0 1 0-4.2z",
   eye: "M1 8Q4.2 3.6 8 3.6Q11.8 3.6 15 8Q11.8 12.4 8 12.4Q4.2 12.4 1 8ZM8 4.9a3.1 3.1 0 1 0 0 6.2 3.1 3.1 0 0 0 0-6.2zM8 6.4a1.6 1.6 0 1 0 0 3.2 1.6 1.6 0 0 0 0-3.2z",
   eyeOff: "M1 8Q4.2 3.6 8 3.6Q11.8 3.6 15 8Q11.8 12.4 8 12.4Q4.2 12.4 1 8ZM1.6 2.8L13.2 14.4L14.4 13.2L2.8 1.6Z",
+  mail: "M1.2 3.4H14.8V12.6H1.2ZM2.4 4.6V11.4H13.6V4.6ZM3.1 5.6L8 9L12.9 5.6V7L8 10.4L3.1 7Z",
+  youtube: "M3.4 3.2h9.2A2.8 2.8 0 0 1 15.4 6v4a2.8 2.8 0 0 1-2.8 2.8H3.4A2.8 2.8 0 0 1 .6 10V6a2.8 2.8 0 0 1 2.8-2.8zM6.4 5.9v4.2L10.7 8z",
+  externalLink: "M9 1.6h5.4V7h-1.6V4.3l-4.6 4.6-1.1-1.1 4.6-4.6H9V1.6zM2.4 3.9h4.3v1.6H4V12h6.5V9.3h1.6v4.3H2.4V3.9z",
 } as const;
 
 export type GlyphName = keyof typeof GLYPHS;

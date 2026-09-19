@@ -19,9 +19,47 @@
   color: var(--fa-color-text);
   border: var(--fa-border-width) solid var(--fa-color-border);
   border-radius: var(--fa-radius-md);
+  box-shadow: var(--fa-shadow-md);
   transform: translateY(-200%);
+  transition: transform var(--fa-duration-fast) var(--fa-easing);
 }
 
 .app_skip_link:focus {
   transform: translateY(0);
+}
+
+.app_progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: calc(var(--fa-layer-header) + 1);
+  height: 2px;
+  background: var(--fa-color-accent);
+  box-shadow: var(--fa-glow-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--fa-duration-fast) var(--fa-easing);
+}
+
+.app_progress[data-busy] {
+  opacity: 1;
+  animation: app_progress_run 1.4s var(--fa-easing) infinite;
+}
+
+@keyframes app_progress_run {
+  from {
+    transform: translateX(-35%) scaleX(0.35);
+  }
+  to {
+    transform: translateX(100%) scaleX(0.35);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app_progress[data-busy] {
+    transform: scaleX(1);
+  }
 }

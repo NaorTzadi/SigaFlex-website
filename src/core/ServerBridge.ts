@@ -71,7 +71,10 @@ export class ServerError extends Error {
   }
 }
 
+let outstanding = 0;
+
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
+  outstanding += 1;
   setGlobal("serverBusy", true);
   try {
     const response = await fetch(`${BASE_URL}${path}`, {
@@ -97,7 +100,8 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
     const text = await response.text();
     return (text ? JSON.parse(text) : undefined) as T;
   } finally {
-    setGlobal("serverBusy", false);
+    outstanding -= 1;
+    setGlobal("serverBusy", outstanding > 0);
   }
 }
 
@@ -141,6 +145,8 @@ export type RegistrationRequest = {
 export type RegistrationResult = {
   /** Whether the server has sent a confirmation mail and is waiting on it. */
   confirmationRequired: boolean;
+  /** True when the address was already waiting on a link from an earlier try. */
+  alreadyPending: boolean;
 };
 
 /**
@@ -222,14 +228,14 @@ export async function changePassword(currentPassword: string, newPassword: strin
   rememberSession(result.sessionToken, getGlobals().accountEmail);
 }
 
-export async function resendConfirmation(): Promise<boolean> {
-  try {
-    await post<void>(ENDPOINT.RESEND_CONFIRMATION, {});
-    return true;
-  } catch (error) {
-    if (error instanceof ServerError && error.status === 409) return false;
-    throw error;
-  }
+/**
+ * Sends the confirmation link again. Takes the address rather than a session,
+ * because an account that was never confirmed cannot sign in to ask. The server
+ * answers the same way whatever the address is, so there is nothing to report
+ * back beyond the request having been accepted.
+ */
+export function resendConfirmation(email: string): Promise<void> {
+  return post<void>(ENDPOINT.RESEND_CONFIRMATION, { email: email.trim() });
 }
 
 export async function logoutEverywhere(): Promise<void> {

@@ -20,14 +20,12 @@
   border: var(--fa-border-width) solid var(--fa-color-border);
   border-radius: var(--fa-radius-md);
   transition: border-color var(--fa-duration-normal) var(--fa-easing),
-    background var(--fa-duration-normal) var(--fa-easing),
-    transform var(--fa-duration-normal) var(--fa-easing);
+    background var(--fa-duration-normal) var(--fa-easing);
 }
 
 .signatures_row:hover {
   background: var(--fa-color-surface-raised);
   border-color: var(--fa-color-border-strong);
-  transform: translateX(4px);
 }
 
 .signatures_claimed {

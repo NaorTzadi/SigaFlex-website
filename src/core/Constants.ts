@@ -2,7 +2,6 @@
  * Static values that more than one class needs. Nothing here changes at run time.
  * Values that do change live in Globals. Route paths live in Routing.
  */
-
 export const SITE_NAME = "File Analyzer";
 export const PRODUCT_NAME = "FileAnalyzer";
 
@@ -10,13 +9,15 @@ export const PRODUCT_NAME = "FileAnalyzer";
 export const TAGLINE =
   "Opens any file, tells you what it actually is, and shows you everything inside it.";
 
+/** The one address the site publishes: support, privacy requests and security reports. */
+export const CONTACT_EMAIL = "naorprojects1@gmail.com";
+
 /**
  * Everything about the site that is not decided yet. Every value here is a
  * placeholder carrying the word "holder", so one grep finds all of them when
- * the real domain, address and operator are known.
+ * the real domain and operator are known.
  */
 export const SITE_URL = "https://holder.com";
-export const CONTACT_EMAIL = "holder@gmail.com";
 export const SITE_OPERATOR = "Holder";
 export const SITE_JURISDICTION = "Holder";
 
@@ -28,7 +29,9 @@ export const POLICY_UPDATED = "19 September 2026";
  * it must also be recorded in OUTSIDE_ROUTES.md.
  */
 export const EXTERNAL_LINKS = {
-  FFMPEG_SOURCE: "https://ffmpeg.org/download.html"
+  FFMPEG_SOURCE: "https://ffmpeg.org/download.html",
+  YOUTUBE_CHANNEL: "https://www.youtube.com/@primalmachine7945",
+  DEMO_VIDEO: "https://www.youtube-nocookie.com/embed/jgW1QeA0rug"
 } as const;
 
 /**
@@ -44,6 +47,7 @@ export const HOME_SECTIONS = {
   PROBLEM: "problem",
   HOW_IT_WORKS: "how-it-works",
   CAPABILITIES: "capabilities",
+  DEMO: "demo",
   WHAT_IT_OPENS: "what-it-opens",
   FORMATS: "formats",
   BEYOND: "beyond",
@@ -59,7 +63,7 @@ export const MAIN_CONTENT_ID = "main-content";
  * Registration rules the client checks before it bothers the server.
  * The server enforces its own; these only spare the reader a round trip.
  */
-export const PASSWORD_MIN_LENGTH = 12;
+export const PASSWORD_MIN_LENGTH = 10;
 
 /** Review limits, matching what the server enforces. */
 export const REVIEW_NAME_MAX_LENGTH = 60;

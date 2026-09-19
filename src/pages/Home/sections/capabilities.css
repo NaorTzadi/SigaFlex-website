@@ -237,3 +237,18 @@
   color: var(--fa-color-text-muted);
   font-variant-numeric: tabular-nums;
 }
+
+.capabilities_tab:active {
+  background: var(--fa-color-surface-pressed);
+}
+
+.capabilities_view {
+  animation: capabilities_view_in var(--fa-duration-normal) var(--fa-easing);
+}
+
+@keyframes capabilities_view_in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}

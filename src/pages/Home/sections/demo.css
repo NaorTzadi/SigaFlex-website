@@ -1,0 +1,33 @@
+.demo {
+  margin-top: var(--fa-space-6);
+  max-width: 46rem;
+}
+
+.demo_frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: var(--fa-color-background);
+  border: var(--fa-border-width) solid var(--fa-color-border);
+  border-radius: var(--fa-radius-lg);
+  box-shadow: var(--fa-shadow-md), var(--fa-shadow-inset-top);
+  overflow: hidden;
+}
+
+.demo_player {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+.demo_note {
+  display: flex;
+  align-items: baseline;
+  gap: var(--fa-space-2);
+  max-width: none;
+  margin: var(--fa-space-3) 0 0;
+  color: var(--fa-color-text-muted);
+  font-size: var(--fa-text-xs);
+}

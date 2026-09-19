@@ -1,0 +1,41 @@
+/*
+ * The page a wrong address lands on. It has nothing to say, so what it does
+ * have -- the mark, the path that arrived, and the ways out -- is given room.
+ */
+
+.notfound_mark {
+  display: block;
+  margin-bottom: var(--fa-space-6);
+  color: var(--fa-color-accent);
+  filter: drop-shadow(0 6px 18px var(--fa-color-accent-glow));
+}
+
+.notfound_path {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--fa-space-3);
+  max-width: none;
+  margin: var(--fa-space-6) 0 0;
+}
+
+.notfound_path_label {
+  color: var(--fa-color-text-muted);
+  font-family: var(--fa-font-mono);
+  font-size: var(--fa-text-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.notfound_path_value {
+  min-width: 0;
+  padding: var(--fa-space-1) var(--fa-space-3);
+  background: var(--fa-color-surface-sunken);
+  border: var(--fa-border-width) solid var(--fa-color-border);
+  border-radius: var(--fa-radius-md);
+  box-shadow: var(--fa-shadow-well);
+  color: var(--fa-color-text-secondary);
+  font-family: var(--fa-font-mono);
+  font-size: var(--fa-text-sm);
+  overflow-wrap: anywhere;
+}

@@ -109,13 +109,13 @@
 @media (max-width: 639px) {
   .containmenttree_columns,
   .containmenttree_row {
-    grid-template-columns: minmax(0, 1fr) 5.5rem;
+    grid-template-columns: minmax(0, 1fr);
   }
 
+  .containmenttree_columns span:nth-child(2),
   .containmenttree_columns span:nth-child(3),
   .containmenttree_columns span:nth-child(4),
-  .containmenttree_cell:nth-of-type(2),
-  .containmenttree_cell:last-child {
+  .containmenttree_cell {
     display: none;
   }
 }
@@ -164,4 +164,17 @@
 
 .containmenttree_note {
   background: var(--fa-color-background);
+}
+
+/* Only a row that opens into something answers the pointer as clickable. */
+.containmenttree_row[aria-expanded] {
+  cursor: pointer;
+}
+
+.containmenttree_row[aria-expanded]:active {
+  background: var(--fa-color-surface-pressed);
+}
+
+.containmenttree_row:focus-visible {
+  outline-offset: -2px;
 }

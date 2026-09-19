@@ -17,7 +17,7 @@ type Note = { good: boolean; message: string } | null;
 
 function dateOf(stamp: string | null): string {
   if (!stamp) return "never";
-  return new Date(stamp).toLocaleDateString(undefined, {
+  return new Date(stamp).toLocaleDateString("en-GB", {
     year: "numeric",
     month: "short",
     day: "numeric"
@@ -37,19 +37,35 @@ function messageFor(error: unknown, refused: string): string {
   return "The server could not be reached. Try again in a moment.";
 }
 
-function Block({ title, children }: { title: string; children: ReactNode }) {
+/**
+ * One setting: what it is, what it is set to, and whatever changes it. A card
+ * rather than a rule across the page, so a long account page reads as a list of
+ * separate things to do instead of one unbroken column.
+ */
+function Block({
+  title,
+  tone,
+  children
+}: {
+  title: string;
+  /** A card that deletes things looks like one. */
+  tone?: "danger";
+  children: ReactNode;
+}) {
   const id = `profile-${title.replace(/\s+/g, "-").toLowerCase()}`;
 
   return (
-    <section className={`${className}_block`} aria-labelledby={id}>
-      <h2 className={`${className}_block_title`} id={id}>
-        {title}
-      </h2>
+    <section
+      className={cx(`${className}_block`, tone && `${className}_block-${tone}`)}
+      aria-labelledby={id}
+    >
+      <h2 className={`${className}_block_title`} id={id}>{title}</h2>
       {children}
     </section>
   );
 }
 
+/** What just happened to this setting. It stays put when its form is put away. */
 function Notice({ note }: { note: Note }) {
   if (!note) return null;
 
@@ -61,6 +77,19 @@ function Notice({ note }: { note: Note }) {
       <Icon name={note.good ? "success" : "warning"} size="1em" />
       {note.message}
     </p>
+  );
+}
+
+/** The current value of a setting, with the control that changes it beside it. */
+function Row({ label, value, children }: { label: string; value: ReactNode; children?: ReactNode }) {
+  return (
+    <div className={`${className}_row`}>
+      <div className={`${className}_row_text`}>
+        <p className={`${className}_row_label`}>{label}</p>
+        <p className={`${className}_row_value`}>{value}</p>
+      </div>
+      {children}
+    </div>
   );
 }
 
@@ -81,13 +110,23 @@ export default function Profile() {
   const [confirmNote, setConfirmNote] = useState<Note>(null);
   const [reviewNote, setReviewNote] = useState<Note>(null);
   const [sessionsNote, setSessionsNote] = useState<Note>(null);
+  const [sessionsAsked, setSessionsAsked] = useState(false);
 
   const [deletePassword, setDeletePassword] = useState("");
   const [deleteAsked, setDeleteAsked] = useState(false);
   const [deleteNote, setDeleteNote] = useState<Note>(null);
 
+  /**
+   * Which form is open, if any. Everything on this page is a thing you rarely
+   * change, so nothing is open until it is asked for: the page is read far more
+   * often than it is edited, and eight fields on arrival is not a page, it is a
+   * form nobody asked to fill in.
+   */
+  const [editing, setEditing] = useState("");
+
   const [busy, setBusy] = useState("");
   const deleteRef = useRef<HTMLInputElement>(null);
+  const keepSessionsRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     let current = true;
@@ -115,6 +154,22 @@ export default function Profile() {
     if (deleteAsked) deleteRef.current?.focus();
   }, [deleteAsked]);
 
+  useEffect(() => {
+    if (sessionsAsked) keepSessionsRef.current?.focus();
+  }, [sessionsAsked]);
+
+  /* A form that opens takes the caret with it; otherwise the reader has pressed
+     a button and nothing appears to have happened where they are looking. */
+  useEffect(() => {
+    if (!editing) return;
+    const first = editing === "email" ? "profile-email" : "profile-current-password";
+    document.getElementById(first)?.focus();
+  }, [editing]);
+
+  function close() {
+    setEditing("");
+  }
+
   async function submitEmail(event: FormEvent) {
     event.preventDefault();
     setEmailNote(null);
@@ -138,6 +193,7 @@ export default function Profile() {
         good: true,
         message: "A confirmation link is on its way to the new address. The old one stays until you follow it."
       });
+      close();
     } catch (error) {
       setEmailNote({ good: false, message: messageFor(error, "That password did not match.") });
     } finally {
@@ -163,6 +219,7 @@ export default function Profile() {
         good: true,
         message: "Your password is changed. Every other signed-in device was signed out."
       });
+      close();
     } catch (error) {
       setPasswordNote({ good: false, message: messageFor(error, "That password did not match.") });
     } finally {
@@ -171,15 +228,12 @@ export default function Profile() {
   }
 
   async function resend() {
+    if (!account) return;
     setConfirmNote(null);
     setBusy("confirm");
     try {
-      const sent = await ServerBridge.resendConfirmation();
-      setConfirmNote(
-        sent
-          ? { good: true, message: "Sent. The link expires in 24 hours." }
-          : { good: true, message: "This address is already confirmed." }
-      );
+      await ServerBridge.resendConfirmation(account.email);
+      setConfirmNote({ good: true, message: "Sent. The link expires in 24 hours." });
     } catch (error) {
       setConfirmNote({ good: false, message: messageFor(error, "Sign in again to do that.") });
     } finally {
@@ -208,6 +262,7 @@ export default function Profile() {
       await ServerBridge.logoutEverywhere();
     } catch {
       setSessionsNote({ good: false, message: "The server could not be reached. Try again in a moment." });
+      setSessionsAsked(false);
     } finally {
       setBusy("");
     }
@@ -246,11 +301,23 @@ export default function Profile() {
   }
 
   if (!loaded) {
+    /* The shape of the page is drawn while it is being read, so the header does
+       not sit alone over an empty screen and then jump. */
     return (
       <article className={`page ${className}`}>
         <p className="account_eyebrow fa_eyebrow">Account</p>
         <h1 className="page_title">Your account</h1>
-        <p className="page_lead">Reading your details…</p>
+        <p className="page_lead">Everything the site holds about you, and everything you can change.</p>
+        <p className="fa_loading account_loading">
+          <span className="fa_spinner" aria-hidden="true" />
+          Reading your details…
+        </p>
+
+        <div className={`${className}_skeleton`} aria-hidden="true">
+          <span className={`${className}_skeleton_identity`} />
+          <span className={`${className}_skeleton_block`} />
+          <span className={`${className}_skeleton_block`} />
+        </div>
       </article>
     );
   }
@@ -260,9 +327,21 @@ export default function Profile() {
       <article className={`page ${className}`}>
         <p className="account_eyebrow fa_eyebrow">Account</p>
         <h1 className="page_title">Your account</h1>
-        <p className="page_lead">
-          Your details could not be read. <Link to={ROUTES.LOGIN}>Sign in</Link> and try again.
-        </p>
+        <div className={cx("account_card", `${className}_empty`)}>
+          <Icon className={`${className}_empty_glyph`} name="warning" size="2.5em" />
+          <p className={`${className}_empty_message`}>
+            Your details could not be read. The server may be unreachable, or this session may have
+            ended while the page was open.
+          </p>
+          <div className={`${className}_actions`}>
+            <Link className="fa_button fa_button-primary" to={ROUTES.LOGIN}>
+              Sign in
+            </Link>
+            <Link className="fa_button" to={ROUTES.HOME}>
+              Back to the home page
+            </Link>
+          </div>
+        </div>
       </article>
     );
   }
@@ -280,7 +359,10 @@ export default function Profile() {
         <div className={`${className}_identity_text`}>
           <p className={`${className}_identity_email`}>{account.email}</p>
           <p className={`${className}_identity_facts`}>
-            Member since {dateOf(account.createdAt)} · Last signed in {dateOf(account.lastLoginAt)}
+            <span className={`${className}_fact`}>Member since {dateOf(account.createdAt)}</span>
+            <span className={`${className}_fact`}>
+              Last signed in {dateOf(account.lastLoginAt)}
+            </span>
           </p>
         </div>
         <span
@@ -291,125 +373,186 @@ export default function Profile() {
         </span>
       </div>
 
+      {/* An unconfirmed address is the one thing on this page that wants doing
+          now, so it is a banner above the settings rather than one of them. */}
       {!account.confirmed && (
-        <Block title="Confirm your address">
-          <p className={`${className}_lead`}>
-            This address stays unconfirmed until you follow the link we sent it.
-          </p>
-          <Notice note={confirmNote} />
+        <div className={`${className}_alert`}>
+          <Icon className={`${className}_alert_glyph`} name="warning" size="1.5em" />
+          <div className={`${className}_alert_body`}>
+            <p className={`${className}_alert_title`}>Confirm your address</p>
+            <p className={`${className}_alert_text`}>
+              This address stays unconfirmed until you follow the link we sent it.
+            </p>
+            <Notice note={confirmNote} />
+          </div>
           <button
             className="fa_button"
             type="button"
             disabled={busy === "confirm"}
             onClick={() => void resend()}
           >
+            {busy === "confirm" && <span className="fa_spinner" aria-hidden="true" />}
             {busy === "confirm" ? "Sending…" : "Send again"}
           </button>
-        </Block>
+        </div>
       )}
 
       <Block title="E-mail address">
+        <Notice note={emailNote} />
+
         {account.pendingEmail && (
-          <p className={`${className}_lead`}>
-            Waiting on <strong>{account.pendingEmail}</strong> to follow its confirmation link. Until
-            it does, {account.email} is still the address on this account.
+          <p className={`${className}_pending`}>
+            <span className="fa_tag fa_tag-accent">Pending</span>
+            Waiting on <strong>{account.pendingEmail}</strong> to follow its confirmation link.
+            Until it does, {account.email} is still the address on this account.
           </p>
         )}
 
-        <form className={`${className}_form`} onSubmit={submitEmail} noValidate>
-          <Notice note={emailNote} />
+        <Row label="Current address" value={account.email}>
+          {editing !== "email" && (
+            <button
+              className="fa_button fa_button-small"
+              type="button"
+              onClick={() => setEditing("email")}
+            >
+              Change
+            </button>
+          )}
+        </Row>
 
-          <div className="account_field">
-            <label className="account_label" htmlFor="profile-email">
-              New address
-            </label>
-            <input
-              className="account_input"
-              id="profile-email"
-              type="email"
-              value={newEmail}
-              autoComplete="email"
-              onChange={(event) => setNewEmail(event.target.value)}
-            />
-          </div>
+        {editing === "email" && (
+          <form className={`${className}_form`} onSubmit={submitEmail} noValidate>
+            <div className="account_field">
+              <label className="account_label" htmlFor="profile-email">
+                New address
+              </label>
+              <input
+                className="account_input"
+                id="profile-email"
+                type="email"
+                value={newEmail}
+                autoComplete="email"
+                onChange={(event) => setNewEmail(event.target.value)}
+              />
+            </div>
 
-          <div className="account_field">
-            <label className="account_label" htmlFor="profile-email-password">
-              Your current password
-            </label>
-            <input
-              className="account_input"
-              id="profile-email-password"
-              type="password"
-              value={emailPassword}
-              autoComplete="current-password"
-              onChange={(event) => setEmailPassword(event.target.value)}
-            />
-          </div>
+            <div className="account_field">
+              <label className="account_label" htmlFor="profile-email-password">
+                Your current password
+              </label>
+              <input
+                className="account_input"
+                id="profile-email-password"
+                type="password"
+                value={emailPassword}
+                autoComplete="current-password"
+                onChange={(event) => setEmailPassword(event.target.value)}
+              />
+            </div>
 
-          <button className="fa_button" type="submit" disabled={busy === "email"}>
-            {busy === "email" ? "Sending…" : "Change address"}
-          </button>
+            <p className="account_note">
+              <Icon name="info" size="0.875em" />
+              The new address replaces the old one once it follows its confirmation link.
+            </p>
 
-          <p className="account_note">
-            <Icon name="info" size="0.875em" />
-            The new address replaces the old one once it follows its confirmation link.
-          </p>
-        </form>
+            <div className={`${className}_actions`}>
+              <button className="fa_button fa_button-primary" type="submit" disabled={busy === "email"}>
+                {busy === "email" && <span className="fa_spinner" aria-hidden="true" />}
+                {busy === "email" ? "Sending…" : "Change address"}
+              </button>
+              <button className="fa_button" type="button" onClick={close}>
+                Cancel
+              </button>
+            </div>
+          </form>
+        )}
       </Block>
 
       <Block title="Password">
-        <form className={`${className}_form`} onSubmit={submitPassword} noValidate>
-          <Notice note={passwordNote} />
+        <Notice note={passwordNote} />
 
-          <div className="account_field">
-            <label className="account_label" htmlFor="profile-current-password">
-              Current password
-            </label>
-            <input
-              className="account_input"
-              id="profile-current-password"
-              type="password"
-              value={currentPassword}
-              autoComplete="current-password"
-              onChange={(event) => setCurrentPassword(event.target.value)}
-            />
-          </div>
+        <Row
+          label="Password"
+          value={
+            <>
+              <span aria-hidden="true">••••••••••</span>
+              <span className="fa_hidden">Set, and not shown</span>
+            </>
+          }
+        >
+          {editing !== "password" && (
+            <button
+              className="fa_button fa_button-small"
+              type="button"
+              onClick={() => setEditing("password")}
+            >
+              Change
+            </button>
+          )}
+        </Row>
 
-          <div className="account_field">
-            <div className="account_field_head">
-              <label className="account_label" htmlFor="profile-new-password">
-                New password
+        {editing === "password" && (
+          <form className={`${className}_form`} onSubmit={submitPassword} noValidate>
+            <div className="account_field">
+              <label className="account_label" htmlFor="profile-current-password">
+                Current password
               </label>
-              <button
-                className="account_reveal"
-                type="button"
-                aria-label="Show password"
-                aria-pressed={revealed}
-                aria-controls="profile-new-password"
-                onClick={() => setRevealed((wasRevealed) => !wasRevealed)}
-              >
-                <Icon name={revealed ? "eyeOff" : "eye"} size="1.25em" />
+              <input
+                className="account_input"
+                id="profile-current-password"
+                type="password"
+                value={currentPassword}
+                autoComplete="current-password"
+                onChange={(event) => setCurrentPassword(event.target.value)}
+              />
+            </div>
+
+            <div className="account_field">
+              <div className="account_field_head">
+                <label className="account_label" htmlFor="profile-new-password">
+                  New password
+                </label>
+                <button
+                  className="account_reveal"
+                  type="button"
+                  aria-label={revealed ? "Hide password" : "Show password"}
+                  aria-pressed={revealed}
+                  aria-controls="profile-new-password"
+                  onClick={() => setRevealed((wasRevealed) => !wasRevealed)}
+                >
+                  <Icon name={revealed ? "eyeOff" : "eye"} size="1.25em" />
+                </button>
+              </div>
+              <p className="account_hint" id="profile-new-password-hint">
+                At least {PASSWORD_MIN_LENGTH} characters.
+              </p>
+              <input
+                className="account_input"
+                id="profile-new-password"
+                type={revealed ? "text" : "password"}
+                value={newPassword}
+                autoComplete="new-password"
+                aria-describedby="profile-new-password-hint"
+                onChange={(event) => setNewPassword(event.target.value)}
+              />
+            </div>
+
+            <p className="account_note">
+              <Icon name="info" size="0.875em" />
+              Changing it signs out every other device.
+            </p>
+
+            <div className={`${className}_actions`}>
+              <button className="fa_button fa_button-primary" type="submit" disabled={busy === "password"}>
+                {busy === "password" && <span className="fa_spinner" aria-hidden="true" />}
+                {busy === "password" ? "Changing…" : "Change password"}
+              </button>
+              <button className="fa_button" type="button" onClick={close}>
+                Cancel
               </button>
             </div>
-            <p className="account_hint" id="profile-new-password-hint">
-              At least {PASSWORD_MIN_LENGTH} characters.
-            </p>
-            <input
-              className="account_input"
-              id="profile-new-password"
-              type={revealed ? "text" : "password"}
-              value={newPassword}
-              autoComplete="new-password"
-              aria-describedby="profile-new-password-hint"
-              onChange={(event) => setNewPassword(event.target.value)}
-            />
-          </div>
-
-          <button className="fa_button" type="submit" disabled={busy === "password"}>
-            {busy === "password" ? "Changing…" : "Change password"}
-          </button>
-        </form>
+          </form>
+        )}
       </Block>
 
       <Block title="Your review">
@@ -417,13 +560,19 @@ export default function Profile() {
 
         {review ? (
           <>
-            <p className={`${className}_review_head`}>
-              <span aria-hidden="true">{"★".repeat(review.rating) + "☆".repeat(5 - review.rating)}</span>
-              <span className={`${className}_review_name`}>
-                {review.displayName} · {dateOf(review.updatedAt ?? review.createdAt)}
-              </span>
-            </p>
-            <p className={`${className}_review_body`}>{review.body}</p>
+            <div className={`${className}_review`}>
+              <p className={`${className}_review_head`}>
+                <span aria-hidden="true">
+                  {"★".repeat(review.rating) + "☆".repeat(5 - review.rating)}
+                </span>
+                <span className="fa_hidden">{review.rating} out of 5</span>
+                <span className={`${className}_review_name`}>
+                  {review.displayName} · {dateOf(review.updatedAt ?? review.createdAt)}
+                </span>
+              </p>
+              <p className={`${className}_review_body`}>{review.body}</p>
+            </div>
+
             <div className={`${className}_actions`}>
               <Link className="fa_button" to={`${ROUTES.HOME}#${HOME_SECTIONS.REVIEWS}`}>
                 Rewrite
@@ -434,17 +583,20 @@ export default function Profile() {
                 disabled={busy === "review"}
                 onClick={() => void withdraw()}
               >
+                {busy === "review" && <span className="fa_spinner" aria-hidden="true" />}
                 {busy === "review" ? "Withdrawing…" : "Withdraw"}
               </button>
             </div>
           </>
         ) : (
-          <>
+          /* Nothing to show is still something to do: the empty state carries
+             the action rather than only reporting the emptiness. */
+          <div className={`${className}_none`}>
             <p className={`${className}_lead`}>You have not left one. One account holds one review.</p>
             <Link className="fa_button" to={`${ROUTES.HOME}#${HOME_SECTIONS.REVIEWS}`}>
               Write a review
             </Link>
-          </>
+          </div>
         )}
       </Block>
 
@@ -454,14 +606,39 @@ export default function Profile() {
           them now, including this one.
         </p>
         <Notice note={sessionsNote} />
-        <button
-          className="fa_button"
-          type="button"
-          disabled={busy === "sessions"}
-          onClick={() => void signOutEverywhere()}
-        >
-          {busy === "sessions" ? "Signing out…" : "Sign out everywhere"}
-        </button>
+
+        {sessionsAsked ? (
+          <div className={`${className}_confirm`} role="group" aria-label="Sign out everywhere">
+            <p className={`${className}_confirm_text`}>
+              <Icon name="warning" size="1em" />
+              This signs out this device too. You will have to sign in again.
+            </p>
+            <div className={`${className}_actions`}>
+              <button
+                className={`fa_button ${className}_danger`}
+                type="button"
+                disabled={busy === "sessions"}
+                onClick={() => void signOutEverywhere()}
+              >
+                {busy === "sessions" && <span className="fa_spinner" aria-hidden="true" />}
+                {busy === "sessions" ? "Signing out…" : "End every session"}
+              </button>
+              <button
+                className="fa_button"
+                type="button"
+                ref={keepSessionsRef}
+                disabled={busy === "sessions"}
+                onClick={() => setSessionsAsked(false)}
+              >
+                Stay signed in
+              </button>
+            </div>
+          </div>
+        ) : (
+          <button className="fa_button" type="button" onClick={() => setSessionsAsked(true)}>
+            Sign out everywhere
+          </button>
+        )}
       </Block>
 
       <Block title="Plan">
@@ -469,34 +646,35 @@ export default function Profile() {
           {PRODUCT_NAME} is free while it is in development, and an account is not needed to use it.
           There is nothing to pay and nothing to cancel.
         </p>
+        <Row label="Current plan" value="Free while in development">
+          <Link className="fa_button fa_button-small" to={ROUTES.PRICING}>
+            See plans
+          </Link>
+        </Row>
       </Block>
 
       <Block title="Your data">
         <p className={`${className}_lead`}>
-          A copy of everything held about you, as a JSON file. Deleting the account removes it and
-          your review, and cannot be undone.
+          A copy of everything held about you, as a JSON file: your account, and your review if you
+          left one.
         </p>
 
-        <div className={`${className}_actions`}>
-          <button className="fa_button" type="button" onClick={download}>
-            <Icon name="export" size="1em" />
-            Download a copy
-          </button>
-          {!deleteAsked && (
-            <button
-              className={`fa_button ${className}_danger`}
-              type="button"
-              onClick={() => setDeleteAsked(true)}
-            >
-              Delete my account
-            </button>
-          )}
-        </div>
+        <button className="fa_button" type="button" onClick={download}>
+          <Icon name="export" size="1em" />
+          Download a copy
+        </button>
+      </Block>
 
-        {deleteAsked && (
-          <form className={`${className}_form ${className}_form-danger`} onSubmit={erase} noValidate>
-            <Notice note={deleteNote} />
+      <Block title="Delete your account" tone="danger">
+        <p className={`${className}_lead`}>
+          This removes the account and the review with it, on the spot and for good. There is no
+          undoing it and no copy kept — take one above first if you want one.
+        </p>
 
+        <Notice note={deleteNote} />
+
+        {deleteAsked ? (
+          <form className={`${className}_form`} onSubmit={erase} noValidate>
             <div className="account_field">
               <label className="account_label" htmlFor="profile-delete-password">
                 Your password
@@ -514,6 +692,7 @@ export default function Profile() {
 
             <div className={`${className}_actions`}>
               <button className={`fa_button ${className}_danger`} type="submit" disabled={busy === "delete"}>
+                {busy === "delete" && <span className="fa_spinner" aria-hidden="true" />}
                 {busy === "delete" ? "Deleting…" : "Delete everything"}
               </button>
               <button
@@ -529,6 +708,14 @@ export default function Profile() {
               </button>
             </div>
           </form>
+        ) : (
+          <button
+            className={`fa_button ${className}_danger`}
+            type="button"
+            onClick={() => setDeleteAsked(true)}
+          >
+            Delete my account
+          </button>
         )}
       </Block>
     </article>

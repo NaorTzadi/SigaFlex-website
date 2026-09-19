@@ -235,11 +235,15 @@ export default function ContainmentTree() {
                   {expandable ? <Icon name="arrowDown" size="0.75em" /> : null}
                 </span>
                 <Icon name={node.glyph} />
-                <span className={`${className}_label`}>{node.name}</span>
+                <span className={`${className}_label`} title={node.name}>
+                  {node.name}
+                </span>
                 {node.format && <span className={`${className}_badge`}>{node.format}</span>}
               </span>
 
-              <span className={`${className}_cell`}>{node.type}</span>
+              <span className={`${className}_cell`} title={node.type}>
+                {node.type}
+              </span>
               <span className={`${className}_cell ${className}_num`}>{node.size}</span>
               <span className={`${className}_cell ${className}_num`}>{node.compressed ?? "—"}</span>
             </div>

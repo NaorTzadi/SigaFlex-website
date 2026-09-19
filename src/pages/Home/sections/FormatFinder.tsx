@@ -80,6 +80,7 @@ export default function FormatFinder() {
             current && `${className}_badge-current`
           )}
           type="button"
+          title={format.name}
           aria-expanded={current}
           aria-controls={detailId}
           onClick={() => pick(format)}
@@ -94,22 +95,33 @@ export default function FormatFinder() {
     <div className={className}>
       <div className={`${className}_search`}>
         <label className={`${className}_label`} htmlFor={inputId}>
-          {FORMAT_TOTAL} formats, identified by content
+          {searching
+            ? `${matchCount} of ${FORMAT_TOTAL} formats match`
+            : `${FORMAT_TOTAL} formats, identified by content`}
         </label>
-        <input
-          className={`${className}_input`}
-          id={inputId}
-          type="search"
-          value={query}
-          placeholder="zip, dll, psd, blend…"
-          autoComplete="off"
-          spellCheck={false}
-          onChange={(event) => {
-            setQuery(event.target.value);
-            setOpenGroup(null);
-            setSelected(null);
-          }}
-        />
+        <div className={`${className}_field`}>
+          <Icon className={`${className}_field_glyph`} name="search" size="1em" />
+          <input
+            className={`${className}_input`}
+            id={inputId}
+            type="search"
+            value={query}
+            placeholder="zip, dll, psd, blend…"
+            autoComplete="off"
+            spellCheck={false}
+            onKeyDown={(event) => {
+              if (event.key !== "Escape" || !query) return;
+              event.preventDefault();
+              setQuery("");
+              setSelected(null);
+            }}
+            onChange={(event) => {
+              setQuery(event.target.value);
+              setOpenGroup(null);
+              setSelected(null);
+            }}
+          />
+        </div>
       </div>
 
       {/* Closed state: the groups, with the detail folded away behind each. */}

@@ -148,7 +148,7 @@ export default function Password() {
               <button
                 className="account_reveal"
                 type="button"
-                aria-label="Show password"
+                aria-label={revealed ? "Hide password" : "Show password"}
                 aria-pressed={revealed}
                 aria-controls="password-new"
                 onClick={() => setRevealed((wasRevealed) => !wasRevealed)}
@@ -192,6 +192,7 @@ export default function Password() {
           type="submit"
           disabled={busy}
         >
+          {busy && <span className="fa_spinner" aria-hidden="true" />}
           {busy ? "Working…" : token ? "Set password" : "Send"}
         </button>
 

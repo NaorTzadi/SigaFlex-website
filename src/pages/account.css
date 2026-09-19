@@ -46,6 +46,8 @@
   align-items: center;
   justify-content: center;
   align-self: center;
+  min-width: 36px;
+  min-height: 36px;
   padding: var(--fa-space-1);
   background: transparent;
   border: 0;
@@ -61,7 +63,7 @@
 }
 
 .account_reveal:focus-visible {
-  outline: var(--fa-border-width) solid var(--fa-color-accent);
+  outline: 2px solid var(--fa-color-focus);
   outline-offset: 2px;
 }
 
@@ -90,6 +92,10 @@
 .account_input-invalid {
   border-width: 2px;
   border-color: var(--fa-color-danger);
+}
+
+.account_loading {
+  margin: var(--fa-space-8) 0 0;
 }
 
 .account_hint {
@@ -206,4 +212,12 @@
 .account_tab-current {
   border-bottom-color: var(--fa-color-accent);
   color: var(--fa-color-accent);
+}
+
+.account_tab:active {
+  background: var(--fa-color-surface-pressed);
+}
+
+.account_reveal:active {
+  background: var(--fa-color-surface-pressed);
 }

@@ -124,6 +124,11 @@ export default function CoverageMap() {
               <span className={`${className}_region_label`}>
                 {`${r.name}, ${STRENGTH_LABEL[r.strength]}, ${bytes(r.size)}, ${percentOfFile(r.size)} of the file`}
               </span>
+
+              {/* Drawn only where the bar becomes a column and there is room for it. */}
+              <span className={`${className}_region_name`} aria-hidden="true">
+                {r.name}
+              </span>
             </button>
           );
         })}

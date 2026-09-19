@@ -11,11 +11,13 @@
  * place is what a link is for — it can be opened in a new tab, copied, and
  * read out as a destination — and Routing does the scrolling when it arrives.
  *
- * It is not sticky. The first screen belongs to the hero.
+ * It is sticky, so on a page that is one long scroll the way out of a band is
+ * always reachable — and, being always on screen, it also says which band the
+ * reader is currently in. See useCurrentSection.
  */
 
 import { useEffect, useRef, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 
 import Icon from "../Icon/Icon";
 import { ROUTES } from "../../Routing";
@@ -32,6 +34,7 @@ const PRODUCT_MENU: Array<{ id: string; label: string }> = [
   { id: HOME_SECTIONS.PROBLEM, label: "The problem" },
   { id: HOME_SECTIONS.HOW_IT_WORKS, label: "How it works" },
   { id: HOME_SECTIONS.CAPABILITIES, label: "Capabilities" },
+  { id: HOME_SECTIONS.DEMO, label: "See it in action" },
   { id: HOME_SECTIONS.BEYOND, label: "Beyond analysis" }
 ];
 
@@ -41,12 +44,60 @@ const TOP_LEVEL: Array<{ id: string; label: string }> = [
   { id: HOME_SECTIONS.ANALYSTS, label: "For analysts" }
 ];
 
+const NAV_SECTIONS = [...PRODUCT_MENU, ...TOP_LEVEL].map((entry) => entry.id);
+
+function useCurrentSection(onHome: boolean): string {
+  const [current, setCurrent] = useState("");
+
+  useEffect(() => {
+    if (!onHome) {
+      setCurrent("");
+      return;
+    }
+
+    let frame = 0;
+
+    function measure() {
+      frame = 0;
+      const line = window.innerHeight / 3;
+      let found = "";
+      let deepest = -Infinity;
+
+      for (const id of NAV_SECTIONS) {
+        const box = document.getElementById(id)?.getBoundingClientRect();
+        if (!box || box.top > line || box.bottom <= 0 || box.top < deepest) continue;
+        deepest = box.top;
+        found = id;
+      }
+
+      setCurrent(found);
+    }
+
+    function onScroll() {
+      if (!frame) frame = window.requestAnimationFrame(measure);
+    }
+
+    measure();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [onHome]);
+
+  return current;
+}
+
 export default function Header() {
   const [open, setOpen] = useState(false);
   const [flyout, setFlyout] = useState(false);
   const productRef = useRef<HTMLLIElement>(null);
   const signedIn = useGlobal("signedIn");
   const accountEmail = useGlobal("accountEmail");
+  const current = useCurrentSection(useLocation().pathname === ROUTES.HOME);
+  const inProduct = PRODUCT_MENU.some((entry) => entry.id === current);
 
   /* An open flyout closes on Escape and on a click anywhere outside it. */
   useEffect(() => {
@@ -58,12 +109,17 @@ export default function Header() {
     function onPointer(event: MouseEvent) {
       if (!productRef.current?.contains(event.target as Node)) setFlyout(false);
     }
+    function onFocus(event: FocusEvent) {
+      if (!productRef.current?.contains(event.target as Node)) setFlyout(false);
+    }
 
     document.addEventListener("keydown", onKey);
     document.addEventListener("mousedown", onPointer);
+    document.addEventListener("focusin", onFocus);
     return () => {
       document.removeEventListener("keydown", onKey);
       document.removeEventListener("mousedown", onPointer);
+      document.removeEventListener("focusin", onFocus);
     };
   }, [flyout]);
 
@@ -81,36 +137,56 @@ export default function Header() {
           {SITE_NAME}
         </Link>
 
+        <div className={`${className}_actions`}>
+          <Link
+            className="fa_button fa_button-primary fa_button-small"
+            to={ROUTES.DOWNLOAD}
+            onClick={closeMenus}
+          >
+            Download
+          </Link>
+        </div>
+
         <button
           className={`${className}_toggle`}
           type="button"
+          aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
           aria-controls="header-nav"
           onClick={() => setOpen((wasOpen) => !wasOpen)}
         >
           <Icon name={open ? "close" : "menu"} size="1.125em" />
-          {open ? "Close" : "Menu"}
+          <span className={`${className}_toggle_label`}>{open ? "Close" : "Menu"}</span>
         </button>
 
         <nav className={cx(`${className}_nav`, open && `${className}_nav-open`)} id="header-nav" aria-label="Main">
           <ul className={`${className}_nav_list`}>
             <li className={`${className}_nav_item`} ref={productRef}>
               <button
-                className={`${className}_nav_button`}
+                className={cx(`${className}_nav_button`, inProduct && `${className}_nav_button-active`)}
                 type="button"
                 aria-expanded={flyout}
                 aria-controls="header-flyout"
                 onClick={() => setFlyout((wasOpen) => !wasOpen)}
               >
                 Product
+                <Icon
+                  className={cx(`${className}_chevron`, flyout && `${className}_chevron-open`)}
+                  name="arrowDown"
+                  size="0.75em"
+                />
               </button>
 
               <ul className={cx(`${className}_flyout`, flyout && `${className}_flyout-open`)} id="header-flyout">
                 {PRODUCT_MENU.map((entry) => (
                   <li key={entry.id}>
                     <Link
-                      className={`${className}_flyout_link`}
+                      className={cx(
+                        `${className}_flyout_link`,
+                        entry.id === current && `${className}_flyout_link-current`
+                      )}
                       to={`${ROUTES.HOME}#${entry.id}`}
+                      aria-current={entry.id === current ? "location" : undefined}
                       onClick={closeMenus}
                     >
                       {entry.label}
@@ -123,14 +199,28 @@ export default function Header() {
             {TOP_LEVEL.map((entry) => (
               <li className={`${className}_nav_item`} key={entry.id}>
                 <Link
-                  className={`${className}_nav_link`}
+                  className={cx(
+                    `${className}_nav_link`,
+                    entry.id === current && `${className}_nav_link-current`
+                  )}
                   to={`${ROUTES.HOME}#${entry.id}`}
+                  aria-current={entry.id === current ? "location" : undefined}
                   onClick={closeMenus}
                 >
                   {entry.label}
                 </Link>
               </li>
             ))}
+
+            <li className={`${className}_nav_item`}>
+              <NavLink
+                className={({ isActive }) => cx(`${className}_nav_link`, isActive && `${className}_nav_link-active`)}
+                to={ROUTES.PRICING}
+                onClick={closeMenus}
+              >
+                Pricing
+              </NavLink>
+            </li>
 
             {signedIn && (
               <li className={`${className}_nav_item`}>
@@ -169,16 +259,6 @@ export default function Header() {
               )}
             </li>
           </ul>
-
-          <div className={`${className}_actions`}>
-            <Link
-              className="fa_button fa_button-primary fa_button-small"
-              to={ROUTES.DOWNLOAD}
-              onClick={closeMenus}
-            >
-              Download
-            </Link>
-          </div>
         </nav>
       </div>
     </header>

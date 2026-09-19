@@ -87,7 +87,9 @@ export default function FileProbe() {
       onDrop={onDrop}
     >
       <div className={`${className}_strip`}>
-        <span className={`${className}_bytes`}>{result ? result.hex : SAMPLE}</span>
+        <span className={cx(`${className}_bytes`, result && `${className}_bytes-read`)}>
+          {result ? result.hex : SAMPLE}
+        </span>
         <span className={`${className}_arrow`} aria-hidden="true">
           →
         </span>

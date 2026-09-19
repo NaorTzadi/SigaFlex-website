@@ -102,14 +102,13 @@
   clip-path: inset(50%);
 }
 
-.fileprobe_input:focus-visible + .fileprobe_privacy {
-  outline: none;
-}
-
-.fileprobe_pick:focus-within,
-.fileprobe_input:focus-visible ~ .fileprobe_pick {
+/* The input is the control and the label is what is drawn, so the ring has to
+   be put on the label. It is the one selector that can reach backwards. */
+.fileprobe_prompt:has(.fileprobe_input:focus-visible) .fileprobe_pick {
   outline: 2px solid var(--fa-color-focus);
   outline-offset: 2px;
+  border-radius: var(--fa-radius-sm);
+  text-decoration: underline;
 }
 
 .fileprobe_privacy {
@@ -146,4 +145,13 @@
 
 .fileprobe_limit {
   color: var(--fa-color-text-muted);
+}
+
+.fileprobe_bytes-read::after {
+  display: none;
+}
+
+.fileprobe_bytes-read {
+  color: var(--fa-color-text);
+  border-color: var(--fa-color-border-strong);
 }

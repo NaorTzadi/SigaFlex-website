@@ -307,3 +307,43 @@
 .formatfinder_card_note svg {
   color: var(--fa-color-info);
 }
+
+.formatfinder_group:active {
+  background: var(--fa-color-surface-pressed);
+  transform: translateY(0);
+}
+
+.formatfinder_badge:active,
+.formatfinder_card_close:active {
+  background: var(--fa-color-surface-pressed);
+}
+
+.formatfinder_card_close {
+  transition: background var(--fa-duration-fast) var(--fa-easing),
+    color var(--fa-duration-fast) var(--fa-easing);
+}
+
+.formatfinder_field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.formatfinder_field_glyph {
+  position: absolute;
+  top: 50%;
+  left: var(--fa-space-3);
+  margin-top: -0.5em;
+  color: var(--fa-color-text-muted);
+  pointer-events: none;
+  transition: color var(--fa-duration-fast) var(--fa-easing);
+}
+
+.formatfinder_field:focus-within .formatfinder_field_glyph {
+  color: var(--fa-color-accent);
+}
+
+.formatfinder_field .formatfinder_input {
+  width: 100%;
+  padding-left: calc(var(--fa-space-6) + var(--fa-space-3));
+}

@@ -144,9 +144,11 @@ export default function Register() {
         termsAccepted: values.terms
       });
       setServerMessage(
-        result.confirmationRequired
-          ? "Check your e-mail to confirm the address."
-          : "Your account is ready."
+        !result.confirmationRequired
+          ? "Your account is ready."
+          : result.alreadyPending
+            ? "That address is already waiting to be confirmed. We have sent the link again — check your e-mail."
+            : "Check your e-mail to confirm the address."
       );
       setDone(true);
     } catch (error) {
@@ -290,6 +292,7 @@ export default function Register() {
           type="submit"
           disabled={busy}
         >
+          {busy && <span className="fa_spinner" aria-hidden="true" />}
           {busy ? "Registering…" : "Register"}
         </button>
 
@@ -377,7 +380,7 @@ function Field({ name, type, autoComplete, value, error, hint, meter, onChange }
           <button
             className={`${className}_reveal`}
             type="button"
-            aria-label="Show password"
+            aria-label={revealed ? "Hide password" : "Show password"}
             aria-pressed={revealed}
             aria-controls={id}
             onClick={() => setRevealed((wasRevealed) => !wasRevealed)}

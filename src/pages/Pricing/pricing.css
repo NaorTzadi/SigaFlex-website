@@ -1,0 +1,153 @@
+.pricing_plans {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--fa-space-4);
+  margin: var(--fa-space-8) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pricing_plan {
+  display: flex;
+  flex-direction: column;
+  gap: var(--fa-space-4);
+  padding: var(--fa-space-6);
+  background: var(--fa-color-surface);
+  border: var(--fa-border-width) solid var(--fa-color-border);
+  border-radius: var(--fa-radius-lg);
+  box-shadow: var(--fa-shadow-inset-top);
+  transition: border-color var(--fa-duration-normal) var(--fa-easing),
+    background var(--fa-duration-normal) var(--fa-easing);
+}
+
+.pricing_plan:hover {
+  background: var(--fa-color-surface-raised);
+  border-color: var(--fa-color-border-strong);
+}
+
+.pricing_plan-open {
+  background:
+    radial-gradient(26rem 12rem at 100% 0%, var(--fa-bloom-accent), transparent 70%),
+    var(--fa-color-surface);
+  border-color: var(--fa-color-accent);
+}
+
+.pricing_plan-open:hover {
+  border-color: var(--fa-color-accent);
+}
+
+/* The name, and whether the plan can be had today, on one line: the reader is
+   scanning three of these side by side. */
+.pricing_name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--fa-space-3);
+  margin: 0;
+  font-size: var(--fa-text-lg);
+}
+
+.pricing_price {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--fa-space-1) var(--fa-space-2);
+  margin: 0;
+  padding-bottom: var(--fa-space-4);
+  border-bottom: var(--fa-border-width) solid var(--fa-color-border);
+}
+
+.pricing_amount {
+  color: var(--fa-color-accent);
+  font-family: var(--fa-font-mono);
+  font-size: var(--fa-text-2xl);
+  font-weight: 600;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.pricing_period {
+  color: var(--fa-color-text-muted);
+  font-size: var(--fa-text-sm);
+}
+
+.pricing_purpose {
+  margin: 0;
+  color: var(--fa-color-text-secondary);
+  font-size: var(--fa-text-sm);
+}
+
+.pricing_points {
+  display: flex;
+  flex-direction: column;
+  gap: var(--fa-space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--fa-text-sm);
+}
+
+.pricing_point {
+  display: flex;
+  align-items: baseline;
+  gap: var(--fa-space-2);
+}
+
+.pricing_point svg {
+  flex: none;
+  color: var(--fa-color-success);
+}
+
+.pricing_action {
+  width: 100%;
+  margin-top: auto;
+}
+
+.pricing_answer {
+  display: flex;
+  align-items: baseline;
+  gap: var(--fa-space-2);
+  margin: 0;
+  color: var(--fa-color-text-muted);
+  font-size: var(--fa-text-xs);
+}
+
+.pricing_answer svg {
+  flex: none;
+  color: var(--fa-color-info);
+}
+
+.pricing_answer:empty {
+  display: none;
+}
+
+/* The answer arrives rather than appearing: a card that suddenly grows by a
+   line reads as a glitch. The children carry it, not the paragraph -- the
+   paragraph is always in the page and only its contents come and go. */
+.pricing_answer > * {
+  animation: pricing_answer_in var(--fa-duration-normal) var(--fa-easing);
+}
+
+@keyframes pricing_answer_in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+.pricing_ask {
+  color: var(--fa-color-text-muted);
+  font-size: var(--fa-text-sm);
+}
+
+@media (min-width: 640px) {
+  .pricing_plans {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .pricing_plans {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

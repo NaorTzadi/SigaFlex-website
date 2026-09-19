@@ -18,7 +18,13 @@ import { Link } from "react-router-dom";
 
 import Icon from "../Icon/Icon";
 import { ROUTES } from "../../Routing";
-import { HOME_SECTIONS, SITE_NAME, TAGLINE } from "../../core/Constants";
+import {
+  EXTERNAL_LINKS,
+  HOME_SECTIONS,
+  SITE_NAME,
+  SITE_OPERATOR,
+  TAGLINE
+} from "../../core/Constants";
 import "./footer.css";
 
 const className = "footer";
@@ -46,9 +52,13 @@ const COLUMNS: Array<{ title: string; entries: Entry[] }> = [
     title: "Get it",
     entries: [
       { to: ROUTES.DOWNLOAD, label: "Download" },
-      { to: ROUTES.REGISTER, label: "Register" },
-      { to: ROUTES.CONTACT, label: "Contact" }
+      { to: ROUTES.PRICING, label: "Pricing" },
+      { to: ROUTES.REGISTER, label: "Register" }
     ]
+  },
+  {
+    title: "Support",
+    entries: [{ to: ROUTES.CONTACT, label: "Contact us" }]
   },
   {
     title: "Legal",
@@ -70,6 +80,19 @@ export default function Footer() {
             {SITE_NAME}
           </p>
           <p className={`${className}_brand_line`}>{TAGLINE}</p>
+
+          <p className={`${className}_social`}>
+            <a
+              className={`${className}_social_link`}
+              href={EXTERNAL_LINKS.YOUTUBE_CHANNEL}
+              target="_blank"
+              rel="noreferrer noopener"
+              title="YouTube channel"
+              aria-label="YouTube channel (opens in a new tab)"
+            >
+              <Icon name="youtube" size="1.25em" />
+            </a>
+          </p>
         </div>
 
         <nav className={`${className}_nav`} aria-label="Footer">
@@ -91,7 +114,12 @@ export default function Footer() {
           </ul>
         </nav>
 
-        <p className={`${className}_note`}>{SITE_NAME} — Windows desktop. Read-only, offline.</p>
+        <p className={`${className}_note`}>
+          <span>
+            © {new Date().getFullYear()} {SITE_OPERATOR}
+          </span>
+          <span>{SITE_NAME} — Windows desktop. Read-only, offline.</span>
+        </p>
       </div>
     </footer>
   );

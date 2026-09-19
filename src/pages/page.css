@@ -1,7 +1,8 @@
 /*
- * Shared by the routed pages (Download, Licenses, NotFound), which are all the
- * same shape: a title, a lead, and a column of prose. One stylesheet instead of
- * three identical ones; a page that outgrows it gets its own.
+ * Shared by the routed pages (Download, Pricing, Contact, Privacy, Terms,
+ * Licenses, NotFound), which are all the same shape: a title, a lead, and a
+ * column of prose. One stylesheet instead of seven identical ones; a page that
+ * outgrows it gets its own beside this one.
  */
 
 .page {
@@ -37,8 +38,13 @@
 
 /* Spoken and shown: a link leaving the site says so before it is followed. */
 .page_external_note {
+  /* inline-block so the link's underline stops at the link's own words; the
+     space before it has to be a margin, because a box swallows it. */
+  display: inline-block;
+  margin-left: var(--fa-space-1);
   color: var(--fa-color-text-muted);
   font-size: var(--fa-text-sm);
+  text-decoration: none;
 }
 
 .page {
@@ -73,17 +79,151 @@
   font-size: var(--fa-text-sm);
 }
 
-.page_definitions {
-  display: grid;
-  gap: var(--fa-space-4);
-  margin: 0;
+/* A row of ways on from a page that has nothing else to offer. */
+.page_actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--fa-space-3);
+  margin-top: var(--fa-space-8);
 }
 
-.page_definition dt {
+@media (max-width: 639px) {
+  .page_actions .fa_button {
+    flex: 1 1 100%;
+  }
+}
+
+/* A jumped-to section stops below the fixed header with room to breathe, not
+   welded to it. `scroll-padding-top` on the root covers the header; this adds
+   the breathing space, and applies to a click on a contents link as well. */
+.page_block {
+  scroll-margin-top: calc(var(--fa-header-height) + var(--fa-space-6));
+}
+
+/* When a policy last changed. Stamped, not buried in the prose. */
+.page_meta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--fa-space-2);
+  margin: 0;
+  color: var(--fa-color-text-muted);
+  font-family: var(--fa-font-mono);
+  font-size: var(--fa-text-xs);
+  letter-spacing: 0.06em;
+}
+
+.page_meta svg {
+  color: var(--fa-color-accent);
+}
+
+/*
+ * An aside the reader has to take with the paragraph beside it: a build that is
+ * not out yet, a price that is not settled. One rule for all of them, because
+ * three pages were each drawing their own.
+ */
+.page_note {
+  display: flex;
+  align-items: baseline;
+  gap: var(--fa-space-3);
+  max-width: 52rem;
+  margin: var(--fa-space-6) 0 0;
+  padding: var(--fa-space-4);
+  background: var(--fa-color-surface);
+  border-left: 2px solid var(--fa-color-accent);
+  border-radius: var(--fa-radius-sm);
+  color: var(--fa-color-text-secondary);
+  font-size: var(--fa-text-sm);
+}
+
+.page_note svg {
+  flex: none;
+  color: var(--fa-color-accent);
+}
+
+/*
+ * A policy page: its contents down one side, the prose down the other. The
+ * contents come first in the document so a keyboard reaches them without
+ * walking the whole page, and the grid puts them back where they belong.
+ */
+.page_layout {
+  display: grid;
+  gap: var(--fa-space-8);
+  align-items: start;
+  margin-top: var(--fa-space-8);
+}
+
+.page_prose {
+  min-width: 0;
+}
+
+/* The first block under the contents does not need the gap twice. */
+.page_prose > .page_block:first-child {
+  margin-top: 0;
+}
+
+@media (min-width: 1024px) {
+  .page_layout {
+    grid-template-columns: minmax(0, 16rem) minmax(0, 1fr);
+    gap: var(--fa-space-12);
+  }
+}
+
+/*
+ * A row of short entries that are read by scanning rather than by reading:
+ * what to write to us about, what ships inside the application. A title and a
+ * line each -- not a link, so none of them lifts to the pointer.
+ */
+.page_cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: var(--fa-space-4);
+  margin: var(--fa-space-6) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.page_card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--fa-space-1);
+  padding: var(--fa-space-6);
+  background: var(--fa-color-surface);
+  border: var(--fa-border-width) solid var(--fa-color-border);
+  border-radius: var(--fa-radius-lg);
+  box-shadow: var(--fa-shadow-inset-top);
+}
+
+.page_card_title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--fa-space-2);
+  margin: 0;
+  font-size: var(--fa-text-base);
   font-weight: 600;
 }
 
-.page_definition dd {
-  margin: var(--fa-space-1) 0 0;
+.page_card_body {
+  margin: 0;
+  max-width: none;
   color: var(--fa-color-text-muted);
+  font-size: var(--fa-text-sm);
+}
+
+/* The well runs the width of the column it sits in rather than stopping at the
+   prose measure: it is a reserved space, not a paragraph. */
+.page_placeholder {
+  max-width: none;
+}
+
+.page_eyebrow {
+  margin: 0 0 var(--fa-space-4);
+}
+
+/* A page that is not here yet. It holds the height a page would have, so the
+   footer does not ride up under the header and drop again a moment later. */
+.page_waiting {
+  display: flex;
+  align-items: flex-start;
+  min-height: 50vh;
 }

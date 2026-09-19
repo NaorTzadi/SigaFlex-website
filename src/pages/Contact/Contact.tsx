@@ -1,9 +1,14 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import Icon from "../../components/Icon/Icon";
 import { CONTACT_EMAIL, PRODUCT_NAME } from "../../core/Constants";
+import { cx } from "../../core/Utility";
 import { ROUTES } from "../../Routing";
 import "../page.css";
+import "./contact.css";
+
+const className = "contact";
 
 const REASONS: Array<{ title: string; body: string }> = [
   {
@@ -25,32 +30,65 @@ const REASONS: Array<{ title: string; body: string }> = [
 ];
 
 export default function Contact() {
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    if (!copied) return;
+    const timer = window.setTimeout(() => setCopied(false), 2400);
+    return () => window.clearTimeout(timer);
+  }, [copied]);
+
+  function copy() {
+    setCopied(true);
+    void navigator.clipboard?.writeText(CONTACT_EMAIL).catch(() => setCopied(false));
+  }
+
   return (
-    <article className="page">
+    <article className={`page ${className}`}>
+      <p className="page_eyebrow fa_eyebrow">Support</p>
       <h1 className="page_title">Contact</h1>
       <p className="page_lead">
         One address, read by a person. There is no ticket system and no chatbot.
       </p>
 
-      <p className="page_block">
+      <div className={`${className}_actions`}>
         <a className="fa_button fa_button-primary" href={`mailto:${CONTACT_EMAIL}`}>
-          <Icon name="export" size="1em" />
-          {CONTACT_EMAIL}
+          <Icon name="mail" size="1em" />
+          Email us
         </a>
-      </p>
+
+        {/* The address is drawn, not only linked: not everyone reads this in a
+            browser that has a mail client behind it. */}
+        <span className={`${className}_address`}>
+          <code className={`${className}_address_value`}>{CONTACT_EMAIL}</code>
+          <button
+            className={cx(`${className}_copy`, copied && `${className}_copy-done`)}
+            type="button"
+            onClick={copy}
+            title={copied ? "Copied" : "Copy email address"}
+            aria-label={copied ? "Copied" : "Copy email address"}
+          >
+            <Icon name={copied ? "success" : "clipboard"} size="1.15em" />
+          </button>
+        </span>
+
+        <span className="fa_hidden" role="status">
+          {copied ? "Address copied to the clipboard" : ""}
+        </span>
+      </div>
 
       <section className="page_block" aria-labelledby="contact-reasons">
         <h2 className="page_block_title" id="contact-reasons">
           What to write about
         </h2>
-        <dl className="page_definitions">
+        <ul className="page_cards">
           {REASONS.map((reason) => (
-            <div className="page_definition" key={reason.title}>
-              <dt>{reason.title}</dt>
-              <dd>{reason.body}</dd>
-            </div>
+            <li className="page_card" key={reason.title}>
+              <p className="page_card_title">{reason.title}</p>
+              <p className="page_card_body">{reason.body}</p>
+            </li>
           ))}
-        </dl>
+        </ul>
       </section>
 
       <section className="page_block" aria-labelledby="contact-files">

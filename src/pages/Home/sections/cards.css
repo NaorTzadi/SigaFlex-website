@@ -52,15 +52,19 @@
   font-weight: 500;
 }
 
-.cards_card:hover {
+/* Only a card that goes somewhere answers the pointer: a lift on a card that
+   cannot be clicked is an invitation to click it. */
+.cards_card-link:hover {
   background: var(--fa-color-surface-raised);
-  border-color: var(--fa-color-border-strong);
+  border-color: var(--fa-color-accent);
   box-shadow: var(--fa-shadow-md), var(--fa-shadow-inset-top);
   transform: translateY(-3px);
 }
 
-.cards_card-link:hover {
-  border-color: var(--fa-color-accent);
+.cards_card-link:active {
+  background: var(--fa-color-surface-pressed);
+  box-shadow: var(--fa-shadow-inset-top);
+  transform: translateY(-1px);
 }
 
 .cards_card-link:hover .cards_go svg {

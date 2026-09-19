@@ -17,6 +17,7 @@ import Capabilities from "./sections/Capabilities";
 import Cards from "./sections/Cards";
 import type { Card } from "./sections/Cards";
 import ContainmentTree from "./sections/ContainmentTree";
+import Demo from "./sections/Demo";
 import CoverageMap from "./sections/CoverageMap";
 import FormatFinder from "./sections/FormatFinder";
 import Hero from "./sections/Hero";
@@ -62,6 +63,12 @@ export default function Home() {
       title: "Download",
       body: "Windows desktop. Runs offline, opens files read-only, writes nothing back.",
       to: ROUTES.DOWNLOAD
+    },
+    {
+      glyph: "tag",
+      title: "Pricing",
+      body: "Free while it is in development, and the shape of the plans that come after.",
+      to: ROUTES.PRICING
     },
     {
       glyph: "seal",
@@ -116,6 +123,14 @@ export default function Home() {
           lead="Display, Readable, Raw, Patterns, Disassembly — all over the same bytes."
         >
           <Capabilities />
+        </Section>
+        <Section
+          id={HOME_SECTIONS.DEMO}
+          level="h3"
+          title="See it in action"
+          lead="A recording of the window doing all of this to real files, rather than a description of it."
+        >
+          <Demo />
         </Section>
       </Section>
 

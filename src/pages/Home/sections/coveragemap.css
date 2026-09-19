@@ -90,6 +90,10 @@
   white-space: nowrap;
 }
 
+.coveragemap_region_name {
+  display: none;
+}
+
 .coveragemap_detail {
   display: grid;
   gap: var(--fa-space-2);
@@ -151,8 +155,28 @@
   }
 
   .coveragemap_region {
+    display: flex;
+    align-items: center;
     flex-basis: auto;
-    min-height: 22px;
+    min-height: 2rem;
+    padding-inline: var(--fa-space-3);
+  }
+
+  /* A column of unlabelled colours says nothing, and there is width here for
+     the name that the horizontal bar has no room for. */
+  .coveragemap_region_name {
+    display: block;
+    overflow: hidden;
+    color: var(--fa-color-text);
+    font-size: var(--fa-text-xs);
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .coveragemap_region-container .coveragemap_region_name {
+    color: var(--fa-color-accent-text);
+    font-weight: 600;
   }
 }
 
@@ -173,4 +197,16 @@
 
 .coveragemap_detail_row {
   font-variant-numeric: tabular-nums;
+}
+
+.coveragemap_region:active {
+  filter: brightness(0.9);
+}
+
+@media (min-width: 640px) {
+  .coveragemap_detail_row {
+    grid-template-columns: 10rem minmax(0, 1fr);
+    gap: var(--fa-space-4);
+    align-items: baseline;
+  }
 }

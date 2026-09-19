@@ -27,6 +27,10 @@ export default function Login() {
   const [revealed, setRevealed] = useState(false);
   const [problem, setProblem] = useState("");
   const [busy, setBusy] = useState(false);
+  /* The password was right but the address was never confirmed: the only page
+     that can offer another link, since this reader cannot get a session. */
+  const [unconfirmed, setUnconfirmed] = useState(false);
+  const [resent, setResent] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -41,6 +45,8 @@ export default function Login() {
   async function submit(event: FormEvent) {
     event.preventDefault();
     setProblem("");
+    setUnconfirmed(false);
+    setResent(false);
 
     if (!isEmail(email)) {
       setProblem("Enter your e-mail address.");
@@ -65,12 +71,28 @@ export default function Login() {
       if (error instanceof ServerBridge.ServerError && error.status === 401) {
         /* One sentence for every refusal the server can give. */
         setProblem("That e-mail address and password do not match an account.");
+      } else if (error instanceof ServerBridge.ServerError && error.status === 403) {
+        /* The server owns the wording; the page only adds the way out. */
+        setProblem(error.message);
+        setUnconfirmed(true);
       } else if (error instanceof ServerBridge.ServerError && error.status === 423) {
         /* The server owns the wait, so it words the sentence. */
         setProblem(error.message);
       } else {
         setProblem("The server could not be reached. Try again in a moment.");
       }
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function resend() {
+    setBusy(true);
+    try {
+      await ServerBridge.resendConfirmation(email);
+      setResent(true);
+    } catch {
+      setProblem("The server could not be reached. Try again in a moment.");
     } finally {
       setBusy(false);
     }
@@ -90,6 +112,24 @@ export default function Login() {
             </>
           )}
         </p>
+
+        {unconfirmed && (
+          <p className="account_note">
+            <Icon name="mail" size="1em" />
+            {resent ? (
+              "Sent. The link expires in 24 hours."
+            ) : (
+              <button
+                className="fa_button fa_button-small"
+                type="button"
+                disabled={busy}
+                onClick={() => void resend()}
+              >
+                Resend confirmation email
+              </button>
+            )}
+          </p>
+        )}
 
         <div className="account_field">
           <label className="account_label" htmlFor="login-email">
@@ -114,7 +154,7 @@ export default function Login() {
             <button
               className="account_reveal"
               type="button"
-              aria-label="Show password"
+              aria-label={revealed ? "Hide password" : "Show password"}
               aria-pressed={revealed}
               aria-controls="login-password"
               onClick={() => setRevealed((wasRevealed) => !wasRevealed)}
@@ -138,6 +178,7 @@ export default function Login() {
           type="submit"
           disabled={busy}
         >
+          {busy && <span className="fa_spinner" aria-hidden="true" />}
           {busy ? "Signing in…" : "Sign in"}
         </button>
 
