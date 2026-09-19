@@ -46,7 +46,11 @@
 }
 
 .register_reveal {
-  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  padding: var(--fa-space-1);
   background: transparent;
   border: 0;
   border-radius: var(--fa-radius-sm);
@@ -56,8 +60,13 @@
 }
 
 .register_reveal:hover {
+  background: var(--fa-color-surface-raised);
   color: var(--fa-color-accent-strong);
-  text-decoration: underline;
+}
+
+.register_reveal:focus-visible {
+  outline: var(--fa-border-width) solid var(--fa-color-accent);
+  outline-offset: 2px;
 }
 
 .register_hint,

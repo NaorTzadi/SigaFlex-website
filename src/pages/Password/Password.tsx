@@ -61,7 +61,7 @@ export default function Password() {
       setOutcome({
         good: true,
         message:
-          "If that address has an account, a link is on its way. It is good for thirty minutes."
+          "If that address has an account, a link is on its way. It expires in 30 minutes."
       });
     } catch {
       setProblem("The server could not be reached. Try again in a moment.");
@@ -100,7 +100,7 @@ export default function Password() {
 
   if (outcome) {
     return (
-      <article className="page account">
+      <article className="page account_page">
         <h1 className="page_title">{outcome.good ? "Done" : "That link is no good"}</h1>
         <div
           className={cx("account_card", "account_outcome", outcome.good ? "account_outcome-good" : "account_outcome-bad")}
@@ -120,13 +120,13 @@ export default function Password() {
   }
 
   return (
-    <article className="page account">
+    <article className="page account_page">
       <p className="account_eyebrow fa_eyebrow">Account</p>
       <h1 className="page_title">{token ? "Choose a new password" : "Reset your password"}</h1>
       <p className="page_lead">
         {token
-          ? "Setting it signs out every device that used the old one."
-          : "Tell us the address on the account and we will send a link."}
+          ? "Every device signed in with the old password will be signed out."
+          : "We will e-mail you a link."}
       </p>
 
       <form className="account_card" onSubmit={token ? setNewPassword : askForLink} noValidate>
@@ -148,11 +148,12 @@ export default function Password() {
               <button
                 className="account_reveal"
                 type="button"
+                aria-label="Show password"
                 aria-pressed={revealed}
                 aria-controls="password-new"
                 onClick={() => setRevealed((wasRevealed) => !wasRevealed)}
               >
-                {revealed ? "Hide" : "Show"}
+                <Icon name={revealed ? "eyeOff" : "eye"} size="1.25em" />
               </button>
             </div>
             <p className="account_hint" id="password-new-hint">
@@ -191,15 +192,15 @@ export default function Password() {
           type="submit"
           disabled={busy}
         >
-          {busy ? "Working…" : token ? "Set password" : "Send the link"}
+          {busy ? "Working…" : token ? "Set password" : "Send"}
         </button>
 
-        <p className="account_note">
-          <Icon name="info" size="0.875em" />
-          {token
-            ? "This link works once."
-            : "The same answer comes back whether or not that address has an account."}
-        </p>
+        {token && (
+          <p className="account_note">
+            <Icon name="info" size="0.875em" />
+            This link works once.
+          </p>
+        )}
       </form>
     </article>
   );

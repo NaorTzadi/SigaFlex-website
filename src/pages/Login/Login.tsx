@@ -52,7 +52,7 @@ export default function Login() {
     }
 
     if (!ServerBridge.isConfigured()) {
-      setProblem("No server is configured for this site yet, so signing in is not possible.");
+      setProblem("No server is configured for this site yet.");
       return;
     }
 
@@ -64,7 +64,10 @@ export default function Login() {
     } catch (error) {
       if (error instanceof ServerBridge.ServerError && error.status === 401) {
         /* One sentence for every refusal the server can give. */
-        setProblem("Those details did not work. If you have tried several times, wait a few minutes.");
+        setProblem("That e-mail address and password do not match an account.");
+      } else if (error instanceof ServerBridge.ServerError && error.status === 423) {
+        /* The server owns the wait, so it words the sentence. */
+        setProblem(error.message);
       } else {
         setProblem("The server could not be reached. Try again in a moment.");
       }
@@ -76,7 +79,7 @@ export default function Login() {
   return (
     <>
       <h1 className="page_title">Sign in</h1>
-      <p className="page_lead">For the site. The application never asks you to.</p>
+      <p className="page_lead">This account is for the site. The application never asks you to sign in.</p>
 
       <form className="account_card" onSubmit={submit} noValidate>
         <p className="account_error" ref={problemRef} tabIndex={-1} role="alert">
@@ -111,11 +114,12 @@ export default function Login() {
             <button
               className="account_reveal"
               type="button"
+              aria-label="Show password"
               aria-pressed={revealed}
               aria-controls="login-password"
               onClick={() => setRevealed((wasRevealed) => !wasRevealed)}
             >
-              {revealed ? "Hide" : "Show"}
+              <Icon name={revealed ? "eyeOff" : "eye"} size="1.25em" />
             </button>
           </div>
           <input
@@ -138,7 +142,7 @@ export default function Login() {
         </button>
 
         <p className="account_links">
-          <Link to={ROUTES.PASSWORD}>Forgotten your password?</Link>
+          <Link to={ROUTES.PASSWORD}>Forgot your password?</Link>
         </p>
       </form>
     </>

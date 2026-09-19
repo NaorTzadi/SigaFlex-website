@@ -22,8 +22,8 @@ type State = "working" | "confirmed" | "spent" | "missing" | "unreachable";
 
 const MESSAGE: Record<Exclude<State, "working">, string> = {
   confirmed: "Your address is confirmed. You can sign in.",
-  spent: "That link has already been used, or it has run out. Signing in will offer a new one.",
-  missing: "That address is incomplete: there is no confirmation token in it.",
+  spent: "That link has already been used or expired. Sign in to get a new one.",
+  missing: "That link is incomplete: it carries no confirmation token.",
   unreachable: "The server could not be reached. Try the link again in a moment."
 };
 
@@ -63,7 +63,7 @@ export default function Confirm() {
   const good = state === "confirmed";
 
   return (
-    <article className="page account">
+    <article className="page account_page">
       <p className="account_eyebrow fa_eyebrow">Account</p>
       <h1 className="page_title">{state === "working" ? "Confirming…" : good ? "Confirmed" : "Not confirmed"}</h1>
 

@@ -11,7 +11,7 @@ export default function NotFound() {
   return (
     <article className="page">
       <h1 className="page_title">Page not found</h1>
-      <p className="page_lead">That address does not exist on this site.</p>
+      <p className="page_lead">That page does not exist on this site.</p>
       <p>
         <Link className="fa_button" to={ROUTES.HOME}>
           Back to the home page

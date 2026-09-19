@@ -164,6 +164,17 @@
   display: none;
 }
 
+/* Asking for an account is not a mistake the reader made: same slot, quieter voice. */
+.reviews_error-ask {
+  align-items: baseline;
+  color: var(--fa-color-text-secondary);
+  font-weight: 400;
+}
+
+.reviews_error-ask svg {
+  color: var(--fa-color-info);
+}
+
 .reviews_actions {
   display: flex;
   flex-wrap: wrap;

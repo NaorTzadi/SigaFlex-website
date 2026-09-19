@@ -203,7 +203,15 @@ export default function Register() {
           <ul className={`${className}_summary_list`}>
             {shownList.map((key) => (
               <li key={key}>
-                <a href={"#register-" + key}>{shown[key]}</a>
+                <a
+                  href={"#register-" + key}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    document.getElementById("register-" + key)?.focus();
+                  }}
+                >
+                  {shown[key]}
+                </a>
               </li>
             ))}
           </ul>
@@ -294,7 +302,7 @@ export default function Register() {
 
       <aside className={`${className}_aside`} aria-labelledby="register-aside-heading">
         <h2 className={`${className}_aside_title`} id="register-aside-heading">
-          Before you do
+          Before you register
         </h2>
 
         <ul className={`${className}_notes`}>
@@ -326,10 +334,29 @@ type FieldProps = {
   value: string;
   error?: string;
   hint?: string;
-  /** Draws how far the value is from the minimum length. Password only. */
+  /** Draws how strong the value looks. Password only. */
   meter?: boolean;
   onChange: (value: string) => void;
 };
+
+/*
+ * How strong the password looks, from nothing to one. Below the minimum length
+ * the bar only tracks progress towards that minimum and stays in its first
+ * third, so it can never read as decent while the form is about to reject it.
+ * Past the minimum, length alone called "111111111111" strong, so how many
+ * different characters it uses and how many kinds of character it mixes carry
+ * the weight; the breach list stays the server's to answer with.
+ */
+function strengthOf(password: string): number {
+  if (!password) return 0;
+  if (password.length < PASSWORD_MIN_LENGTH) return password.length / PASSWORD_MIN_LENGTH / 3;
+
+  const distinct = Math.min(new Set(password).size / 8, 1);
+  const kinds =
+    [/[a-z]/, /[A-Z]/, /[0-9]/, /[^A-Za-z0-9]/].filter((kind) => kind.test(password)).length / 4;
+
+  return 0.2 + 0.5 * distinct + 0.3 * kinds;
+}
 
 function Field({ name, type, autoComplete, value, error, hint, meter, onChange }: FieldProps) {
   const [revealed, setRevealed] = useState(false);
@@ -337,7 +364,7 @@ function Field({ name, type, autoComplete, value, error, hint, meter, onChange }
   const hintId = id + "-hint";
   const errorId = id + "-error";
   const described = [hint ? hintId : "", error ? errorId : ""].filter(Boolean).join(" ");
-  const reached = Math.min(value.length / PASSWORD_MIN_LENGTH, 1);
+  const strength = strengthOf(value);
 
   return (
     <div className={`${className}_field`}>
@@ -350,11 +377,12 @@ function Field({ name, type, autoComplete, value, error, hint, meter, onChange }
           <button
             className={`${className}_reveal`}
             type="button"
+            aria-label="Show password"
             aria-pressed={revealed}
             aria-controls={id}
             onClick={() => setRevealed((wasRevealed) => !wasRevealed)}
           >
-            {revealed ? "Hide" : "Show"}
+            <Icon name={revealed ? "eyeOff" : "eye"} size="1.25em" />
           </button>
         )}
       </div>
@@ -377,11 +405,11 @@ function Field({ name, type, autoComplete, value, error, hint, meter, onChange }
         onChange={(event) => onChange(event.target.value)}
       />
 
-      {/* The length rule is already stated in the hint and enforced in the
-          error; the bar is the same fact, drawn. */}
+      {/* The length rule is stated in the hint and enforced in the error; the bar
+          answers the other question, which is whether the password is any good. */}
       {meter && (
-        <div className={cx(`${className}_meter`, reached === 1 && `${className}_meter-met`)} aria-hidden="true">
-          <span className={`${className}_meter_fill`} style={{ transform: `scaleX(${reached})` }} />
+        <div className={cx(`${className}_meter`, strength >= 0.75 && `${className}_meter-met`)} aria-hidden="true">
+          <span className={`${className}_meter_fill`} style={{ transform: `scaleX(${strength})` }} />
         </div>
       )}
 

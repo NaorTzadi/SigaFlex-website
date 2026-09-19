@@ -136,7 +136,7 @@ export default function Profile() {
       setEmailPassword("");
       setEmailNote({
         good: true,
-        message: "A confirmation link is on its way to the new address. The old one stays until it is followed."
+        message: "A confirmation link is on its way to the new address. The old one stays until you follow it."
       });
     } catch (error) {
       setEmailNote({ good: false, message: messageFor(error, "That password did not match.") });
@@ -177,7 +177,7 @@ export default function Profile() {
       const sent = await ServerBridge.resendConfirmation();
       setConfirmNote(
         sent
-          ? { good: true, message: "Sent. The link is good for twenty-four hours." }
+          ? { good: true, message: "Sent. The link expires in 24 hours." }
           : { good: true, message: "This address is already confirmed." }
       );
     } catch (error) {
@@ -294,7 +294,7 @@ export default function Profile() {
       {!account.confirmed && (
         <Block title="Confirm your address">
           <p className={`${className}_lead`}>
-            Until the link in the confirmation mail is followed, this address is unproven.
+            This address stays unconfirmed until you follow the link we sent it.
           </p>
           <Notice note={confirmNote} />
           <button
@@ -303,7 +303,7 @@ export default function Profile() {
             disabled={busy === "confirm"}
             onClick={() => void resend()}
           >
-            {busy === "confirm" ? "Sending…" : "Send the link again"}
+            {busy === "confirm" ? "Sending…" : "Send again"}
           </button>
         </Block>
       )}
@@ -348,12 +348,12 @@ export default function Profile() {
           </div>
 
           <button className="fa_button" type="submit" disabled={busy === "email"}>
-            {busy === "email" ? "Sending…" : "Change the address"}
+            {busy === "email" ? "Sending…" : "Change address"}
           </button>
 
           <p className="account_note">
             <Icon name="info" size="0.875em" />
-            The new address has to answer a confirmation mail before it replaces the old one.
+            The new address replaces the old one once it follows its confirmation link.
           </p>
         </form>
       </Block>
@@ -384,11 +384,12 @@ export default function Profile() {
               <button
                 className="account_reveal"
                 type="button"
+                aria-label="Show password"
                 aria-pressed={revealed}
                 aria-controls="profile-new-password"
                 onClick={() => setRevealed((wasRevealed) => !wasRevealed)}
               >
-                {revealed ? "Hide" : "Show"}
+                <Icon name={revealed ? "eyeOff" : "eye"} size="1.25em" />
               </button>
             </div>
             <p className="account_hint" id="profile-new-password-hint">
@@ -406,7 +407,7 @@ export default function Profile() {
           </div>
 
           <button className="fa_button" type="submit" disabled={busy === "password"}>
-            {busy === "password" ? "Changing…" : "Change the password"}
+            {busy === "password" ? "Changing…" : "Change password"}
           </button>
         </form>
       </Block>
@@ -425,7 +426,7 @@ export default function Profile() {
             <p className={`${className}_review_body`}>{review.body}</p>
             <div className={`${className}_actions`}>
               <Link className="fa_button" to={`${ROUTES.HOME}#${HOME_SECTIONS.REVIEWS}`}>
-                Rewrite it
+                Rewrite
               </Link>
               <button
                 className="fa_button"
@@ -433,7 +434,7 @@ export default function Profile() {
                 disabled={busy === "review"}
                 onClick={() => void withdraw()}
               >
-                {busy === "review" ? "Withdrawing…" : "Withdraw it"}
+                {busy === "review" ? "Withdrawing…" : "Withdraw"}
               </button>
             </div>
           </>
@@ -449,8 +450,8 @@ export default function Profile() {
 
       <Block title="Signed-in devices">
         <p className={`${className}_lead`}>
-          A session ends by itself after thirty minutes idle, and after twelve hours whatever happens.
-          This ends all of them now, including this one.
+          A session ends after 30 minutes idle, or 12 hours whatever happens. This ends all of
+          them now, including this one.
         </p>
         <Notice note={sessionsNote} />
         <button
@@ -498,7 +499,7 @@ export default function Profile() {
 
             <div className="account_field">
               <label className="account_label" htmlFor="profile-delete-password">
-                Your password, to be sure
+                Your password
               </label>
               <input
                 className="account_input"

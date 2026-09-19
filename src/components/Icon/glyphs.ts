@@ -2,8 +2,9 @@
  * The application's own glyphs, as path data on a 16x16 grid.
  *
  * Lifted verbatim from the desktop app's Constants.Glyphs so the site and the
- * product draw the same shapes. Nothing here was designed for the website, and
- * nothing here is a third party: no icon set to license, no request to make.
+ * product draw the same shapes, except for `eye` and `eyeOff`, which are drawn
+ * here because only the website has a password to reveal. Nothing here is a
+ * third party: no icon set to license, no request to make.
  *
  * Regenerate rather than edit by hand if the app's glyphs change.
  */
@@ -40,6 +41,8 @@ export const GLYPHS = {
   refresh: "M8 2.2a5.8 5.8 0 1 0 5.6 7.3l-1.6-.4A4.2 4.2 0 1 1 8 3.8v2.4l3.6-3.2L8 0v2.2z",
   search: "M6.8 1.6a5.2 5.2 0 1 0 3.1 9.4l3.3 3.3 1.2-1.2-3.3-3.3A5.2 5.2 0 0 0 6.8 1.6zm0 1.6a3.6 3.6 0 1 1 0 7.2 3.6 3.6 0 0 1 0-7.2z",
   inspect: "M3.6 1.6h5.3L13 5.7v2.1a5.4 5.4 0 0 0-6.7 6.6H3.6c-.3 0-.5-.2-.5-.5V2.1c0-.3.2-.5.5-.5zM11.3 8.8a3.6 3.6 0 1 0 2.1 6.5l1.5 1.5 1.1-1.1-1.5-1.5a3.6 3.6 0 0 0-3.2-5.4zm0 1.5a2.1 2.1 0 1 1 0 4.2 2.1 2.1 0 0 1 0-4.2z",
+  eye: "M1 8Q4.2 3.6 8 3.6Q11.8 3.6 15 8Q11.8 12.4 8 12.4Q4.2 12.4 1 8ZM8 4.9a3.1 3.1 0 1 0 0 6.2 3.1 3.1 0 0 0 0-6.2zM8 6.4a1.6 1.6 0 1 0 0 3.2 1.6 1.6 0 0 0 0-3.2z",
+  eyeOff: "M1 8Q4.2 3.6 8 3.6Q11.8 3.6 15 8Q11.8 12.4 8 12.4Q4.2 12.4 1 8ZM1.6 2.8L13.2 14.4L14.4 13.2L2.8 1.6Z",
 } as const;
 
 export type GlyphName = keyof typeof GLYPHS;
