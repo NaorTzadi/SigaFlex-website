@@ -101,6 +101,7 @@ export default function Password() {
   if (outcome) {
     return (
       <article className="page account_page">
+        <p className="account_eyebrow fa_eyebrow">Account</p>
         <h1 className="page_title">{outcome.good ? "Done" : "That link is no good"}</h1>
         <div
           className={cx("account_card", "account_outcome", outcome.good ? "account_outcome-good" : "account_outcome-bad")}
@@ -196,10 +197,14 @@ export default function Password() {
           {busy ? "Working…" : token ? "Set password" : "Send"}
         </button>
 
-        {token && (
+        {token ? (
           <p className="account_note">
             <Icon name="info" size="0.875em" />
             This link works once.
+          </p>
+        ) : (
+          <p className="account_links">
+            <Link to={ROUTES.LOGIN}>Back to sign in</Link>
           </p>
         )}
       </form>

@@ -6,6 +6,8 @@
  * any other file.
  */
 
+import * as CookiesManager from "./CookiesManager";
+import { COOKIE } from "./CookiesManager";
 import { getGlobals, setGlobal } from "./Globals";
 
 const BASE_URL: string = import.meta.env.VITE_API_BASE_URL ?? "";
@@ -15,6 +17,7 @@ const ENDPOINT = {
   REGISTER: "/auth/register",
   LOGIN: "/auth/login",
   LOGOUT: "/auth/logout",
+  RESUME: "/auth/resume",
   SESSION: "/auth/session",
   CONFIRM: "/auth/confirm",
   RESEND_CONFIRMATION: "/auth/resend-confirmation",
@@ -33,9 +36,14 @@ const ENDPOINT = {
  * does not sign the reader out. sessionStorage rather than a cookie: the token
  * is sent as a header, so it is never attached to a cross-site request, and it
  * dies with the tab rather than lingering for a year.
+ *
+ * Coming back after the tab is gone is the remember token's job. It lives in a
+ * cookie for as long as the server honours it, is spent the first time it is
+ * used, and is replaced by the one the server hands back.
  */
 const SESSION_KEY = "fa_session";
 const SESSION_HEADER = "sessionToken";
+const REMEMBER_DAYS = 30;
 
 let sessionToken: string | null = readStoredSession();
 
@@ -48,10 +56,17 @@ function readStoredSession(): string | null {
   }
 }
 
-function rememberSession(token: string | null, email = ""): void {
+/**
+ * Signing out drops the remember cookie too. Signing in keeps the token the
+ * server sent, when it sent one; a plain session check sends none and leaves
+ * the cookie as it was.
+ */
+function rememberSession(token: string | null, email = "", rememberToken: string | null = null): void {
   sessionToken = token;
   setGlobal("signedIn", token !== null);
   setGlobal("accountEmail", token === null ? "" : email);
+  if (token === null) CookiesManager.remove(COOKIE.REMEMBER);
+  else if (rememberToken) CookiesManager.set(COOKIE.REMEMBER, rememberToken, REMEMBER_DAYS);
   try {
     if (token) window.sessionStorage.setItem(SESSION_KEY, token);
     else window.sessionStorage.removeItem(SESSION_KEY);
@@ -165,6 +180,8 @@ export function register(request: RegistrationRequest): Promise<RegistrationResu
 
 export type Account = {
   sessionToken: string;
+  /** Null when the server only checked a session rather than opening one. */
+  rememberToken: string | null;
   email: string;
   confirmed: boolean;
   pendingEmail: string | null;
@@ -187,7 +204,7 @@ export type Credentials = {
  */
 export async function login(credentials: Credentials): Promise<Account> {
   const account = await post<Account>(ENDPOINT.LOGIN, credentials);
-  rememberSession(account.sessionToken, account.email);
+  rememberSession(account.sessionToken, account.email, account.rememberToken);
   return account;
 }
 
@@ -200,19 +217,42 @@ export async function logout(): Promise<void> {
   }
 }
 
-/** Who the held token belongs to, or null when it is no longer good. */
+/**
+ * Who the held token belongs to. Without a live session it falls back to the
+ * remember cookie, and answers null only when neither is any good.
+ */
 export async function currentAccount(): Promise<Account | null> {
   try {
-    if (!sessionToken) return null;
-
-    const account = await get<Account>(ENDPOINT.SESSION);
-    rememberSession(account.sessionToken, account.email);
-    return account;
-  } catch (error) {
-    if (error instanceof ServerError && error.status === 401) return null;
-    throw error;
+    if (sessionToken) {
+      try {
+        const account = await get<Account>(ENDPOINT.SESSION);
+        rememberSession(account.sessionToken, account.email);
+        return account;
+      } catch (error) {
+        if (!(error instanceof ServerError && error.status === 401)) throw error;
+      }
+    }
+    return await resume();
   } finally {
     setGlobal("sessionChecked", true);
+  }
+}
+
+/** Opens a session from the remember cookie. A refused cookie is dropped. */
+async function resume(): Promise<Account | null> {
+  const rememberToken = CookiesManager.get(COOKIE.REMEMBER);
+  if (!rememberToken) return null;
+
+  try {
+    const account = await post<Account>(ENDPOINT.RESUME, { rememberToken });
+    rememberSession(account.sessionToken, account.email, account.rememberToken);
+    return account;
+  } catch (error) {
+    if (error instanceof ServerError && error.status === 401) {
+      CookiesManager.remove(COOKIE.REMEMBER);
+      return null;
+    }
+    throw error;
   }
 }
 
@@ -221,11 +261,11 @@ export function changeEmail(password: string, email: string): Promise<void> {
 }
 
 export async function changePassword(currentPassword: string, newPassword: string): Promise<void> {
-  const result = await post<{ sessionToken: string }>(ENDPOINT.CHANGE_PASSWORD, {
+  const result = await post<{ sessionToken: string; rememberToken: string }>(ENDPOINT.CHANGE_PASSWORD, {
     currentPassword,
     newPassword
   });
-  rememberSession(result.sessionToken, getGlobals().accountEmail);
+  rememberSession(result.sessionToken, getGlobals().accountEmail, result.rememberToken);
 }
 
 /**

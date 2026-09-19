@@ -363,3 +363,30 @@
   color: var(--fa-color-accent);
   font-weight: 600;
 }
+
+@media (min-width: 1024px) {
+  .reviews {
+    display: grid;
+    grid-template-columns: minmax(0, 34rem) minmax(0, 1fr);
+    column-gap: var(--fa-space-12);
+    align-items: start;
+  }
+
+  .reviews_summary,
+  .reviews_note {
+    grid-column: 1 / -1;
+  }
+
+  .reviews_form {
+    position: sticky;
+    top: calc(var(--fa-header-height) + var(--fa-space-6));
+    grid-column: 1;
+    max-width: none;
+  }
+
+  .reviews_loading,
+  .reviews_empty,
+  .reviews_list {
+    grid-column: 2;
+  }
+}

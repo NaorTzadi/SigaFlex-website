@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { ROUTES } from "../../../Routing";
 import { HOME_SECTIONS, PRODUCT_NAME, TAGLINE } from "../../../core/Constants";
 import FileProbe from "./FileProbe";
+import { FORMAT_TOTAL } from "./formatCatalog";
 import Showcase from "./Showcase";
 import type { Slide } from "./Showcase";
 import treeView from "../../../assets/images/screenshots/tree-zip-nested.png";
@@ -56,7 +57,7 @@ const SLIDES: Slide[] = [
 
 /** The claims worth making before a reader scrolls at all. */
 const FACTS: Array<{ value: string; label: string }> = [
-  { value: "100", label: "formats by content" },
+  { value: String(FORMAT_TOTAL), label: "formats by content" },
   { value: "Any", label: "levels of containment" },
   { value: "0", label: "bytes written to disk" },
   { value: "0", label: "network calls" }
@@ -87,18 +88,18 @@ export default function Hero() {
               How it works
             </Link>
           </div>
-
-          <ul className={`${className}_facts`}>
-            {FACTS.map((fact) => (
-              <li className={`${className}_fact`} key={fact.label}>
-                <span className={`${className}_fact_value`}>{fact.value}</span>
-                <span className={`${className}_fact_label`}>{fact.label}</span>
-              </li>
-            ))}
-          </ul>
         </div>
 
         <Showcase slides={SLIDES} label="File Analyzer screenshots" />
+
+        <ul className={`${className}_facts`}>
+          {FACTS.map((fact) => (
+            <li className={`${className}_fact`} key={fact.label}>
+              <span className={`${className}_fact_value`}>{fact.value}</span>
+              <span className={`${className}_fact_label`}>{fact.label}</span>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

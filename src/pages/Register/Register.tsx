@@ -300,6 +300,10 @@ export default function Register() {
         <p className={`${className}_status`} role="status" aria-live="polite">
           {serverMessage}
         </p>
+
+        <p className="account_links">
+          <Link to={ROUTES.LOGIN}>Already have an account? Sign in</Link>
+        </p>
         </form>
       </div>
 

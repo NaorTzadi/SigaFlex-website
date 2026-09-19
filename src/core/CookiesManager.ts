@@ -8,13 +8,15 @@
 
 export const COOKIE = {
   /** "accepted" | "declined". Necessary: it records the answer itself. */
-  CONSENT: "fa_consent"
+  CONSENT: "fa_consent",
+  /** The token that signs the reader back in on their next visit. Necessary: it is the sign-in. */
+  REMEMBER: "fa_remember"
 } as const;
 
 export type CookieId = (typeof COOKIE)[keyof typeof COOKIE];
 
 /** Cookies written regardless of consent, because the site cannot work without them. */
-const NECESSARY: CookieId[] = [COOKIE.CONSENT];
+const NECESSARY: CookieId[] = [COOKIE.CONSENT, COOKIE.REMEMBER];
 
 export type ConsentAnswer = "accepted" | "declined";
 

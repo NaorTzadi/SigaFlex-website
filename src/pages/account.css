@@ -172,50 +172,14 @@
 }
 
 /*
- * Sign in and register are one page with two tabs, so the two never sit beside
- * each other in the header pointing at different places. The tabs are links,
- * not scripted tabs: each one is a real route a reader can open or copy.
- *
- * The page keeps the full content width, and the card keeps its own width
- * inside it, so the fields do not jump sideways when the tab changes. Reset and
- * confirm use the same page for that reason: the card lands where the sign-in
- * card was rather than re-centring itself in a narrower column.
+ * Sign in and register share one page. It keeps the full content width and the
+ * card keeps its own width inside it, so the fields do not jump sideways when
+ * the reader moves between the two. Reset and confirm use the same page for
+ * that reason: the card lands where the sign-in card was rather than
+ * re-centring itself in a narrower column.
  */
 .account_page {
-  max-width: var(--fa-content-width);
-}
-
-.account_tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--fa-space-1);
-  margin-top: var(--fa-space-6);
-  border-bottom: var(--fa-border-width) solid var(--fa-color-border);
-}
-
-.account_tab {
-  padding: var(--fa-space-3) var(--fa-space-4);
-  border-bottom: 2px solid transparent;
-  color: var(--fa-color-text-secondary);
-  font-weight: 600;
-  text-decoration: none;
-  transition: color var(--fa-duration-fast) var(--fa-easing),
-    background var(--fa-duration-fast) var(--fa-easing),
-    border-color var(--fa-duration-fast) var(--fa-easing);
-}
-
-.account_tab:hover {
-  background: var(--fa-color-surface-hover);
-  color: var(--fa-color-text);
-}
-
-.account_tab-current {
-  border-bottom-color: var(--fa-color-accent);
-  color: var(--fa-color-accent);
-}
-
-.account_tab:active {
-  background: var(--fa-color-surface-pressed);
+  max-width: calc(55rem + 2 * var(--fa-gutter));
 }
 
 .account_reveal:active {

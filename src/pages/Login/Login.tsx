@@ -184,6 +184,7 @@ export default function Login() {
 
         <p className="account_links">
           <Link to={ROUTES.PASSWORD}>Forgot your password?</Link>
+          <Link to={ROUTES.REGISTER}>Create an account</Link>
         </p>
       </form>
     </>

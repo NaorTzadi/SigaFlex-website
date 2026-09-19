@@ -29,13 +29,15 @@ export default function Privacy() {
         <>
           <p>
             One cookie, <code>fa_consent</code>, records your answer to the cookie question and
-            lasts a year. It is the only cookie this site sets. If you decline, nothing else is ever
-            written; if you accept, anything added later is still held to that answer.
+            lasts a year. If you decline, nothing beyond what signing in needs is ever written; if
+            you accept, anything added later is still held to that answer.
           </p>
           <p>
             While you are signed in, your session token is kept in the browser&apos;s sessionStorage
             rather than in a cookie, so it is never attached to a request made by another site and
-            it is gone when the tab closes.
+            it is gone when the tab closes. A second cookie, <code>fa_remember</code>, holds a token
+            that signs you back in on your next visit. It lasts thirty days, is replaced every time
+            it is used, and is removed when you sign out.
           </p>
         </>
       )

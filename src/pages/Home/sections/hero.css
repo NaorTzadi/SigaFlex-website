@@ -65,14 +65,14 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--fa-space-3);
-  margin-block: var(--fa-space-6);
+  margin: var(--fa-space-6) 0 var(--fa-space-8);
 }
 
 .hero_facts {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--fa-space-4) var(--fa-space-8);
-  margin: 0 0 var(--fa-space-12);
+  margin: var(--fa-space-8) 0 0;
   padding: var(--fa-space-6) 0 0;
   border-top: var(--fa-border-width) solid var(--fa-color-border);
   list-style: none;
@@ -106,6 +106,6 @@
 
 @media (min-width: 1024px) {
   .hero_facts {
-    max-width: 52rem;
+    gap: var(--fa-space-4) var(--fa-space-12);
   }
 }
