@@ -1,0 +1,98 @@
+.faq {
+  display: flex;
+  flex-direction: column;
+  max-width: 52rem;
+  margin-top: var(--fa-space-6);
+  background: var(--fa-color-surface);
+  border: var(--fa-border-width) solid var(--fa-color-border);
+  border-radius: var(--fa-radius-lg);
+  box-shadow: var(--fa-shadow-md), var(--fa-shadow-inset-top);
+  overflow: hidden;
+}
+
+.faq_item {
+  border-bottom: var(--fa-border-width) solid var(--fa-color-border);
+}
+
+.faq_item:last-child {
+  border-bottom: 0;
+}
+
+.faq_question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--fa-space-4);
+  min-height: 44px;
+  padding: var(--fa-space-4) var(--fa-space-6);
+  font-weight: 500;
+  list-style: none;
+  cursor: pointer;
+  transition: background var(--fa-duration-fast) var(--fa-easing),
+    color var(--fa-duration-fast) var(--fa-easing);
+}
+
+.faq_question::-webkit-details-marker {
+  display: none;
+}
+
+.faq_question:hover {
+  background: var(--fa-color-surface-raised);
+}
+
+.faq_question:focus-visible {
+  outline-offset: -2px;
+}
+
+.faq_item[open] > .faq_question {
+  color: var(--fa-color-accent);
+}
+
+.faq_marker {
+  color: var(--fa-color-text-muted);
+  transition: transform var(--fa-duration-normal) var(--fa-easing),
+    color var(--fa-duration-fast) var(--fa-easing);
+}
+
+.faq_question:hover .faq_marker {
+  color: var(--fa-color-text);
+}
+
+.faq_item[open] > .faq_question .faq_marker {
+  color: var(--fa-color-accent);
+  transform: rotate(45deg);
+}
+
+.faq_answer {
+  padding: 0 var(--fa-space-6) var(--fa-space-6);
+  animation: faq_answer_in var(--fa-duration-normal) var(--fa-easing);
+}
+
+@keyframes faq_answer_in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+.faq_answer_text {
+  max-width: none;
+  margin: 0;
+  color: var(--fa-color-text-secondary);
+  font-size: var(--fa-text-sm);
+}
+
+.faq_answer_text a {
+  color: var(--fa-color-accent);
+}
+
+@media (max-width: 639px) {
+  .faq_question {
+    padding-inline: var(--fa-space-4);
+  }
+
+  .faq_answer {
+    padding-inline: var(--fa-space-4);
+    padding-bottom: var(--fa-space-4);
+  }
+}
