@@ -57,7 +57,7 @@ export default function Signatures() {
             <span className={`${className}_bytes`}>{claim.bytes}</span>
 
             <span className={`${className}_verdict`}>
-              <Icon name="doubleArrowRight" size="0.875em" />
+              <Icon name="chevronRight" size="0.875em" />
               {claim.verdict}
             </span>
 

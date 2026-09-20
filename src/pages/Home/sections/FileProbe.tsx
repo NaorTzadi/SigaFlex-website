@@ -20,7 +20,7 @@ import type { DragEvent } from "react";
 
 import Icon from "../../../components/Icon/Icon";
 import { cx } from "../../../core/Utility";
-import { PROBE_LENGTH, identify } from "./formatCatalog";
+import { PROBE_LENGTH, SIGNATURES, identify } from "./formatCatalog";
 import type { FormatEntry } from "./formatCatalog";
 import "./fileprobe.css";
 
@@ -37,6 +37,20 @@ type Result = {
 
 /** The sample shown before anything is dropped: a PE, as the tab would read it. */
 const SAMPLE = "4D 5A 90 00 03 00 00 00 04 00 00 00 FF FF";
+
+const SAMPLE_FILES: Array<{ name: string; tag: string }> = [
+  { name: "report.pdf", tag: "ZIP" },
+  { name: "photo.jpg", tag: "PNG" },
+  { name: "cache.bin", tag: "SQLITE" }
+];
+
+function sampleFile(name: string, tag: string): File {
+  const bytes = new Uint8Array(16);
+  for (const part of SIGNATURES.find((signature) => signature.tag === tag)?.parts ?? []) {
+    bytes.set(part.bytes.slice(0, 16 - part.at), part.at);
+  }
+  return new File([bytes], name);
+}
 
 function hexOf(bytes: Uint8Array, count: number): string {
   return Array.from(bytes.slice(0, count), (byte) => byte.toString(16).padStart(2, "0"))
@@ -56,7 +70,7 @@ export default function FileProbe() {
 
   async function probe(file: File) {
     /* Only the opening bytes are ever read: enough for every signature the page
-       knows, including the one that sits 32KB into an ISO. */
+       knows, including the recognition sequence a UDF image carries past 32KB. */
     const head = new Uint8Array(await file.slice(0, PROBE_LENGTH).arrayBuffer());
     const format = identify(head);
     const claimed = extensionOf(file.name);
@@ -90,9 +104,7 @@ export default function FileProbe() {
         <span className={cx(`${className}_bytes`, result && `${className}_bytes-read`)}>
           {result ? result.hex : SAMPLE}
         </span>
-        <span className={`${className}_arrow`} aria-hidden="true">
-          →
-        </span>
+        <Icon className={`${className}_arrow`} name="arrowRight" size="0.875em" />
         <span className={`${className}_verdict`}>
           {result ? (result.format ? result.format.tag : "no signature") : "PE32 executable"}
         </span>
@@ -116,6 +128,20 @@ export default function FileProbe() {
         </span>
       </p>
 
+      <p className={`${className}_samples`}>
+        <span className={`${className}_samples_text`}>No file to hand? Try one that lies about its name:</span>
+        {SAMPLE_FILES.map((sample) => (
+          <button
+            className={`${className}_sample`}
+            key={sample.name}
+            type="button"
+            onClick={() => void probe(sampleFile(sample.name, sample.tag))}
+          >
+            {sample.name}
+          </button>
+        ))}
+      </p>
+
       <p className={`${className}_answer`} role="status" aria-live="polite">
         {result && result.format && (
           <>
@@ -134,8 +160,8 @@ export default function FileProbe() {
           <>
             <strong className={`${className}_answer_name`}>No signature matched.</strong>{" "}
             <span className={`${className}_limit`}>
-              Not a dead end: around forty of the formats the engine knows have no signature at all
-              and are confirmed by parsing them. This page only reads the opening bytes.
+              Not a dead end: around sixty of the formats the engine knows carry no signature of
+              their own and are confirmed by parsing them. This page only reads the opening bytes.
             </span>
           </>
         )}

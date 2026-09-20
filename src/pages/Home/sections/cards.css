@@ -74,3 +74,30 @@
 .cards_go svg {
   transition: transform var(--fa-duration-normal) var(--fa-easing);
 }
+
+.cards_card {
+  position: relative;
+  overflow: hidden;
+}
+
+.cards_card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    18rem 18rem at var(--cards-x, 50%) var(--cards-y, 50%),
+    var(--fa-bloom-accent),
+    transparent 70%
+  );
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--fa-duration-normal) var(--fa-easing);
+}
+
+.cards_card:hover::before {
+  opacity: 1;
+}
+
+.cards_card > * {
+  position: relative;
+}

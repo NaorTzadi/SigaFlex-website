@@ -20,6 +20,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 
 import Icon from "../Icon/Icon";
+import type { GlyphName } from "../Icon/glyphs";
 import { ROUTES } from "../../Routing";
 import { HOME_SECTIONS, SITE_NAME } from "../../core/Constants";
 import { useGlobal } from "../../core/Globals";
@@ -30,16 +31,18 @@ import "./header.css";
 const className = "header";
 
 /** The bands behind the flyout. */
-const PRODUCT_MENU: Array<{ id: string; label: string }> = [
-  { id: HOME_SECTIONS.PROBLEM, label: "The problem" },
-  { id: HOME_SECTIONS.HOW_IT_WORKS, label: "How it works" },
-  { id: HOME_SECTIONS.CAPABILITIES, label: "Capabilities" },
-  { id: HOME_SECTIONS.DEMO, label: "See it in action" },
-  { id: HOME_SECTIONS.BEYOND, label: "Beyond analysis" }
+const PRODUCT_MENU: Array<{ id: string; label: string; glyph: GlyphName; hint: string }> = [
+  { id: HOME_SECTIONS.PROBLEM, label: "The problem", glyph: "grid", hint: "Five tools, five partial answers" },
+  { id: HOME_SECTIONS.HOW_IT_WORKS, label: "How it works", glyph: "package", hint: "A file becomes a tree, as deep as it goes" },
+  { id: HOME_SECTIONS.CAPABILITIES, label: "Capabilities", glyph: "inspect", hint: "Five views of the same bytes" },
+  { id: HOME_SECTIONS.DEMO, label: "See it in action", glyph: "eye", hint: "The window on real files" },
+  { id: HOME_SECTIONS.BEYOND, label: "Beyond analysis", glyph: "convert", hint: "Viewing, conversion, terminal, export" },
+  { id: HOME_SECTIONS.FAQ, label: "Questions", glyph: "question", hint: "Safety, cost, platforms, accounts" }
 ];
 
 /** Bands promoted to the top level, beside the flyout. */
 const TOP_LEVEL: Array<{ id: string; label: string }> = [
+  { id: HOME_SECTIONS.TERMINAL, label: "Terminal" },
   { id: HOME_SECTIONS.FORMATS, label: "Formats" },
   { id: HOME_SECTIONS.ANALYSTS, label: "For analysts" }
 ];
@@ -98,6 +101,17 @@ export default function Header() {
   const accountEmail = useGlobal("accountEmail");
   const current = useCurrentSection(useLocation().pathname === ROUTES.HOME);
   const inProduct = PRODUCT_MENU.some((entry) => entry.id === current);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    function onScroll() {
+      setScrolled(window.scrollY > 8);
+    }
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   /* An open flyout closes on Escape and on a click anywhere outside it. */
   useEffect(() => {
@@ -130,7 +144,7 @@ export default function Header() {
   }
 
   return (
-    <header className={className}>
+    <header className={cx(className, scrolled && `${className}-scrolled`)}>
       <div className={`${className}_bar`}>
         <Link className={`${className}_brand`} to={ROUTES.HOME} onClick={closeMenus}>
           <Icon className={`${className}_brand_mark`} name="package" size="1.25em" />
@@ -172,7 +186,7 @@ export default function Header() {
                 Product
                 <Icon
                   className={cx(`${className}_chevron`, flyout && `${className}_chevron-open`)}
-                  name="arrowDown"
+                  name="chevronDown"
                   size="0.75em"
                 />
               </button>
@@ -189,7 +203,9 @@ export default function Header() {
                       aria-current={entry.id === current ? "location" : undefined}
                       onClick={closeMenus}
                     >
-                      {entry.label}
+                      <Icon className={`${className}_flyout_glyph`} name={entry.glyph} size="1.125em" />
+                      <span>{entry.label}</span>
+                      <span className={`${className}_flyout_hint`}>{entry.hint}</span>
                     </Link>
                   </li>
                 ))}

@@ -20,7 +20,7 @@
  * hidden, so a screen reader reads one screenshot rather than four.
  */
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import Icon from "../../../components/Icon/Icon";
 import { cx, prefersReducedMotion } from "../../../core/Utility";
@@ -28,7 +28,7 @@ import "./showcase.css";
 
 const className = "showcase";
 
-export type Slide = { src: string; alt: string };
+export type Slide = { src: string; alt: string; caption: string };
 
 type ShowcaseProps = {
   slides: Slide[];
@@ -44,16 +44,11 @@ export default function Showcase({ slides, label, interval = 6000 }: ShowcasePro
   const [held, setHeld] = useState(false);
   const [reduced] = useState(() => prefersReducedMotion());
 
-  const rotating = playing && !held && !reduced && slides.length > 1;
+  const rotating = playing && !reduced && slides.length > 1;
 
-  useEffect(() => {
-    if (!rotating) return;
-
-    const timer = window.setInterval(() => {
-      setIndex((current) => (current + 1) % slides.length);
-    }, interval);
-    return () => window.clearInterval(timer);
-  }, [rotating, interval, slides.length]);
+  function advance() {
+    setIndex((current) => (current + 1) % slides.length);
+  }
 
   /** Picking a slide is a decision to stay on it. */
   function show(next: number) {
@@ -114,15 +109,25 @@ export default function Showcase({ slides, label, interval = 6000 }: ShowcasePro
 
         <ul className={`${className}_dots`}>
           {slides.map((slide, i) => (
-            <li key={slide.src}>
+            <li className={`${className}_dots_item`} key={slide.src}>
               <button
                 className={cx(`${className}_dot`, i === index && `${className}_dot-current`)}
                 type="button"
                 aria-current={i === index}
                 onClick={() => show(i)}
               >
-                {/* The dot is a shape; its name is what it goes to. */}
-                <span className={`${className}_dot_label`}>{`Screenshot ${i + 1} of ${slides.length}`}</span>
+                <span className={`${className}_dot_track`} aria-hidden="true">
+                  {i === index && (
+                    <span
+                      className={cx(`${className}_dot_fill`, rotating && `${className}_dot_fill-running`)}
+                      key={index}
+                      style={{ animationDuration: `${interval}ms`, animationPlayState: held ? "paused" : "running" }}
+                      onAnimationEnd={advance}
+                    />
+                  )}
+                </span>
+                <span className={`${className}_dot_caption`}>{slide.caption}</span>
+                <span className={`${className}_dot_label`}>{`, screenshot ${i + 1} of ${slides.length}`}</span>
               </button>
             </li>
           ))}

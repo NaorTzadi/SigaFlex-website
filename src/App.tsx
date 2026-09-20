@@ -3,6 +3,7 @@
  */
 
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
@@ -17,6 +18,7 @@ const className = "app";
 
 export default function App() {
   const busy = useGlobal("serverBusy");
+  const { pathname } = useLocation();
 
   /* A reload keeps the token but not the knowledge that it still works, so the
      shell asks once. A dead token is cleared by the ask itself. */
@@ -34,7 +36,7 @@ export default function App() {
 
       <Header />
 
-      <main className={`${className}_main`} id={MAIN_CONTENT_ID} tabIndex={-1}>
+      <main className={`${className}_main`} id={MAIN_CONTENT_ID} tabIndex={-1} key={pathname}>
         <Routing />
       </main>
 

@@ -6,8 +6,8 @@
  * descriptions are written for this site. Adding a format to the engine means adding it here
  * too: nothing keeps the two in step on its own.
  *
- * Left out: UNKNOWN, ARCHIVE and RAW are internal buckets rather than formats, and FBX_ASCII
- * is folded into FBX.
+ * Left out: UNKNOWN and ARCHIVE are internal buckets rather than formats, and FBX_ASCII is
+ * folded into FBX.
  */
 
 export type FormatEntry = {
@@ -139,6 +139,13 @@ export const FORMAT_GROUPS: FormatGroup[] = [
           "An ISO 9660 disc image. Its volume descriptor sits 32KB in, so an image is confirmed by structure rather than by anything at offset zero."
       },
       {
+        tag: "UDF",
+        name: "UDF disc image",
+        extensions: [".iso", ".img", ".udf"],
+        description:
+          "The filesystem that replaced ISO 9660 on optical media. Found by walking the recognition sequence past 32KB rather than by searching for its mark, and a bridge disc, which is both, is reported as this one."
+      },
+      {
         tag: "RPM",
         name: "RPM package",
         extensions: [".rpm"],
@@ -238,6 +245,13 @@ export const FORMAT_GROUPS: FormatGroup[] = [
         extensions: [".dylib", ".bundle"],
         description:
           "The macOS binary. One architecture, or several stacked together in one fat file."
+      },
+      {
+        tag: "JAVA-CLASS",
+        name: "Java class file",
+        extensions: [".class"],
+        description:
+          "A compiled Java class. It opens with CAFEBABE, and so does a fat Mach-O, so it is claimed from the version and the constant pool behind that magic rather than from the magic itself."
       },
       {
         tag: "LNK",
@@ -341,6 +355,13 @@ export const FORMAT_GROUPS: FormatGroup[] = [
     name: "Markup",
     formats: [
       {
+        tag: "HTML",
+        name: "HTML document",
+        extensions: [".html", ".htm"],
+        description:
+          "A web page. No signature at all, and probed before XML deliberately: over half the pages on a machine are well formed enough for the XML parser to claim them, and calling one an XML document is the wrong answer."
+      },
+      {
         tag: "XML",
         name: "XML document",
         extensions: [".xml"],
@@ -388,11 +409,32 @@ export const FORMAT_GROUPS: FormatGroup[] = [
           "A mailbox: many messages concatenated, each opening with a From line. Every message inside opens again as an EML."
       },
       {
+        tag: "MHT",
+        name: "MHTML web archive",
+        extensions: [".mht", ".mhtml"],
+        description:
+          "A page saved as one MIME message. The same syntax as a mail message, so what it is gets settled once the parts have been read, and every part it holds opens on its own."
+      },
+      {
         tag: "SQLITE",
         name: "SQLite database",
         extensions: [".db", ".sqlite", ".sqlite3", ".db3"],
         description:
           "A SQLite database. Sixteen bytes of text, confirmed by a page layout the format fixes. Nothing inside it is a file, so its pages and tables are structure rather than containment."
+      },
+      {
+        tag: "JSON",
+        name: "JSON document",
+        extensions: [".json"],
+        description:
+          "A JSON document. Probed after glTF, which is JSON with a vocabulary the engine already knows, so an asset stays an asset and a document that is only JSON lands here."
+      },
+      {
+        tag: "CSV",
+        name: "CSV table",
+        extensions: [".csv"],
+        description:
+          "A delimited table. No signature and no syntax of its own, only repeated rectangular structure to go on, which makes it the weakest claim the engine makes."
       }
     ]
   },
@@ -508,6 +550,13 @@ export const FORMAT_GROUPS: FormatGroup[] = [
         extensions: [".dng"],
         description:
           "Adobe's open raw format. TIFF-based, and the one most other raws can be converted into."
+      },
+      {
+        tag: "RAW",
+        name: "camera raw image",
+        extensions: [".raw", ".orf", ".rw2", ".pef", ".srw", ".3fr", ".iiq", ".erf", ".dcr", ".kdc", ".mos", ".mef"],
+        description:
+          "A raw the engine can prove but cannot attribute: TIFF-based sensor data whose tags name no maker it knows. Olympus, Panasonic, Pentax and the rest land here."
       }
     ]
   },
@@ -534,6 +583,20 @@ export const FORMAT_GROUPS: FormatGroup[] = [
         extensions: [".ttc", ".otc"],
         description:
           "A font collection. Several faces sharing one set of tables, rather than members that could be taken out on their own."
+      },
+      {
+        tag: "WOFF",
+        name: "Web Open Font Format",
+        extensions: [".woff"],
+        description:
+          "A web font: an sfnt whose tables have each been deflated, behind four bytes no font file itself begins with."
+      },
+      {
+        tag: "WOFF2",
+        name: "Web Open Font Format 2",
+        extensions: [".woff2"],
+        description:
+          "The same idea rebuilt on Brotli, with every table in one stream and the glyphs transformed, which is what makes it a format of its own rather than a version."
       }
     ]
   },
@@ -670,6 +733,13 @@ export const FORMAT_GROUPS: FormatGroup[] = [
         extensions: [".h265", ".265", ".hevc"],
         description:
           "A bare H.265 stream, recognised the same way."
+      },
+      {
+        tag: "MPEG-VIDEO",
+        name: "MPEG video stream",
+        extensions: [".m1v", ".m2v", ".mpv", ".mp2v"],
+        description:
+          "A bare MPEG-1 or MPEG-2 video stream, confirmed by a sequence header whose declared length lands on the next start code. A .mpg opening with a pack is a program stream instead."
       }
     ]
   },
@@ -782,6 +852,46 @@ export const FORMAT_GROUPS: FormatGroup[] = [
           "AutoCAD's drawing exchange format. Group codes and values, in pairs, all the way down."
       }
     ]
+  },
+  {
+    name: "Game assets",
+    formats: [
+      {
+        tag: "UNITY-BUNDLE",
+        name: "Unity asset bundle",
+        extensions: [".unity3d", ".assetbundle"],
+        description:
+          "A Unity asset bundle: a header, then one compressed level after another. Its members exist only once the body has been decompressed, so listing one means decoding the front of it."
+      },
+      {
+        tag: "UNITY-SERIALIZED",
+        name: "Unity serialized file",
+        extensions: [".assets", ".unity", ".resource"],
+        description:
+          "Unity's own asset file. No signature of any kind: it is recognised by its metadata ending exactly where its header says it does."
+      },
+      {
+        tag: "RPA",
+        name: "Ren'Py archive",
+        extensions: [".rpa"],
+        description:
+          "Ren'Py's archive. A header line saying where the index sits, and a zlib stream holding that index of everything the archive carries."
+      },
+      {
+        tag: "RENPY-RPC2",
+        name: "Ren'Py compiled script",
+        extensions: [".rpyc", ".rpymc"],
+        description:
+          "A compiled Ren'Py script: slots of zlib-compressed Python pickle, which is walked symbolically and never executed."
+      },
+      {
+        tag: "RPGMV-ASSET",
+        name: "RPG Maker encrypted asset",
+        extensions: [".rpgmvp", ".rpgmvo", ".rpgmvm", ".png_", ".ogg_", ".m4a_"],
+        description:
+          "An RPG Maker MV asset: sixteen bytes of header, sixteen more exclusive-ored against the project's key, and the original file untouched from there. The payload proves the key by itself, so the project is not needed to read it."
+      }
+    ]
   }
 ];
 
@@ -791,12 +901,16 @@ export const FORMAT_TOTAL = FORMAT_GROUPS.reduce((sum, group) => sum + group.for
  * Leading signatures, for the page's own probe.
  *
  * This is deliberately not the engine. The engine confirms a signature against
- * the structure behind it, and identifies another forty formats by parsing them
- * when they have no signature at all. This table is the first stage only, and
- * the ones it cannot do are the point rather than a gap.
+ * the structure behind it, and settles another sixty formats by parsing them
+ * when they carry no signature of their own. This table is the first stage only,
+ * and the ones it cannot do are the point rather than a gap.
  *
  * Ordered most specific first: the first entry that matches wins, so CR2 has to
- * come before TIFF and HEIF before MP4.
+ * come before TIFF, HEIF before MP4 and UDF before ISO.
+ *
+ * CAFEBABE stays with Mach-O: a Java class file opens with the same four bytes,
+ * and what tells them apart is a version rather than a mark, which is exactly
+ * the kind of reading this table does not do.
  */
 export type Signature = { tag: string; parts: Array<{ at: number; bytes: number[] }> };
 
@@ -819,6 +933,15 @@ export const SIGNATURES: Signature[] = [
   { tag: "RPM", parts: [{ at: 0, bytes: [0xed, 0xab, 0xee, 0xdb] }] },
   { tag: "CPIO", parts: [{ at: 0, bytes: ascii("070701") }] },
   { tag: "CPIO", parts: [{ at: 0, bytes: ascii("070707") }] },
+  { tag: "UNITY-BUNDLE", parts: [{ at: 0, bytes: ascii("UnityWeb") }] },
+  { tag: "UNITY-BUNDLE", parts: [{ at: 0, bytes: ascii("UnityRaw") }] },
+  { tag: "RPA", parts: [{ at: 0, bytes: ascii("RPA-3.0 ") }] },
+  { tag: "RENPY-RPC2", parts: [{ at: 0, bytes: ascii("RENPY RPC2") }] },
+  { tag: "RPGMV-ASSET", parts: [{ at: 0, bytes: ascii("RPGMV") }, { at: 5, bytes: [0x00, 0x00, 0x00] }] },
+  { tag: "UDF", parts: [{ at: 34817, bytes: ascii("NSR02") }] },
+  { tag: "UDF", parts: [{ at: 34817, bytes: ascii("NSR03") }] },
+  { tag: "UDF", parts: [{ at: 36865, bytes: ascii("NSR02") }] },
+  { tag: "UDF", parts: [{ at: 36865, bytes: ascii("NSR03") }] },
   { tag: "ISO", parts: [{ at: 32769, bytes: ascii("CD001") }] },
   { tag: "PDF", parts: [{ at: 0, bytes: ascii("%PDF-") }] },
   { tag: "OLE", parts: [{ at: 0, bytes: [0xd0, 0xcf, 0x11, 0xe0, 0xa1, 0xb1, 0x1a, 0xe1] }] },
@@ -853,6 +976,8 @@ export const SIGNATURES: Signature[] = [
   { tag: "MP4", parts: [{ at: 4, bytes: ascii("ftyp") }] },
   { tag: "MKV", parts: [{ at: 0, bytes: [0x1a, 0x45, 0xdf, 0xa3] }] },
   { tag: "ASF", parts: [{ at: 0, bytes: [0x30, 0x26, 0xb2, 0x75, 0x8e, 0x66, 0xcf, 0x11] }] },
+  { tag: "WOFF2", parts: [{ at: 0, bytes: ascii("wOF2") }] },
+  { tag: "WOFF", parts: [{ at: 0, bytes: ascii("wOFF") }] },
   { tag: "OTF", parts: [{ at: 0, bytes: ascii("OTTO") }] },
   { tag: "TTC", parts: [{ at: 0, bytes: ascii("ttcf") }] },
   { tag: "TTF", parts: [{ at: 0, bytes: [0x00, 0x01, 0x00, 0x00] }] },
@@ -863,8 +988,11 @@ export const SIGNATURES: Signature[] = [
   { tag: "BMP", parts: [{ at: 0, bytes: ascii("BM") }] }
 ];
 
-/** Enough for every signature above, including the one 32KB into an ISO. */
-export const PROBE_LENGTH = 32_800;
+/**
+ * Enough for every signature above. The far end of it is UDF, whose recognition
+ * sequence sits a sector or two past the descriptor an ISO keeps 32KB in.
+ */
+export const PROBE_LENGTH = 36_880;
 
 export function formatByTag(tag: string): FormatEntry | undefined {
   for (const group of FORMAT_GROUPS) {

@@ -21,7 +21,9 @@ const className = "reviews";
 function Stars({ rating }: { rating: number }) {
   return (
     <span className={`${className}_stars`}>
-      <span aria-hidden="true">{"★".repeat(rating) + "☆".repeat(5 - rating)}</span>
+      {REVIEW_RATINGS.map((value) => (
+        <Icon key={value} name={value <= rating ? "star" : "starOutline"} />
+      ))}
       <span className={`${className}_hidden`}>{`${rating} out of 5`}</span>
     </span>
   );
@@ -299,7 +301,7 @@ export default function Reviews() {
                     checked={rating === value}
                     onChange={() => setRating(value)}
                   />
-                  <span aria-hidden="true">★</span>
+                  <Icon name="star" />
                   <span className={`${className}_hidden`}>{value === 1 ? "1 star" : `${value} stars`}</span>
                 </label>
               ))}
@@ -395,7 +397,7 @@ export default function Reviews() {
 
       {loaded && written.length === 0 && ServerBridge.isConfigured() && (
         <div className={`${className}_empty`}>
-          <Icon className={`${className}_empty_glyph`} name="clipboard" size="1.75em" />
+          <Icon className={`${className}_empty_glyph`} name="starOutline" size="1.75em" />
           <p className={`${className}_empty_title`}>No reviews yet</p>
           <p className={`${className}_empty_body`}>
             Yours would be the first. Say what it got right, and what it did not.

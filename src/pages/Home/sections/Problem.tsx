@@ -15,7 +15,7 @@ const TOOLS: Tool[] = [
     misses: "Cannot tell you what any of them are"
   },
   {
-    glyph: "table",
+    glyph: "grid",
     name: "A hex editor",
     gives: "Shows every byte",
     misses: "None of them mean anything"
@@ -33,7 +33,7 @@ const TOOLS: Tool[] = [
     misses: "Ignores everything that is not code"
   },
   {
-    glyph: "chip",
+    glyph: "image",
     name: "An image viewer",
     gives: "Draws the picture",
     misses: "Hides the metadata behind it"
@@ -61,7 +61,7 @@ export default function Problem() {
             <span className={`${className}_tool_name`}>{tool.name}</span>
             <span className={`${className}_tool_gives`}>{tool.gives}</span>
             <span className={`${className}_tool_misses`}>
-              <Icon name="close" size="0.75em" />
+              <Icon name="error" size="0.75em" />
               {tool.misses}
             </span>
           </li>

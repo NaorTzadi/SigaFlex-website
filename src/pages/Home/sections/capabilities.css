@@ -252,3 +252,28 @@
     transform: translateY(4px);
   }
 }
+
+.capabilities_tabs {
+  position: relative;
+}
+
+.capabilities_tab {
+  border-bottom-color: transparent;
+}
+
+.capabilities_tab-current {
+  border-bottom-color: transparent;
+}
+
+.capabilities_indicator {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  height: 2px;
+  width: 0;
+  background: var(--fa-color-accent);
+  border-radius: 999px;
+  box-shadow: 0 0 12px -2px var(--fa-color-accent);
+  transition: transform var(--fa-duration-normal) var(--fa-easing),
+    width var(--fa-duration-normal) var(--fa-easing);
+}

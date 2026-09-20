@@ -19,7 +19,7 @@
  * so Tab steps over the row into the output rather than through five buttons.
  */
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { KeyboardEvent } from "react";
 
 import { cx } from "../../../core/Utility";
@@ -52,6 +52,18 @@ export default function Capabilities() {
   const [tab, setTab] = useState<Tab>("Raw");
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const panelRef = useRef<HTMLDivElement>(null);
+  const [indicator, setIndicator] = useState({ left: 0, width: 0 });
+
+  useLayoutEffect(() => {
+    function measure() {
+      const button = tabRefs.current[TABS.indexOf(tab)];
+      if (button) setIndicator({ left: button.offsetLeft, width: button.offsetWidth });
+    }
+
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [tab]);
 
   useEffect(() => {
     if (panelRef.current) panelRef.current.scrollTop = 0;
@@ -101,6 +113,11 @@ export default function Capabilities() {
             {name}
           </button>
         ))}
+        <span
+          className={`${className}_indicator`}
+          style={{ width: indicator.width, transform: `translateX(${indicator.left}px)` }}
+          aria-hidden="true"
+        />
       </div>
 
       <div

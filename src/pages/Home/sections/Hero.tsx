@@ -5,6 +5,7 @@
 
 import { Link } from "react-router-dom";
 
+import Icon from "../../../components/Icon/Icon";
 import { ROUTES } from "../../../Routing";
 import { HOME_SECTIONS, PRODUCT_NAME, TAGLINE } from "../../../core/Constants";
 import FileProbe from "./FileProbe";
@@ -24,18 +25,21 @@ const className = "hero";
 const SLIDES: Slide[] = [
   {
     src: treeView,
+    caption: "Tree",
     alt:
       "The tree view showing a ZIP expanded into 774 files across 127 folders, with columns for " +
       "name, date modified, type, and both uncompressed and compressed size."
   },
   {
     src: disassembly,
+    caption: "Disassembly",
     alt:
       "The Disassembly tab listing decoded x86 instructions with their addresses and raw bytes, " +
       "beside a panel of the PE file's entry point, image base and section sizes."
   },
   {
     src: details,
+    caption: "Details",
     alt:
       "The Details panel listing a PE file's linker version, entry point, image base and section " +
       "sizes, beside its decoded strings, with the whole structure tree — headers, data " +
@@ -43,12 +47,14 @@ const SLIDES: Slide[] = [
   },
   {
     src: colors,
+    caption: "Colors",
     alt:
       "The Colors tab on a photograph, reporting 478,744 unique colours and listing the most " +
       "frequent ones with swatches, percentages and pixel counts."
   },
   {
     src: model,
+    caption: "3D model",
     alt:
       "A 3D model rendered inside the Display tab, with its glTF node, mesh and vertex counts " +
       "listed in the details panel and a terminal open below."
@@ -82,6 +88,7 @@ export default function Hero() {
 
           <div className={`${className}_actions`}>
             <Link className="fa_button fa_button-primary" to={ROUTES.DOWNLOAD}>
+              <Icon name="arrowDown" size="1em" />
               Download
             </Link>
             <Link className="fa_button" to={`${ROUTES.HOME}#${HOME_SECTIONS.HOW_IT_WORKS}`}>
@@ -89,8 +96,6 @@ export default function Hero() {
             </Link>
           </div>
         </div>
-
-        <Showcase slides={SLIDES} label="File Analyzer screenshots" />
 
         <ul className={`${className}_facts`}>
           {FACTS.map((fact) => (
@@ -100,6 +105,8 @@ export default function Hero() {
             </li>
           ))}
         </ul>
+
+        <Showcase slides={SLIDES} label="File Analyzer screenshots" />
       </div>
     </section>
   );

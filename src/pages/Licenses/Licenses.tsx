@@ -58,9 +58,8 @@ export default function Licenses() {
         </p>
         <p>
           <a href={EXTERNAL_LINKS.FFMPEG_SOURCE} rel="noreferrer noopener" target="_blank">
+            Corresponding FFmpeg source{" "}
             <Icon name="externalLink" size="0.875em" />
-            {" "}
-            Corresponding FFmpeg source
             <span className="page_external_note"> (opens ffmpeg.org in a new tab)</span>
           </a>
         </p>

@@ -71,7 +71,7 @@ const TREE: Node[] = [
         type: "Resource tree",
         size: "176 KB",
         children: [
-          { id: "icon", name: "MAINICON", kind: "file", glyph: "chip", type: "Icon group", size: "67 KB" },
+          { id: "icon", name: "MAINICON", kind: "file", glyph: "image", type: "Icon group", size: "67 KB" },
           { id: "manifest", name: "Manifest", kind: "file", glyph: "code", type: "XML", size: "1.1 KB" },
           { id: "version", name: "Version info", kind: "file", glyph: "tag", type: "Version", size: "892 B" }
         ]
@@ -102,7 +102,7 @@ const TREE: Node[] = [
             ]
           },
           { id: "cfg", name: "config.xml", kind: "file", glyph: "code", type: "XML", size: "3.2 KB", compressed: "1.1 KB" },
-          { id: "logo", name: "logo.png", kind: "container", glyph: "chip", format: "PNG", type: "PNG image", size: "44 KB", compressed: "44 KB",
+          { id: "logo", name: "logo.png", kind: "container", glyph: "image", format: "PNG", type: "PNG image", size: "44 KB", compressed: "44 KB",
             children: [
               { id: "ihdr", name: "IHDR", kind: "file", glyph: "table", type: "Chunk", size: "13 B" },
               { id: "exif", name: "eXIf", kind: "file", glyph: "tag", type: "EXIF metadata", size: "1.8 KB" }
@@ -232,7 +232,7 @@ export default function ContainmentTree() {
                 style={{ paddingLeft: `calc(${level - 1} * var(--fa-space-6))` }}
               >
                 <span className={cx(`${className}_twisty`, isOpen && `${className}_twisty-open`)}>
-                  {expandable ? <Icon name="arrowDown" size="0.75em" /> : null}
+                  {expandable ? <Icon name="chevronDown" size="0.75em" /> : null}
                 </span>
                 <Icon name={node.glyph} />
                 <span className={`${className}_label`} title={node.name}>

@@ -25,9 +25,11 @@
 }
 
 .reviews_stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.1em;
   color: var(--fa-color-accent);
   font-size: var(--fa-text-lg);
-  letter-spacing: 0.1em;
   white-space: nowrap;
 }
 

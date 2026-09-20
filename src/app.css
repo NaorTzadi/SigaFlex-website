@@ -63,3 +63,14 @@
     transform: scaleX(1);
   }
 }
+
+.app_main {
+  animation: app_page_in var(--fa-duration-normal) var(--fa-easing) both;
+}
+
+@keyframes app_page_in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}

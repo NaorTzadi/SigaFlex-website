@@ -48,11 +48,13 @@ export const HOME_SECTIONS = {
   HOW_IT_WORKS: "how-it-works",
   CAPABILITIES: "capabilities",
   DEMO: "demo",
+  TERMINAL: "terminal",
   WHAT_IT_OPENS: "what-it-opens",
   FORMATS: "formats",
   BEYOND: "beyond",
   ANALYSTS: "analysts",
   REVIEWS: "reviews",
+  FAQ: "faq",
   DISCOVER: "discover"
 } as const;
 

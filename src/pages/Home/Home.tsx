@@ -18,6 +18,7 @@ import Cards from "./sections/Cards";
 import type { Card } from "./sections/Cards";
 import ContainmentTree from "./sections/ContainmentTree";
 import Demo from "./sections/Demo";
+import Faq from "./sections/Faq";
 import CoverageMap from "./sections/CoverageMap";
 import FormatFinder from "./sections/FormatFinder";
 import Hero from "./sections/Hero";
@@ -25,18 +26,19 @@ import Problem from "./sections/Problem";
 import Reviews from "./sections/Reviews";
 import Section from "./sections/Section";
 import Signatures from "./sections/Signatures";
+import Terminal from "./sections/Terminal";
 import { ROUTES } from "../../Routing";
 import { HOME_SECTIONS } from "../../core/Constants";
 import { revealOnScroll } from "../../core/Utility";
 
-const BEYOND: Card[] = [
+const BEYOND_TEMPLATE: Card[] = [
   {
-    glyph: "chip",
+    glyph: "eye",
     title: "Viewing",
     body: "Images, documents, fonts, 3D models, audio and video play and render in the same window that analysed them."
   },
   {
-    glyph: "refresh",
+    glyph: "convert",
     title: "Conversion",
     body: "Media is converted by a bundled FFmpeg. Office documents go through Word and Excel when they are installed."
   },
@@ -57,6 +59,10 @@ export default function Home() {
 
   /* Built here, not at module scope: Routing imports this page, so ROUTES is
      still being initialised while this module is evaluated. */
+  const beyond: Card[] = BEYOND_TEMPLATE.map((card) =>
+    card.glyph === "terminal" ? { ...card, to: `${ROUTES.HOME}#${HOME_SECTIONS.TERMINAL}` } : card
+  );
+
   const discover: Card[] = [
     {
       glyph: "arrowDown",
@@ -71,7 +77,7 @@ export default function Home() {
       to: ROUTES.PRICING
     },
     {
-      glyph: "seal",
+      glyph: "user",
       title: "Register",
       body: "An account for licences and updates. Nothing you open is ever uploaded.",
       to: ROUTES.REGISTER
@@ -135,8 +141,18 @@ export default function Home() {
       </Section>
 
       <Section
+        id={HOME_SECTIONS.TERMINAL}
+        eyebrow="02 — The agent"
+        title="A terminal, and an agent that can see"
+        lead="A real shell inside the window, with a command channel. Start Claude Code or Codex in it and it sees what you see, reads what you read, and drives the window for you."
+        tone="raised"
+      >
+        <Terminal />
+      </Section>
+
+      <Section
         id={HOME_SECTIONS.WHAT_IT_OPENS}
-        eyebrow="02 — The coverage"
+        eyebrow="03 — The coverage"
         title="What it opens"
         lead="Archives, documents, executables, images, fonts, audio, video, 3D models."
       >
@@ -154,13 +170,13 @@ export default function Home() {
           title="Beyond analysis"
           lead="Viewing, conversion, and a terminal with an agent command channel."
         >
-          <Cards items={BEYOND} />
+          <Cards items={beyond} />
         </Section>
       </Section>
 
       <Section
         id={HOME_SECTIONS.ANALYSTS}
-        eyebrow="03 — The evidence"
+        eyebrow="04 — The evidence"
         title="Built for analysts"
         lead="Every byte accounted for — including the ones nothing claims."
         tone="raised"
@@ -170,7 +186,7 @@ export default function Home() {
 
       <Section
         id={HOME_SECTIONS.REVIEWS}
-        eyebrow="04 — The verdict"
+        eyebrow="05 — The verdict"
         title="What people say"
         lead="Reviews left by people with an account. One each, and they can change or remove their own."
         tone="sunken"
@@ -178,8 +194,17 @@ export default function Home() {
         <Reviews />
       </Section>
 
+      <Section
+        id={HOME_SECTIONS.FAQ}
+        eyebrow="06 — Questions"
+        title="Questions, answered"
+        lead="The things people ask before they open a file they care about."
+      >
+        <Faq />
+      </Section>
+
       {/* The closing band: where the reader goes next. */}
-      <Section id={HOME_SECTIONS.DISCOVER} eyebrow="05 — Next" title="Discover more">
+      <Section id={HOME_SECTIONS.DISCOVER} eyebrow="07 — Next" title="Discover more">
         <Cards items={discover} />
       </Section>
     </>

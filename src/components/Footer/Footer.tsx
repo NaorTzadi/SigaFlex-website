@@ -37,7 +37,8 @@ const COLUMNS: Array<{ title: string; entries: Entry[] }> = [
     entries: [
       { to: `${ROUTES.HOME}#${HOME_SECTIONS.WHAT_IT_DOES}`, label: "What it does" },
       { to: `${ROUTES.HOME}#${HOME_SECTIONS.HOW_IT_WORKS}`, label: "How it works" },
-      { to: `${ROUTES.HOME}#${HOME_SECTIONS.CAPABILITIES}`, label: "Capabilities" }
+      { to: `${ROUTES.HOME}#${HOME_SECTIONS.CAPABILITIES}`, label: "Capabilities" },
+      { to: `${ROUTES.HOME}#${HOME_SECTIONS.TERMINAL}`, label: "The terminal" }
     ]
   },
   {
@@ -58,7 +59,10 @@ const COLUMNS: Array<{ title: string; entries: Entry[] }> = [
   },
   {
     title: "Support",
-    entries: [{ to: ROUTES.CONTACT, label: "Contact us" }]
+    entries: [
+      { to: `${ROUTES.HOME}#${HOME_SECTIONS.FAQ}`, label: "Questions" },
+      { to: ROUTES.CONTACT, label: "Contact us" }
+    ]
   },
   {
     title: "Legal",

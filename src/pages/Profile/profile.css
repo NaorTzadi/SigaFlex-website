@@ -337,6 +337,12 @@
   color: var(--fa-color-accent);
 }
 
+.profile_review_stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.1em;
+}
+
 .profile_review_name {
   color: var(--fa-color-text-muted);
   font-size: var(--fa-text-sm);

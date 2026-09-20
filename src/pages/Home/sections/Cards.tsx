@@ -1,3 +1,4 @@
+import type { MouseEvent } from "react";
 import { Link } from "react-router-dom";
 
 import Icon from "../../../components/Icon/Icon";
@@ -15,8 +16,16 @@ export type Card = {
 };
 
 export default function Cards({ items }: { items: Card[] }) {
+  function spotlight(event: MouseEvent<HTMLUListElement>) {
+    const card = (event.target as HTMLElement).closest<HTMLElement>(`.${className}_card`);
+    if (!card) return;
+    const box = card.getBoundingClientRect();
+    card.style.setProperty("--cards-x", `${event.clientX - box.left}px`);
+    card.style.setProperty("--cards-y", `${event.clientY - box.top}px`);
+  }
+
   return (
-    <ul className={className}>
+    <ul className={className} onMouseMove={spotlight}>
       {items.map((card) => {
         const inside = (
           <>
@@ -25,7 +34,7 @@ export default function Cards({ items }: { items: Card[] }) {
             <span className={`${className}_body`}>{card.body}</span>
             {card.to && (
               <span className={`${className}_go`}>
-                Open <Icon name="doubleArrowRight" size="0.875em" />
+                Open <Icon name="chevronRight" size="0.875em" />
               </span>
             )}
           </>

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Contents from "../../components/Contents/Contents";
 import Icon from "../../components/Icon/Icon";
 import type { GlyphName } from "../../components/Icon/glyphs";
-import { HOME_SECTIONS, PASSWORD_MIN_LENGTH, PRODUCT_NAME } from "../../core/Constants";
+import { HOME_SECTIONS, PASSWORD_MIN_LENGTH, PRODUCT_NAME, REVIEW_RATINGS } from "../../core/Constants";
 import * as ServerBridge from "../../core/ServerBridge";
 import { cx, isEmail } from "../../core/Utility";
 import { ROUTES } from "../../Routing";
@@ -364,7 +364,7 @@ export default function Profile() {
         <p className="account_eyebrow fa_eyebrow">Account</p>
         <h1 className="page_title">Your account</h1>
         <div className={cx("account_card", `${className}_empty`)}>
-          <Icon className={`${className}_empty_glyph`} name="warning" size="2.5em" />
+          <Icon className={`${className}_empty_glyph`} name="info" size="2.5em" />
           <p className={`${className}_empty_message`}>
             Your details could not be read. The server may be unreachable, or this session may have
             ended while the page was open.
@@ -622,8 +622,10 @@ export default function Profile() {
               <>
                 <div className={`${className}_review`}>
                   <p className={`${className}_review_head`}>
-                    <span aria-hidden="true">
-                      {"★".repeat(review.rating) + "☆".repeat(5 - review.rating)}
+                    <span className={`${className}_review_stars`}>
+                      {REVIEW_RATINGS.map((value) => (
+                        <Icon key={value} name={value <= review.rating ? "star" : "starOutline"} />
+                      ))}
                     </span>
                     <span className="fa_hidden">{review.rating} out of 5</span>
                     <span className={`${className}_review_name`}>

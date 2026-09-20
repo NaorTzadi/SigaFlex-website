@@ -31,7 +31,7 @@ const REQUIREMENTS: Array<{ glyph: GlyphName; text: string }> = [
 
 const PLANNED: Array<{ glyph: GlyphName; name: string; note: string }> = [
   { glyph: "terminal", name: "Linux", note: "Planned" },
-  { glyph: "module", name: "macOS", note: "Planned" }
+  { glyph: "apple", name: "macOS", note: "Planned" }
 ];
 
 export default function Download() {
