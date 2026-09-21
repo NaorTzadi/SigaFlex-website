@@ -4,8 +4,22 @@
   align-items: center;
   min-height: calc(100svh - var(--fa-header-height));
   padding-block: clamp(var(--fa-space-12), 7vw, var(--fa-space-16));
-  border-bottom: var(--fa-border-width) solid var(--fa-color-border);
+  border-bottom: 0;
   overflow: clip;
+}
+
+/* The horizon. A line of amber along the foot of the hero, glowing up into it,
+   where the eye lands after the headline and before the page proper. */
+.hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--fa-hairline-accent);
+  box-shadow: 0 0 48px 4px var(--fa-color-accent-glow);
+  pointer-events: none;
 }
 
 .hero_backdrop {
@@ -47,7 +61,7 @@
 
 @supports (background-clip: text) or (-webkit-background-clip: text) {
   .hero_title {
-    background: linear-gradient(160deg, var(--fa-color-text-bright) 0%, var(--fa-color-text) 55%, var(--fa-color-text-secondary) 100%);
+    background: linear-gradient(160deg, var(--fa-color-text-bright) 0%, var(--fa-color-text) 55%, color-mix(in srgb, var(--fa-color-text-secondary) 72%, var(--fa-color-accent)) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -121,6 +135,7 @@
 
 .hero_fact_value {
   transition: color var(--fa-duration-fast) var(--fa-easing);
+  text-shadow: 0 0 22px var(--fa-color-accent-glow);
 }
 
 @media (min-width: 1024px) {

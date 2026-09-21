@@ -1,5 +1,6 @@
 .footer {
-  border-top: var(--fa-border-width) solid var(--fa-color-border);
+  border-top: var(--fa-border-width) solid transparent;
+  border-image: var(--fa-hairline) 1;
   background: var(--fa-color-surface);
 }
 
@@ -49,6 +50,7 @@
 .footer {
   position: relative;
   background:
+    var(--fa-grain) 0 0 / 200px 200px,
     radial-gradient(60rem 24rem at 50% 0%, var(--fa-bloom-accent), transparent 70%),
     var(--fa-color-surface);
 }
@@ -68,6 +70,7 @@
 
 .footer_brand_mark {
   color: var(--fa-color-accent);
+  filter: drop-shadow(0 0 6px var(--fa-color-accent-glow));
 }
 
 .footer_note {

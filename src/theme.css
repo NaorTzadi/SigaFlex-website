@@ -92,9 +92,28 @@
   --fa-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
   --fa-shadow-md: 0 10px 28px -14px rgb(0 0 0 / 0.75), 0 2px 6px rgb(0 0 0 / 0.35);
   --fa-shadow-lg: 0 40px 72px -28px rgb(0 0 0 / 0.85), 0 10px 28px -14px rgb(0 0 0 / 0.55);
-  --fa-shadow-inset-top: inset 0 1px 0 rgb(255 255 255 / 0.05);
+  --fa-shadow-inset-top: inset 0 1px 0 rgb(255 255 255 / 0.07);
   --fa-shadow-well: inset 0 1px 3px rgb(0 0 0 / 0.5);
   --fa-glow-accent: 0 10px 34px -14px rgb(224 163 65 / 0.55);
+
+  /* A rule that is lit from its middle and fades before it reaches the edges,
+     instead of a flat line drawn from wall to wall. */
+  --fa-hairline: linear-gradient(90deg, transparent, var(--fa-color-border-strong) 50%, transparent);
+  --fa-hairline-accent: linear-gradient(90deg, transparent 8%, var(--fa-color-accent-glow) 35%, var(--fa-color-accent) 50%, var(--fa-color-accent-glow) 65%, transparent 92%);
+
+  /* Surfaces catch light from above: a control is lighter at its top edge than
+     at its bottom, and the amber is brighter where the light lands. */
+  --fa-gradient-accent: linear-gradient(180deg, var(--fa-color-accent-strong), var(--fa-color-accent));
+  --fa-gradient-surface: linear-gradient(180deg, var(--fa-color-surface-hover), var(--fa-color-surface-raised));
+  --fa-gradient-heading: linear-gradient(160deg, var(--fa-color-text-bright) 0%, var(--fa-color-text) 60%, var(--fa-color-text-secondary) 100%);
+
+  /* Film grain, for the canvas and nothing on it. Mid-grey noise pushed down so
+     half of it is black and invisible on graphite; what is left is a faint
+     scatter of light specks that keeps a flat field from reading as a flat
+     field of pixels. It is a background layer -- the page, the raised and the
+     sunken bands, the footer -- and never an overlay, so a screenshot, a video
+     or a terminal is never dusted with it. Inline, so nothing is fetched. */
+  --fa-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='2.2' intercept='-1.1'/%3E%3CfeFuncG type='linear' slope='2.2' intercept='-1.1'/%3E%3CfeFuncB type='linear' slope='2.2' intercept='-1.1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.09'/%3E%3C/svg%3E");
 
   --fa-backdrop: rgb(23 24 26 / 0.78);
   --fa-grid-line: rgb(255 255 255 / 0.028);
@@ -198,11 +217,12 @@ html {
 
 body {
   margin: 0;
-  background: var(--fa-color-background);
+  background: var(--fa-grain) 0 0 / 200px 200px, var(--fa-color-background);
   color: var(--fa-color-text);
   font-family: var(--fa-font-body);
   font-size: var(--fa-text-base);
   line-height: var(--fa-line-body);
+  -webkit-font-smoothing: antialiased;
 }
 
 h1,
@@ -294,7 +314,7 @@ button {
   gap: var(--fa-space-2);
   min-height: 44px;
   padding: var(--fa-space-3) var(--fa-space-6);
-  background: var(--fa-color-surface-raised);
+  background: var(--fa-gradient-surface);
   border: var(--fa-border-width) solid var(--fa-color-border-strong);
   border-radius: var(--fa-radius-md);
   box-shadow: var(--fa-shadow-inset-top), var(--fa-shadow-sm);
@@ -321,16 +341,16 @@ button {
 }
 
 .fa_button-primary {
-  background: var(--fa-color-accent);
+  background: var(--fa-gradient-accent);
   color: var(--fa-color-accent-text);
   border-color: var(--fa-color-accent);
-  box-shadow: var(--fa-glow-accent);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.28), var(--fa-glow-accent);
 }
 
 .fa_button-primary:hover {
   background: var(--fa-color-accent-strong);
   border-color: var(--fa-color-accent-strong);
-  box-shadow: 0 14px 40px -12px rgb(224 163 65 / 0.7);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.32), 0 14px 40px -12px rgb(224 163 65 / 0.7);
 }
 
 .fa_button-primary:active {
@@ -395,7 +415,7 @@ button {
   display: inline-flex;
   align-items: center;
   gap: var(--fa-space-2);
-  color: var(--fa-color-text-muted);
+  color: var(--fa-color-accent);
   font-family: var(--fa-font-mono);
   font-size: var(--fa-text-xs);
   letter-spacing: 0.14em;
@@ -455,6 +475,7 @@ button {
 }
 
 .fa_tag-accent {
+  background: var(--fa-color-accent-soft);
   border-color: var(--fa-color-accent);
   color: var(--fa-color-accent);
 }

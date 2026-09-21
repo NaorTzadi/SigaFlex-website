@@ -58,6 +58,15 @@
   letter-spacing: -0.025em;
 }
 
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  .page_title {
+    background: var(--fa-gradient-heading);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
 .page_block_title {
   display: flex;
   align-items: center;

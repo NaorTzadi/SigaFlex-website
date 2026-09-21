@@ -1,6 +1,8 @@
 .section {
   padding-block: var(--fa-section-padding-block);
-  border-bottom: var(--fa-border-width) solid var(--fa-color-border);
+  border-bottom: var(--fa-border-width) solid transparent;
+  /* Fades out before the edges: the page is lit from the middle, not ruled. */
+  border-image: var(--fa-hairline) 1;
 }
 
 .section:last-child {
@@ -73,15 +75,39 @@
   letter-spacing: -0.02em;
 }
 
+/* Titles carry the same sheen as the hero headline, so a band opens the way
+   the page did. Not the nested ones: at that size the sheen reads as dimming. */
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  .section_title {
+    background: var(--fa-gradient-heading);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .section-nested .section_title {
+    background: none;
+    color: inherit;
+  }
+}
+
 .section-raised {
   background:
+    var(--fa-grain) 0 0 / 200px 200px,
     radial-gradient(60rem 30rem at 50% -20%, var(--fa-bloom-accent), transparent 70%),
     var(--fa-color-surface);
   box-shadow: var(--fa-shadow-inset-top);
 }
 
+/* A raised band is a plate laid on the page, and a plate has a top edge. */
+.section-raised {
+  border-top: var(--fa-border-width) solid transparent;
+}
+
 .section-sunken {
   background:
+    var(--fa-grain) 0 0 / 200px 200px,
+    radial-gradient(70% 90% at 50% 0%, transparent 35%, var(--fa-color-surface-sunken) 100%),
     linear-gradient(var(--fa-grid-line) 1px, transparent 1px) 0 0 / 100% 3rem,
     linear-gradient(90deg, var(--fa-grid-line) 1px, transparent 1px) 0 0 / 3rem 100%,
     var(--fa-color-surface-sunken);
