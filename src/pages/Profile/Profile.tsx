@@ -7,7 +7,7 @@ import Icon from "../../components/Icon/Icon";
 import type { GlyphName } from "../../components/Icon/glyphs";
 import { HOME_SECTIONS, PASSWORD_MIN_LENGTH, PRODUCT_NAME, REVIEW_RATINGS } from "../../core/Constants";
 import * as ServerBridge from "../../core/ServerBridge";
-import { cx, isEmail } from "../../core/Utility";
+import { cx, initialOf, isEmail } from "../../core/Utility";
 import { ROUTES } from "../../Routing";
 import "../page.css";
 import "../account.css";
@@ -41,10 +41,6 @@ function dateOf(stamp: string | null): string {
     month: "short",
     day: "numeric"
   });
-}
-
-function initialOf(email: string): string {
-  return (email.trim()[0] ?? "?").toUpperCase();
 }
 
 function failure(error: unknown, refused: string, refusedField?: string): Note {

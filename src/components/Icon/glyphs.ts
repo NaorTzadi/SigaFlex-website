@@ -6,7 +6,7 @@
  * `externalLink`, `calendar` and `padlock`, which are drawn here because only the website has a
  * password to reveal, an address to write to, a channel to link and a link that
  * leaves the site. `chevronDown`, `chevronRight`, `arrowRight`, `image`, `grid`,
- * `user`, `star`, `starOutline`, `error`, `convert` and `apple` are drawn here for
+ * `user`, `signOut`, `star`, `starOutline`, `error`, `convert` and `apple` are drawn here for
  * the same reason: a disclosure marker, a picture, a person, a rating and a
  * platform the window itself never has to name. `inspect` is redrawn rather than
  * lifted, because the app's path runs past the 16x16 box and clips its own handle.
@@ -29,6 +29,7 @@ export const GLYPHS = {
   tag: "M7.8 1.2h5.3c.7 0 1.3.6 1.3 1.3v5.3c0 .3-.1.6-.4.9l-5.38 5.38c-.5.5-1.3.5-1.8 0L1.52 8.78c-.5-.5-.5-1.3 0-1.8l5.38-5.38c.3-.3.6-.4.9-.4zm3.55 1.75a1.3 1.3 0 1 0 0 2.6 1.3 1.3 0 0 0 0-2.6z",
   seal: "M8 1.4a4.3 4.3 0 1 0 0 8.6 4.3 4.3 0 0 0 0-8.6zm0 1.8a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM5.2 10.5l-1 4.1L8 12.9l3.8 1.7-1-4.1a5.9 5.9 0 0 1-5.6 0z",
   user: "M8 2a3.1 3.1 0 1 1 0 6.2A3.1 3.1 0 0 1 8 2zm0 7.6c3.2 0 5.8 2 6.2 4.6H1.8c.4-2.6 3-4.6 6.2-4.6z",
+  signOut: "M2 2.4h6v1.6H3.6v8H8v1.6H2V2.4zm8.2 2.9L14.9 8l-4.7 2.7V8.8H6.6V7.2h3.6V5.3z",
   star: "M8 1.5 9.6 6.2 14.6 6.3 10.6 9.3 12.1 14 8 11.2 3.9 14 5.4 9.3 1.4 6.3 6.4 6.2z",
   starOutline: "M8 1.5 9.6 6.2 14.6 6.3 10.6 9.3 12.1 14 8 11.2 3.9 14 5.4 9.3 1.4 6.3 6.4 6.2zM8 4.8 8.8 7.3 11.4 7.3 9.4 8.9 10.1 11.3 8 9.9 5.9 11.3 6.6 8.9 4.6 7.3 7.2 7.3z",
   warning: "M8 1.8c.4 0 .8.2 1 .6l5.2 9.1c.4.7-.1 1.6-1 1.6H2.8c-.9 0-1.4-.9-1-1.6L7 2.4c.2-.4.6-.6 1-.6zm-.8 3.6v4.1h1.6V5.4H7.2zm0 5.2v1.6h1.6v-1.6H7.2z",

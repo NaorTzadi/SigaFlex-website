@@ -25,7 +25,7 @@ import { ROUTES } from "../../Routing";
 import { HOME_SECTIONS, SITE_NAME } from "../../core/Constants";
 import { useGlobal } from "../../core/Globals";
 import * as ServerBridge from "../../core/ServerBridge";
-import { cx } from "../../core/Utility";
+import { cx, initialOf, nameOf } from "../../core/Utility";
 import "./header.css";
 
 const className = "header";
@@ -93,6 +93,109 @@ function useCurrentSection(onHome: boolean): string {
   return current;
 }
 
+/* An open panel closes on Escape and on anything that happens outside it. */
+function useDismiss(
+  open: boolean,
+  holder: { current: HTMLElement | null },
+  setOpen: (open: boolean) => void
+) {
+  useEffect(() => {
+    if (!open) return;
+
+    function onKey(event: KeyboardEvent) {
+      if (event.key === "Escape") setOpen(false);
+    }
+    function outside(event: Event) {
+      if (!holder.current?.contains(event.target as Node)) setOpen(false);
+    }
+
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("mousedown", outside);
+    document.addEventListener("focusin", outside);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("mousedown", outside);
+      document.removeEventListener("focusin", outside);
+    };
+  }, [open, holder, setOpen]);
+}
+
+/**
+ * Who is signed in, and the two things they can do about it.
+ *
+ * The convention every site with accounts has settled on: an avatar at the top
+ * right, the name beside it, and the account's own pages behind it rather than
+ * as another link competing with the nav. The account holds an address and no
+ * picture, so the avatar is the first letter of it and the name is the part in
+ * front of the @ — the whole address is in the menu, where there is room for it.
+ */
+function AccountMenu({ email, onLeave }: { email: string; onLeave: () => void }) {
+  const [open, setOpen] = useState(false);
+  const holder = useRef<HTMLDivElement>(null);
+
+  useDismiss(open, holder, setOpen);
+
+  function leave() {
+    setOpen(false);
+    onLeave();
+  }
+
+  return (
+    <div className={`${className}_account`} ref={holder}>
+      <button
+        className={`${className}_account_button`}
+        type="button"
+        aria-haspopup="menu"
+        aria-expanded={open}
+        aria-controls="header-account"
+        onClick={() => setOpen((wasOpen) => !wasOpen)}
+      >
+        <span className={`${className}_avatar`} aria-hidden="true">
+          {initialOf(email)}
+        </span>
+        <span className={`${className}_account_name`}>{nameOf(email)}</span>
+        <span className="fa_hidden">account menu</span>
+        <Icon
+          className={cx(`${className}_chevron`, open && `${className}_chevron-open`)}
+          name="chevronDown"
+          size="0.75em"
+        />
+      </button>
+
+      <div
+        className={cx(`${className}_account_menu`, open && `${className}_account_menu-open`)}
+        id="header-account"
+        role="menu"
+      >
+        <p className={`${className}_account_head`}>
+          <span className={`${className}_account_head_label`}>Signed in as</span>
+          <span className={`${className}_account_head_email`}>{email}</span>
+        </p>
+
+        <Link className={`${className}_account_item`} role="menuitem" to={ROUTES.ACCOUNT} onClick={leave}>
+          <Icon className={`${className}_account_glyph`} name="user" size="1em" />
+          Your account
+        </Link>
+
+        {/* Last, and on its own: signing out by accident is the expensive slip
+            in a menu like this one. */}
+        <button
+          className={cx(`${className}_account_item`, `${className}_account_item-out`)}
+          type="button"
+          role="menuitem"
+          onClick={() => {
+            leave();
+            void ServerBridge.logout();
+          }}
+        >
+          <Icon className={`${className}_account_glyph`} name="signOut" size="1em" />
+          Sign out
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export default function Header() {
   const [open, setOpen] = useState(false);
   const [flyout, setFlyout] = useState(false);
@@ -113,29 +216,7 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  /* An open flyout closes on Escape and on a click anywhere outside it. */
-  useEffect(() => {
-    if (!flyout) return;
-
-    function onKey(event: KeyboardEvent) {
-      if (event.key === "Escape") setFlyout(false);
-    }
-    function onPointer(event: MouseEvent) {
-      if (!productRef.current?.contains(event.target as Node)) setFlyout(false);
-    }
-    function onFocus(event: FocusEvent) {
-      if (!productRef.current?.contains(event.target as Node)) setFlyout(false);
-    }
-
-    document.addEventListener("keydown", onKey);
-    document.addEventListener("mousedown", onPointer);
-    document.addEventListener("focusin", onFocus);
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.removeEventListener("mousedown", onPointer);
-      document.removeEventListener("focusin", onFocus);
-    };
-  }, [flyout]);
+  useDismiss(flyout, productRef, setFlyout);
 
   /** Following any link puts the header back the way it was. */
   function closeMenus() {
@@ -152,6 +233,16 @@ export default function Header() {
         </Link>
 
         <div className={`${className}_actions`}>
+          {!signedIn && (
+            <NavLink
+              className={({ isActive }) => cx(`${className}_signin`, isActive && `${className}_signin-active`)}
+              to={ROUTES.LOGIN}
+              onClick={closeMenus}
+            >
+              Sign in
+            </NavLink>
+          )}
+
           <Link
             className="fa_button fa_button-primary fa_button-small"
             to={ROUTES.DOWNLOAD}
@@ -159,6 +250,8 @@ export default function Header() {
           >
             Download
           </Link>
+
+          {signedIn && <AccountMenu email={accountEmail} onLeave={closeMenus} />}
         </div>
 
         <button
@@ -236,43 +329,6 @@ export default function Header() {
               >
                 Pricing
               </NavLink>
-            </li>
-
-            {signedIn && (
-              <li className={`${className}_nav_item`}>
-                <NavLink
-                  className={({ isActive }) => cx(`${className}_nav_link`, isActive && `${className}_nav_link-active`)}
-                  to={ROUTES.ACCOUNT}
-                  title={accountEmail}
-                  onClick={closeMenus}
-                >
-                  Account
-                </NavLink>
-              </li>
-            )}
-
-            <li className={`${className}_nav_item`}>
-              {signedIn ? (
-                <button
-                  className={`${className}_nav_button`}
-                  type="button"
-                  title={accountEmail}
-                  onClick={() => {
-                    closeMenus();
-                    void ServerBridge.logout();
-                  }}
-                >
-                  Sign out
-                </button>
-              ) : (
-                <NavLink
-                  className={({ isActive }) => cx(`${className}_nav_link`, isActive && `${className}_nav_link-active`)}
-                  to={ROUTES.LOGIN}
-                  onClick={closeMenus}
-                >
-                  Sign in
-                </NavLink>
-              )}
             </li>
           </ul>
         </nav>

@@ -391,3 +391,186 @@
     min-height: 52px;
   }
 }
+
+/* Signed out: a quiet text link beside the call to action, the way every site
+   with accounts pairs them. */
+.header_signin {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-inline: var(--fa-space-2);
+  color: var(--fa-color-text-secondary);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--fa-duration-fast) var(--fa-easing);
+}
+
+.header_signin:hover,
+.header_signin-active {
+  color: var(--fa-color-text);
+}
+
+/* Signed in: the avatar, the name and the menu behind them. Set apart from the
+   nav and the call to action, so it reads as this account rather than as one
+   more of the site's buttons. */
+.header_account {
+  position: relative;
+}
+
+/* The bar keeps to the content column; this one control does not. It is taken
+   out of the row and pinned to the edge of the window, a gutter in, so nothing
+   else in the bar moves with it. Pinned against the header rather than the bar,
+   because the bar is the thing that is capped. */
+@media (min-width: 1024px) {
+  .header_account {
+    position: absolute;
+    top: 50%;
+    right: var(--fa-gutter);
+    transform: translateY(-50%);
+  }
+}
+
+.header_account_button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--fa-space-2);
+  min-height: 44px;
+  padding: var(--fa-space-1) var(--fa-space-2);
+  background: transparent;
+  border: var(--fa-border-width) solid transparent;
+  border-radius: 999px;
+  color: var(--fa-color-text-secondary);
+  cursor: pointer;
+  transition: background var(--fa-duration-fast) var(--fa-easing),
+    border-color var(--fa-duration-fast) var(--fa-easing),
+    color var(--fa-duration-fast) var(--fa-easing);
+}
+
+.header_account_button:hover,
+.header_account_button[aria-expanded="true"] {
+  background: var(--fa-color-surface-hover);
+  border-color: var(--fa-color-border);
+  color: var(--fa-color-text);
+}
+
+.header_avatar {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  background: var(--fa-color-accent);
+  color: var(--fa-color-accent-text);
+  border-radius: 50%;
+  font-size: var(--fa-text-sm);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.header_account_name {
+  max-width: 9rem;
+  overflow: hidden;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* The panel hangs off the right edge, so it never runs past the viewport. */
+.header_account_menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + var(--fa-space-2));
+  right: 0;
+  z-index: 1;
+  min-width: 15rem;
+  padding: var(--fa-space-2);
+  background: var(--fa-color-surface-raised);
+  border: var(--fa-border-width) solid var(--fa-color-border);
+  border-radius: var(--fa-radius-lg);
+  box-shadow: var(--fa-shadow-md);
+}
+
+.header_account_menu-open {
+  display: block;
+  animation: header_flyout_in var(--fa-duration-fast) var(--fa-easing);
+}
+
+.header_account_head {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: var(--fa-space-2) var(--fa-space-3) var(--fa-space-3);
+  border-bottom: var(--fa-border-width) solid var(--fa-color-border);
+}
+
+.header_account_head_label {
+  color: var(--fa-color-text-muted);
+  font-size: var(--fa-text-xs);
+}
+
+.header_account_head_email {
+  overflow-wrap: anywhere;
+  font-size: var(--fa-text-sm);
+  font-weight: 600;
+}
+
+.header_account_item {
+  display: flex;
+  align-items: center;
+  gap: var(--fa-space-3);
+  width: 100%;
+  min-height: 44px;
+  margin-top: var(--fa-space-1);
+  padding: var(--fa-space-2) var(--fa-space-3);
+  background: transparent;
+  border: 0;
+  border-radius: var(--fa-radius-md);
+  color: var(--fa-color-text-secondary);
+  font: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--fa-duration-fast) var(--fa-easing),
+    color var(--fa-duration-fast) var(--fa-easing);
+}
+
+.header_account_item:hover {
+  background: var(--fa-color-surface-hover);
+  color: var(--fa-color-text);
+}
+
+.header_account_glyph {
+  color: var(--fa-color-text-muted);
+  transition: color var(--fa-duration-fast) var(--fa-easing);
+}
+
+.header_account_item:hover .header_account_glyph {
+  color: var(--fa-color-accent);
+}
+
+.header_account_item-out {
+  margin-top: var(--fa-space-2);
+  border-top: var(--fa-border-width) solid var(--fa-color-border);
+  border-radius: 0 0 var(--fa-radius-md) var(--fa-radius-md);
+}
+
+.header_account_item-out:hover {
+  color: var(--fa-color-danger);
+}
+
+.header_account_item-out:hover .header_account_glyph {
+  color: var(--fa-color-danger);
+}
+
+/* On a phone the bar keeps the avatar and drops everything around it: the name
+   is in the menu, and the row has the brand, the download and the toggle in it. */
+@media (max-width: 1023px) {
+  .header_account_name,
+  .header_account_button .header_chevron {
+    display: none;
+  }
+
+  .header_account_button {
+    padding: var(--fa-space-1);
+  }
+}

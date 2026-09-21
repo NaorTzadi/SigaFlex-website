@@ -57,22 +57,28 @@ function readStoredSession(): string | null {
 }
 
 /**
- * Signing out drops the remember cookie too. Signing in keeps the token the
- * server sent, when it sent one; a plain session check sends none and leaves
- * the cookie as it was.
+ * Signing in keeps the token the server sent, when it sent one; a plain
+ * session check sends none and leaves the cookie as it was. Losing the session
+ * leaves the cookie too: a dead session is exactly what the cookie is for.
+ * Only a deliberate sign-out drops it, through forget().
  */
 function rememberSession(token: string | null, email = "", rememberToken: string | null = null): void {
   sessionToken = token;
   setGlobal("signedIn", token !== null);
   setGlobal("accountEmail", token === null ? "" : email);
-  if (token === null) CookiesManager.remove(COOKIE.REMEMBER);
-  else if (rememberToken) CookiesManager.set(COOKIE.REMEMBER, rememberToken, REMEMBER_DAYS);
+  if (rememberToken) CookiesManager.set(COOKIE.REMEMBER, rememberToken, REMEMBER_DAYS);
   try {
     if (token) window.sessionStorage.setItem(SESSION_KEY, token);
     else window.sessionStorage.removeItem(SESSION_KEY);
   } catch {
     /* Nothing to do: the in-memory copy still works for this page view. */
   }
+}
+
+/** The reader chose to leave: the session and the way back are both dropped. */
+function forget(): void {
+  CookiesManager.remove(COOKIE.REMEMBER);
+  rememberSession(null);
 }
 
 export function hasSession(): boolean {
@@ -213,15 +219,28 @@ export async function logout(): Promise<void> {
   try {
     await post<void>(ENDPOINT.LOGOUT, {});
   } finally {
-    rememberSession(null);
+    forget();
   }
 }
 
 /**
  * Who the held token belongs to. Without a live session it falls back to the
  * remember cookie, and answers null only when neither is any good.
+ *
+ * One check at a time. The remember token is spent by the first resume, so a
+ * second caller arriving while it is in flight shares its answer rather than
+ * posting the same token again and being refused.
  */
-export async function currentAccount(): Promise<Account | null> {
+let checking: Promise<Account | null> | null = null;
+
+export function currentAccount(): Promise<Account | null> {
+  checking ??= checkAccount().finally(() => {
+    checking = null;
+  });
+  return checking;
+}
+
+async function checkAccount(): Promise<Account | null> {
   try {
     if (sessionToken) {
       try {
@@ -282,13 +301,13 @@ export async function logoutEverywhere(): Promise<void> {
   try {
     await post<void>(ENDPOINT.LOGOUT_ALL, {});
   } finally {
-    rememberSession(null);
+    forget();
   }
 }
 
 export async function deleteAccount(password: string): Promise<void> {
   await post<void>(ENDPOINT.DELETE_ACCOUNT, { password });
-  rememberSession(null);
+  forget();
 }
 
 /* --- address confirmation and password reset --------------------------- */

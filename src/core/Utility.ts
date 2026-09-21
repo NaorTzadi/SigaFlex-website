@@ -70,3 +70,13 @@ export function revealOnScroll(): () => void {
 export function isEmail(value: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
 }
+
+/** The letter an avatar stands in with when there is no picture to show. */
+export function initialOf(email: string): string {
+  return (email.trim()[0] ?? "?").toUpperCase();
+}
+
+/** What to call someone when the account holds an address and nothing else. */
+export function nameOf(email: string): string {
+  return email.trim().split("@")[0] || email.trim();
+}
