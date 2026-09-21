@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import Contents from "../../components/Contents/Contents";
+import TableOfContents from "../../components/TableOfContents/TableOfContents";
 import Icon from "../../components/Icon/Icon";
 import {
   CONTACT_EMAIL,
@@ -131,7 +131,7 @@ export default function Terms() {
       </p>
 
       <div className="page_layout">
-        <Contents
+        <TableOfContents
           label="Sections of the terms page"
           entries={sections.map(({ id, title }) => ({ id, title }))}
         />

@@ -244,7 +244,7 @@ export default function Header() {
           )}
 
           <Link
-            className="fa_button fa_button-primary fa_button-small"
+            className="fa_button fa_button-primary fa_button-live fa_button-small"
             to={ROUTES.DOWNLOAD}
             onClick={closeMenus}
           >

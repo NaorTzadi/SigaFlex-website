@@ -1,0 +1,57 @@
+/*
+ * The card the confirmation link lands in. It is not a form -- it is one
+ * outcome, a mark that says which one at a glance, and the way on from it.
+ * The surface is account.css's card; only what sits inside is here.
+ */
+
+.emailconfirmationpage_outcome {
+  align-items: flex-start;
+  gap: var(--fa-space-4);
+  /* The card arrives after a round trip to the server, so it arrives rather
+     than being there: the reader is watching this spot. */
+  animation: emailconfirmationpage_outcome_in var(--fa-duration-normal) var(--fa-easing);
+}
+
+@keyframes emailconfirmationpage_outcome_in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.emailconfirmationpage_mark-good {
+  color: var(--fa-color-success);
+}
+
+.emailconfirmationpage_mark-bad {
+  color: var(--fa-color-danger);
+}
+
+.emailconfirmationpage_message {
+  margin: 0;
+  font-size: var(--fa-text-lg);
+}
+
+.emailconfirmationpage_actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--fa-space-3);
+  width: 100%;
+  padding-top: var(--fa-space-4);
+  border-top: var(--fa-border-width) solid var(--fa-color-border);
+}
+
+@media (max-width: 639px) {
+  .emailconfirmationpage_actions .fa_button {
+    flex: 1 1 100%;
+  }
+}
+
+.emailconfirmationpage_working {
+  justify-content: center;
+  min-height: 12rem;
+}
+
+.emailconfirmationpage_working .fa_loading {
+  margin: 0;
+}

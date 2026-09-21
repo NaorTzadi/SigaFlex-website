@@ -55,7 +55,7 @@ export default function Download() {
 
           {BUILD ? (
             <>
-              <a className={`fa_button fa_button-primary ${className}_action`} href={BUILD.url}>
+              <a className={`fa_button fa_button-primary fa_button-live ${className}_action`} href={BUILD.url}>
                 <Icon name="arrowDown" size="1em" />
                 Download {BUILD.version}
               </a>

@@ -13,25 +13,25 @@
 
 import { useEffect } from "react";
 
-import Capabilities from "./sections/Capabilities";
-import Cards from "./sections/Cards";
-import type { Card } from "./sections/Cards";
+import FileInspectorDemo from "./sections/FileInspectorDemo";
+import InfoCardGrid from "./sections/InfoCardGrid";
+import type { InfoCard } from "./sections/InfoCardGrid";
 import ContainmentTree from "./sections/ContainmentTree";
-import Demo from "./sections/Demo";
+import ProductDemoVideo from "./sections/ProductDemoVideo";
 import Faq from "./sections/Faq";
-import CoverageMap from "./sections/CoverageMap";
-import FormatFinder from "./sections/FormatFinder";
-import Hero from "./sections/Hero";
-import Problem from "./sections/Problem";
+import FileByteCoverageMap from "./sections/FileByteCoverageMap";
+import SupportedFormatSearch from "./sections/SupportedFormatSearch";
+import ProductIntroduction from "./sections/ProductIntroduction";
+import AnalysisToolsComparison from "./sections/AnalysisToolsComparison";
 import Reviews from "./sections/Reviews";
 import Section from "./sections/Section";
-import Signatures from "./sections/Signatures";
-import Terminal from "./sections/Terminal";
+import FileSignatureExamples from "./sections/FileSignatureExamples";
+import AgentTerminalDemo from "./sections/AgentTerminalDemo";
 import { ROUTES } from "../../Routing";
 import { HOME_SECTIONS } from "../../core/Constants";
 import { revealOnScroll } from "../../core/Utility";
 
-const BEYOND_TEMPLATE: Card[] = [
+const BEYOND_TEMPLATE: InfoCard[] = [
   {
     glyph: "eye",
     title: "Viewing",
@@ -59,11 +59,11 @@ export default function Home() {
 
   /* Built here, not at module scope: Routing imports this page, so ROUTES is
      still being initialised while this module is evaluated. */
-  const beyond: Card[] = BEYOND_TEMPLATE.map((card) =>
+  const beyond: InfoCard[] = BEYOND_TEMPLATE.map((card) =>
     card.glyph === "terminal" ? { ...card, to: `${ROUTES.HOME}#${HOME_SECTIONS.TERMINAL}` } : card
   );
 
-  const discover: Card[] = [
+  const discover: InfoCard[] = [
     {
       glyph: "arrowDown",
       title: "Download",
@@ -92,11 +92,11 @@ export default function Home() {
 
   return (
     <>
-      <Hero />
+      <ProductIntroduction />
 
       {/* A heading-less strip directly under the hero. */}
       <Section id={HOME_SECTIONS.STRIP} label="Find a format">
-        <FormatFinder />
+        <SupportedFormatSearch />
       </Section>
 
       <Section
@@ -113,7 +113,7 @@ export default function Home() {
           title="The problem"
           lead="One file, five tools, five partial answers."
         >
-          <Problem />
+          <AnalysisToolsComparison />
         </Section>
         <Section
           id={HOME_SECTIONS.HOW_IT_WORKS}
@@ -129,7 +129,7 @@ export default function Home() {
           title="Capabilities"
           lead="Display, Readable, Raw, Patterns, Disassembly — all over the same bytes."
         >
-          <Capabilities />
+          <FileInspectorDemo />
         </Section>
         <Section
           id={HOME_SECTIONS.DEMO}
@@ -137,7 +137,7 @@ export default function Home() {
           title="See it in action"
           lead="A recording of the window doing all of this to real files, rather than a description of it."
         >
-          <Demo />
+          <ProductDemoVideo />
         </Section>
       </Section>
 
@@ -148,7 +148,7 @@ export default function Home() {
         lead="A real shell inside the window, with a command channel. Start Claude Code or Codex in it and it sees what you see, reads what you read, and drives the window for you."
         tone="raised"
       >
-        <Terminal />
+        <AgentTerminalDemo />
       </Section>
 
       <Section
@@ -163,7 +163,7 @@ export default function Home() {
           title="Format coverage"
           lead="Identified by bytes, not by extension."
         >
-          <Signatures />
+          <FileSignatureExamples />
         </Section>
         <Section
           id={HOME_SECTIONS.BEYOND}
@@ -171,7 +171,7 @@ export default function Home() {
           title="Beyond analysis"
           lead="Viewing, conversion, and a terminal with an agent command channel."
         >
-          <Cards items={beyond} />
+          <InfoCardGrid items={beyond} />
         </Section>
       </Section>
 
@@ -183,7 +183,7 @@ export default function Home() {
         tone="raised"
         hue="crimson"
       >
-        <CoverageMap />
+        <FileByteCoverageMap />
       </Section>
 
       <Section
@@ -208,7 +208,7 @@ export default function Home() {
 
       {/* The closing band: where the reader goes next. */}
       <Section id={HOME_SECTIONS.DISCOVER} eyebrow="07 — Next" title="Discover more">
-        <Cards items={discover} />
+        <InfoCardGrid items={discover} />
       </Section>
     </>
   );

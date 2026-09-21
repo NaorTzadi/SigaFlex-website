@@ -1,0 +1,279 @@
+/* The frame echoes the application's inspector: a fixed header naming the
+   entry, a row of tabs, and one output area beneath them. */
+.fileinspectordemo {
+  margin-top: var(--fa-space-6);
+  background: var(--fa-color-surface);
+  border: var(--fa-border-width) solid var(--fa-color-border);
+  border-radius: var(--fa-radius-lg);
+  overflow: hidden;
+}
+
+.fileinspectordemo_head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--fa-space-3);
+  padding: var(--fa-space-3) var(--fa-space-4);
+  background: var(--fa-color-surface-raised);
+  border-bottom: var(--fa-border-width) solid var(--fa-color-border);
+}
+
+.fileinspectordemo_file {
+  font-weight: 600;
+}
+
+.fileinspectordemo_badge {
+  padding: 0 var(--fa-space-2);
+  background: var(--fa-color-accent);
+  color: var(--fa-color-accent-text);
+  border-radius: var(--fa-radius-sm);
+  font-family: var(--fa-font-mono);
+  font-size: var(--fa-text-xs);
+  letter-spacing: 0.04em;
+}
+
+.fileinspectordemo_summary {
+  color: var(--fa-color-text-muted);
+  font-size: var(--fa-text-sm);
+}
+
+/* The tab row scrolls sideways on a phone rather than wrapping: five views in
+   a fixed order read better as a strip than as two ragged lines. */
+.fileinspectordemo_tabs {
+  display: flex;
+  gap: var(--fa-space-1);
+  padding: 0 var(--fa-space-2);
+  border-bottom: var(--fa-border-width) solid var(--fa-color-border);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.fileinspectordemo_tab {
+  flex: none;
+  padding: var(--fa-space-3) var(--fa-space-4);
+  background: transparent;
+  border: 0;
+  /* The selected tab is underlined; the space is reserved on all of them so
+     nothing shifts when the selection moves. */
+  border-bottom: 2px solid transparent;
+  color: var(--fa-color-text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.fileinspectordemo_tab:hover {
+  color: var(--fa-color-text);
+}
+
+.fileinspectordemo_tab-current {
+  border-bottom-color: var(--fa-color-accent);
+  color: var(--fa-color-text);
+}
+
+.fileinspectordemo_panel {
+  /* One height for every view, so switching tabs never resizes the page. */
+  height: 22rem;
+  padding: var(--fa-space-4);
+  overflow: auto;
+}
+
+.fileinspectordemo_pre {
+  margin: 0;
+  font-family: var(--fa-font-mono);
+  font-size: var(--fa-text-sm);
+  line-height: 1.7;
+  white-space: pre;
+}
+
+.fileinspectordemo_row {
+  display: block;
+}
+
+/* Offsets and addresses are scaffolding: present, never competing with the
+   bytes they point at. */
+.fileinspectordemo_offset {
+  color: var(--fa-color-text-muted);
+  padding-right: var(--fa-space-4);
+}
+
+.fileinspectordemo_bytes {
+  color: var(--fa-color-text-muted);
+}
+
+.fileinspectordemo_ascii {
+  color: var(--fa-color-text-muted);
+}
+
+/* The application's own control-flow colours, from its Dark theme. */
+.fileinspectordemo_flow-jump {
+  color: var(--fa-color-flow-jump);
+}
+
+.fileinspectordemo_flow-call {
+  color: var(--fa-color-flow-call);
+}
+
+.fileinspectordemo_flow-return {
+  color: var(--fa-color-flow-return);
+}
+
+.fileinspectordemo_lines {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: line;
+  font-family: var(--fa-font-mono);
+  font-size: var(--fa-text-sm);
+  line-height: 1.8;
+}
+
+/* Numbered by CSS so the numbers cannot be selected and pasted along with the
+   strings — the strings are the content, the numbers are furniture. */
+.fileinspectordemo_line {
+  counter-increment: line;
+}
+
+.fileinspectordemo_line::before {
+  content: counter(line);
+  display: inline-block;
+  width: 2.5rem;
+  color: var(--fa-color-text-muted);
+  text-align: right;
+  padding-right: var(--fa-space-4);
+}
+
+.fileinspectordemo_facts {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--fa-space-3);
+}
+
+.fileinspectordemo_fact {
+  padding-bottom: var(--fa-space-3);
+  border-bottom: var(--fa-border-width) solid var(--fa-color-border);
+  font-family: var(--fa-font-mono);
+  font-size: var(--fa-text-sm);
+}
+
+.fileinspectordemo_fact:last-child {
+  border-bottom: 0;
+}
+
+.fileinspectordemo_table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fa-text-sm);
+}
+
+.fileinspectordemo_table th {
+  padding: 0 var(--fa-space-4) var(--fa-space-2) 0;
+  border-bottom: var(--fa-border-width) solid var(--fa-color-border);
+  color: var(--fa-color-text-muted);
+  font-size: var(--fa-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.fileinspectordemo_table td {
+  padding: var(--fa-space-2) var(--fa-space-4) var(--fa-space-2) 0;
+  border-bottom: var(--fa-border-width) solid var(--fa-color-border);
+  vertical-align: top;
+}
+
+.fileinspectordemo_table tr:last-child td {
+  border-bottom: 0;
+}
+
+.fileinspectordemo_type {
+  color: var(--fa-color-text-muted);
+  white-space: nowrap;
+}
+
+.fileinspectordemo_value {
+  font-family: var(--fa-font-mono);
+  word-break: break-all;
+}
+
+.fileinspectordemo {
+  background:
+    linear-gradient(var(--fa-color-surface), var(--fa-color-surface)) padding-box,
+    linear-gradient(160deg, var(--fa-color-border-strong), var(--fa-color-border)) border-box;
+  border-color: transparent;
+  box-shadow: var(--fa-shadow-md), var(--fa-shadow-inset-top);
+}
+
+.fileinspectordemo_head {
+  position: relative;
+}
+
+.fileinspectordemo_head::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--fa-color-accent), transparent 40%);
+}
+
+.fileinspectordemo_tab {
+  transition: color var(--fa-duration-fast) var(--fa-easing),
+    background var(--fa-duration-fast) var(--fa-easing);
+}
+
+.fileinspectordemo_tab:hover {
+  color: var(--fa-color-text);
+  background: var(--fa-color-surface-hover);
+}
+
+.fileinspectordemo_panel {
+  background: var(--fa-color-background);
+}
+
+.fileinspectordemo_offset {
+  color: var(--fa-color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.fileinspectordemo_tab:active {
+  background: var(--fa-color-surface-pressed);
+}
+
+.fileinspectordemo_view {
+  animation: fileinspectordemo_view_in var(--fa-duration-normal) var(--fa-easing);
+}
+
+@keyframes fileinspectordemo_view_in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+.fileinspectordemo_tabs {
+  position: relative;
+}
+
+.fileinspectordemo_tab {
+  border-bottom-color: transparent;
+}
+
+.fileinspectordemo_tab-current {
+  border-bottom-color: transparent;
+}
+
+.fileinspectordemo_indicator {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  height: 2px;
+  width: 0;
+  background: var(--fa-color-accent);
+  border-radius: 999px;
+  box-shadow: 0 0 12px -2px var(--fa-color-accent);
+  transition: transform var(--fa-duration-normal) var(--fa-easing),
+    width var(--fa-duration-normal) var(--fa-easing);
+}

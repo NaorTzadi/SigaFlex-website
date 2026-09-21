@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import Contents from "../../components/Contents/Contents";
+import TableOfContents from "../../components/TableOfContents/TableOfContents";
 import Icon from "../../components/Icon/Icon";
 import { CONTACT_EMAIL, POLICY_UPDATED, SITE_NAME, SITE_OPERATOR } from "../../core/Constants";
 import { ROUTES } from "../../Routing";
@@ -140,7 +140,7 @@ export default function Privacy() {
       </p>
 
       <div className="page_layout">
-        <Contents
+        <TableOfContents
           label="Sections of the privacy page"
           entries={sections.map(({ id, title }) => ({ id, title }))}
         />

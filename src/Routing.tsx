@@ -16,10 +16,10 @@ import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import Download from "./pages/Download/Download";
 import Pricing from "./pages/Pricing/Pricing";
-import Account from "./pages/Account/Account";
-import Profile from "./pages/Profile/Profile";
-import Password from "./pages/Password/Password";
-import Confirm from "./pages/Confirm/Confirm";
+import AuthenticationPage from "./pages/AuthenticationPage/AuthenticationPage";
+import AccountSettingsPage from "./pages/AccountSettingsPage/AccountSettingsPage";
+import PasswordResetPage from "./pages/PasswordResetPage/PasswordResetPage";
+import EmailConfirmationPage from "./pages/EmailConfirmationPage/EmailConfirmationPage";
 import Contact from "./pages/Contact/Contact";
 import Privacy from "./pages/Privacy/Privacy";
 import Terms from "./pages/Terms/Terms";
@@ -128,7 +128,7 @@ export default function Routing() {
           path={ROUTES.REGISTER}
           element={
             <SessionGate needed={false}>
-              <Account />
+              <AuthenticationPage />
             </SessionGate>
           }
         />
@@ -136,7 +136,7 @@ export default function Routing() {
           path={ROUTES.LOGIN}
           element={
             <SessionGate needed={false}>
-              <Account />
+              <AuthenticationPage />
             </SessionGate>
           }
         />
@@ -144,12 +144,12 @@ export default function Routing() {
           path={ROUTES.ACCOUNT}
           element={
             <SessionGate needed>
-              <Profile />
+              <AccountSettingsPage />
             </SessionGate>
           }
         />
-        <Route path={ROUTES.PASSWORD} element={<Password />} />
-        <Route path={ROUTES.CONFIRM} element={<Confirm />} />
+        <Route path={ROUTES.PASSWORD} element={<PasswordResetPage />} />
+        <Route path={ROUTES.CONFIRM} element={<EmailConfirmationPage />} />
         <Route path={ROUTES.CONTACT} element={<Contact />} />
         <Route path={ROUTES.PRIVACY} element={<Privacy />} />
         <Route path={ROUTES.TERMS} element={<Terms />} />

@@ -1,0 +1,103 @@
+.infocardgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: var(--fa-space-4);
+  margin: var(--fa-space-6) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.infocardgrid_item {
+  display: flex;
+}
+
+.infocardgrid_card {
+  display: grid;
+  align-content: start;
+  gap: var(--fa-space-2);
+  width: 100%;
+  padding: var(--fa-space-6);
+  background: var(--fa-color-surface);
+  border: var(--fa-border-width) solid var(--fa-color-border);
+  border-radius: var(--fa-radius-lg);
+  box-shadow: var(--fa-shadow-inset-top);
+  text-decoration: none;
+  transition: background var(--fa-duration-normal) var(--fa-easing),
+    border-color var(--fa-duration-normal) var(--fa-easing),
+    box-shadow var(--fa-duration-normal) var(--fa-easing),
+    transform var(--fa-duration-normal) var(--fa-easing);
+}
+
+.infocardgrid_glyph {
+  color: var(--fa-color-accent);
+}
+
+.infocardgrid_title {
+  font-size: var(--fa-text-lg);
+  font-weight: 600;
+}
+
+.infocardgrid_body {
+  color: var(--fa-color-text-muted);
+  font-size: var(--fa-text-sm);
+}
+
+.infocardgrid_go {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--fa-space-2);
+  margin-top: var(--fa-space-2);
+  color: var(--fa-color-accent);
+  font-size: var(--fa-text-sm);
+  font-weight: 500;
+}
+
+/* Only a card that goes somewhere answers the pointer: a lift on a card that
+   cannot be clicked is an invitation to click it. */
+.infocardgrid_card-link:hover {
+  background: var(--fa-color-surface-raised);
+  border-color: var(--fa-color-accent);
+  box-shadow: var(--fa-shadow-md), var(--fa-shadow-inset-top);
+  transform: translateY(-3px);
+}
+
+.infocardgrid_card-link:active {
+  background: var(--fa-color-surface-pressed);
+  box-shadow: var(--fa-shadow-inset-top);
+  transform: translateY(-1px);
+}
+
+.infocardgrid_card-link:hover .infocardgrid_go svg {
+  transform: translateX(3px);
+}
+
+.infocardgrid_go svg {
+  transition: transform var(--fa-duration-normal) var(--fa-easing);
+}
+
+.infocardgrid_card {
+  position: relative;
+  overflow: hidden;
+}
+
+.infocardgrid_card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    18rem 18rem at var(--infocardgrid-x, 50%) var(--infocardgrid-y, 50%),
+    var(--fa-bloom-accent),
+    transparent 70%
+  );
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--fa-duration-normal) var(--fa-easing);
+}
+
+.infocardgrid_card:hover::before {
+  opacity: 1;
+}
+
+.infocardgrid_card > * {
+  position: relative;
+}
