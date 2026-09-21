@@ -31,140 +31,140 @@ export const FORMAT_GROUPS: FormatGroup[] = [
         name: "ZIP archive",
         extensions: [".zip"],
         description:
-          "The everyday archive: a central directory at the end and one compressed stream per entry. Half the formats on this list are a ZIP with a convention on top."
+          "An archive that groups files and folders in one file. Each entry can be compressed or stored unchanged; a central directory records its name and location."
       },
       {
         tag: "RAR",
         name: "RAR archive",
         extensions: [".rar"],
         description:
-          "WinRAR's archive. Solid compression and recovery records; entries are listed and read without unpacking the whole file."
+          "An archive format used by WinRAR, with support for compression, encryption, split volumes and optional recovery records."
       },
       {
         tag: "7Z",
         name: "7z archive",
         extensions: [".7z"],
         description:
-          "The 7-Zip archive. LZMA by default, and a header that can itself be compressed, so the member list has to be decoded before anything can be listed."
+          "The 7-Zip archive format, supporting several compression methods, encryption and solid compression, which compresses multiple files together."
       },
       {
         tag: "TAR",
         name: "TAR archive",
         extensions: [".tar"],
         description:
-          "A tape archive: no compression and no index, just 512-byte headers back to back. Every entry below it here is a TAR inside a compressor."
+          "An archive that stores files, directories and their metadata in a sequence of records. TAR does not compress data itself and is often combined with a separate compressor."
       },
       {
         tag: "TAR.GZ",
         name: "gzip-compressed TAR archive",
         extensions: [".tar.gz", ".tgz"],
         description:
-          "A TAR wrapped in a gzip stream. Decompressed in memory, then read as the TAR it is."
+          "A TAR archive compressed with gzip. TAR groups the files and their metadata; gzip compresses the resulting archive."
       },
       {
         tag: "TAR.BZ2",
         name: "bzip2-compressed TAR archive",
         extensions: [".tar.bz2", ".tbz2", ".tbz"],
         description:
-          "A TAR wrapped in bzip2. Slower, smaller, and still a TAR underneath."
+          "A TAR archive compressed with bzip2. It combines TAR's file and directory records with lossless bzip2 compression."
       },
       {
         tag: "TAR.XZ",
         name: "xz-compressed TAR archive",
         extensions: [".tar.xz", ".txz"],
         description:
-          "A TAR wrapped in xz. The usual shape of a source release or a kernel tree."
+          "A TAR archive compressed in the XZ format, typically using LZMA2 compression. Commonly used to distribute software source code."
       },
       {
         tag: "TAR.ZST",
         name: "zstd-compressed TAR archive",
         extensions: [".tar.zst", ".tzst"],
         description:
-          "A TAR wrapped in Zstandard: near-gzip speed at close to xz ratios, which is why packagers keep moving to it."
+          "A TAR archive compressed with Zstandard. It combines TAR's file and directory records with a compressor designed for fast compression and decompression."
       },
       {
         tag: "GZIP",
         name: "gzip stream",
         extensions: [".gz"],
         description:
-          "One compressed stream and nothing else, with no member list. Very often a TAR, so what is inside is identified rather than assumed."
+          "A lossless compression format using DEFLATE. It compresses a byte stream and can contain concatenated members; multiple files are commonly grouped in TAR before compression."
       },
       {
         tag: "BZIP2",
         name: "bzip2 stream",
         extensions: [".bz2"],
         description:
-          "A single Burrows-Wheeler compressed stream. Same shape as gzip: one member, known only by reading it."
+          "A lossless compression format based on the Burrows-Wheeler transform. It compresses data without providing a file directory, so it is often paired with TAR."
       },
       {
         tag: "XZ",
         name: "xz stream",
         extensions: [".xz"],
         description:
-          "A single LZMA2 stream with integrity checks. One member, like gzip."
+          "A lossless compression container, typically using LZMA2, with support for integrity checks. Often used to compress individual files or TAR archives."
       },
       {
         tag: "ZSTD",
         name: "zstd stream",
         extensions: [".zst", ".zstd"],
         description:
-          "A single Zstandard stream. Fast, and what .tar.zst and several package formats now sit on."
+          "A lossless compression format using Zstandard, designed for fast compression and decompression. Used for compressed files, archives and software package payloads."
       },
       {
         tag: "AR",
         name: "ar archive",
         extensions: [".a", ".lib"],
         description:
-          "The Unix archive. The outer layer of every .deb, and of every static library."
+          "A simple archive format commonly used for Unix static libraries. It stores named members and also serves as the outer container for Debian packages."
       },
       {
         tag: "CPIO",
         name: "cpio archive",
         extensions: [".cpio"],
         description:
-          "The archive inside an RPM, and inside every initramfs. A header per file and no index at all."
+          "An archive format that stores files and filesystem metadata as a sequence of entries. Used in Linux initramfs images and many RPM package payloads."
       },
       {
         tag: "CAB",
         name: "Microsoft cabinet",
         extensions: [".cab"],
         description:
-          "Microsoft's cabinet. What an MSI, a driver package or a Windows update carries its files in."
+          "Microsoft's Cabinet archive format, used to distribute installation files and updates. It supports compression and archives split across multiple cabinet files."
       },
       {
         tag: "ISO",
         name: "ISO 9660 disc image",
         extensions: [".iso", ".img"],
         description:
-          "An ISO 9660 disc image. Its volume descriptor sits 32KB in, so an image is confirmed by structure rather than by anything at offset zero."
+          "A disc image containing an ISO 9660 filesystem, commonly used for software distribution and CD images. Extensions such as Joliet and Rock Ridge add filename and metadata features."
       },
       {
         tag: "UDF",
         name: "UDF disc image",
         extensions: [".iso", ".img", ".udf"],
         description:
-          "The filesystem that replaced ISO 9660 on optical media. Found by walking the recognition sequence past 32KB rather than by searching for its mark, and a bridge disc, which is both, is reported as this one."
+          "A disc image containing the Universal Disk Format filesystem, used on DVDs, Blu-ray discs and other media. A disc can contain both UDF and ISO 9660 structures."
       },
       {
         tag: "RPM",
         name: "RPM package",
         extensions: [".rpm"],
         description:
-          "A Red Hat package: a lead, two header sections, and a compressed cpio payload that is reached and then opened as its own archive."
+          "A software package used by RPM-based Linux distributions. It contains package metadata, dependency information and a file payload, commonly stored as a compressed cpio archive."
       },
       {
         tag: "DEB",
         name: "Debian package",
         extensions: [".deb", ".udeb"],
         description:
-          "A Debian package. An ar archive holding control and data tarballs, each of which opens in turn."
+          "A Debian software package stored as an ar archive. It contains a format version marker, a control archive with package metadata and a data archive with installable files."
       },
       {
         tag: "MSI",
         name: "Windows Installer package",
         extensions: [".msi", ".msp"],
         description:
-          "A Windows Installer database. A compound file underneath, with the install tables held as streams."
+          "A Windows Installer database containing the tables and instructions used to install software. Stored in a compound file, it can embed cabinet archives or reference external installation files."
       }
     ]
   },
@@ -176,49 +176,49 @@ export const FORMAT_GROUPS: FormatGroup[] = [
         name: "Java archive",
         extensions: [".jar"],
         description:
-          "A ZIP with a manifest. What makes it a JAR is what META-INF holds, not what the file is called."
+          "A ZIP-based archive for Java classes and resources. An optional manifest provides information such as the application entry point, and the archive can include digital signatures."
       },
       {
         tag: "WAR",
         name: "Java web archive",
         extensions: [".war"],
         description:
-          "A Java web archive: a JAR laid out as a deployable web application."
+          "A ZIP-based package for deploying a Java web application. It can contain web pages, compiled classes, libraries and configuration under the WEB-INF directory."
       },
       {
         tag: "EAR",
         name: "Java enterprise archive",
         extensions: [".ear"],
         description:
-          "A Java enterprise archive, holding WARs and JARs that each open again."
+          "A ZIP-based package for a Java enterprise application. It groups application modules, such as WAR and JAR files, with shared libraries and deployment metadata."
       },
       {
         tag: "APK",
         name: "Android package",
         extensions: [".apk", ".aab"],
         description:
-          "An Android package: a ZIP with a manifest, a DEX payload and a signing block."
+          "A ZIP-based package for installing an Android application. It contains an Android manifest, resources and any compiled code; an Android App Bundle (.aab) is a separate publishing format used to generate APKs."
       },
       {
         tag: "EPUB",
         name: "EPUB publication",
         extensions: [".epub"],
         description:
-          "An e-book. A ZIP of XHTML, CSS and images, with an OPF package file naming the reading order."
+          "An e-book publication packaged as a ZIP archive. It combines web content, such as XHTML, CSS and images, with metadata, navigation and a defined reading order."
       },
       {
         tag: "3MF",
         name: "3D Manufacturing Format package",
         extensions: [".3mf"],
         description:
-          "3D Manufacturing Format. A ZIP of XML describing a printable model, meant to replace STL."
+          "A ZIP-based format for exchanging 3D printing models. XML parts describe geometry, units and build information, with support for materials and other print properties."
       },
       {
         tag: "USDZ",
         name: "Universal Scene Description package",
         extensions: [".usdz"],
         description:
-          "A USD package: an uncompressed ZIP holding a scene and its textures, which is what AR viewers consume."
+          "A package for sharing USD scenes and their assets, including textures. It uses an uncompressed ZIP layout with alignment requirements and is commonly used for augmented reality."
       }
     ]
   },
@@ -230,35 +230,35 @@ export const FORMAT_GROUPS: FormatGroup[] = [
         name: "Windows PE binary",
         extensions: [".exe", ".dll", ".sys", ".ocx", ".cpl", ".scr"],
         description:
-          "The Windows executable. DOS stub, COFF header, section table, and anything appended past the last section, which is exactly where an installer hides its payload."
+          "The Portable Executable format used for Windows programs, DLLs and drivers. Headers and sections describe code, data, resources and information needed to load the binary."
       },
       {
         tag: "ELF",
         name: "ELF binary",
         extensions: [".so", ".elf"],
         description:
-          "The Unix and Linux binary. Program headers say how to load it, section headers describe everything else."
+          "The Executable and Linkable Format, used for programs, shared libraries, object files and core dumps on Linux and other systems. Headers describe how its code and data are organized."
       },
       {
         tag: "MACH-O",
         name: "Mach-O binary",
         extensions: [".dylib", ".bundle"],
         description:
-          "The macOS binary. One architecture, or several stacked together in one fat file."
+          "A binary format used for executables, libraries and object files on Apple platforms. A universal binary can package Mach-O files for multiple processor architectures."
       },
       {
         tag: "JAVA-CLASS",
         name: "Java class file",
         extensions: [".class"],
         description:
-          "A compiled Java class. It opens with CAFEBABE, and so does a fat Mach-O, so it is claimed from the version and the constant pool behind that magic rather than from the magic itself."
+          "A compiled class or interface for the Java Virtual Machine. It stores type information, a constant pool, fields and methods, including bytecode for methods with implementations."
       },
       {
         tag: "LNK",
         name: "Windows shortcut",
         extensions: [".lnk"],
         description:
-          "A Windows shortcut. Structure describing a target elsewhere, including the path, the arguments and the machine it was made on, but never the target itself."
+          "A Windows Shell shortcut that references a file, folder or other target. It can store a target path, command-line arguments, a working directory and icon information."
       }
     ]
   },
@@ -270,84 +270,84 @@ export const FORMAT_GROUPS: FormatGroup[] = [
         name: "PDF document",
         extensions: [".pdf"],
         description:
-          "A PDF. It has no member table, but the attachments it carries exist independently of it, so those are real containment and they open."
+          "The Portable Document Format, designed to preserve page layout across systems. A document can contain text, fonts, images, vector graphics, forms and embedded file attachments."
       },
       {
         tag: "OLE",
         name: "compound file",
         extensions: [".ole", ".bin"],
         description:
-          "The compound file: a whole filesystem inside one file, with storages and streams. Word, Excel, PowerPoint, MSI and Outlook messages are all this underneath."
+          "Microsoft's Compound File Binary Format, which organizes named data streams and storage directories inside one file. Used by older Office documents, Windows Installer databases and Outlook message files."
       },
       {
         tag: "DOC",
         name: "Word 97-2003 document",
         extensions: [".doc", ".dot"],
         description:
-          "Word 97-2003. A compound file whose WordDocument stream holds the text."
+          "The binary document format used by Word 97-2003. It stores text, formatting and document structures in a compound file, with support for pictures and embedded objects."
       },
       {
         tag: "XLS",
         name: "Excel 97-2003 workbook",
         extensions: [".xls", ".xlt", ".xla"],
         description:
-          "Excel 97-2003. A compound file of BIFF records."
+          "The binary workbook format used by Excel 97-2003. Spreadsheet records in a compound file describe worksheets, cell values, formulas, formatting and other workbook data."
       },
       {
         tag: "PPT",
         name: "PowerPoint 97-2003 presentation",
         extensions: [".ppt", ".pps", ".pot"],
         description:
-          "PowerPoint 97-2003, in the same compound file shape."
+          "The binary presentation format used by PowerPoint 97-2003. It stores slides, text, drawing objects and presentation data in a compound file."
       },
       {
         tag: "DOCX",
         name: "Word document",
         extensions: [".docx", ".docm", ".dotx"],
         description:
-          "Word since 2007. A ZIP of XML parts, which is why it opens as an archive and why every part inside it opens too."
+          "An Office Open XML word-processing document packaged as ZIP. XML parts describe text, formatting and relationships to resources such as images; related .docm files can contain macros."
       },
       {
         tag: "XLSX",
         name: "Excel workbook",
         extensions: [".xlsx", ".xlsm", ".xltx"],
         description:
-          "Excel since 2007. A ZIP of XML: one part per sheet, plus the shared string table every cell points into."
+          "An Office Open XML spreadsheet packaged as ZIP. Its parts store worksheets, cell values, formulas, styles and other workbook data; text cells may use a shared string table or inline strings."
       },
       {
         tag: "PPTX",
         name: "PowerPoint presentation",
         extensions: [".pptx", ".pptm", ".potx"],
         description:
-          "PowerPoint since 2007. A ZIP of XML with one part per slide."
+          "An Office Open XML presentation packaged as ZIP. Its parts describe slides, layouts, themes, notes and linked or embedded media."
       },
       {
         tag: "ODT",
         name: "OpenDocument text",
         extensions: [".odt"],
         description:
-          "OpenDocument text. The same idea as DOCX with a different vocabulary."
+          "An OpenDocument text document, used by applications such as LibreOffice Writer. Its ZIP package contains XML for document content, styles and metadata, along with resources such as images."
       },
       {
         tag: "ODS",
         name: "OpenDocument spreadsheet",
         extensions: [".ods"],
         description:
-          "OpenDocument spreadsheet."
+          "An OpenDocument spreadsheet, used by applications such as LibreOffice Calc. Its ZIP package stores sheet data, formulas, styles and metadata as XML, with any supporting resources."
       },
       {
         tag: "ODP",
         name: "OpenDocument presentation",
         extensions: [".odp"],
         description:
-          "OpenDocument presentation."
+          "An OpenDocument presentation, used by applications such as LibreOffice Impress. Its ZIP package contains XML describing slides, text, styles and presentation resources."
       },
       {
         tag: "RTF",
         name: "Rich Text Format document",
         extensions: [".rtf"],
         description:
-          "Rich Text Format. Plain text carrying braces and control words; the pictures and objects in it live inside the text as escaped hex rather than as stored files."
+          "Rich Text Format, a text-based document format that uses control words and braces to describe text and formatting. It can also include encoded images and embedded objects."
       }
     ]
   },
@@ -359,28 +359,28 @@ export const FORMAT_GROUPS: FormatGroup[] = [
         name: "HTML document",
         extensions: [".html", ".htm"],
         description:
-          "A web page. No signature at all, and probed before XML deliberately: over half the pages on a machine are well formed enough for the XML parser to claim them, and calling one an XML document is the wrong answer."
+          "The markup language used to structure web pages. Elements describe content such as headings, links, tables and forms, and can reference stylesheets, scripts and media."
       },
       {
         tag: "XML",
         name: "XML document",
         extensions: [".xml"],
         description:
-          "An XML document. It has no signature at all, so it is recognised by parsing a bounded prefix and finding a declaration and a well-formed root."
+          "A text-based format for structured data, using named elements, attributes and nested content. XML defines the syntax; the application or schema defines what the data means."
       },
       {
         tag: "XHTML",
         name: "XHTML document",
         extensions: [".xhtml", ".xht"],
         description:
-          "HTML that is also valid XML. Told apart from plain XML by its root element, the same way a ZIP becomes a DOCX."
+          "HTML expressed using XML syntax. Elements must follow XML rules, including proper nesting and explicit closing, while representing familiar web page content."
       },
       {
         tag: "SVG",
         name: "SVG image",
         extensions: [".svg"],
         description:
-          "Vector graphics written as XML. Same refinement: the root element is what names it."
+          "Scalable Vector Graphics, an XML-based image format. It describes shapes, paths, text and effects that can scale without losing vector detail, and can also include raster images."
       }
     ]
   },
@@ -392,49 +392,49 @@ export const FORMAT_GROUPS: FormatGroup[] = [
         name: "Outlook message",
         extensions: [".msg", ".oft"],
         description:
-          "An Outlook message. A compound file whose streams hold the headers, the body and every attachment."
+          "An Outlook message or template stored in Microsoft's compound file format. It holds message properties, recipients, body content and any attachments."
       },
       {
         tag: "EML",
         name: "email message",
         extensions: [".eml"],
         description:
-          "An RFC 5322 message. No signature either, so it is recognised by a header block whose every line parses, and its MIME parts open as real attachments."
+          "An individual email message stored with its headers and body. MIME structures can describe alternative body formats, inline resources and file attachments."
       },
       {
         tag: "MBOX",
         name: "mailbox",
         extensions: [".mbox"],
         description:
-          "A mailbox: many messages concatenated, each opening with a From line. Every message inside opens again as an EML."
+          "A family of mailbox formats that stores multiple email messages in one text file. Messages are separated by lines beginning with 'From ', with escaping rules that vary by implementation."
       },
       {
         tag: "MHT",
         name: "MHTML web archive",
         extensions: [".mht", ".mhtml"],
         description:
-          "A page saved as one MIME message. The same syntax as a mail message, so what it is gets settled once the parts have been read, and every part it holds opens on its own."
+          "A saved web page packaged as a MIME message, also called MHTML. It groups the page's HTML and resources, such as images and stylesheets, into one file."
       },
       {
         tag: "SQLITE",
         name: "SQLite database",
         extensions: [".db", ".sqlite", ".sqlite3", ".db3"],
         description:
-          "A SQLite database. Sixteen bytes of text, confirmed by a page layout the format fixes. Nothing inside it is a file, so its pages and tables are structure rather than containment."
+          "A database file used by SQLite, an embedded SQL database engine. It stores tables, indexes and other database structures in pages within a single file."
       },
       {
         tag: "JSON",
         name: "JSON document",
         extensions: [".json"],
         description:
-          "A JSON document. Probed after glTF, which is JSON with a vocabulary the engine already knows, so an asset stays an asset and a document that is only JSON lands here."
+          "A text-based data format with objects, arrays, strings, numbers, booleans and null. Commonly used for configuration, data exchange and web APIs."
       },
       {
         tag: "CSV",
         name: "CSV table",
         extensions: [".csv"],
         description:
-          "A delimited table. No signature and no syntax of its own, only repeated rectangular structure to go on, which makes it the weakest claim the engine makes."
+          "A text format for tabular data, with records divided into fields, usually by commas. Quoting allows fields to contain separators or line breaks; delimiter and header conventions vary."
       }
     ]
   },
@@ -446,77 +446,77 @@ export const FORMAT_GROUPS: FormatGroup[] = [
         name: "PNG image",
         extensions: [".png"],
         description:
-          "Chunks, each with a length, a type and a CRC. IHDR first, IEND last, and anything in between, including the EXIF a camera left there."
+          "A raster image format with lossless compression and support for transparency. It stores pixel data and metadata in chunks and is commonly used for screenshots, diagrams and web graphics."
       },
       {
         tag: "JPEG",
         name: "JPEG image",
         extensions: [".jpg", ".jpeg", ".jpe", ".jfif"],
         description:
-          "Marker segments: the picture, and whatever the camera wrote into APP1 beside it."
+          "A compressed raster image format commonly used for photographs, usually with lossy compression. JPEG files can also carry metadata such as Exif camera settings and thumbnails."
       },
       {
         tag: "GIF",
         name: "GIF image",
         extensions: [".gif"],
         description:
-          "A screen descriptor, a colour table, and one image descriptor per frame."
+          "A losslessly compressed image format with a palette of up to 256 colors per frame. It supports simple transparency and multiple frames for animation."
       },
       {
         tag: "BMP",
         name: "Windows bitmap",
         extensions: [".bmp", ".dib"],
         description:
-          "The Windows bitmap. Two very ordinary leading bytes, so it is confirmed by the header it declares rather than by BM alone."
+          "A bitmap image format associated with Windows. It stores pixel data with image headers and, where needed, a color palette; data may be uncompressed or use supported compression methods."
       },
       {
         tag: "TIFF",
         name: "TIFF image",
         extensions: [".tif", ".tiff"],
         description:
-          "Image file directories of tagged fields. The base format every camera raw on this list is built on."
+          "A flexible raster image format that uses tagged fields to describe image data. It supports multiple images, varied color depths and several compression methods, and is widely used in scanning and imaging."
       },
       {
         tag: "ICO",
         name: "Windows icon",
         extensions: [".ico", ".cur"],
         description:
-          "A Windows icon: a directory of images at several sizes, each one a PNG or a bitmap in its own right."
+          "A Windows icon file that can contain multiple images at different sizes and color depths. Images may use bitmap or PNG encoding; the related CUR format adds cursor hotspot coordinates."
       },
       {
         tag: "HEIF",
         name: "HEIF image",
         extensions: [".heic", ".heif", ".hif"],
         description:
-          "An ISO base media file carrying stills instead of tracks, told apart from an MP4 by the brands in its ftyp box."
+          "The High Efficiency Image File Format, a container for still images, image sequences and metadata. It supports different codecs; HEIC files commonly use HEVC compression."
       },
       {
         tag: "AVIF",
         name: "AVIF image",
         extensions: [".avif"],
         description:
-          "The same container as HEIF, with AV1 inside it."
+          "An image format that stores AV1-compressed images in a HEIF-based container. It supports lossless and lossy compression, transparency, high dynamic range and image sequences."
       },
       {
         tag: "WEBP",
         name: "WebP image",
         extensions: [".webp"],
         description:
-          "A RIFF form like WAVE, told apart by the four bytes sitting past the size."
+          "A raster image format developed for the web. It supports lossy and lossless compression, transparency and animation in a RIFF-based container."
       },
       {
         tag: "DDS",
         name: "DirectDraw surface",
         extensions: [".dds"],
         description:
-          "A DirectDraw surface: texture data, mip levels and all, laid out the way the GPU wants it."
+          "The DirectDraw Surface format for textures and related graphics data. It can store compressed or uncompressed pixels, mipmaps, cube maps and texture arrays for graphics applications."
       },
       {
         tag: "PSD",
         name: "Photoshop document",
         extensions: [".psd", ".psb"],
         description:
-          "A Photoshop document: layers, channels and the flattened composite in one file. A .psb is the same format with eight-byte lengths."
+          "Adobe Photoshop's document format, storing image data, layers, masks, channels and other editing information. The related PSB format supports larger documents."
       }
     ]
   },
@@ -528,35 +528,35 @@ export const FORMAT_GROUPS: FormatGroup[] = [
         name: "Canon CR2 raw image",
         extensions: [".cr2"],
         description:
-          "Canon's raw image. A TIFF underneath, and which raw it is comes from the tags it carries."
+          "Canon's TIFF-based raw photo format. It stores camera sensor data and capture metadata, typically with preview images, for processing in photo-editing software."
       },
       {
         tag: "NEF",
         name: "Nikon NEF raw image",
         extensions: [".nef"],
         description:
-          "Nikon's raw image, also TIFF-based."
+          "Nikon's raw photo format, based on TIFF structures. It preserves sensor data and camera metadata for later adjustments to settings such as exposure and white balance."
       },
       {
         tag: "ARW",
         name: "Sony ARW raw image",
         extensions: [".arw"],
         description:
-          "Sony's raw image, also TIFF-based."
+          "Sony's raw photo format, based on TIFF structures. It stores sensor image data, camera metadata and previews for processing after capture."
       },
       {
         tag: "DNG",
         name: "Adobe DNG image",
         extensions: [".dng"],
         description:
-          "Adobe's open raw format. TIFF-based, and the one most other raws can be converted into."
+          "Digital Negative, Adobe's publicly documented format for raw photographs. Based on TIFF, it stores image data and metadata needed to interpret and process the image."
       },
       {
         tag: "RAW",
         name: "camera raw image",
         extensions: [".raw", ".orf", ".rw2", ".pef", ".srw", ".3fr", ".iiq", ".erf", ".dcr", ".kdc", ".mos", ".mef"],
         description:
-          "A raw the engine can prove but cannot attribute: TIFF-based sensor data whose tags name no maker it knows. Olympus, Panasonic, Pentax and the rest land here."
+          "A general category for camera raw images rather than one universal file format. These files preserve sensor data and processing metadata in layouts that vary by camera manufacturer."
       }
     ]
   },
@@ -568,35 +568,35 @@ export const FORMAT_GROUPS: FormatGroup[] = [
         name: "TrueType font",
         extensions: [".ttf"],
         description:
-          "A TrueType font. Tables such as glyf, cmap and name are parts of one file rather than files stored inside it."
+          "A font file using TrueType glyph outlines. Tables describe character mappings, glyph shapes, spacing and other information needed to display text."
       },
       {
         tag: "OTF",
         name: "OpenType font",
         extensions: [".otf"],
         description:
-          "An OpenType font: the same table structure, with CFF outlines instead of TrueType ones."
+          "An OpenType font file, commonly using Compact Font Format (CFF) outlines with the .otf extension. OpenType supports advanced typography and can use either CFF or TrueType outlines."
       },
       {
         tag: "TTC",
         name: "font collection",
         extensions: [".ttc", ".otc"],
         description:
-          "A font collection. Several faces sharing one set of tables, rather than members that could be taken out on their own."
+          "A font collection that groups multiple font faces in one file. Faces can share tables to reduce duplication; related .otc files are OpenType collections."
       },
       {
         tag: "WOFF",
         name: "Web Open Font Format",
         extensions: [".woff"],
         description:
-          "A web font: an sfnt whose tables have each been deflated, behind four bytes no font file itself begins with."
+          "A web font container for TrueType or OpenType font data. Individual font tables can be compressed with zlib, and the file can include metadata and private data."
       },
       {
         tag: "WOFF2",
         name: "Web Open Font Format 2",
         extensions: [".woff2"],
         description:
-          "The same idea rebuilt on Brotli, with every table in one stream and the glyphs transformed, which is what makes it a format of its own rather than a version."
+          "The second version of the Web Open Font Format. It uses Brotli compression and optional font-specific transformations to reduce the size of fonts delivered over the web."
       }
     ]
   },
@@ -608,49 +608,49 @@ export const FORMAT_GROUPS: FormatGroup[] = [
         name: "MPEG audio",
         extensions: [".mp3", ".mp2", ".mp1"],
         description:
-          "MPEG audio frames, confirmed by parsing the frames themselves, plus whatever ID3 has been wrapped around them."
+          "Compressed MPEG audio, most commonly MPEG-1 or MPEG-2 Audio Layer III. Related MP1 and MP2 streams use other MPEG audio layers; files may also carry ID3 metadata."
       },
       {
         tag: "AAC",
         name: "AAC audio stream",
         extensions: [".aac", ".adts"],
         description:
-          "A bare AAC stream with no container at all, recognised by validating the ADTS frames it opens with."
+          "Advanced Audio Coding, a lossy audio compression format. Standalone .aac files commonly use ADTS headers to frame the compressed audio; AAC can also be stored in containers such as MP4."
       },
       {
         tag: "WAV",
         name: "WAVE audio",
         extensions: [".wav", ".wave", ".bwf"],
         description:
-          "RIFF chunks around PCM. The fmt chunk says how to read the data chunk."
+          "The WAVE audio container, based on RIFF chunks. It commonly stores uncompressed PCM audio but can also hold other audio encodings and metadata."
       },
       {
         tag: "AIFF",
         name: "AIFF audio",
         extensions: [".aiff", ".aif", ".aifc"],
         description:
-          "Apple's IFF. The same chunk walk as WAV, with every size big-endian."
+          "Apple's Audio Interchange File Format, a chunk-based container commonly used for uncompressed audio. The related AIFF-C format also supports compressed audio encodings."
       },
       {
         tag: "FLAC",
         name: "FLAC audio",
         extensions: [".flac"],
         description:
-          "Lossless audio: a chain of metadata blocks, then the frames."
+          "Free Lossless Audio Codec, which compresses audio while preserving the original samples exactly. A native FLAC file contains metadata blocks followed by compressed audio frames."
       },
       {
         tag: "OGG",
         name: "Ogg audio",
         extensions: [".ogg", ".oga", ".opus", ".spx"],
         description:
-          "Ogg pages, carrying Vorbis, Opus or FLAC."
+          "An open container for media streams, commonly used for Vorbis, Opus, Speex or FLAC audio. Ogg organizes encoded data into pages and can also carry video."
       },
       {
         tag: "M4A",
         name: "MPEG-4 audio",
         extensions: [".m4a", ".m4b", ".m4p"],
         description:
-          "MPEG-4 audio. The MP4 container with an audio track and no video."
+          "An MPEG-4 container commonly used for audio, often encoded as AAC or Apple Lossless. Related extensions are used for audiobooks and protected audio."
       }
     ]
   },
@@ -662,84 +662,84 @@ export const FORMAT_GROUPS: FormatGroup[] = [
         name: "MPEG-4 video",
         extensions: [".mp4", ".m4v", ".mp4v"],
         description:
-          "The ISO base media container. A tree of boxes: moov describes the file, mdat holds it."
+          "An MPEG-4 media container based on the ISO Base Media File Format. It can hold video, audio, subtitles and metadata; the codecs determine how those streams are compressed."
       },
       {
         tag: "MOV",
         name: "QuickTime movie",
         extensions: [".mov", ".qt"],
         description:
-          "QuickTime, the container MP4 was standardised from, with the same box tree."
+          "Apple's QuickTime movie container. It organizes video, audio and other tracks in structures called atoms and can hold media encoded with a variety of codecs."
       },
       {
         tag: "AVI",
         name: "AVI video",
         extensions: [".avi"],
         description:
-          "A RIFF container. Older and simpler, and still everywhere."
+          "Microsoft's Audio Video Interleave container, based on RIFF. It stores audio and video streams with headers and indexing information; compression depends on the codecs used."
       },
       {
         tag: "MKV",
         name: "Matroska video",
         extensions: [".mkv", ".mka", ".mks", ".mk3d"],
         description:
-          "Matroska: an EBML tree, which is a binary XML in all but name."
+          "Matroska, an extensible media container based on EBML. It can hold video, audio, subtitles, chapters and attachments; related extensions include .mka for audio and .mks for subtitles."
       },
       {
         tag: "WEBM",
         name: "WebM video",
         extensions: [".webm"],
         description:
-          "Matroska restricted to free codecs."
+          "A media container based on a restricted Matroska profile, designed for web playback. It uses specified video and audio codecs, including VP8 or VP9 video and Vorbis or Opus audio."
       },
       {
         tag: "ASF",
         name: "Windows Media",
         extensions: [".wma", ".wmv", ".asf"],
         description:
-          "Windows Media. One 16-byte GUID, which is as unambiguous as a signature gets."
+          "Microsoft's Advanced Systems Format, a container designed for digital media playback and streaming. Commonly used for Windows Media Audio and Windows Media Video files."
       },
       {
         tag: "MPEG-TS",
         name: "MPEG transport stream",
         extensions: [".ts", ".m2t", ".mpegts", ".tsv"],
         description:
-          "A transport stream: 188-byte packets in a grid, confirmed by the program association table sitting on that grid."
+          "An MPEG transport stream that carries audio, video and program information in packets, normally 188 bytes long. Used in broadcasting and streaming, with support for multiple programs."
       },
       {
         tag: "MPEG-PS",
         name: "MPEG program stream",
         extensions: [".mpg", ".mpeg", ".vob", ".m2p"],
         description:
-          "A program stream. Pack start codes, confirmed by each pack's declared length landing exactly where the next one begins. A .vob is one of these."
+          "An MPEG program stream that combines audio and video into a synchronized stream. Used for stored media, including DVD video in VOB files."
       },
       {
         tag: "M2TS",
         name: "Blu-ray / AVCHD transport stream",
         extensions: [".m2ts", ".mts"],
         description:
-          "The Blu-ray and AVCHD transport stream: MPEG-TS with a timestamp on every packet."
+          "A transport-stream format used by Blu-ray and AVCHD. Each 192-byte unit adds a four-byte header with timing information to a standard 188-byte MPEG transport packet."
       },
       {
         tag: "H.264",
         name: "H.264 video stream",
         extensions: [".h264", ".264", ".avc"],
         description:
-          "A bare H.264 stream. No container, so it is confirmed by parsing the parameter sets the codec itself defines."
+          "An elementary video stream encoded with H.264, also called AVC. It contains compressed video and codec information; audio and container-level metadata are stored separately."
       },
       {
         tag: "H.265",
         name: "H.265 video stream",
         extensions: [".h265", ".265", ".hevc"],
         description:
-          "A bare H.265 stream, recognised the same way."
+          "An elementary video stream encoded with H.265, also called HEVC. It contains compressed video and codec information and needs a separate container to package it with audio."
       },
       {
         tag: "MPEG-VIDEO",
         name: "MPEG video stream",
         extensions: [".m1v", ".m2v", ".mpv", ".mp2v"],
         description:
-          "A bare MPEG-1 or MPEG-2 video stream, confirmed by a sequence header whose declared length lands on the next start code. A .mpg opening with a pack is a program stream instead."
+          "An elementary video stream encoded with MPEG-1 or MPEG-2. It contains video sequence information and compressed pictures, without the audio or multiplexing structure of a program or transport stream."
       }
     ]
   },
@@ -751,105 +751,105 @@ export const FORMAT_GROUPS: FormatGroup[] = [
         name: "glTF binary model",
         extensions: [".glb"],
         description:
-          "glTF in one binary file: a JSON chunk describing the scene, and a binary chunk holding the buffers."
+          "The binary packaging of glTF, used to deliver 3D scenes and models. It contains a JSON scene description and can embed geometry, animation data and images in a binary chunk."
       },
       {
         tag: "GLTF",
         name: "glTF model",
         extensions: [".gltf"],
         description:
-          "glTF as JSON, with its buffers and textures sitting beside it."
+          "A JSON-based format for delivering 3D scenes and models. It describes geometry, materials and animations, with binary data and images either embedded or referenced as external resources."
       },
       {
         tag: "OBJ",
         name: "Wavefront OBJ model",
         extensions: [".obj"],
         description:
-          "Wavefront OBJ. Text: vertices, faces, and a reference to a material file."
+          "A text-based 3D geometry format from Wavefront. It describes vertices, texture coordinates, normals and faces, and can reference a separate MTL file for materials."
       },
       {
         tag: "STL",
         name: "Stereolithography model",
         extensions: [".stl"],
         description:
-          "Stereolithography. Triangles and nothing else, which is why 3D printing settled on it."
+          "A 3D surface format commonly used in 3D printing. It represents a model as triangles in ASCII or binary form, without a standard way to record units, textures or materials."
       },
       {
         tag: "PLY",
         name: "Polygon file format model",
         extensions: [".ply"],
         description:
-          "The Stanford polygon format. A text header declaring the elements, then the data in text or binary."
+          "The Polygon File Format, used for 3D meshes and point clouds. A text header defines elements and properties, such as vertex positions and colors, followed by ASCII or binary data."
       },
       {
         tag: "DAE",
         name: "COLLADA model",
         extensions: [".dae"],
         description:
-          "COLLADA: a whole scene graph written as XML."
+          "A COLLADA document for exchanging 3D assets between applications. XML describes scene objects such as geometry, materials, cameras, lights and animations."
       },
       {
         tag: "FBX",
         name: "Autodesk FBX model",
         extensions: [".fbx"],
         description:
-          "Autodesk's interchange format. A node tree of properties; the ASCII variant is the same tree spelled out."
+          "Autodesk's format for exchanging 3D scenes and animation. It can store models, materials, skeletons, cameras and animation data in binary or ASCII form."
       },
       {
         tag: "3DS",
         name: "3D Studio model",
         extensions: [".3ds"],
         description:
-          "The 3D Studio format. A chunk tree, and still the lingua franca for older assets."
+          "A legacy 3D Studio scene format. Binary chunks store data such as meshes, materials, lights and cameras for exchange between 3D applications."
       },
       {
         tag: "BLEND",
         name: "Blender scene",
         extensions: [".blend"],
         description:
-          "A Blender scene: effectively a memory dump, with a DNA block describing its own structures so it can be read back."
+          "Blender's native project format. It stores scene data such as objects, meshes, materials and animation, and can pack resources such as textures into the file."
       },
       {
         tag: "USDA",
         name: "USD scene description (text)",
         extensions: [".usda", ".usd"],
         description:
-          "USD written as text."
+          "The readable text form of Universal Scene Description (USD). It stores scene data and composition instructions used to assemble assets, properties and animation into a scene."
       },
       {
         tag: "USDC",
         name: "USD scene description (crate)",
         extensions: [".usdc", ".usd"],
         description:
-          "USD written as a crate binary."
+          "The binary 'crate' form of Universal Scene Description (USD). It stores scene data and composition instructions in a layout designed for efficient storage and access."
       },
       {
         tag: "ABC",
         name: "Alembic scene cache (Ogawa)",
         extensions: [".abc"],
         description:
-          "Alembic. A baked scene cache in the Ogawa layout, used to hand animation between tools."
+          "An Alembic scene cache using the Ogawa storage backend. It stores baked geometry and time-varying properties for transferring animated assets between production tools."
       },
       {
         tag: "STEP",
         name: "STEP exchange structure (Part 21)",
         extensions: [".step", ".stp", ".p21"],
         description:
-          "ISO 10303 Part 21. CAD exchange as text, one entity per line."
+          "A text exchange file using ISO 10303 Part 21 syntax. Commonly used to transfer CAD product data, including precise geometry and assemblies, according to a STEP application schema."
       },
       {
         tag: "IGES",
         name: "IGES exchange file",
         extensions: [".iges", ".igs"],
         description:
-          "The older CAD exchange format: fixed 80-column records."
+          "The Initial Graphics Exchange Specification, used to transfer CAD drawing and model data. It represents entities such as curves and surfaces in fixed-width text records."
       },
       {
         tag: "DXF",
         name: "AutoCAD drawing exchange file",
         extensions: [".dxf"],
         description:
-          "AutoCAD's drawing exchange format. Group codes and values, in pairs, all the way down."
+          "Autodesk's Drawing Exchange Format for CAD data. Available in ASCII and binary forms, it uses group codes and values to describe drawing entities, layers and other properties."
       }
     ]
   },
@@ -861,35 +861,35 @@ export const FORMAT_GROUPS: FormatGroup[] = [
         name: "Unity asset bundle",
         extensions: [".unity3d", ".assetbundle"],
         description:
-          "A Unity asset bundle: a header, then one compressed level after another. Its members exist only once the body has been decompressed, so listing one means decoding the front of it."
+          "A Unity archive for delivering assets such as models, textures and scenes at runtime. It contains serialized asset data and supporting resources, with optional compression."
       },
       {
         tag: "UNITY-SERIALIZED",
         name: "Unity serialized file",
         extensions: [".assets", ".unity", ".resource"],
         description:
-          "Unity's own asset file. No signature of any kind: it is recognised by its metadata ending exactly where its header says it does."
+          "Unity's binary format for serialized objects and asset data. It records object metadata, properties and references and is used in built game data and AssetBundles."
       },
       {
         tag: "RPA",
         name: "Ren'Py archive",
         extensions: [".rpa"],
         description:
-          "Ren'Py's archive. A header line saying where the index sits, and a zlib stream holding that index of everything the archive carries."
+          "An archive used by Ren'Py games to package resources such as images, audio and scripts. An index maps resource names to the stored data."
       },
       {
         tag: "RENPY-RPC2",
         name: "Ren'Py compiled script",
         extensions: [".rpyc", ".rpymc"],
         description:
-          "A compiled Ren'Py script: slots of zlib-compressed Python pickle, which is walked symbolically and never executed."
+          "A compiled Ren'Py script using the RPC2 container. It stores compressed serialized script data that Ren'Py loads when running a visual novel."
       },
       {
         tag: "RPGMV-ASSET",
         name: "RPG Maker encrypted asset",
         extensions: [".rpgmvp", ".rpgmvo", ".rpgmvm", ".png_", ".ogg_", ".m4a_"],
         description:
-          "An RPG Maker MV asset: sixteen bytes of header, sixteen more exclusive-ored against the project's key, and the original file untouched from there. The payload proves the key by itself, so the project is not needed to read it."
+          "An encrypted image or audio asset used by RPG Maker MV or MZ. A format header and partial encryption wrap the original media; interpreting the payload depends on the encryption key or recoverable file structure."
       }
     ]
   }
