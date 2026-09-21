@@ -105,6 +105,7 @@ export default function Home() {
         title="What it does"
         lead="One file, one window, every question answered at once."
         tone="sunken"
+        hue="blue"
       >
         <Section
           id={HOME_SECTIONS.PROBLEM}
@@ -180,6 +181,7 @@ export default function Home() {
         title="Built for analysts"
         lead="Every byte accounted for — including the ones nothing claims."
         tone="raised"
+        hue="crimson"
       >
         <CoverageMap />
       </Section>
@@ -190,6 +192,7 @@ export default function Home() {
         title="What people say"
         lead="Reviews left by people with an account. One each, and they can change or remove their own."
         tone="sunken"
+        hue="blue"
       >
         <Reviews />
       </Section>

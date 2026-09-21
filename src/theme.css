@@ -80,6 +80,13 @@
   --fa-color-success: #55c98a;
   --fa-color-danger: #f07167;
 
+  /* Two more lights beside the amber. Never paint: a bloom behind a band, a
+     hairline, an eyebrow, a cursor. Blue is the info colour above, given a
+     second job. Crimson is new: warmer and deeper than the coral of --danger,
+     which stays an error colour and nothing else. Both clear 4.5:1 on every
+     surface, because an eyebrow is text. */
+  --fa-color-crimson: #e25870;
+
   --fa-color-region-explained: #3f444c;
   --fa-color-region-strong: #565d68;
   --fa-color-region-hatch: #4a4f57;
@@ -99,7 +106,8 @@
   /* A rule that is lit from its middle and fades before it reaches the edges,
      instead of a flat line drawn from wall to wall. */
   --fa-hairline: linear-gradient(90deg, transparent, var(--fa-color-border-strong) 50%, transparent);
-  --fa-hairline-accent: linear-gradient(90deg, transparent 8%, var(--fa-color-accent-glow) 35%, var(--fa-color-accent) 50%, var(--fa-color-accent-glow) 65%, transparent 92%);
+  /* Amber at the centre, cooling to crimson before it fades: a sunset line. */
+  --fa-hairline-accent: linear-gradient(90deg, transparent 4%, color-mix(in srgb, var(--fa-color-crimson) 45%, transparent) 22%, var(--fa-color-accent-glow) 38%, var(--fa-color-accent) 50%, var(--fa-color-accent-glow) 62%, color-mix(in srgb, var(--fa-color-crimson) 45%, transparent) 78%, transparent 96%);
 
   /* Surfaces catch light from above: a control is lighter at its top edge than
      at its bottom, and the amber is brighter where the light lands. */
@@ -120,6 +128,7 @@
   --fa-bloom-accent: rgb(224 163 65 / 0.13);
   --fa-color-accent-glow: rgb(224 163 65 / 0.35);
   --fa-bloom-info: rgb(107 163 245 / 0.10);
+  --fa-bloom-crimson: rgb(226 88 112 / 0.11);
 
   /* --- type ---------------------------------------------------------- */
   --fa-font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;

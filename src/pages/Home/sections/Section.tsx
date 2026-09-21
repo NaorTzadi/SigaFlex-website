@@ -37,6 +37,8 @@ type SectionProps = {
   eyebrow?: string;
   /** A band that sits on its own surface instead of the page background. */
   tone?: "raised" | "sunken";
+  /** The light a band carries: its bloom, eyebrow and rules. Amber when unsaid. */
+  hue?: "blue" | "crimson";
   children?: ReactNode;
 };
 
@@ -48,6 +50,7 @@ export default function Section({
   lead,
   eyebrow,
   tone,
+  hue,
   children
 }: SectionProps) {
   const headingId = `${id}-heading`;
@@ -56,7 +59,12 @@ export default function Section({
 
   return (
     <section
-      className={cx(className, nested && "section-nested", tone && `section-${tone}`)}
+      className={cx(
+        className,
+        nested && "section-nested",
+        tone && `section-${tone}`,
+        hue && `section-hue-${hue}`
+      )}
       id={id}
       aria-labelledby={title ? headingId : undefined}
       aria-label={title ? undefined : label}

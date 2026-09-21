@@ -71,6 +71,41 @@
   margin: 0 0 var(--fa-space-4);
 }
 
+/*
+ * A band may carry a light of its own. The hue sets two properties and the
+ * rules below read them, with the amber as the fallback: a band that names no
+ * hue looks exactly as it did. Custom properties inherit, so the bands nested
+ * inside a hued one take its light without being told.
+ */
+.section-hue-blue {
+  --section-accent: var(--fa-color-info);
+  --section-bloom: var(--fa-bloom-info);
+}
+
+.section-hue-crimson {
+  --section-accent: var(--fa-color-crimson);
+  --section-bloom: var(--fa-bloom-crimson);
+}
+
+.section-hue-blue,
+.section-hue-crimson {
+  border-image: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in srgb, var(--section-accent) 55%, var(--fa-color-border-strong)) 50%,
+      transparent
+    )
+    1;
+}
+
+.section_eyebrow {
+  color: var(--section-accent, var(--fa-color-accent));
+}
+
+.section_eyebrow::before {
+  background: linear-gradient(90deg, var(--section-accent, var(--fa-color-accent)), transparent);
+}
+
 .section_title {
   letter-spacing: -0.02em;
 }
@@ -94,7 +129,7 @@
 .section-raised {
   background:
     var(--fa-grain) 0 0 / 200px 200px,
-    radial-gradient(60rem 30rem at 50% -20%, var(--fa-bloom-accent), transparent 70%),
+    radial-gradient(60rem 30rem at 50% -20%, var(--section-bloom, var(--fa-bloom-accent)), transparent 70%),
     var(--fa-color-surface);
   box-shadow: var(--fa-shadow-inset-top);
 }
@@ -107,6 +142,7 @@
 .section-sunken {
   background:
     var(--fa-grain) 0 0 / 200px 200px,
+    radial-gradient(60rem 24rem at 50% 0%, var(--section-bloom, transparent), transparent 70%),
     radial-gradient(70% 90% at 50% 0%, transparent 35%, var(--fa-color-surface-sunken) 100%),
     linear-gradient(var(--fa-grid-line) 1px, transparent 1px) 0 0 / 100% 3rem,
     linear-gradient(90deg, var(--fa-grid-line) 1px, transparent 1px) 0 0 / 3rem 100%,
@@ -128,6 +164,6 @@
   flex: none;
   width: 3px;
   height: 1.1em;
-  background: var(--fa-color-accent);
+  background: var(--section-accent, var(--fa-color-accent));
   border-radius: 999px;
 }
