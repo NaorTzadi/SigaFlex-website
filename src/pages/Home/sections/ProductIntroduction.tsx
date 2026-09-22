@@ -106,7 +106,7 @@ export default function ProductIntroduction() {
           ))}
         </ul>
 
-        <ScreenshotCarousel slides={SLIDES} label="File Analyzer screenshots" />
+        <ScreenshotCarousel slides={SLIDES} label={`${PRODUCT_NAME} screenshots`} />
       </div>
     </section>
   );

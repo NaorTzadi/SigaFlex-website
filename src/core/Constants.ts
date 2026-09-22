@@ -2,8 +2,8 @@
  * Static values that more than one class needs. Nothing here changes at run time.
  * Values that do change live in Globals. Route paths live in Routing.
  */
-export const SITE_NAME = "File Analyzer";
-export const PRODUCT_NAME = "FileAnalyzer";
+export const SITE_NAME = "SigaFlex";
+export const PRODUCT_NAME = "SigaFlex";
 
 /** The one-line answer, per the product brief. */
 export const TAGLINE =

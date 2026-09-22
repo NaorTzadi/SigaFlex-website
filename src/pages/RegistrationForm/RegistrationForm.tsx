@@ -19,7 +19,7 @@ import { Link } from "react-router-dom";
 
 import Icon from "../../components/Icon/Icon";
 import type { GlyphName } from "../../components/Icon/glyphs";
-import { PASSWORD_MIN_LENGTH } from "../../core/Constants";
+import { PASSWORD_MIN_LENGTH, PRODUCT_NAME } from "../../core/Constants";
 import * as ServerBridge from "../../core/ServerBridge";
 import { cx, isEmail } from "../../core/Utility";
 import { ROUTES } from "../../Routing";
@@ -44,7 +44,7 @@ const NOTES: Array<{ glyph: GlyphName; title: string; body: string }> = [
   {
     glyph: "seal",
     title: "For the site, not the app",
-    body: "File Analyzer runs offline and opens files read-only. Nothing here is needed to use it."
+    body: `${PRODUCT_NAME} runs offline and opens files read-only. Nothing here is needed to use it.`
   },
   {
     glyph: "info",

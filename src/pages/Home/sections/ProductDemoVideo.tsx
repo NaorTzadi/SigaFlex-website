@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-import { EXTERNAL_LINKS } from "../../../core/Constants";
+import { EXTERNAL_LINKS, PRODUCT_NAME } from "../../../core/Constants";
 import "./productdemovideo.css";
 
 const className = "productdemovideo";
@@ -38,7 +38,7 @@ export default function ProductDemoVideo() {
           <iframe
             className={`${className}_player`}
             src={EXTERNAL_LINKS.DEMO_VIDEO}
-            title="File Analyzer demonstration video"
+            title={`${PRODUCT_NAME} demonstration video`}
             loading="lazy"
             allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
