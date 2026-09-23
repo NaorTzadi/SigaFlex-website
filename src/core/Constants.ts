@@ -30,8 +30,8 @@ export const POLICY_UPDATED = "19 September 2026";
  */
 export const EXTERNAL_LINKS = {
   FFMPEG_SOURCE: "https://ffmpeg.org/download.html",
-  YOUTUBE_CHANNEL: "https://www.youtube.com/@primalmachine7945",
-  DEMO_VIDEO: "https://www.youtube-nocookie.com/embed/jgW1QeA0rug"
+  YOUTUBE_CHANNEL: "https://www.youtube.com/@SigaFlex",
+  DEMO_VIDEO: "https://www.youtube-nocookie.com/embed/hunAcThQbF4"
 } as const;
 
 /**
