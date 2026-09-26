@@ -17,6 +17,7 @@
 import { Link } from "react-router-dom";
 
 import Icon from "../Icon/Icon";
+import BrandName from "../BrandName/BrandName";
 import { ROUTES } from "../../Routing";
 import {
   EXTERNAL_LINKS,
@@ -81,7 +82,7 @@ export default function Footer() {
         <div className={`${className}_brand`}>
           <p className={`${className}_brand_name`}>
             <Icon className={`${className}_brand_mark`} name="package" size="1.25em" />
-            {SITE_NAME}
+            <BrandName />
           </p>
           <p className={`${className}_brand_line`}>{TAGLINE}</p>
 

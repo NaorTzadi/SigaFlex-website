@@ -6,17 +6,13 @@
 import { Link } from "react-router-dom";
 
 import Icon from "../../../components/Icon/Icon";
+import BrandName from "../../../components/BrandName/BrandName";
 import { ROUTES } from "../../../Routing";
-import { HOME_SECTIONS, PRODUCT_NAME, TAGLINE } from "../../../core/Constants";
+import { ASSETS, HOME_SECTIONS, PRODUCT_NAME } from "../../../core/Constants";
 import FileFormatDetector from "./FileFormatDetector";
 import { FORMAT_TOTAL } from "./formatCatalog";
 import ScreenshotCarousel from "./ScreenshotCarousel";
 import type { ScreenshotSlide } from "./ScreenshotCarousel";
-import treeView from "../../../assets/images/screenshots/tree-zip-nested.png";
-import disassembly from "../../../assets/images/screenshots/inspector-disassembly.png";
-import details from "../../../assets/images/screenshots/details-pe-structure.png";
-import colors from "../../../assets/images/screenshots/colors-photo.png";
-import model from "../../../assets/images/screenshots/display-3d-model.png";
 import "./productintroduction.css";
 
 const className = "productintroduction";
@@ -24,21 +20,21 @@ const className = "productintroduction";
 /** The rotating set. Order is the order a reader meets the product in. */
 const SLIDES: ScreenshotSlide[] = [
   {
-    src: treeView,
+    src: ASSETS.treeView,
     caption: "Tree",
     alt:
       "The tree view showing a ZIP expanded into 774 files across 127 folders, with columns for " +
       "name, date modified, type, and both uncompressed and compressed size."
   },
   {
-    src: disassembly,
+    src: ASSETS.disassembly,
     caption: "Disassembly",
     alt:
       "The Disassembly tab listing decoded x86 instructions with their addresses and raw bytes, " +
       "beside a panel of the PE file's entry point, image base and section sizes."
   },
   {
-    src: details,
+    src: ASSETS.details,
     caption: "Details",
     alt:
       "The Details panel listing a PE file's linker version, entry point, image base and section " +
@@ -46,14 +42,14 @@ const SLIDES: ScreenshotSlide[] = [
       "directories, sections and imports — printed in the terminal below."
   },
   {
-    src: colors,
+    src: ASSETS.colors,
     caption: "Colors",
     alt:
       "The Colors tab on a photograph, reporting 478,744 unique colours and listing the most " +
       "frequent ones with swatches, percentages and pixel counts."
   },
   {
-    src: model,
+    src: ASSETS.model,
     caption: "3D model",
     alt:
       "A 3D model rendered inside the Display tab, with its glTF node, mesh and vertex counts " +
@@ -78,11 +74,12 @@ export default function ProductIntroduction() {
         <div className={`${className}_copy`}>
           <p className={`${className}_eyebrow fa_eyebrow`}>Windows desktop · offline · read-only</p>
 
-          <h1 className={`${className}_title`} id="hero-heading">
-            {PRODUCT_NAME}
+          <h1 className={`${className}_title`} id="hero-heading" aria-label={PRODUCT_NAME}>
+            <img className={`${className}_logo`} src={ASSETS.animatedLogo} alt="" width={100} height={100} />
+            <BrandName />
           </h1>
 
-          <p className={`${className}_tagline`}>{TAGLINE}</p>
+          <p className={`${className}_tagline`}>File analysis reimagined</p>
 
           <FileFormatDetector />
 

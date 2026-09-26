@@ -159,6 +159,11 @@
 }
 
 .header_brand_mark {
+  display: block;
+  width: 2rem;
+  height: 2rem;
+  flex: none;
+  object-fit: contain;
   color: var(--fa-color-accent);
   filter: drop-shadow(0 0 6px var(--fa-color-accent-glow));
   transition: transform var(--fa-duration-normal) var(--fa-easing);

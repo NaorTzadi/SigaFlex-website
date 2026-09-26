@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import PolicyDraftNotice from "./PolicyDraftNotice";
 
 import TableOfContents from "../../components/TableOfContents/TableOfContents";
 import Icon from "../../components/Icon/Icon";
@@ -131,6 +132,7 @@ export default function Privacy() {
     <article className="page">
       <p className="page_eyebrow fa_eyebrow">Policy</p>
       <h1 className="page_title">Privacy</h1>
+      <PolicyDraftNotice />
       <p className="page_lead">
         What this site stores, why, and for how long. Written against what the code actually does.
       </p>

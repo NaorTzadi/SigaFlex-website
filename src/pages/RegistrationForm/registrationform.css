@@ -151,6 +151,13 @@
   display: flex;
   align-items: flex-start;
   gap: var(--fa-space-3);
+  font-size: var(--fa-text-sm);
+  line-height: 1.6;
+  color: var(--fa-color-text-secondary);
+}
+
+.registrationform_check_label label {
+  cursor: pointer;
 }
 
 .registrationform_check_input {

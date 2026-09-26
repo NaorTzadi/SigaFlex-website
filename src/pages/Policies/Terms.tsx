@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import PolicyDraftNotice from "./PolicyDraftNotice";
 
 import TableOfContents from "../../components/TableOfContents/TableOfContents";
 import Icon from "../../components/Icon/Icon";
@@ -122,6 +123,7 @@ export default function Terms() {
     <article className="page">
       <p className="page_eyebrow fa_eyebrow">Policy</p>
       <h1 className="page_title">Terms</h1>
+      <PolicyDraftNotice />
       <p className="page_lead">
         The arrangement between you and {SITE_OPERATOR} for this site and for {PRODUCT_NAME}.
       </p>

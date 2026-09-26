@@ -18,6 +18,8 @@ import type { FormEvent } from "react";
 import { Link } from "react-router-dom";
 
 import Icon from "../../components/Icon/Icon";
+import PolicyDialog from "../../components/PolicyDialog/PolicyDialog";
+import type { PolicyKind } from "../../components/PolicyDialog/PolicyDialog";
 import type { GlyphName } from "../../components/Icon/glyphs";
 import { PASSWORD_MIN_LENGTH, PRODUCT_NAME } from "../../core/Constants";
 import * as ServerBridge from "../../core/ServerBridge";
@@ -92,6 +94,7 @@ export default function RegistrationForm() {
   const [trap, setTrap] = useState("");
   const [serverMessage, setServerMessage] = useState("");
   const [done, setDone] = useState(false);
+  const [policy, setPolicy] = useState<PolicyKind | null>(null);
 
   const summaryRef = useRef<HTMLDivElement>(null);
   const doneRef = useRef<HTMLDivElement>(null);
@@ -184,6 +187,7 @@ export default function RegistrationForm() {
 
   return (
     <div className={className}>
+      {policy && <PolicyDialog policy={policy} onClose={() => setPolicy(null)} />}
       <div className={`${className}_main`}>
         <h1 className="page_title">Register</h1>
         <p className="page_lead">
@@ -269,14 +273,21 @@ export default function RegistrationForm() {
               id="register-terms"
               type="checkbox"
               checked={values.terms}
+              aria-labelledby="register-terms-label"
               aria-invalid={Boolean(shown.terms)}
               aria-describedby={shown.terms ? "register-terms-error" : undefined}
               onChange={(event) => change("terms", event.target.checked)}
             />
-            <label className={`${className}_check_label`} htmlFor="register-terms">
-              I accept the <Link to={ROUTES.TERMS}>terms</Link> and the{" "}
-              <Link to={ROUTES.PRIVACY}>privacy</Link> page.
-            </label>
+            <div className={`${className}_check_label`} id="register-terms-label">
+              <label htmlFor="register-terms">I agree to the </label>
+              <button className="registrationform_policy_link" type="button" aria-haspopup="dialog" onClick={() => setPolicy("terms")}>
+                Terms of Service
+              </button>
+              <label htmlFor="register-terms"> and acknowledge the </label>
+              <button className="registrationform_policy_link" type="button" aria-haspopup="dialog" onClick={() => setPolicy("privacy")}>
+                Privacy Policy
+              </button>.
+            </div>
           </div>
 
           {shown.terms && (

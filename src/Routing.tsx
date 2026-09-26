@@ -21,33 +21,15 @@ import AccountSettingsPage from "./pages/AccountSettingsPage/AccountSettingsPage
 import PasswordResetPage from "./pages/PasswordResetPage/PasswordResetPage";
 import EmailConfirmationPage from "./pages/EmailConfirmationPage/EmailConfirmationPage";
 import Contact from "./pages/Contact/Contact";
-import Privacy from "./pages/Privacy/Privacy";
-import Terms from "./pages/Terms/Terms";
-import Licenses from "./pages/Licenses/Licenses";
+import Privacy from "./pages/Policies/Privacy";
+import Terms from "./pages/Policies/Terms";
+import Licenses from "./pages/Policies/Licenses";
 import NotFound from "./pages/NotFound/NotFound";
-import { MAIN_CONTENT_ID, SITE_NAME } from "./core/Constants";
+import { MAIN_CONTENT_ID, SITE_NAME, ROUTES } from "./core/Constants";
 import { useGlobal } from "./core/Globals";
 import { prefersReducedMotion, scrollToSection } from "./core/Utility";
 
-export const ROUTES = {
-  HOME: "/",
-  DOWNLOAD: "/download",
-  PRICING: "/pricing",
-  /** Register and sign in are two tabs of one page; the route picks the tab. */
-  REGISTER: "/register",
-  LOGIN: "/login",
-  ACCOUNT: "/account",
-  /** Both halves of a password reset: with a token it sets one, without it asks. */
-  PASSWORD: "/reset-password",
-  /** Where a confirmation mail lands. Carries the token in the query. */
-  CONFIRM: "/confirm",
-  CONTACT: "/contact",
-  PRIVACY: "/privacy",
-  TERMS: "/terms",
-  /** Mandatory: the FFmpeg distribution obliges us to publish this. Never drop it. */
-  LICENSES: "/licenses",
-  NOT_FOUND: "*"
-} as const;
+
 
 /** The tab title for each route. A single-page app has to set this itself. */
 const TITLE: Record<string, string> = {
@@ -159,3 +141,5 @@ export default function Routing() {
     </>
   );
 }
+
+export { ROUTES } from "./core/Constants";

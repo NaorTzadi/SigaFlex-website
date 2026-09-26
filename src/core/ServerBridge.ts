@@ -6,30 +6,15 @@
  * any other file.
  */
 
+import { ENDPOINT } from "./Constants";
 import * as CookiesManager from "./CookiesManager";
 import { COOKIE } from "./CookiesManager";
 import { getGlobals, setGlobal } from "./Globals";
 
 const BASE_URL: string = import.meta.env.VITE_API_BASE_URL ?? "";
 
-/** Every path the site asks the server for. Nothing outside this file names one. */
-const ENDPOINT = {
-  REGISTER: "/auth/register",
-  LOGIN: "/auth/login",
-  LOGOUT: "/auth/logout",
-  RESUME: "/auth/resume",
-  SESSION: "/auth/session",
-  CONFIRM: "/auth/confirm",
-  RESEND_CONFIRMATION: "/auth/resend-confirmation",
-  CHANGE_EMAIL: "/auth/change-email",
-  CHANGE_PASSWORD: "/auth/change-password",
-  LOGOUT_ALL: "/auth/logout-all",
-  DELETE_ACCOUNT: "/auth/delete-account",
-  FORGOT_PASSWORD: "/auth/forgot-password",
-  RESET_PASSWORD: "/auth/reset-password",
-  REVIEWS: "/reviews",
-  MY_REVIEW: "/reviews/mine"
-} as const;
+
+
 
 /**
  * The session token, held in memory and mirrored to sessionStorage so a reload

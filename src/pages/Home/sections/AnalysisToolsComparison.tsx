@@ -1,6 +1,6 @@
 import Icon from "../../../components/Icon/Icon";
 import type { GlyphName } from "../../../components/Icon/glyphs";
-import { PRODUCT_NAME } from "../../../core/Constants";
+import BrandName from "../../../components/BrandName/BrandName";
 import "./analysistoolscomparison.css";
 
 const className = "analysistoolscomparison";
@@ -71,7 +71,7 @@ export default function AnalysisToolsComparison() {
       <div className={`${className}_answer`}>
         <p className={`${className}_answer_head`}>
           <Icon className={`${className}_answer_glyph`} name="inspect" size="1.25em" />
-          {PRODUCT_NAME}
+          <BrandName />
         </p>
 
         <ul className={`${className}_answer_list`}>

@@ -20,9 +20,10 @@ import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 
 import Icon from "../Icon/Icon";
+import BrandName from "../BrandName/BrandName";
 import type { GlyphName } from "../Icon/glyphs";
 import { ROUTES } from "../../Routing";
-import { HOME_SECTIONS, SITE_NAME } from "../../core/Constants";
+import { ASSETS, HOME_SECTIONS } from "../../core/Constants";
 import { useGlobal } from "../../core/Globals";
 import * as ServerBridge from "../../core/ServerBridge";
 import { cx, initialOf, nameOf } from "../../core/Utility";
@@ -228,8 +229,8 @@ export default function Header() {
     <header className={cx(className, scrolled && `${className}-scrolled`)}>
       <div className={`${className}_bar`}>
         <Link className={`${className}_brand`} to={ROUTES.HOME} onClick={closeMenus}>
-          <Icon className={`${className}_brand_mark`} name="package" size="1.25em" />
-          {SITE_NAME}
+          <img className={`${className}_brand_mark`} src={ASSETS.brandIcon} alt="" width={32} height={32} />
+          <BrandName />
         </Link>
 
         <div className={`${className}_actions`}>

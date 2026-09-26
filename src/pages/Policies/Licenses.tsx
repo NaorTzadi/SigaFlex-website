@@ -1,5 +1,5 @@
 /**
- * Third-Party Licenses.
+ * Third-Party Licenses. Policy content lives together in this directory.
  *
  * This route is mandatory, not optional: the application distributes FFmpeg,
  * and the LGPL obliges us to publish the licence text, the copyright notices,
