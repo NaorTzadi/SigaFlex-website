@@ -5,10 +5,10 @@
 
 import { Link } from "react-router-dom";
 
-import Icon from "../../../components/Icon/Icon";
 import BrandName from "../../../components/BrandName/BrandName";
 import { ROUTES } from "../../../Routing";
 import { ASSETS, HOME_SECTIONS, PRODUCT_NAME } from "../../../core/Constants";
+import { useGlobal } from "../../../core/Globals";
 import FileFormatDetector from "./FileFormatDetector";
 import { FORMAT_TOTAL } from "./formatCatalog";
 import ScreenshotCarousel from "./ScreenshotCarousel";
@@ -66,6 +66,8 @@ const FACTS: Array<{ value: string; label: string }> = [
 ];
 
 export default function ProductIntroduction() {
+  const signedIn = useGlobal("signedIn");
+
   return (
     <section className={className} id={HOME_SECTIONS.HERO} aria-labelledby="hero-heading">
       <div className={`${className}_backdrop`} aria-hidden="true" />
@@ -84,15 +86,13 @@ export default function ProductIntroduction() {
 
           <FileFormatDetector />
 
-          <div className={`${className}_actions`}>
-            <Link className="fa_button fa_button-primary fa_button-live" to={ROUTES.DOWNLOAD}>
-              <Icon name="arrowDown" size="1em" />
-              Download
-            </Link>
-            <Link className="fa_button" to={`${ROUTES.HOME}#${HOME_SECTIONS.HOW_IT_WORKS}`}>
-              How it works
-            </Link>
-          </div>
+          {!signedIn && (
+            <div className={`${className}_actions`}>
+              <Link className="fa_command" to={ROUTES.DOWNLOAD}>
+                download sigaflex <span className="fa_command_flag">--windows</span>
+              </Link>
+            </div>
+          )}
         </div>
 
         <ul className={`${className}_facts`}>

@@ -245,11 +245,11 @@ export default function Header() {
           )}
 
           <Link
-            className="fa_button fa_button-primary fa_button-live fa_button-small"
+            className={cx("fa_command fa_command-small", signedIn && "fa_command-ghost")}
             to={ROUTES.DOWNLOAD}
             onClick={closeMenus}
           >
-            Download
+            download
           </Link>
 
           {signedIn && <AccountMenu email={accountEmail} onLeave={closeMenus} />}

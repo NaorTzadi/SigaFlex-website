@@ -16,7 +16,7 @@ export const ASSETS = {
 
 /** Font locations for CSS aliases, relative to the website root unless absolute. */
 export const FONT_PATHS = {
-  "@preview-brand-font": "C:\\Users\\neors\\MultiModuleProjects\\file-analyzer\\assets\\test fonts\\Exo2[wght].ttf",
+  "@preview-brand-font": "C:\\Users\\neors\\MultiModuleProjects\\file-analyzer\\assets\\test fonts\\Audiowide-Regular.ttf",
   "@font-sans": "./src/assets/fonts/ibm-plex-sans-var.woff2",
   "@font-mono": "./src/assets/fonts/ibm-plex-mono-var.woff2"
 } as const;

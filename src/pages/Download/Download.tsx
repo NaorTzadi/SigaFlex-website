@@ -55,9 +55,8 @@ export default function Download() {
 
           {BUILD ? (
             <>
-              <a className={`fa_button fa_button-primary fa_button-live ${className}_action`} href={BUILD.url}>
-                <Icon name="arrowDown" size="1em" />
-                Download {BUILD.version}
+              <a className={`fa_command ${className}_action`} href={BUILD.url}>
+                download sigaflex <span className="fa_command_flag">{BUILD.version}</span>
               </a>
 
               <dl className={`${className}_facts`}>
