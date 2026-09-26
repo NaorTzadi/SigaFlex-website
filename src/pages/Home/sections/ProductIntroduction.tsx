@@ -75,8 +75,9 @@ export default function ProductIntroduction() {
           <p className={`${className}_eyebrow fa_eyebrow`}>Windows desktop · offline · read-only</p>
 
           <h1 className={`${className}_title`} id="hero-heading" aria-label={PRODUCT_NAME}>
-            <img className={`${className}_logo`} src={ASSETS.animatedLogo} alt="" width={100} height={100} />
-            <BrandName />
+            <BrandName
+              firstLetter={<img className={`${className}_logo`} src={ASSETS.animatedLogo} alt="" width={100} height={100} />}
+            />
           </h1>
 
           <p className={`${className}_tagline`}>File analysis reimagined</p>
