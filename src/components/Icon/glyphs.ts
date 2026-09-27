@@ -2,7 +2,7 @@
  * The application's own glyphs, as path data on a 16x16 grid.
  *
  * Lifted verbatim from the desktop app's Constants.Glyphs so the site and the
- * product draw the same shapes, except for `eye`, `eyeOff`, `mail`, `youtube`,
+ * product draw the same shapes, except for `eye`, `eyeOff`, `mail`, `youtube`, `instagram`,
  * `externalLink`, `calendar` and `padlock`, which are drawn here because only the website has a
  * password to reveal, an address to write to, a channel to link and a link that
  * leaves the site. `chevronDown`, `chevronRight`, `arrowRight`, `image`, `grid`,
@@ -16,6 +16,7 @@
  */
 
 export const GLYPHS = {
+  instagram: "M5 1h6a4 4 0 0 1 4 4v6a4 4 0 0 1-4 4H5a4 4 0 0 1-4-4V5a4 4 0 0 1 4-4zM5 2.4A2.6 2.6 0 0 0 2.4 5v6A2.6 2.6 0 0 0 5 13.6h6a2.6 2.6 0 0 0 2.6-2.6V5A2.6 2.6 0 0 0 11 2.4H5zM8 4.4a3.6 3.6 0 1 1 0 7.2 3.6 3.6 0 0 1 0-7.2zM8 5.8a2.2 2.2 0 1 0 0 4.4 2.2 2.2 0 0 0 0-4.4zM11.8 3.3a.9.9 0 1 1 0 1.8.9.9 0 0 1 0-1.8z",
   folder: "M1.5 4.2c0-.7.6-1.3 1.3-1.3h3.1l1.5 1.8H13.2c.7 0 1.3.6 1.3 1.3v5.8c0 .7-.6 1.3-1.3 1.3H2.8c-.7 0-1.3-.6-1.3-1.3V4.2z",
   file: "M3.6 1.6h5.3L13 5.7v8.2c0 .3-.2.5-.5.5H3.6c-.3 0-.5-.2-.5-.5V2.1c0-.3.2-.5.5-.5z",
   package: "M8 1.5 14 4.4v7.2L8 14.5 2 11.6V4.4L8 1.5zm0 1.7L4.1 5l3.9 1.9L11.9 5 8 3.2z",

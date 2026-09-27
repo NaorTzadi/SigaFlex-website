@@ -51,6 +51,7 @@ export const POLICY_UPDATED = "19 September 2026";
 export const EXTERNAL_LINKS = {
   FFMPEG_SOURCE: "https://ffmpeg.org/download.html",
   YOUTUBE_CHANNEL: "https://www.youtube.com/@SigaFlex",
+  INSTAGRAM_PROFILE: "https://www.instagram.com/sigaflex/",
   DEMO_VIDEO: "https://www.youtube-nocookie.com/embed/hunAcThQbF4"
 } as const;
 

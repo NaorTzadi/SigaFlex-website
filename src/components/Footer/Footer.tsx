@@ -17,14 +17,12 @@
 import { Link } from "react-router-dom";
 
 import Icon from "../Icon/Icon";
-import BrandName from "../BrandName/BrandName";
 import { ROUTES } from "../../Routing";
 import {
   EXTERNAL_LINKS,
   HOME_SECTIONS,
   SITE_NAME,
-  SITE_OPERATOR,
-  TAGLINE
+  SITE_OPERATOR
 } from "../../core/Constants";
 import "./footer.css";
 
@@ -80,12 +78,6 @@ export default function Footer() {
     <footer className={className}>
       <div className={`${className}_inner`}>
         <div className={`${className}_brand`}>
-          <p className={`${className}_brand_name`}>
-            <Icon className={`${className}_brand_mark`} name="package" size="1.25em" />
-            <BrandName />
-          </p>
-          <p className={`${className}_brand_line`}>{TAGLINE}</p>
-
           <p className={`${className}_social`}>
             <a
               className={`${className}_social_link`}
@@ -96,6 +88,16 @@ export default function Footer() {
               aria-label="YouTube channel (opens in a new tab)"
             >
               <Icon name="youtube" size="1.25em" />
+            </a>
+            <a
+              className={`${className}_social_link`}
+              href={EXTERNAL_LINKS.INSTAGRAM_PROFILE}
+              target="_blank"
+              rel="noreferrer noopener"
+              title="Instagram profile"
+              aria-label="Instagram profile (opens in a new tab)"
+            >
+              <Icon name="instagram" size="1.25em" />
             </a>
           </p>
         </div>
