@@ -37,9 +37,26 @@
   font-size: var(--fa-text-xs);
 }
 
+.agentterminaldemo_tabs {
+  display: flex;
+  gap: var(--fa-space-1);
+}
+
 .agentterminaldemo_tab {
   padding: var(--fa-space-1) var(--fa-space-3);
+  background: transparent;
+  border: 0;
   border-radius: var(--fa-radius-sm);
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  transition: color var(--fa-duration-fast) var(--fa-easing),
+    background var(--fa-duration-fast) var(--fa-easing);
+}
+
+.agentterminaldemo_tab:not(.agentterminaldemo_tab-current):hover {
+  color: var(--fa-color-text);
+  background: var(--fa-color-surface-hover);
 }
 
 .agentterminaldemo_tab-current {

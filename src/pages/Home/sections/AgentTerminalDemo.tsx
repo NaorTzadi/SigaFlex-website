@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import type { KeyboardEvent } from "react";
 
 import Icon from "../../../components/Icon/Icon";
 import type { GlyphName } from "../../../components/Icon/glyphs";
@@ -11,10 +12,10 @@ const className = "agentterminaldemo";
 
 type Line = { kind: "prompt" | "ask" | "command" | "output" | "answer"; text: string };
 
-const SESSION: Line[] = [
+const CLAUDE_SESSION: Line[] = [
   { kind: "prompt", text: "PS C:\\Users\\you> claude" },
   { kind: "ask", text: "What is inside the file I have open, and is any of it signed?" },
-  { kind: "command", text: "fileanalyzer fetch tree" },
+  { kind: "command", text: "sigaflex fetch tree" },
   { kind: "output", text: "installer.exe [PE]" },
   { kind: "output", text: "├─ Structure" },
   { kind: "output", text: "├─ .rsrc" },
@@ -22,15 +23,44 @@ const SESSION: Line[] = [
   { kind: "output", text: "   ├─ app.jar [JAR]" },
   { kind: "output", text: "   ├─ config.xml" },
   { kind: "output", text: "   └─ logo.png [PNG]" },
-  { kind: "command", text: "fileanalyzer inspect setup.zip/app.jar" },
-  { kind: "command", text: "fileanalyzer capture window" },
-  { kind: "output", text: "…\\FileAnalyzer\\commands\\window.png" },
-  { kind: "command", text: "fileanalyzer export inspected file data" },
-  { kind: "output", text: "…\\FileAnalyzer\\commands\\exported" },
+  { kind: "command", text: "sigaflex inspect setup.zip/app.jar" },
+  { kind: "command", text: "sigaflex capture window" },
+  { kind: "output", text: "…\\SigaFlex\\commands\\window.png" },
+  { kind: "command", text: "sigaflex export inspected file data" },
+  { kind: "output", text: "…\\SigaFlex\\commands\\exported" },
   {
     kind: "answer",
     text: "The installer carries a ZIP appended past its last section, with a Java application inside it. The PE itself has one Authenticode certificate. Nothing inside the ZIP is signed, and MANIFEST.MF names no signer either."
   }
+];
+
+const CODEX_SESSION: Line[] = [
+  { kind: "prompt", text: "PS C:\\Users\\you> codex" },
+  { kind: "ask", text: "Is there a way to change shortcut keys?" },
+  { kind: "command", text: "sigaflex show views list" },
+  {
+    kind: "output",
+    text: '["inspector-view","inspector-view-side-tab","inspector-view-display-box","inspector-view-display-box-readable-area","inspector-view-display-box-raw-area","inspector-view-display-box-disassembly-area","inspector-view-display-box-patterns-area","inspector-view-display-box-hexadecimal-area","inspector-view-display-box-c-code-area","tree-view","terminal-panel","top-bar","file-password-view","settings-panel"]'
+  },
+  { kind: "command", text: "sigaflex show component settings-panel details" },
+  { kind: "output", text: "SettingsPanel#settings-panel.settings-overlay [-310,-210 620x420] hidden" },
+  { kind: "output", text: "  BorderPane.settings-card [-310,-210 620x420]" },
+  { kind: "output", text: "    HBox.settings-header [-310,-210 620x44]" },
+  { kind: "output", text: "+109 lines" },
+  {
+    kind: "answer",
+    text:
+      "Yes—open Settings → Shortcuts.\n\n" +
+      "1. Click the current shortcut beside an action.\n" +
+      "2. Press the new key combination.\n" +
+      "3. Click Apply or OK.\n\n" +
+      "You can use Restore defaults to reset the shortcuts."
+  }
+];
+
+const TERMINALS: Array<{ name: string; session: Line[] }> = [
+  { name: "Terminal 1", session: CLAUDE_SESSION },
+  { name: "Terminal 2", session: CODEX_SESSION }
 ];
 
 const COMMANDS: Array<{ command: string; does: string }> = [
@@ -38,7 +68,7 @@ const COMMANDS: Array<{ command: string; does: string }> = [
   { command: "fetch tree [path]", does: "The tree as it is loaded, from the root or from any entry under it." },
   { command: "fetch absolute path <path>", does: "Where an entry lives on disk, or which container it is inside." },
   { command: "open <path>", does: "Expands an entry in the tree, as a double-click would." },
-  { command: "inspect <path>", does: "Opens the inspector on an entry: Display, Readable, Raw, Patterns, Disassembly." },
+  { command: "inspect <path>", does: "Opens the inspector on an entry: Display, Readable, Raw, Patterns, Disassembly, Hexadecimal, C code." },
   { command: "show views list", does: "Every page and view the window has." },
   { command: "show component <view_id> details", does: "One view in full: children, position, size, style, what it does." },
   { command: "fetch visible components details", does: "What is in front of the user right now." },
@@ -94,14 +124,36 @@ const AUDIENCES: InfoCard[] = [
 ];
 
 export default function AgentTerminalDemo() {
+  const [terminal, setTerminal] = useState(0);
   const [shown, setShown] = useState(0);
   const [started, setStarted] = useState(false);
   const [reduced] = useState(() => prefersReducedMotion());
   const frameRef = useRef<HTMLDivElement>(null);
+  const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const session = TERMINALS[terminal].session;
+
+  function openTerminal(index: number) {
+    if (index === terminal) return;
+    setTerminal(index);
+    setShown(reduced ? TERMINALS[index].session.length : 0);
+  }
+
+  function onTabKeyDown(event: KeyboardEvent<HTMLButtonElement>) {
+    let next: number;
+    if (event.key === "ArrowRight") next = (terminal + 1) % TERMINALS.length;
+    else if (event.key === "ArrowLeft") next = (terminal - 1 + TERMINALS.length) % TERMINALS.length;
+    else if (event.key === "Home") next = 0;
+    else if (event.key === "End") next = TERMINALS.length - 1;
+    else return;
+
+    event.preventDefault();
+    openTerminal(next);
+    tabRefs.current[next]?.focus();
+  }
 
   useEffect(() => {
     if (reduced) {
-      setShown(SESSION.length);
+      setShown(TERMINALS[0].session.length);
       return;
     }
     const frame = frameRef.current;
@@ -115,35 +167,60 @@ export default function AgentTerminalDemo() {
         setStarted(true);
         observer.disconnect();
       },
-      { threshold: 0.4 }
+      { rootMargin: "0px 0px -40% 0px", threshold: 0 }
     );
     observer.observe(frame);
     return () => observer.disconnect();
   }, [reduced]);
 
   useEffect(() => {
-    if (!started || shown >= SESSION.length) return;
-    const next = SESSION[shown];
+    if (!started || shown >= session.length) return;
+    const next = session[shown];
     const delay = next.kind === "command" ? 700 : next.kind === "answer" ? 900 : next.kind === "ask" ? 500 : 140;
     const timer = window.setTimeout(() => setShown(shown + 1), delay);
     return () => window.clearTimeout(timer);
-  }, [started, shown]);
+  }, [started, shown, session]);
 
-  const finished = shown >= SESSION.length;
+  const finished = shown >= session.length;
 
   return (
     <div className={className}>
       <div className={`${className}_top`}>
         <div className={`${className}_frame`} ref={frameRef}>
-          <div className={`${className}_chrome`} aria-hidden="true">
+          <div className={`${className}_chrome`}>
             <Icon name="terminal" />
-            <span className={`${className}_tab ${className}_tab-current`}>Terminal 1</span>
-            <span className={`${className}_tab`}>Terminal 2</span>
+            <div className={`${className}_tabs`} role="tablist" aria-label="Terminals">
+              {TERMINALS.map((entry, i) => (
+                <button
+                  className={cx(`${className}_tab`, i === terminal && `${className}_tab-current`)}
+                  key={entry.name}
+                  ref={(element) => {
+                    tabRefs.current[i] = element;
+                  }}
+                  type="button"
+                  role="tab"
+                  id={`agentterminal-tab-${i}`}
+                  aria-selected={i === terminal}
+                  aria-controls="agentterminal-panel"
+                  tabIndex={i === terminal ? 0 : -1}
+                  onClick={() => openTerminal(i)}
+                  onKeyDown={onTabKeyDown}
+                >
+                  {entry.name}
+                </button>
+              ))}
+            </div>
             <Icon className={`${className}_tab_add`} name="plus" size="0.875em" />
           </div>
 
-          <pre className={`${className}_session`}>
-            {SESSION.map((line, i) => (
+          <pre
+            className={`${className}_session`}
+            key={terminal}
+            id="agentterminal-panel"
+            role="tabpanel"
+            aria-labelledby={`agentterminal-tab-${terminal}`}
+          >
+            {session.map((line, i) => (
               <span
                 className={cx(
                   `${className}_line`,
@@ -202,7 +279,7 @@ export default function AgentTerminalDemo() {
             {COMMANDS.map((entry) => (
               <tr key={entry.command}>
                 <td className={`${className}_command`}>
-                  <span className={`${className}_command_prefix`}>fileanalyzer </span>
+                  <span className={`${className}_command_prefix`}>sigaflex </span>
                   {entry.command}
                 </td>
                 <td className={`${className}_does`}>{entry.does}</td>

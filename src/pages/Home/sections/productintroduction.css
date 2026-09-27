@@ -62,15 +62,6 @@
   color: var(--fa-color-text);
 }
 
-.productintroduction_logo {
-  display: inline-block;
-  width: 1em;
-  height: 1em;
-  margin-right: -0.08em;
-  vertical-align: -0.12em;
-  object-fit: contain;
-}
-
 .productintroduction_tagline {
   color: var(--fa-color-text-secondary);
   font-size: clamp(0.7rem, 1.5vw, 1rem);

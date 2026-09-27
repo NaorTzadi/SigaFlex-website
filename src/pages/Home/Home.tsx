@@ -127,7 +127,7 @@ export default function Home() {
           id={HOME_SECTIONS.CAPABILITIES}
           level="h3"
           title="Capabilities"
-          lead="Display, Readable, Raw, Patterns, Disassembly — all over the same bytes."
+          lead="Readable, Raw, Patterns, Disassembly, Hexadecimal, C code — all over the same bytes."
         >
           <FileInspectorDemo />
         </Section>

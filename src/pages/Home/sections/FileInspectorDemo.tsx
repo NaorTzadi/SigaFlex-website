@@ -1,8 +1,8 @@
 /**
  * The inspector, on the page.
  *
- * The product's central claim is that Display, Readable, Raw, Patterns and
- * Disassembly are five views of the *same* entry rather than five tools. A
+ * The product's central claim is that Readable, Raw, Patterns, Disassembly,
+ * Hexadecimal and C code are six views of the *same* entry rather than six tools. A
  * screenshot cannot make that argument — it shows one view, frozen. Tabs over
  * one unchanging header can: the file name and the byte count never move while
  * everything beneath them does.
@@ -16,7 +16,7 @@
  *
  * Keyboard: the tab row follows the usual pattern — arrows move between tabs,
  * Home and End jump to the ends, and only the selected tab is in the tab order,
- * so Tab steps over the row into the output rather than through five buttons.
+ * so Tab steps over the row into the output rather than through six buttons.
  */
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
@@ -24,8 +24,9 @@ import type { KeyboardEvent } from "react";
 
 import { cx } from "../../../core/Utility";
 import {
+  C_CODE,
   DISASSEMBLY,
-  DISPLAY,
+  HEXADECIMAL,
   PATTERNS,
   RAW,
   READABLE,
@@ -36,8 +37,13 @@ import "./fileinspectordemo.css";
 
 const className = "fileinspectordemo";
 
-const TABS = ["Display", "Readable", "Raw", "Patterns", "Disassembly"] as const;
+const TABS = ["Readable", "Raw", "Patterns", "Disassembly", "Hexadecimal", "C code"] as const;
 type Tab = (typeof TABS)[number];
+
+/** Tab names hold spaces; element ids cannot. */
+function tabSlug(tab: Tab): string {
+  return tab.replace(/ /g, "-");
+}
 
 /** Which instructions get the application's control-flow colours. */
 function flowClass(text: string): string | false {
@@ -86,7 +92,7 @@ export default function FileInspectorDemo() {
 
   return (
     <div className={className}>
-      {/* The header never changes. That is the point: one entry, five views. */}
+      {/* The header never changes. That is the point: one entry, six views. */}
       <div className={`${className}_head`}>
         <span className={`${className}_file`}>{SAMPLE_FILE}</span>
         <span className={`${className}_badge`}>PE</span>
@@ -103,9 +109,9 @@ export default function FileInspectorDemo() {
             }}
             type="button"
             role="tab"
-            id={`capabilities-tab-${name}`}
+            id={`capabilities-tab-${tabSlug(name)}`}
             aria-selected={name === tab}
-            aria-controls={`capabilities-panel-${name}`}
+            aria-controls={`capabilities-panel-${tabSlug(name)}`}
             tabIndex={name === tab ? 0 : -1}
             onClick={() => setTab(name)}
             onKeyDown={onKeyDown}
@@ -122,24 +128,14 @@ export default function FileInspectorDemo() {
 
       <div
         className={`${className}_panel`}
-        id={`capabilities-panel-${tab}`}
+        id={`capabilities-panel-${tabSlug(tab)}`}
         ref={panelRef}
         role="tabpanel"
-        aria-labelledby={`capabilities-tab-${tab}`}
+        aria-labelledby={`capabilities-tab-${tabSlug(tab)}`}
         /* A scrollable region has to be reachable by keyboard. */
         tabIndex={0}
       >
         <div className={`${className}_view`} key={tab}>
-          {tab === "Display" && (
-            <dl className={`${className}_facts`}>
-              {DISPLAY.map((line) => (
-                <div className={`${className}_fact`} key={line}>
-                  {line}
-                </div>
-              ))}
-            </dl>
-          )}
-
           {tab === "Readable" && (
             <ol className={`${className}_lines`}>
               {READABLE.map((line) => (
@@ -150,12 +146,14 @@ export default function FileInspectorDemo() {
             </ol>
           )}
 
-          {tab === "Raw" && (
+          {tab === "Raw" && <pre className={`${className}_pre`}>{RAW.join("\n")}</pre>}
+
+          {tab === "Hexadecimal" && (
             <pre className={`${className}_pre`}>
-              {RAW.map((line) => {
-                const offset = line.slice(0, 8);
-                const hex = line.slice(8, 60);
-                const ascii = line.slice(60);
+              {HEXADECIMAL.map((line) => {
+                const offset = line.slice(0, 16);
+                const hex = line.slice(16, 68);
+                const ascii = line.slice(68);
                 return (
                   <span className={`${className}_row`} key={offset}>
                     <span className={`${className}_offset`}>{offset}</span>
@@ -196,6 +194,21 @@ export default function FileInspectorDemo() {
                   <span className={`${className}_offset`}>{row.address}</span>
                   <span className={`${className}_bytes`}>{row.bytes.padEnd(18)}</span>
                   <span className={cx(flowClass(row.text))}>{row.text}</span>
+                  {"\n"}
+                </span>
+              ))}
+            </pre>
+          )}
+
+          {tab === "C code" && (
+            <pre className={`${className}_pre`}>
+              {C_CODE.map((line, row) => (
+                <span className={`${className}_row`} key={row}>
+                  {line.map(([text, kind], index) => (
+                    <span className={cx(kind && `${className}_code-${kind}`)} key={index}>
+                      {text}
+                    </span>
+                  ))}
                   {"\n"}
                 </span>
               ))}

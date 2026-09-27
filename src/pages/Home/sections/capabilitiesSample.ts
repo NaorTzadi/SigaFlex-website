@@ -1,5 +1,5 @@
 /**
- * The same bytes, seen five ways.
+ * The same bytes, seen six ways.
  *
  * This is sample output standing in for the real thing. The application can
  * export exactly these artifacts from its Export tab — tree, details, readable,
@@ -14,16 +14,13 @@
 
 export type PatternRow = { type: string; value: string; offset: string };
 export type InstructionRow = { address: string; bytes: string; text: string };
+export type CodeKind =
+  | "keyword" | "type" | "function" | "global" | "parameter"
+  | "variable" | "label" | "number" | "string" | "comment";
+export type CodeToken = [text: string, kind?: CodeKind];
 
 export const SAMPLE_FILE = "installer.exe";
 export const SAMPLE_SUMMARY = "PE32 executable (x86) · 199 files in 11 folders";
-
-/** Rendered content, as the Display tab would show it. */
-export const DISPLAY = [
-  "Windows GUI application, Inno Setup",
-  "Linker 2.25 · entry point 0x000B5EEC · image base 0x00400000",
-  "Signed · 1 certificate · 4.1 MB (4,292,529 bytes)"
-];
 
 /** Human-readable strings pulled out of the bytes. */
 export const READABLE = [
@@ -38,16 +35,23 @@ export const READABLE = [
   "The setup files are corrupted. Please obtain a new copy of the program."
 ];
 
-/** Raw bytes, sixteen to the line, as the Raw tab lays them out. */
+/** The bytes decoded as text, control characters shown as ·, as the Raw tab shows them. */
 export const RAW = [
-  "00000000  4d 5a 90 00 03 00 00 00  04 00 00 00 ff ff 00 00  MZ..............",
-  "00000010  b8 00 00 00 00 00 00 00  40 00 00 00 00 00 00 00  ........@.......",
-  "00000020  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  ................",
-  "00000030  00 00 00 00 00 00 00 00  00 00 00 00 f0 00 00 00  ................",
-  "00000040  0e 1f ba 0e 00 b4 09 cd  21 b8 01 4c cd 21 54 68  ........!..L.!Th",
-  "00000050  69 73 20 70 72 6f 67 72  61 6d 20 63 61 6e 6e 6f  is program canno",
-  "00000060  74 20 62 65 20 72 75 6e  20 69 6e 20 44 4f 53 20  t be run in DOS ",
-  "00000070  6d 6f 64 65 2e 0d 0d 0a  24 00 00 00 00 00 00 00  mode....$......."
+  "MZ�·········ÿÿ··¸·······@···································ð·····º··´\tÍ!¸·LÍ!This program cannot be run in DOS mode.",
+  "",
+  "$·······"
+];
+
+/** Raw bytes, sixteen to the row, as the Hexadecimal tab lays them out. */
+export const HEXADECIMAL = [
+  "0000000000000000  4d 5a 90 00 03 00 00 00  04 00 00 00 ff ff 00 00  |MZ..............|",
+  "0000000000000010  b8 00 00 00 00 00 00 00  40 00 00 00 00 00 00 00  |........@.......|",
+  "0000000000000020  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|",
+  "0000000000000030  00 00 00 00 00 00 00 00  00 00 00 00 f0 00 00 00  |................|",
+  "0000000000000040  0e 1f ba 0e 00 b4 09 cd  21 b8 01 4c cd 21 54 68  |........!..L.!Th|",
+  "0000000000000050  69 73 20 70 72 6f 67 72  61 6d 20 63 61 6e 6e 6f  |is program canno|",
+  "0000000000000060  74 20 62 65 20 72 75 6e  20 69 6e 20 44 4f 53 20  |t be run in DOS |",
+  "0000000000000070  6d 6f 64 65 2e 0d 0d 0a  24 00 00 00 00 00 00 00  |mode....$.......|"
 ];
 
 /** Everything the pattern pass recognised, with where it sits. */
@@ -79,4 +83,22 @@ export const DISASSEMBLY: InstructionRow[] = [
   { address: "0040101b", bytes: "8b e5", text: "mov     esp, ebp" },
   { address: "0040101d", bytes: "5d", text: "pop     ebp" },
   { address: "0040101e", bytes: "c3", text: "ret" }
+];
+
+/** The same function decompiled, token by token, as the C code tab colours it. */
+export const C_CODE: CodeToken[][] = [
+  [["/* sub_401000 @ 0x00401000 */", "comment"]],
+  [["uint32_t", "type"], [" "], ["sub_401000", "function"], ["("], ["uint32_t", "type"], [" "], ["stack_arg_4", "parameter"], [")"]],
+  [["{"]],
+  [["    "], ["uint32_t", "type"], [" "], ["eax", "variable"], [";"]],
+  [["    "], ["uint32_t", "type"], [" "], ["ebx", "variable"], [";"]],
+  [],
+  [["    "], ["if", "keyword"], [" ("], ["stack_arg_4", "parameter"], [" == "], ["0", "number"], [") "], ["goto", "keyword"], [" "], ["loc_401022", "label"], [";"]],
+  [["    "], ["eax", "variable"], [" = "], ["imported_GetProcAddress", "function"], ["("], ["stack_arg_4", "parameter"], [", "], ["\"InnoSetupLdrWindow\"", "string"], [");"]],
+  [["    "], ["ebx", "variable"], [" = "], ["eax", "variable"], [";"]],
+  [["    "], ["return", "keyword"], [" "], ["eax", "variable"], [";"]],
+  [],
+  [["loc_401022", "label"], [":"]],
+  [["    "], ["return", "keyword"], [" "], ["0", "number"], [";"]],
+  [["}"]]
 ];

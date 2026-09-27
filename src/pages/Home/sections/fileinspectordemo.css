@@ -117,6 +117,17 @@
   color: var(--fa-color-flow-return);
 }
 
+.fileinspectordemo_code-keyword { color: var(--fa-color-code-keyword); }
+.fileinspectordemo_code-type { color: var(--fa-color-code-type); }
+.fileinspectordemo_code-function { color: var(--fa-color-flow-call); }
+.fileinspectordemo_code-global { color: var(--fa-color-code-global); }
+.fileinspectordemo_code-parameter { color: var(--fa-color-code-parameter); }
+.fileinspectordemo_code-variable { color: var(--fa-color-code-variable); }
+.fileinspectordemo_code-label { color: var(--fa-color-flow-jump); }
+.fileinspectordemo_code-number { color: var(--fa-color-code-number); }
+.fileinspectordemo_code-string { color: var(--fa-color-code-string); }
+.fileinspectordemo_code-comment { color: var(--fa-color-text-muted); }
+
 .fileinspectordemo_lines {
   margin: 0;
   padding: 0;
@@ -140,24 +151,6 @@
   color: var(--fa-color-text-muted);
   text-align: right;
   padding-right: var(--fa-space-4);
-}
-
-.fileinspectordemo_facts {
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--fa-space-3);
-}
-
-.fileinspectordemo_fact {
-  padding-bottom: var(--fa-space-3);
-  border-bottom: var(--fa-border-width) solid var(--fa-color-border);
-  font-family: var(--fa-font-mono);
-  font-size: var(--fa-text-sm);
-}
-
-.fileinspectordemo_fact:last-child {
-  border-bottom: 0;
 }
 
 .fileinspectordemo_table {

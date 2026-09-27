@@ -1,0 +1,63 @@
+/* Temporary font preview; Vite resolves this to the original Downloads file. */
+@font-face {
+  font-family: "SigaFlex Brand Preview";
+  src: url("@preview-brand-font") format("truetype");
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+.brandname {
+  text-transform: uppercase;
+  font-family: "SigaFlex Brand Preview", var(--fa-font-mono);
+  font-weight: 600;
+  letter-spacing: 0.035em;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.brandname_symbol {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin-right: -0.08em;
+  vertical-align: -0.12em;
+  object-fit: contain;
+}
+
+.brandname_letter { display: inline-block; }
+
+.brandname_letter-reveal {
+  animation: brandname_letter_in 0.35s cubic-bezier(0.2, 0.6, 0.35, 1) backwards;
+}
+
+@keyframes brandname_letter_in {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brandname_letter-reveal { animation: none; }
+}
+
+.brandname_silver { color: #e6e8eb; }
+.brandname_gold { color: #e0a341; }
+
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  .brandname_silver,
+  .brandname_gold {
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .brandname_silver {
+    background-image: linear-gradient(180deg, #ffffff 0%, #d5d8dc 35%, #8d949b 52%, #eceef0 76%, #b9bfc7 100%);
+  }
+
+  .brandname_gold {
+    background-image: linear-gradient(180deg, #ffe4a0 0%, #f4c567 35%, #b97a23 52%, #f5c264 76%, #df9c35 100%);
+  }
+}
