@@ -1,0 +1,68 @@
+.policydialog {
+  width: min(54rem, calc(100% - 2rem));
+  max-height: calc(100dvh - 2rem);
+  margin: auto;
+  padding: 0;
+  overflow: hidden;
+  color: var(--fa-color-text);
+  background: var(--fa-color-background);
+  border: 1px solid var(--fa-color-border-strong);
+  border-radius: var(--fa-radius-lg);
+  box-shadow: var(--fa-shadow-lg);
+}
+
+.policydialog::backdrop { background: rgb(0 0 0 / 0.7); }
+
+.policydialog_content {
+  max-height: calc(100dvh - 2rem - 2px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: clamp(1rem, 4vw, 2rem);
+}
+
+.policydialog_close {
+  position: absolute;
+  top: 0.5rem;
+  right: 1.25rem;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--fa-radius-sm);
+  background: transparent;
+  color: var(--fa-color-text-secondary);
+  cursor: pointer;
+}
+
+.policydialog_close:hover {
+  background: var(--fa-color-surface-hover);
+  color: var(--fa-color-text-bright);
+}
+
+.policydialog_close:focus-visible {
+  outline: 2px solid var(--fa-color-focus);
+  outline-offset: 2px;
+}
+
+.policydialog .page_layout { grid-template-columns: 1fr; }
+.policydialog .tableofcontents { display: none; }
+
+.registrationform_policy_link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--fa-color-accent);
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+.registrationform_policy_link:focus-visible {
+  outline: 2px solid var(--fa-color-focus);
+  outline-offset: 3px;
+}

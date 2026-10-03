@@ -1,11 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import type { KeyboardEvent } from "react";
 
-import Icon from "../../../components/Icon/Icon";
-import type { GlyphName } from "../../../components/Icon/glyphs";
-import { cx, prefersReducedMotion } from "../../../core/Utility";
-import InfoCardGrid from "./InfoCardGrid";
-import type { InfoCard } from "./InfoCardGrid";
+import Icon from "../../../../components/Icon/Icon";
+import type { GlyphName } from "../../../../components/Icon/glyphs";
+import { HOME_SECTIONS } from "../../../../core/Constants";
+import { cx, prefersReducedMotion } from "../../../../core/Utility";
+import InfoCardGrid from "../InfoCardGrid";
+import type { InfoCard } from "../InfoCardGrid";
+import Section from "../Section";
+import claudeLogo from "../../../../assets/icons/claude.svg";
+import codexLogo from "../../../../assets/icons/codex.svg";
+import geminiLogo from "../../../../assets/icons/gemini.svg";
 import "./agentterminaldemo.css";
 
 const className = "agentterminaldemo";
@@ -63,7 +68,7 @@ const TERMINALS: Array<{ name: string; session: Line[] }> = [
   { name: "Terminal 2", session: CODEX_SESSION }
 ];
 
-const COMMANDS: Array<{ command: string; does: string }> = [
+const COMMAND_EXAMPLES: Array<{ command: string; does: string }> = [
   { command: "fetch root path", does: "The file or folder the user gave the program." },
   { command: "fetch tree [path]", does: "The tree as it is loaded, from the root or from any entry under it." },
   { command: "fetch absolute path <path>", does: "Where an entry lives on disk, or which container it is inside." },
@@ -74,7 +79,13 @@ const COMMANDS: Array<{ command: string; does: string }> = [
   { command: "fetch visible components details", does: "What is in front of the user right now." },
   { command: "capture window", does: "A screenshot of the window, saved to a path." },
   { command: "export inspected file data", does: "Details, readable text and disassembly of the inspected entry, as files." },
-  { command: "show available commands", does: "This list." }
+  { command: "show available commands", does: "Lists the commands available in the terminal." }
+];
+
+const SUPPORTED_AGENTS: Array<{ logo: string; name: string; upcoming?: boolean }> = [
+  { logo: codexLogo, name: "Codex" },
+  { logo: claudeLogo, name: "Claude Code" },
+  { logo: geminiLogo, name: "Gemini CLI", upcoming: true }
 ];
 
 const GIVES: Array<{ glyph: GlyphName; title: string; body: string }> = [
@@ -184,112 +195,135 @@ export default function AgentTerminalDemo() {
   const finished = shown >= session.length;
 
   return (
-    <div className={className}>
-      <div className={`${className}_top`}>
-        <div className={`${className}_frame`} ref={frameRef}>
-          <div className={`${className}_chrome`}>
-            <Icon name="terminal" />
-            <div className={`${className}_tabs`} role="tablist" aria-label="Terminals">
-              {TERMINALS.map((entry, i) => (
-                <button
-                  className={cx(`${className}_tab`, i === terminal && `${className}_tab-current`)}
-                  key={entry.name}
-                  ref={(element) => {
-                    tabRefs.current[i] = element;
-                  }}
-                  type="button"
-                  role="tab"
-                  id={`agentterminal-tab-${i}`}
-                  aria-selected={i === terminal}
-                  aria-controls="agentterminal-panel"
-                  tabIndex={i === terminal ? 0 : -1}
-                  onClick={() => openTerminal(i)}
-                  onKeyDown={onTabKeyDown}
-                >
-                  {entry.name}
-                </button>
-              ))}
-            </div>
-            <Icon className={`${className}_tab_add`} name="plus" size="0.875em" />
-          </div>
-
-          <pre
-            className={`${className}_session`}
-            key={terminal}
-            id="agentterminal-panel"
-            role="tabpanel"
-            aria-labelledby={`agentterminal-tab-${terminal}`}
-          >
-            {session.map((line, i) => (
-              <span
-                className={cx(
-                  `${className}_line`,
-                  `${className}_line-${line.kind}`,
-                  i < shown && `${className}_line-shown`
-                )}
-                key={i}
-              >
-                {line.kind === "command" && <span className={`${className}_bullet`}>●</span>}
-                {line.kind === "ask" && <span className={`${className}_bullet`}>›</span>}
-                {line.text}
-                {"\n"}
-              </span>
+    <Section
+      id={HOME_SECTIONS.TERMINAL}
+      eyebrow="02 — The Terminal"
+      title="AI agents terminal support"
+      lead="A real shell inside the window, with a command channel. You can now use your AI agents to help you with your tasks."
+      tone="raised"
+    >
+      <div className={className}>
+        <div className={`${className}_agents`}>
+          <span className={`${className}_agents_label`} id="agentterminal-agents-label">
+            Supported AI agents
+          </span>
+          <ul className={`${className}_agents_list`} aria-labelledby="agentterminal-agents-label">
+            {SUPPORTED_AGENTS.map((agent) => (
+              <li className={cx(`${className}_agent`, agent.upcoming && `${className}_agent-upcoming`)} key={agent.name}>
+                <img className={`${className}_agent_logo`} src={agent.logo} alt="" />
+                {agent.name}
+                {agent.upcoming && <span className={`${className}_agent_badge`}>Upcoming</span>}
+              </li>
             ))}
-            {!reduced && started && !finished && <span className={`${className}_cursor`} aria-hidden="true" />}
-          </pre>
-
-          {!reduced && (
-            <button
-              className={`${className}_replay`}
-              type="button"
-              disabled={!finished}
-              onClick={() => setShown(0)}
-            >
-              <Icon name="refresh" size="0.875em" />
-              Replay
-            </button>
-          )}
+          </ul>
         </div>
 
-        <ul className={`${className}_gives`}>
-          {GIVES.map((give) => (
-            <li className={`${className}_give`} key={give.title}>
-              <Icon className={`${className}_give_glyph`} name={give.glyph} size="1.125em" />
-              <span className={`${className}_give_title`}>{give.title}</span>
-              <span className={`${className}_give_body`}>{give.body}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
+        <div className={`${className}_top`}>
+          <div className={`${className}_frame`} ref={frameRef}>
+            <div className={`${className}_chrome`}>
+              <Icon name="terminal" />
+              <div className={`${className}_tabs`} role="tablist" aria-label="Terminals">
+                {TERMINALS.map((entry, i) => (
+                  <button
+                    className={cx(`${className}_tab`, i === terminal && `${className}_tab-current`)}
+                    key={entry.name}
+                    ref={(element) => {
+                      tabRefs.current[i] = element;
+                    }}
+                    type="button"
+                    role="tab"
+                    id={`agentterminal-tab-${i}`}
+                    aria-selected={i === terminal}
+                    aria-controls="agentterminal-panel"
+                    tabIndex={i === terminal ? 0 : -1}
+                    onClick={() => openTerminal(i)}
+                    onKeyDown={onTabKeyDown}
+                  >
+                    {entry.name}
+                  </button>
+                ))}
+              </div>
+              <Icon className={`${className}_tab_add`} name="plus" size="0.875em" />
+            </div>
 
-      <details className={`${className}_reference`}>
-        <summary className={`${className}_reference_summary`}>
-          <Icon className={`${className}_reference_marker`} name="chevronRight" size="0.875em" />
-          Every command, and what it answers
-          <span className={`${className}_reference_count`}>{COMMANDS.length}</span>
-        </summary>
-        <table className={`${className}_table`}>
-          <thead>
-            <tr>
-              <th scope="col">Command</th>
-              <th scope="col">What it does</th>
-            </tr>
-          </thead>
-          <tbody>
-            {COMMANDS.map((entry) => (
-              <tr key={entry.command}>
-                <td className={`${className}_command`}>
-                  <span className={`${className}_command_prefix`}>sigaflex </span>
-                  {entry.command}
-                </td>
-                <td className={`${className}_does`}>{entry.does}</td>
-              </tr>
+            <pre
+              className={`${className}_session`}
+              key={terminal}
+              id="agentterminal-panel"
+              role="tabpanel"
+              aria-labelledby={`agentterminal-tab-${terminal}`}
+            >
+              {session.map((line, i) => (
+                <span
+                  className={cx(
+                    `${className}_line`,
+                    `${className}_line-${line.kind}`,
+                    i < shown && `${className}_line-shown`
+                  )}
+                  key={i}
+                >
+                  {line.kind === "command" && <span className={`${className}_bullet`}>●</span>}
+                  {line.kind === "ask" && <span className={`${className}_bullet`}>›</span>}
+                  {line.text}
+                  {"\n"}
+                </span>
+              ))}
+              {!reduced && started && !finished && <span className={`${className}_cursor`} aria-hidden="true" />}
+            </pre>
+
+            {!reduced && (
+              <button
+                className={`${className}_replay`}
+                type="button"
+                disabled={!finished}
+                onClick={() => setShown(0)}
+              >
+                <Icon name="refresh" size="0.875em" />
+                Replay
+              </button>
+            )}
+          </div>
+
+          <ul className={`${className}_gives`}>
+            {GIVES.map((give) => (
+              <li className={`${className}_give`} key={give.title}>
+                <Icon className={`${className}_give_glyph`} name={give.glyph} size="1.125em" />
+                <span className={`${className}_give_title`}>{give.title}</span>
+                <span className={`${className}_give_body`}>{give.body}</span>
+              </li>
             ))}
-          </tbody>
-        </table>
-      </details>
+          </ul>
+        </div>
 
-      <InfoCardGrid items={AUDIENCES} />
-    </div>
+        <details className={`${className}_reference`}>
+          <summary className={`${className}_reference_summary`}>
+            <Icon className={`${className}_reference_marker`} name="chevronRight" size="0.875em" />
+            Command examples
+            <span className={`${className}_reference_count`}>{COMMAND_EXAMPLES.length}</span>
+          </summary>
+          <table className={`${className}_table`}>
+            <thead>
+              <tr>
+                <th scope="col">command</th>
+                <th scope="col">What it does</th>
+              </tr>
+            </thead>
+            <tbody>
+              {COMMAND_EXAMPLES.map((entry) => (
+                <tr key={entry.command}>
+                  <td className={`${className}_command`}>
+                    <span className={`${className}_command_prefix`}>sigaflex </span>
+                    {entry.command}
+                  </td>
+                  <td className={`${className}_does`}>{entry.does}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </details>
+
+        <InfoCardGrid items={AUDIENCES} />
+      </div>
+    </Section>
   );
 }

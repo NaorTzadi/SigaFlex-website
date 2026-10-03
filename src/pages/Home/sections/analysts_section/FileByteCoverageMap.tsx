@@ -18,7 +18,9 @@
 
 import { useState } from "react";
 
-import { cx } from "../../../core/Utility";
+import { HOME_SECTIONS } from "../../../../core/Constants";
+import { cx } from "../../../../core/Utility";
+import Section from "../Section";
 import "./filebytecoveragemap.css";
 
 const className = "filebytecoveragemap";
@@ -91,86 +93,95 @@ export default function FileByteCoverageMap() {
   const enlarged = REGIONS.filter((r) => (r.size / TOTAL) * 100 < MIN_VISIBLE_PERCENT).length;
 
   return (
-    <div className={className}>
-      <div className={`${className}_head`}>
-        <span className={`${className}_file`}>installer.exe</span>
-        <span className={`${className}_total`}>{bytes(TOTAL)} accounted for</span>
-      </div>
+    <Section
+      id={HOME_SECTIONS.ANALYSTS}
+      eyebrow="04 — The evidence"
+      title="Built for analysts"
+      lead="Every byte accounted for — including the ones nothing claims."
+      tone="raised"
+      hue="crimson"
+    >
+      <div className={className}>
+        <div className={`${className}_head`}>
+          <span className={`${className}_file`}>installer.exe</span>
+          <span className={`${className}_total`}>{bytes(TOTAL)} accounted for</span>
+        </div>
 
-      <div className={`${className}_bar`} role="group" aria-label="Byte coverage of installer.exe">
-        {REGIONS.map((r, i) => {
-          const percent = (r.size / TOTAL) * 100;
-          return (
-            <button
-              className={cx(
-                `${className}_region`,
-                `${className}_region-${r.strength}`,
-                i === selected && `${className}_region-current`
-              )}
-              key={r.name}
-              type="button"
-              style={{ flexGrow: Math.max(percent, MIN_VISIBLE_PERCENT) }}
-              aria-pressed={i === selected}
-              onClick={() => setSelected(i)}
-              onMouseEnter={() => {
-                if (!keyboard) setSelected(i);
-              }}
-              onFocus={() => {
-                setKeyboard(true);
-                setSelected(i);
-              }}
-              onBlur={() => setKeyboard(false)}
-            >
-              <span className={`${className}_region_label`}>
-                {`${r.name}, ${STRENGTH_LABEL[r.strength]}, ${bytes(r.size)}, ${percentOfFile(r.size)} of the file`}
+        <div className={`${className}_bar`} role="group" aria-label="Byte coverage of installer.exe">
+          {REGIONS.map((r, i) => {
+            const percent = (r.size / TOTAL) * 100;
+            return (
+              <button
+                className={cx(
+                  `${className}_region`,
+                  `${className}_region-${r.strength}`,
+                  i === selected && `${className}_region-current`
+                )}
+                key={r.name}
+                type="button"
+                style={{ flexGrow: Math.max(percent, MIN_VISIBLE_PERCENT) }}
+                aria-pressed={i === selected}
+                onClick={() => setSelected(i)}
+                onMouseEnter={() => {
+                  if (!keyboard) setSelected(i);
+                }}
+                onFocus={() => {
+                  setKeyboard(true);
+                  setSelected(i);
+                }}
+                onBlur={() => setKeyboard(false)}
+              >
+                <span className={`${className}_region_label`}>
+                  {`${r.name}, ${STRENGTH_LABEL[r.strength]}, ${bytes(r.size)}, ${percentOfFile(r.size)} of the file`}
+                </span>
+
+                {/* Drawn only where the bar becomes a column and there is room for it. */}
+                <span className={`${className}_region_name`} aria-hidden="true">
+                  {r.name}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        <dl className={`${className}_detail`} aria-live="polite">
+          <div className={`${className}_detail_row`}>
+            <dt>Region</dt>
+            <dd className={`${className}_detail_name`}>{region.name}</dd>
+          </div>
+          <div className={`${className}_detail_row`}>
+            <dt>Offsets</dt>
+            <dd className={`${className}_mono`}>
+              {hex(region.start)} – {hex(region.start + region.size - 1)}
+            </dd>
+          </div>
+          <div className={`${className}_detail_row`}>
+            <dt>Size</dt>
+            <dd className={`${className}_mono`}>
+              {bytes(region.size)} · {percentOfFile(region.size)}
+            </dd>
+          </div>
+          <div className={`${className}_detail_row`}>
+            <dt>Evidence</dt>
+            <dd>
+              <span className={cx(`${className}_chip`, `${className}_region-${region.strength}`)}>
+                {STRENGTH_LABEL[region.strength]}
               </span>
+            </dd>
+          </div>
+          <div className={`${className}_detail_row`}>
+            <dt>What explained it</dt>
+            <dd>{region.note}</dd>
+          </div>
+        </dl>
 
-              {/* Drawn only where the bar becomes a column and there is room for it. */}
-              <span className={`${className}_region_name`} aria-hidden="true">
-                {r.name}
-              </span>
-            </button>
-          );
-        })}
+        {enlarged > 0 && (
+          <p className={`${className}_footnote`}>
+            Drawn to scale. {enlarged} regions are smaller than the bar can show and are widened to
+            stay reachable — their real size is in the panel.
+          </p>
+        )}
       </div>
-
-      <dl className={`${className}_detail`} aria-live="polite">
-        <div className={`${className}_detail_row`}>
-          <dt>Region</dt>
-          <dd className={`${className}_detail_name`}>{region.name}</dd>
-        </div>
-        <div className={`${className}_detail_row`}>
-          <dt>Offsets</dt>
-          <dd className={`${className}_mono`}>
-            {hex(region.start)} – {hex(region.start + region.size - 1)}
-          </dd>
-        </div>
-        <div className={`${className}_detail_row`}>
-          <dt>Size</dt>
-          <dd className={`${className}_mono`}>
-            {bytes(region.size)} · {percentOfFile(region.size)}
-          </dd>
-        </div>
-        <div className={`${className}_detail_row`}>
-          <dt>Evidence</dt>
-          <dd>
-            <span className={cx(`${className}_chip`, `${className}_region-${region.strength}`)}>
-              {STRENGTH_LABEL[region.strength]}
-            </span>
-          </dd>
-        </div>
-        <div className={`${className}_detail_row`}>
-          <dt>What explained it</dt>
-          <dd>{region.note}</dd>
-        </div>
-      </dl>
-
-      {enlarged > 0 && (
-        <p className={`${className}_footnote`}>
-          Drawn to scale. {enlarged} regions are smaller than the bar can show and are widened to
-          stay reachable — their real size is in the panel.
-        </p>
-      )}
-    </div>
+    </Section>
   );
 }

@@ -16,9 +16,9 @@
 import { useMemo, useRef, useState } from "react";
 import type { KeyboardEvent } from "react";
 
-import Icon from "../../../components/Icon/Icon";
-import type { GlyphName } from "../../../components/Icon/glyphs";
-import { cx } from "../../../core/Utility";
+import Icon from "../../../../components/Icon/Icon";
+import type { GlyphName } from "../../../../components/Icon/glyphs";
+import { cx } from "../../../../core/Utility";
 import "./containmenttree.css";
 
 const className = "containmenttree";

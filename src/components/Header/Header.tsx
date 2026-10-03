@@ -33,22 +33,15 @@ const className = "header";
 
 /** The bands behind the flyout. */
 const PRODUCT_MENU: Array<{ id: string; label: string; glyph: GlyphName; hint: string }> = [
-  { id: HOME_SECTIONS.PROBLEM, label: "The problem", glyph: "grid", hint: "Five tools, five partial answers" },
-  { id: HOME_SECTIONS.HOW_IT_WORKS, label: "How it works", glyph: "package", hint: "A file becomes a tree, as deep as it goes" },
-  { id: HOME_SECTIONS.CAPABILITIES, label: "Capabilities", glyph: "inspect", hint: "Five views of the same bytes" },
-  { id: HOME_SECTIONS.DEMO, label: "See it in action", glyph: "eye", hint: "The window on real files" },
+  { id: HOME_SECTIONS.PROBLEM, label: "Explore the whole file", glyph: "grid", hint: "Structure, details and content together" },
+  { id: HOME_SECTIONS.TERMINAL, label: "Terminal", glyph: "terminal", hint: "A terminal with an agent command channel" },
+  { id: HOME_SECTIONS.FORMATS, label: "Formats", glyph: "file", hint: "Format coverage, identified by bytes" },
   { id: HOME_SECTIONS.BEYOND, label: "Beyond analysis", glyph: "convert", hint: "Viewing, conversion, terminal, export" },
+  { id: HOME_SECTIONS.ANALYSTS, label: "For analysts", glyph: "inspect", hint: "Every byte accounted for" },
   { id: HOME_SECTIONS.FAQ, label: "Questions", glyph: "question", hint: "Safety, cost, platforms, accounts" }
 ];
 
-/** Bands promoted to the top level, beside the flyout. */
-const TOP_LEVEL: Array<{ id: string; label: string }> = [
-  { id: HOME_SECTIONS.TERMINAL, label: "Terminal" },
-  { id: HOME_SECTIONS.FORMATS, label: "Formats" },
-  { id: HOME_SECTIONS.ANALYSTS, label: "For analysts" }
-];
-
-const NAV_SECTIONS = [...PRODUCT_MENU, ...TOP_LEVEL].map((entry) => entry.id);
+const NAV_SECTIONS = PRODUCT_MENU.map((entry) => entry.id);
 
 function useCurrentSection(onHome: boolean): string {
   const [current, setCurrent] = useState("");
@@ -305,22 +298,6 @@ export default function Header() {
                 ))}
               </ul>
             </li>
-
-            {TOP_LEVEL.map((entry) => (
-              <li className={`${className}_nav_item`} key={entry.id}>
-                <Link
-                  className={cx(
-                    `${className}_nav_link`,
-                    entry.id === current && `${className}_nav_link-current`
-                  )}
-                  to={`${ROUTES.HOME}#${entry.id}`}
-                  aria-current={entry.id === current ? "location" : undefined}
-                  onClick={closeMenus}
-                >
-                  {entry.label}
-                </Link>
-              </li>
-            ))}
 
             <li className={`${className}_nav_item`}>
               <NavLink

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-import { EXTERNAL_LINKS, PRODUCT_NAME } from "../../../core/Constants";
+import { EXTERNAL_LINKS, PRODUCT_NAME } from "../../../../core/Constants";
 import "./productdemovideo.css";
 
 const className = "productdemovideo";

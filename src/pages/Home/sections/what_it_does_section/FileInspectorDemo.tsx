@@ -22,7 +22,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { KeyboardEvent } from "react";
 
-import { cx } from "../../../core/Utility";
+import { cx } from "../../../../core/Utility";
 import {
   C_CODE,
   DISASSEMBLY,

@@ -5,12 +5,12 @@
 
 import { Link } from "react-router-dom";
 
-import BrandName from "../../../components/BrandName/BrandName";
-import { ROUTES } from "../../../Routing";
-import { ASSETS, HOME_SECTIONS, PRODUCT_NAME } from "../../../core/Constants";
-import { useGlobal } from "../../../core/Globals";
+import BrandName from "../../../../components/BrandName/BrandName";
+import { ROUTES } from "../../../../Routing";
+import { ASSETS, HOME_SECTIONS, PRODUCT_NAME } from "../../../../core/Constants";
+import { useGlobal } from "../../../../core/Globals";
 import FileFormatDetector from "./FileFormatDetector";
-import { FORMAT_TOTAL } from "./formatCatalog";
+import { FORMAT_TOTAL } from "../formatCatalog";
 import ScreenshotCarousel from "./ScreenshotCarousel";
 import type { ScreenshotSlide } from "./ScreenshotCarousel";
 import "./productintroduction.css";
@@ -19,6 +19,13 @@ const className = "productintroduction";
 
 /** The rotating set. Order is the order a reader meets the product in. */
 const SLIDES: ScreenshotSlide[] = [
+  {
+    src: ASSETS.model,
+    caption: "3D model",
+    alt:
+      "A 3D model rendered inside the Display tab, with its glTF node, mesh and vertex counts " +
+      "listed in the details panel and a terminal open below."
+  },
   {
     src: ASSETS.treeView,
     caption: "Tree",
@@ -47,13 +54,6 @@ const SLIDES: ScreenshotSlide[] = [
     alt:
       "The Colors tab on a photograph, reporting 478,744 unique colours and listing the most " +
       "frequent ones with swatches, percentages and pixel counts."
-  },
-  {
-    src: ASSETS.model,
-    caption: "3D model",
-    alt:
-      "A 3D model rendered inside the Display tab, with its glTF node, mesh and vertex counts " +
-      "listed in the details panel and a terminal open below."
   }
 ];
 

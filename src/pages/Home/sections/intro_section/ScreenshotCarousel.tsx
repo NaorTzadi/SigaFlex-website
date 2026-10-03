@@ -22,8 +22,8 @@
 
 import { useState } from "react";
 
-import Icon from "../../../components/Icon/Icon";
-import { cx, prefersReducedMotion } from "../../../core/Utility";
+import Icon from "../../../../components/Icon/Icon";
+import { cx, prefersReducedMotion } from "../../../../core/Utility";
 import "./screenshotcarousel.css";
 
 const className = "screenshotcarousel";

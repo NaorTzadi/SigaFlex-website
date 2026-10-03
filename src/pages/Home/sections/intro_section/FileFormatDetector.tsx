@@ -18,10 +18,10 @@
 import { useId, useState } from "react";
 import type { DragEvent } from "react";
 
-import Icon from "../../../components/Icon/Icon";
-import { cx } from "../../../core/Utility";
-import { PROBE_LENGTH, SIGNATURES, identify } from "./formatCatalog";
-import type { FormatEntry } from "./formatCatalog";
+import Icon from "../../../../components/Icon/Icon";
+import { cx } from "../../../../core/Utility";
+import { PROBE_LENGTH, SIGNATURES, identify } from "../formatCatalog";
+import type { FormatEntry } from "../formatCatalog";
 import "./fileformatdetector.css";
 
 const className = "fileformatdetector";

@@ -1,9 +1,10 @@
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 
-import Icon from "../../../components/Icon/Icon";
-import { HOME_SECTIONS, PRODUCT_NAME } from "../../../core/Constants";
-import { ROUTES } from "../../../Routing";
+import Icon from "../../../../components/Icon/Icon";
+import { HOME_SECTIONS, PRODUCT_NAME } from "../../../../core/Constants";
+import { ROUTES } from "../../../../Routing";
+import Section from "../Section";
 import "./faq.css";
 
 const className = "faq";
@@ -95,18 +96,25 @@ export default function Faq() {
   ];
 
   return (
-    <div className={className}>
-      {entries.map((entry) => (
-        <details className={`${className}_item`} key={entry.question} name={className}>
-          <summary className={`${className}_question`}>
-            <span className={`${className}_question_text`}>{entry.question}</span>
-            <Icon className={`${className}_marker`} name="plus" size="1em" />
-          </summary>
-          <div className={`${className}_answer`}>
-            <p className={`${className}_answer_text`}>{entry.answer}</p>
-          </div>
-        </details>
-      ))}
-    </div>
+    <Section
+      id={HOME_SECTIONS.FAQ}
+      eyebrow="06 — Questions"
+      title="Questions, answered"
+      lead="The things people ask before they open a file they care about."
+    >
+      <div className={className}>
+        {entries.map((entry) => (
+          <details className={`${className}_item`} key={entry.question} name={className}>
+            <summary className={`${className}_question`}>
+              <span className={`${className}_question_text`}>{entry.question}</span>
+              <Icon className={`${className}_marker`} name="plus" size="1em" />
+            </summary>
+            <div className={`${className}_answer`}>
+              <p className={`${className}_answer_text`}>{entry.answer}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </Section>
   );
 }

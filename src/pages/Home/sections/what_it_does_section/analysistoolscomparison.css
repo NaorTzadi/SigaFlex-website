@@ -41,7 +41,7 @@
 }
 
 .analysistoolscomparison_tool_gives,
-.analysistoolscomparison_tool_misses {
+.analysistoolscomparison_tool_detail {
   font-size: var(--fa-text-sm);
 }
 
@@ -49,15 +49,8 @@
   color: var(--fa-color-text-muted);
 }
 
-.analysistoolscomparison_tool_misses {
-  display: flex;
-  align-items: center;
-  gap: var(--fa-space-2);
-  color: var(--fa-color-danger);
-}
-
-.analysistoolscomparison_tool_misses svg {
-  flex: none;
+.analysistoolscomparison_tool_detail {
+  color: var(--fa-color-text-muted);
 }
 
 .analysistoolscomparison_answer {
