@@ -5,8 +5,8 @@
 /** Asset URLs are resolved by Vite for the browser and by URL for build configuration. */
 export const ASSETS = {
   brandIcon: new URL("../../../assets/sigaflex_icon_256x256.png", import.meta.url).href,
-  animatedLogo: new URL("../../../assets/test_sigaflex_icons/sigaflex_icon_animation.svg", import.meta.url).href,
-  favicon: new URL("../../../assets/test_sigaflex_icons/sigaflex_icon_simplified_1.svg", import.meta.url).href,
+  animatedLogo: new URL("../../../assets/sigaflex_icon_animation.svg", import.meta.url).href,
+  favicon: new URL("../../../assets/test_assets/sigaflex images/sigaflex_icon_simplified_1.svg", import.meta.url).href,
   treeView: new URL("../assets/images/screenshots/tree-zip-nested.png", import.meta.url).href,
   disassembly: new URL("../assets/images/screenshots/inspector-disassembly.png", import.meta.url).href,
   details: new URL("../assets/images/screenshots/details-pe-structure.png", import.meta.url).href,
