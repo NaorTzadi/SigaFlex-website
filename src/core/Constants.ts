@@ -4,9 +4,9 @@
  */
 /** Asset URLs are resolved by Vite for the browser and by URL for build configuration. */
 export const ASSETS = {
-  brandIcon: new URL("../../../assets/sigaflex_icon_256x256.png", import.meta.url).href,
-  animatedLogo: new URL("../../../assets/sigaflex_icon_animation.svg", import.meta.url).href,
-  favicon: new URL("../../../assets/test_assets/sigaflex images/sigaflex_icon_simplified_1.svg", import.meta.url).href,
+  brandIcon: new URL("../assets/images/logos/sigaflex_icon_simplified_256x256.png", import.meta.url).href,
+  animatedLogo: new URL("../assets/images/logos/sigaflex_icon_animation.svg", import.meta.url).href,
+  favicon: new URL("../assets/images/logos/sigaflex_icon_simplified_1.svg", import.meta.url).href,
   treeView: new URL("../assets/images/screenshots/tree-zip-nested.png", import.meta.url).href,
   disassembly: new URL("../assets/images/screenshots/inspector-disassembly.png", import.meta.url).href,
   details: new URL("../assets/images/screenshots/details-pe-structure.png", import.meta.url).href,
@@ -16,7 +16,7 @@ export const ASSETS = {
 
 /** Font locations for CSS aliases, relative to the website root unless absolute. */
 export const FONT_PATHS = {
-  "@preview-brand-font": "C:\\Users\\neors\\MultiModuleProjects\\file-analyzer\\assets\\test fonts\\Audiowide-Regular.ttf",
+  "@preview-brand-font": "./src/assets/fonts/Audiowide-Regular.ttf",
   "@font-sans": "./src/assets/fonts/ibm-plex-sans-var.woff2",
   "@font-mono": "./src/assets/fonts/ibm-plex-mono-var.woff2"
 } as const;
