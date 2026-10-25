@@ -23,6 +23,7 @@ export default function Privacy() {
         </p>
       )
     },
+    /* SAFEGUARD PRIV-005 — see SAFEGUARDS.md */
     {
       id: "privacy-cookies",
       title: "Cookies and browser storage",
@@ -86,6 +87,7 @@ export default function Privacy() {
         </p>
       )
     },
+    /* SAFEGUARD PRIV-005 — see SAFEGUARDS.md */
     {
       id: "privacy-third-parties",
       title: "One third party",
@@ -99,11 +101,11 @@ export default function Privacy() {
           <p>
             The exception is the demonstration video on the home page. Its player comes from
             YouTube&apos;s <code>youtube-nocookie.com</code> rather than from youtube.com, and it is
-            not part of the page when the page opens: it is added only once you scroll near the band
-            that holds it. From that point your browser is talking to YouTube directly, and Google
-            receives what any request carries — your IP address, what your browser says it is, and
-            which page asked. None of that reaches us, and if you never scroll that far nothing is
-            requested at all.
+            not part of the page until you press play on it. Accepting cookies does not load it;
+            only that press does. From that point your browser is talking to YouTube directly:
+            Google receives what any request carries — your IP address, what your browser says it
+            is, and which page asked — and the player may store data in your browser. None of that
+            reaches us, and if you never press play nothing is requested from YouTube at all.
           </p>
         </>
       )

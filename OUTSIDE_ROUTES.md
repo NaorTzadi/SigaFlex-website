@@ -1,5 +1,7 @@
 # Links that leave this domain
 
+<!-- SAFEGUARD PRIV-005 — see SAFEGUARDS.md -->
+
 Every URL on this site that sends a reader somewhere we do not control is
 listed here. Adding one means adding a row here, in the same change.
 
@@ -12,7 +14,7 @@ outside URL is written inline in a component.
 | https://ffmpeg.org/download.html | `src/pages/Licenses/Licenses.tsx`, "Corresponding FFmpeg source" | The LGPL obliges us to give access to the exact corresponding source of the FFmpeg build the application distributes. |
 | https://www.youtube.com/@SigaFlex | `src/components/Footer/Footer.tsx`, the YouTube glyph | The official SigaFlex YouTube channel. Declared as `Constants.EXTERNAL_LINKS.YOUTUBE_CHANNEL`. |
 | https://www.instagram.com/sigaflex/ | `src/components/Footer/Footer.tsx`, the Instagram glyph beside YouTube | The SigaFlex Instagram profile. Declared as `Constants.EXTERNAL_LINKS.INSTAGRAM_PROFILE`. |
-| https://www.youtube-nocookie.com/embed/hunAcThQbF4 | `src/pages/Home/sections/Demo.tsx`, the "See it in action" band | The demonstration video is streamed rather than shipped, so the file stays out of the repository. The browser fetches the player from Google, which is a row here by the rule below even though the reader is never sent away from the page. The no-cookie host is used so nothing is written until the reader presses play; the frame is lazy so nothing is fetched until it is scrolled to. Declared as `Constants.EXTERNAL_LINKS.DEMO_VIDEO`. |
+| https://www.youtube-nocookie.com/embed/hunAcThQbF4 | `src/pages/Home/sections/what_it_does_section/ProductDemoVideo.tsx`, the demonstration video | The demonstration video is streamed rather than shipped, so the file stays out of the repository. The browser fetches the player from Google, which is a row here by the rule below even though the reader is never sent away from the page. Nothing is fetched until the reader presses play on the placeholder (safeguard PRIV-004); the no-cookie host is used on top of that. Declared as `Constants.EXTERNAL_LINKS.DEMO_VIDEO`. |
 
 ## Rules
 

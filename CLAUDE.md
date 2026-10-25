@@ -68,6 +68,21 @@ If we route a user to a url path outside the website domain they we need to add 
 ## API keys
 Used as environment variables only.
 
+## Legal safeguards
+SAFEGUARDS.md at the website root lists every protection that exists to reduce legal risk:
+what it guarantees, where it lives, and why.
+
+- Before editing or removing code in a file listed in SAFEGUARDS.md, read that safeguard's entry.
+- A safeguard's implementation may be refactored, moved, or improved, but its protection must
+  stay intact. Never weaken, bypass, or remove a protection unless the user explicitly authorizes
+  that specific change.
+- When code that a safeguard covers changes, update its entry in the same change.
+- When adding anything that serves as a legal protection, register it as a new safeguard in the
+  same change.
+- Every implementation site carries a marker beside the protected code, in the form
+  `SAFEGUARD PRIV-001 — see SAFEGUARDS.md`. Markers are an explicit exception to the
+  no-comments rule. Keep them next to the code they protect; move them when it moves.
+
 
 # General Working rules
 

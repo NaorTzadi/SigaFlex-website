@@ -16,6 +16,7 @@ export const COOKIE = {
 export type CookieId = (typeof COOKIE)[keyof typeof COOKIE];
 
 /** Cookies written regardless of consent, because the site cannot work without them. */
+/* SAFEGUARD PRIV-001 — see SAFEGUARDS.md */
 const NECESSARY: CookieId[] = [COOKIE.CONSENT, COOKIE.REMEMBER];
 
 export type ConsentAnswer = "accepted" | "declined";
@@ -29,6 +30,7 @@ export function get(id: CookieId): string | null {
 }
 
 export function set(id: CookieId, value: string, days: number = ONE_YEAR_DAYS): void {
+  /* SAFEGUARD PRIV-001 — see SAFEGUARDS.md */
   if (!NECESSARY.includes(id) && consent() !== "accepted") return;
 
   const expires = new Date(Date.now() + days * 864e5).toUTCString();
@@ -49,6 +51,7 @@ export function answerConsent(answer: ConsentAnswer): void {
   const expires = new Date(Date.now() + ONE_YEAR_DAYS * 864e5).toUTCString();
   document.cookie = `${COOKIE.CONSENT}=${answer}; expires=${expires}; path=/; SameSite=Lax`;
 
+  /* SAFEGUARD PRIV-001 — see SAFEGUARDS.md */
   if (answer === "declined") {
     Object.values(COOKIE)
       .filter((id) => !NECESSARY.includes(id))

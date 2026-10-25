@@ -33,6 +33,7 @@ export default function CookieConsent() {
 
      It steps aside on the privacy page, which is the one page the question
      itself sends people to, and asks again everywhere else until answered. */
+  /* SAFEGUARD PRIV-002 — see SAFEGUARDS.md */
   useEffect(() => {
     if (answered) return;
     if (reading) ref.current?.close();
@@ -53,15 +54,18 @@ export default function CookieConsent() {
       className={className}
       ref={ref}
       aria-labelledby="cookieconsent-title"
+      /* SAFEGUARD PRIV-002 — see SAFEGUARDS.md */
       onCancel={(event: SyntheticEvent) => event.preventDefault()}
     >
       <h2 className={`${className}_title`} id="cookieconsent-title">
         Cookies
       </h2>
 
+      {/* SAFEGUARD PRIV-005 — see SAFEGUARDS.md */}
       <p className={`${className}_text`}>
-        This site stores nothing beyond your answer to this question. Anything we add later — a
-        preference, a measurement — is held to that answer.
+        This site stores your answer to this question and, once you sign in, what keeps you signed
+        in. Nothing else is stored, and anything we add later — a preference, a measurement — is
+        held to that answer.
       </p>
 
       <p className={`${className}_text`}>
