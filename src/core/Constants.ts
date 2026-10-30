@@ -37,7 +37,7 @@ export const CONTACT_EMAIL = "naorprojects1@gmail.com";
  * placeholder carrying the word "holder", so one grep finds all of them when
  * the real domain and operator are known.
  */
-export const SITE_URL = "https://holder.com";
+export const SITE_URL = "https://sigaflex.com";
 export const SITE_OPERATOR = "Holder";
 export const SITE_JURISDICTION = "Holder";
 
