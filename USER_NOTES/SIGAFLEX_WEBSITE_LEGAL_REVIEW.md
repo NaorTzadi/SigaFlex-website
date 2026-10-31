@@ -1,30 +1,36 @@
-# SigaFlex: pre-launch legal risk review
+ SigaFlex: website-only pre-launch legal review
 
 Review date: **29 October 2026**. Intended audience: **worldwide**, as confirmed by the owner.
 
 Operator status: **an individual, not a registered business**. Operating country: **Israel**. Both confirmed by the owner on **31 October 2026**. The installer is not currently hosted or offered for download. Worldwide is the intended audience, not a change to the operator's country or evidence of clearance in every market.
 
-Outstanding findings and current source rechecked **31 October 2026**.
+Outstanding findings and current source rechecked **31 October 2026**. Scope separation updated **31 October 2026**.
+
+**Current scope only:** the live/pending informational SigaFlex website promoting an *upcoming* desktop product, including the website's existing or enabled account, review, marketing, video, file-detector, and website/API features. **No SigaFlex desktop installer, download, active desktop trial, or payment/checkout is available.** A present-tense promise about any of those features is a website-copy issue now, but implementing their legal/operational terms belongs to the separate [future product release review](FUTURE_SIGAFLEX_RELEASE_LEGAL_REVIEW.md). A future-facing mention here is a placeholder, not a current launch gate.
+
+**Legal-minimum rule for this review:** distinguish obligations supported by applicable law from conditional applicability and optional risk/engineering recommendations. No recommendation should become a purported legal requirement solely because it appears in the checklist.
 
 This file lists outstanding work only. Completed findings are removed; remaining IDs retain their original numbering. Conditional work applies only when the relevant feature or market is in scope; it is not automatically a blocker for an informational launch.
 
 ## Launch assessment
 
-**Changes are needed before public launch.** The clearest remaining issues are unfinished operator/policy details, inaccurate privacy disclosures, and overly broad product claims. Accounts and payments create additional obligations at different stages.
+**Website issues remain to be resolved before enabling the affected features or making the affected claims.** The principal issues identified by the review are unfinished operator/policy details for covered data collection, inaccurate privacy disclosures, and overly broad or premature marketing claims. Payment and desktop-software matters are deferred to the future product review; they are not current website launch gates. Individual applicability assessments remain necessary before classifying any item as legally mandatory.
 
-This is a source-based risk review, not legal clearance or a guarantee against lawsuits. A worldwide launch cannot be cleared against every country's laws from a repository review. The owner will operate as an individual in Israel; the name to publish where identification is required and the paid-launch plan remain unresolved. Deployment files now identify several providers, but their live settings, contracts, retention and backup arrangements still need verification. Professional review is recommended for unresolved applicability, policy and sales questions; it is not presented as a universal requirement to hire a lawyer before publishing a personal project.
+This is a source-based risk review, not legal clearance or a guarantee against lawsuits. A worldwide launch cannot be cleared against every country's laws from a repository review. The owner will operate as an individual in Israel; the name to publish where identification is required remains unresolved. Deployment files now identify several providers, but their live settings, contracts, retention and backup arrangements still need verification. Professional advice is optional unless some specific applicable rule requires it; this review does not establish a universal requirement to hire a lawyer before publishing the current website.
 
-The current scope is the website and any enabled accounts, reviews, email and request logging. Applicable identification/privacy duties, data security and accessibility concern that scope even without a hosted installer. This report does not establish a requirement to register a business, publish a home address or identity number, or display Israel as a standalone mandatory country notice for the current site. Naming the responsible person for covered personal-data collection is a separate issue from business registration. Desktop distribution/licence work becomes relevant before offering the program; prices, billing, renewal, cancellation and refund terms become relevant before an active trial or paid offer. Website operational arrangements mean who handles website data, access, retention, backups and privacy requests; they are internal practices whose relevant effects must be described accurately, not a requirement to publish every implementation detail.
+The current scope is the website and any enabled accounts, reviews, email and request logging. Applicable identification/privacy duties, data security and accessibility may concern that scope even without a hosted installer; determine actual applicability rather than assuming each rule covers every site. This report does not establish a requirement to register a business, publish a home address or identity number, or display Israel as a standalone mandatory country notice for the current site. Naming the responsible person for covered personal-data collection is a separate issue from business registration. Website operational arrangements mean who handles website data, access, retention, backups and privacy requests; they are internal practices whose legally required effects must be described accurately, not a requirement to publish every implementation detail.
+
+**Future placeholder:** preserve a path in the website architecture/content for a later software licence, actual downloads, trial and payment terms, and any legally required sales notices. Do **not** populate those with operative product/download/sales terms, add those features, or count them as outstanding current-site legal work. Details are tracked only in [FUTURE_SIGAFLEX_RELEASE_LEGAL_REVIEW.md](FUTURE_SIGAFLEX_RELEASE_LEGAL_REVIEW.md).
 
 ## Scope and evidence
 
 Reviewed the website's routes, account and review forms, browser storage, file detector, video embed, marketing copy, policy pages, dependencies, fonts, icons, public files, existing `dist/` output, and all five product screenshots. Also read relevant source in the adjacent `../file-analyzer-server` module to check the website's server-related promises.
 
-The 31 October recheck compared the remaining findings with current website/server source and the deployment files, including `wrangler.toml`, `../file-analyzer-server/deploy/wrangler.toml`, `cloudflare-worker.js` and `DEPLOY.md`. Desktop-application dependency licensing remains outside this website review's scope.
+The 31 October recheck compared the remaining findings with current website/server source and the deployment files, including `wrangler.toml`, `../file-analyzer-server/deploy/wrangler.toml`, `cloudflare-worker.js` and `DEPLOY.md`. Desktop-application dependency licensing is deferred to the future product review.
 
 Online references below are legislation, regulators, standards bodies, or official project licenses. Sources were checked on the original review date; the FTC advertising guidance, ICO privacy-notice/storage guidance and OWASP session guidance were rechecked on 31 October. The remaining country references were not revalidated in this source recheck. Some government pages blocked direct retrieval during the original review; where relevant, their official indexed text was available.
 
-Neither the original review nor this recheck ran the application or performed live browser/network, accessibility, penetration, payment, or deployed-host checks. The desktop application's complete code, installer, native dependencies, and runtime behavior were not audited. The original `dist/` directory was inspected as an existing artifact, not certified as a fresh build; this recheck did not certify the current output. Secret environment values were not read or reproduced. No tests or builds were run for these documentation-only reviews.
+Neither the original review nor this recheck ran the application or performed live browser/network, accessibility, penetration, payment, or deployed-host checks. The desktop application's complete code, installer, native dependencies, and runtime behavior were not audited; such auditing is not a condition for merely publishing a website, although currently published claims must remain accurate. The original `dist/` directory was inspected as an existing artifact, not certified as a fresh build; this recheck did not certify the current output. Secret environment values were not read or reproduced. No tests or builds were run for these documentation-only reviews.
 
 Evidence labels used below:
 
@@ -46,7 +52,7 @@ configured providers, data locations, contracts and retention rules.
 
 ## Priorities
 
-These are recommended release gates, not a claim that each item is universally required by law.
+These are **website-only** suggested checkpoints, **not** a claim that each is mandatory by law. Apply a checkpoint only if the underlying feature is active and an applicable legal requirement or a presently inaccurate statement actually needs correcting.
 
 | ID | Finding | Recommended gate | Evidence |
 | --- | --- | --- | --- |
@@ -56,9 +62,9 @@ These are recommended release gates, not a claim that each item is universally r
 | L04 | Automatic persistent sign-in needs assessment or an informed choice | Before public account activation | Confirmed behavior; exemptions depend on the requested purpose |
 | L09 | Remaining disk-write, safety, coverage and AI-data claims need qualification | Before public launch | Confirmed copy; desktop behavior unverified |
 | L10 | Accessibility statement is missing; conformance remains unverified | Before public launch unless a valid exemption applies | Confirmed missing statement; technical assessment pending |
-| L11 | Terms need final scope, acceptance evidence, and consumer-rights review | Before accounts/downloads; revisit before sales | Confirmed gaps; enforceability is jurisdiction-specific |
+| L11 | Website/account/review terms need correct current scope; desktop licence wording is premature | If website terms are used or accounts/reviews are enabled | Confirmed gaps; enforceability is jurisdiction-specific |
 | L12 | Reviews need clearer publication/privacy information and moderation arrangements | Before enabling public reviews | Confirmed UI/backend gaps |
-| L14 | Trial and paid terms are unfinished | Before presenting an active trial or accepting payment | Confirmed; no checkout found |
+| L14 | Current website falsely implies an available download/active free trial | Correct existing public copy now; actual trial/payment terms deferred | Confirmed; no installer/checkout found |
 | L15 | Deployment security and privacy operations need evidence | Before public accounts/API | Confirmed code concerns; deployment unverified |
 | L16 | Worldwide availability needs a regional applicability and localization plan | Before claiming worldwide readiness | Unverified country coverage |
 
@@ -74,7 +80,7 @@ These are recommended release gates, not a claim that each item is universally r
 
 **Verified rule and scope:** Israel's section 11 collection notice for covered personal-data processing includes the controller's name and contact details, alongside purpose, voluntariness/consequences, recipients and access/correction rights. This concerns the person responsible for the data, not incorporation. The database definition has exclusions, including personal nonbusiness collections; an individual is not automatically exempt merely because no company is registered. Assess the actual public account/review activity rather than claiming every personal website must display its author's legal name. [Israel PPA: collection-notice guidance](https://www.gov.il/BlobFolder/legalinfo/duty_to_notify/he/notify13.pdf), [Israel PPA: database scope and duties](https://www.gov.il/BlobFolder/generalpage/manager_duties/he/InfoDuties_new.pdf).
 
-Sales-stage trader/address disclosures must be assessed if the project begins making relevant offers or sales. They are not an established current requirement for this no-sale stage. [EU: distance-selling information](https://europa.eu/youreurope/business/selling-in-eu/selling-goods-services/ecommerce-distance-selling/index_en.htm).
+**Future placeholder:** sales-stage trader/address disclosures are tracked in [the future product review](FUTURE_SIGAFLEX_RELEASE_LEGAL_REVIEW.md); they are not an established requirement for the current no-sale website.
 
 ### L02 — Complete the privacy notice against the actual data lifecycle
 
@@ -126,7 +132,7 @@ that distinction.
 - The tagline promises to open any file and show everything inside it. The website's format catalog is a manually defined list; the desktop implementation was not verified against it.
 - `Download.tsx` says the installer is unpublished but also says Windows ships today; pricing advertises a trial as open now.
 
-**Change:** distinguish the website's requests, built-in local parsing, explicit exports/conversions, external commands, and optional AI-agent activity. State that external agents can transmit inspected content under their own configuration/provider terms. Qualify disk-write claims so they do not cover exports, application state, converters, or OS behavior without evidence. Keep a feature/format evidence list for the release actually offered. Clearly label illustrative terminal sessions where appropriate.
+**Change:** distinguish the website's requests, built-in local parsing, explicit exports/conversions, external commands, and optional AI-agent activity. State that external agents can transmit inspected content under their own configuration/provider terms. Qualify disk-write claims so they do not cover exports, application state, converters, or OS behavior without evidence. Clearly label illustrative terminal sessions where appropriate.
 
 Review statements about opening untrusted files: read-only parsing and not intentionally executing the inspected file do not establish immunity to parser vulnerabilities. Keep the existing “not a virus scanner” explanation and give users accurate scope near relevant claims.
 
@@ -142,17 +148,15 @@ Israel's guidance addresses commercial information as well as sales, new-site ac
 
 For US business coverage, DOJ guidance describes ADA obligations, but the exact application to an overseas software-only business requires legal assessment. Do not assume the public-sector technical rule automatically governs this private site. [US DOJ: web accessibility](https://www.ada.gov/resources/web-guidance/).
 
-EU e-commerce accessibility requirements have applied to covered new services since 28 June 2025, with exceptions including qualifying microenterprises providing services. Assess the future checkout and relevant national implementation. [EU: accessibility requirements and exceptions](https://europa.eu/youreurope/business/selling-in-eu/selling-goods-services/accessibility/index_en.htm).
+**Future placeholder:** assess any applicable checkout/e-commerce accessibility rules if a trial, purchase or other covered service is later offered; see [the future product review](FUTURE_SIGAFLEX_RELEASE_LEGAL_REVIEW.md).
 
-### L11 — Finalize contract scope and retain meaningful acceptance evidence
+### L11 — Keep website and account terms limited to the current service
 
-**Confirmed evidence:** the terms rely on website use/continued use as acceptance, license the application only “for your own use,” exclude liability broadly, and allow terms to change. The client sends only `termsAccepted: boolean`; the server's `User` records `termsAcceptedAt` without the accepted policy version. The terms preserve third-party licence rights but do not expressly preserve mandatory consumer rights.
+**Confirmed evidence:** the existing terms rely on website use/continued use as acceptance, exclude liability broadly, and allow terms to change. The client sends only `termsAccepted: boolean`; the server's `User` records `termsAcceptedAt` without the accepted policy version. The terms also contain a premature software-licensing clause (“for your own use”) and references to third-party licence rights, despite the absence of a downloadable product.
 
-**Change:** distinguish website terms, account/review rules, and the desktop license. Define permitted personal/commercial use, redistribution and restrictions, support/update obligations, and the status of the free release consistently. Present the actual software license at a meaningful point before installation/use where needed. Preserve the accepted terms version and its text, date, and relevant acceptance event. Treat version records as an evidence recommendation, not a universal statutory database schema requirement.
+**Current website scope:** assess website/account/review rules and the enforceability of their actual terms. Do not suggest that continued browsing necessarily constitutes contractual acceptance, or that broad liability exclusions override applicable mandatory rights. An accepted policy version is an evidence recommendation, **not** a universal legally required database field. Whether any website Terms of Service document is required at all is **not established** by this review. Keep contractual acceptance distinct from optional privacy or marketing consent; accepting a privacy policy is not blanket consent. [EU: unfair contract terms](https://europa.eu/youreurope/citizens/consumers/unfair-treatment/unfair-contract-terms/index_en.htm).
 
-Have counsel review liability limits, changes/notification, termination, dispute terms, and governing law for the operator and worldwide consumers. Explicitly preserve mandatory consumer rights. Do not assume “as is,” a checkbox, continued browsing, or a chosen jurisdiction prevents claims. EU guidance identifies several one-sided liability/change provisions as potentially unfair. [EU: unfair contract terms](https://europa.eu/youreurope/citizens/consumers/unfair-treatment/unfair-contract-terms/index_en.htm).
-
-Keep contract acceptance distinct from any optional privacy/marketing consent. A separate checkbox consenting to the entire privacy policy is not a universal fix.
+**Future placeholder:** remove, disable, or clearly mark inapplicable any software licence/redistribution/update/support terms that wrongly imply an available program. A separate desktop software licence and any required sales terms can be added when those offerings become real; see [the future product review](FUTURE_SIGAFLEX_RELEASE_LEGAL_REVIEW.md). No desktop licence text needs to be drafted for this website-only launch.
 
 ### L12 — Make public reviews transparent and manageable
 
@@ -164,17 +168,13 @@ Publish genuine feedback fairly. Do not fabricate reviews, condition incentives 
 
 The server returns only the newest 100 reviews; the client calculates the count/average over that response. If the total later exceeds 100, label the summary as the displayed subset or return an accurate overall aggregate. This is a future presentation issue, not evidence that the current ratings are fabricated.
 
-### L14 — Finish trial and consumer-sale terms before monetization
+### L14 — Correct website wording that implies a live trial or download
 
-**Confirmed evidence:** the free-trial card says “Open now” and “Start free trial,” links to `/download` while that page has no published installer, and does not specify the trial duration. Other copy calls development use free without that limit. Paid checkout/subscription work below is conditional; no current payment flow was found.
+**Confirmed evidence:** the free-trial card says “Open now” and “Start free trial,” links to `/download` while that page has no published installer. Other copy calls development use free; no current payment flow was found.
 
-**Change now:** state one accurate availability/development/free-trial position and remove misleading active-trial wording until there is a real offer.
+**Change now:** describe SigaFlex as an **upcoming product** and make Pricing, Download, CTA buttons, and other availability claims accurate. Do not invite visitors to begin a trial or download a program that cannot be obtained. Retaining a future download/pricing route in the site's structure does not make a trial or purchase active.
 
-**Before charging:** settle final prices/currency/taxes, duration, commercial-use rights, recurring billing/renewal, trial conversion, cancellation, refunds, functionality/compatibility, support, and trader contact details. Present key terms before the customer commits and supply the required confirmation. Do not assume every digital download is automatically nonrefundable; applicable consent/acknowledgment and consumer-law exceptions matter. [EU: online selling and digital-content rules](https://europa.eu/youreurope/business/selling-in-eu/selling-goods-services/ecommerce-distance-selling/index_en.htm).
-
-If Israeli online consumer cancellation duties apply, implement the required prominent cancellation route and disclosures; do not treat account deletion as subscription cancellation. [Knesset: consumer cancellation amendment](https://main.knesset.gov.il/Activity/Legislation/Laws/Pages/LawBill.aspx?lawitemid=2002974).
-
-Reassess payment-provider contracts, privacy disclosures, tax/invoicing, and country-specific subscription rules when the commercial model is known. These are conditional launch requirements, not missing active payment functionality in this version.
+**Future placeholder:** trial duration, licences, pricing, billing, cancellations, refunds, tax/invoicing, and commercial terms belong exclusively in [the future product review](FUTURE_SIGAFLEX_RELEASE_LEGAL_REVIEW.md). They are **not** current website requirements or unfinished current checkout functionality.
 
 ### L15 — Verify deployment security and privacy operations
 
@@ -194,23 +194,23 @@ Verify that the deployed website uses the intended `dist` output and that direct
 
 ### L16 — Treat worldwide coverage as a separate workstream
 
-The owner confirmed an Israeli base and an intended global audience. Accessibility of a site from a country does not by itself settle every law's territorial reach, but intentionally offering services globally creates a stronger reason to assess destination-country requirements. Assess the website's accounts/reviews separately from future software distribution and sales; a free service can also fall within privacy rules. EU guidance expressly distinguishes mere accessibility from offering services to people in the Union. [EDPB: territorial scope guidance](https://www.edpb.europa.eu/sites/default/files/files/file1/edpb_guidelines_3_2018_territorial_scope_after_public_consultation_en_0.pdf), [European Commission: GDPR scope, including free services](https://commission.europa.eu/law/law-topic/data-protection/information-business-and-organisations/application-gdpr_en).
+The owner confirmed an Israeli base and an intended global audience. Accessibility of a site from a country does not by itself settle every law's territorial reach, but intentionally offering services globally creates a stronger reason to assess destination-country requirements. This section assesses the current website, its accounts/reviews and marketing only; a free service can also fall within privacy rules. Future distribution and sales are tracked separately. EU guidance expressly distinguishes mere accessibility from offering services to people in the Union. [EDPB: territorial scope guidance](https://www.edpb.europa.eu/sites/default/files/files/file1/edpb_guidelines_3_2018_territorial_scope_after_public_consultation_en_0.pdf), [European Commission: GDPR scope, including free services](https://commission.europa.eu/law/law-topic/data-protection/information-business-and-organisations/application-gdpr_en).
 
 The following is an applicability screen, not country-by-country clearance:
 
 | Market/topic | Required follow-up for SigaFlex | Authoritative starting point |
 | --- | --- | --- |
-| EU/EEA | Determine GDPR scope, any representative obligation, provider/transfer arrangements, national cookie rules, consumer protections, accessibility, and required local disclosures/languages. Do not assume a free service is outside privacy rules. | [EDPB territorial scope](https://www.edpb.europa.eu/sites/default/files/files/file1/edpb_guidelines_3_2018_territorial_scope_after_public_consultation_en_0.pdf) |
+| EU/EEA | Determine GDPR scope, any representative obligation, provider/transfer arrangements, national cookie rules, presently applicable website protections and accessibility, and required website disclosures/languages. Do not assume a free service is outside privacy rules. | [EDPB territorial scope](https://www.edpb.europa.eu/sites/default/files/files/file1/edpb_guidelines_3_2018_territorial_scope_after_public_consultation_en_0.pdf) |
 | UK | Assess UK privacy scope/representation separately, and use current PECR rules rather than an old universal cookie checklist. The ICO storage guidance was updated in April 2026. | [ICO: storage/access guidance](https://ico.org.uk/for-organisations/direct-marketing-and-privacy-and-electronic-communications/guidance-on-the-use-of-storage-and-access-technologies/) |
 | Israel (confirmed operating country) | Assess and implement the applicable controller/security duties and determine whether database registration/notification or a DPO is required. Amendment 13 narrowed registration; ordinary accounts do not automatically mean a database must be registered. | [PPA: registration after Amendment 13](https://www.gov.il/he/service/registration_in_the_database), [PPA: Amendment 13 Q&A](https://www.gov.il/he/pages/tikun13_qa?chapterIndex=6) |
 | US/California | Screen state-specific privacy and consumer rules. CCPA has coverage criteria; do not assume every small site needs a sale/share opt-out link. Conversely, being below CCPA thresholds does not settle other laws such as CalOPPA's privacy-policy requirements. Assess actual tracking before writing DNT disclosures. | [California AG: CCPA coverage](https://oag.ca.gov/privacy/ccpa), [California AG: privacy-policy/CalOPPA guidance](https://oag.ca.gov/sites/all/files/agweb/pdfs/cybersecurity/making_your_privacy_practices_public.pdf) |
 | Canada | Assess PIPEDA/provincial scope and establish meaningful, understandable consent and privacy practices where required; a generic EU lawful-basis paragraph is not a substitute. | [Canada OPC: meaningful consent](https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/p_principle/principles/p_consent/) |
-| Quebec language requirements | The website is English-only. Determine whether offering the product in Quebec triggers French-language website/commercial-document requirements and implement the required localized content. Do not assume every foreign site is covered merely because it is reachable. | [OQLF: websites, social media, and commercial publications](https://www.oqlf.gouv.qc.ca/francisation/entreprises/memo-assistant-francisation/publications/fiche-medias-sociaux-sites-web-doc-publicitaires.pdf) |
-| Australia | Assess Australian connection and Privacy Act coverage, including small-business exceptions and exceptions to those exceptions. Do not assume either automatic coverage or automatic exemption. Consumer-law obligations need separate assessment for sales. | [OAIC: small-business coverage](https://www.oaic.gov.au/privacy/privacy-guidance-for-organisations-and-government-agencies/organisations/small-business) |
+| Quebec language requirements | The website is English-only. Determine whether current marketing or website services directed toward Quebec trigger French-language website requirements; commercial sales/document obligations are deferred. Do not assume every foreign site is covered merely because it is reachable. | [OQLF: websites, social media, and commercial publications](https://www.oqlf.gouv.qc.ca/francisation/entreprises/memo-assistant-francisation/publications/fiche-medias-sociaux-sites-web-doc-publicitaires.pdf) |
+| Australia | Assess Australian connection and Privacy Act coverage, including small-business exceptions and exceptions to those exceptions. Do not assume either automatic coverage or automatic exemption. Consumer-sales obligations are deferred to the future product review. | [OAIC: small-business coverage](https://www.oaic.gov.au/privacy/privacy-guidance-for-organisations-and-government-agencies/organisations/small-business) |
 | New Zealand | Assess whether the global offer amounts to carrying on business there. The regulator expressly addresses overseas organizations, privacy officers, and privacy statements. | [NZ Privacy Commissioner: overseas organizations](https://www.privacy.org.nz/resources-and-learning/knowledge-base/view/154/) |
 | Brazil | Assess LGPD applicability, appropriate processing grounds, rights/contact arrangements, and transfers for the actual service. This review has not completed a Brazilian compliance assessment. | [ANPD: official LGPD FAQ](https://www.gov.br/anpd/pt-br/acesso-a-informacao/perguntas-frequentes) |
 | India | Check the DPDP Act/Rules provisions and commencement dates applicable on the actual launch date. Official material describes an 18-month phased implementation following the 2025 Rules; do not assume every provision commenced simultaneously. | [MeitY: 2025–26 annual report, DPDP implementation](https://www.meity.gov.in/static/uploads/2026/04/46face7d48c8f6a97030f713ad5fdab4.pdf) |
-| Other destinations | Additional national privacy, transfer/localization, accessibility, consumer, language, software-distribution, and tax requirements remain unassessed. Maintain a launch-country applicability list; obtain local advice or limit transactional availability where requirements are unresolved. | No claim of clearance is made for unassessed countries. |
+| Other destinations | Additional national website privacy, transfer/localization, accessibility, marketing and language requirements remain unassessed; software-distribution, sales and tax issues are deferred. Maintain a launch-country applicability list; obtain local advice or limit transactional availability where requirements are unresolved. | No claim of clearance is made for unassessed countries. |
 
 Cross-border handling must follow the actual transfer route, not a generic statement that data might go anywhere. Identify where hosting, support email, backups, and providers operate; assess contractual safeguards and applicable transfer mechanisms. Israeli transfer regulations and New Zealand's overseas-disclosure guidance illustrate why one global paragraph is insufficient. [Israel: overseas database-transfer regulations](https://www.gov.il/BlobFolder/news/post_schrems_update/he/TakanotHul.pdf), [NZ: sending information overseas](https://www.privacy.org.nz/responsibilities/disclosing-personal-information-outside-new-zealand/).
 
@@ -223,15 +223,17 @@ Cross-border handling must follow the actual transfer route, not a generic state
 
 ## Release checklist
 
-- [ ] Resolve the individual's name/contact notice for covered collection, target-market treatment and the configured providers' actual data handling, using the confirmed individual-in-Israel and website-without-installer scope. No business-registration requirement is established by this review. Reassess before enabling downloads, an active trial or payments.
-- [ ] Resolve L01; publish final, accurate legal notices and real contact/business information.
-- [ ] Resolve L02–L04 for account/privacy information, remaining logging/retention gaps, and automatic persistent sign-in.
-- [ ] Resolve L09; match claims and availability to the actual release.
-- [ ] Resolve L10; verify accessibility and document any valid exemption.
-- [ ] Resolve L11–L12 before accepting accounts/reviews; retain final acceptance evidence and establish complaint handling.
-- [ ] Resolve L14 before any paid/trial offer becomes active.
-- [ ] Resolve L15 in the production deployment; confirm operational privacy/security procedures.
-- [ ] Complete L16's market review and remaining children/email/brand decisions.
-- [ ] Rebuild the intended release and verify the deployed pages, artifacts, network/storage behavior, and legal links after fixes. A successful build alone does not establish legal compliance.
+The following are a **website-only review checklist**, not a declaration that every action is legally compulsory. Apply legal duties only if applicable to the site's actual functions, users, and markets; distinguish them from risk-reduction recommendations.
 
-When implementing fixes, keep `USER_NOTES/SAFEGUARDS.md`, `LICENSES_INDEX_MAP.md`, and `OUTSIDE_ROUTES.md` consistent with the actual behavior. Do not weaken the existing file-locality, consent-gating, or click-to-load protections while correcting their disclosures.
+- [ ] L01: determine and satisfy the operator/contact disclosure legally required for the current website's covered personal-data collection, without inventing a company or mandatory country notice.
+- [ ] L02–L04: assess current website/account/review privacy notices, request logs, retention, and persistent sign-in against applicable requirements.
+- [ ] L09 and L14: remove or qualify present-tense download/trial claims and substantiate marketing claims made **now** about the upcoming product.
+- [ ] L10: assess website accessibility duties and any valid exemption; implement only what actually applies.
+- [ ] L11–L12: scope website/account/review rules and public review notices appropriately; assess mandatory requirements before imposing optional controls.
+- [ ] L15: verify security and privacy operations of the **website and its enabled APIs**, distinguishing law from OWASP best-practice recommendations.
+- [ ] L16 and conditional checks: determine applicability to **current** website visitors, data, marketing, brands and publication targets.
+- [ ] Verify the website's deployed pages, assets, network/storage behavior, and applicable legal links. A successful build alone does not establish legal compliance.
+
+**Future placeholder (not a current checkbox):** download/installer and desktop licences, actual software-release validation, trial activation, payments, subscriptions, consumer sales/returns, and software-distribution laws are tracked in [FUTURE_SIGAFLEX_RELEASE_LEGAL_REVIEW.md](FUTURE_SIGAFLEX_RELEASE_LEGAL_REVIEW.md). Leave the corresponding website sections inactive or clearly marked “Coming soon” until the offering exists.
+
+When implementing present website fixes, keep `USER_NOTES/SAFEGUARDS.md`, `LICENSES_INDEX_MAP.md`, and `OUTSIDE_ROUTES.md` consistent with the actual behavior. Do not weaken the existing file-locality, consent-gating, or click-to-load protections while correcting their disclosures.

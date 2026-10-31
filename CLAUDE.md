@@ -1,11 +1,30 @@
 
 # specific project working rules/guidlines
 
+
+## Things to keep in mind
+
+The SigaFlex website will host the SigaFlex desktop application, which we intend to sell
+globally through the website. SigaFlex is currently an upcoming product.
+
+### Download, accounts, and licensing model
+
+- Anyone can download and install SigaFlex without creating an account or paying.
+- One installer supports free, trial, and paid versions.
+- **Free version:** Limited functionality, no account required.
+- **Trial version:** Temporary access to additional or full functionality, requires an account to activate.
+- **Paid version:** Requires an account to purchase and activate a license.
+- Users can upgrade their access without downloading or reinstalling SigaFlex.
+- Once activated, SigaFlex should remain usable offline without continuous login or license-server connectivity.
+- Account creation is optional for free users.
+- Downloads, trials, and purchases must not be presented as available until those features actually launch.
+
 Device compatability
 the skeleton must support desktop/mobile layouts even before actual styling is chosen.
 
 Concept design
-One page design meaning one page which is the home page that you can scroll through with a few additions of pages that you get routed to when doing something.
+One page design meaning one page which is the home page that you can scroll through with a few additions of pages
+that you get routed to when doing something.
 We are not reinventing the wheel. The same design concept exists in many modern websites.
 
 ## Classes
