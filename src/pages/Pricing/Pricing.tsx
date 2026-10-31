@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import Icon from "../../components/Icon/Icon";
 import { PRODUCT_NAME } from "../../core/Constants";
 import { ROUTES } from "../../Routing";
-import { cx } from "../../core/Utility";
 import "../page.css";
 import "./pricing.css";
 
@@ -18,8 +17,6 @@ type Plan = {
   purpose: string;
   points: string[];
   action: string;
-  /** Present when the plan has somewhere real to send the reader today. */
-  to?: string;
 };
 
 export default function Pricing() {
@@ -27,29 +24,41 @@ export default function Pricing() {
 
   const plans: Plan[] = [
     {
+      id: "free",
+      name: "Free",
+      amount: "Free",
+      period: "no account needed",
+      purpose: "A limited version, planned for anyone who installs it.",
+      points: [
+        "Limited functionality",
+        "No account and no payment",
+        "The same installer as every other plan"
+      ],
+      action: "Get Free"
+    },
+    {
       id: "trial",
       name: "Free Trial",
       amount: "Free",
       period: "for a limited period",
-      purpose: "Try it on your own files before paying anything.",
+      purpose: "Planned for trying more of the application on your own files before paying.",
       points: [
-        "The application in full, not a cut-down build",
-        "Nothing to cancel when the period ends",
-        "Meant for evaluation rather than ongoing work"
+        "Expanded access for a limited period",
+        "Requires a free account to activate",
+        "Length and terms still to be settled"
       ],
-      action: "Start free trial",
-      to: ROUTES.DOWNLOAD
+      action: "Start free trial"
     },
     {
       id: "personal",
       name: "Personal",
       amount: "$X",
-      period: "per month",
+      period: "per year",
       purpose: "For your own files and your own projects.",
       points: [
-        "Everything the application does today",
+        "Full functionality",
         "Personal, non-commercial use",
-        "Billed monthly"
+        "Requires an account"
       ],
       action: "Choose Personal"
     },
@@ -57,12 +66,12 @@ export default function Pricing() {
       id: "professional",
       name: "Professional",
       amount: "$XX",
-      period: "per month",
+      period: "per year",
       purpose: "For the files you are paid to look at.",
       points: [
         "Everything in Personal",
         "Commercial and professional use",
-        "Billed monthly",
+        "Requires an account",
         "Support and licensing terms still to be settled"
       ],
       action: "Choose Professional"
@@ -74,23 +83,23 @@ export default function Pricing() {
       <p className="page_eyebrow fa_eyebrow">Plans</p>
       <h1 className="page_title">Pricing</h1>
       <p className="page_lead">
-        {PRODUCT_NAME} is free while it is in development. This is the shape of what comes after it.
+        {PRODUCT_NAME} is an upcoming Windows desktop application. This is the shape of the plans
+        planned for its release.
       </p>
 
       <p className="page_note">
         <Icon name="info" size="1em" />
-        Plans and pricing are still being finalized. The figures below are placeholders, and nothing
-        on this page can be bought yet.
+        Downloads, trials and paid plans are not available yet. Plans and pricing are still being
+        finalized, the figures below are placeholders, and nothing on this page can be obtained or
+        bought yet.
       </p>
 
       <ul className={`${className}_plans`}>
         {plans.map((plan) => (
-          <li className={cx(`${className}_plan`, plan.to && `${className}_plan-open`)} key={plan.id}>
+          <li className={`${className}_plan`} key={plan.id}>
             <h2 className={`${className}_name`}>
               {plan.name}
-              <span className={plan.to ? "fa_tag fa_tag-accent" : "fa_tag"}>
-                {plan.to ? "Open now" : "Not open yet"}
-              </span>
+              <span className="fa_tag">Not available yet</span>
             </h2>
 
             <p className={`${className}_price`}>
@@ -113,24 +122,18 @@ export default function Pricing() {
               {asked === plan.id && (
                 <>
                   <Icon name="info" size="0.875em" />
-                  <span>Not open yet. Nothing is charged while the plans are being settled.</span>
+                  <span>Not available yet. {PRODUCT_NAME} has not been released.</span>
                 </>
               )}
             </p>
 
-            {plan.to ? (
-              <Link className={`fa_button fa_button-primary ${className}_action`} to={plan.to}>
-                {plan.action}
-              </Link>
-            ) : (
-              <button
-                className={`fa_button ${className}_action`}
-                type="button"
-                onClick={() => setAsked(plan.id)}
-              >
-                {plan.action}
-              </button>
-            )}
+            <button
+              className={`fa_button ${className}_action`}
+              type="button"
+              onClick={() => setAsked(plan.id)}
+            >
+              {plan.action}
+            </button>
           </li>
         ))}
       </ul>
@@ -140,9 +143,8 @@ export default function Pricing() {
           What applies today
         </h2>
         <p>
-          {PRODUCT_NAME} is free to use while it is in development and works offline. Connecting
-          an account uses the internet. Your account is also used for reviews on this site and
-          for plans once they become available.
+          Nothing can be downloaded, tried or bought yet. A free account on this site can be used
+          for reviews; creating one is not a purchase or a subscription.
         </p>
         <p className={`${className}_ask`}>
           Questions about a plan before they are settled? <Link to={ROUTES.CONTACT}>Write to us</Link>.

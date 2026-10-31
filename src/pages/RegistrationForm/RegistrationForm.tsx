@@ -57,7 +57,7 @@ const NOTES: Array<{ glyph: GlyphName; title: string; body: string }> = [
   {
     glyph: "success",
     title: "Cookies and storage",
-    body: "Two cookies support your cookie choice and sign-in. Tab storage keeps your session and a review draft when sign-in is needed. The privacy policy explains each item."
+    body: "Two cookies support your cookie choice and sign-in. Tab storage keeps your session, a review draft when sign-in is needed, and a one-time check while you sign in with Google. The privacy policy explains each item."
   }
 ];
 
@@ -171,6 +171,20 @@ export default function RegistrationForm() {
     } finally {
       setBusy(false);
     }
+  }
+
+  function continueWithGoogle() {
+    setServerMessage("");
+    if (!values.terms) {
+      setServerMessage("Accept the terms first, then continue with Google.");
+      document.getElementById("register-terms")?.focus();
+      return;
+    }
+    if (!ServerBridge.isConfigured()) {
+      setServerMessage("No server is configured for this site yet, so registration cannot be completed.");
+      return;
+    }
+    if (!ServerBridge.startGoogleSignIn(true)) setServerMessage("This browser blocks tab storage, which signing in with Google needs.");
   }
 
   if (done) {
@@ -306,6 +320,10 @@ export default function RegistrationForm() {
         >
           {busy && <span className="fa_spinner" aria-hidden="true" />}
           {busy ? "Registering…" : "Register"}
+        </button>
+
+        <button className={`fa_button ${className}_submit`} type="button" disabled={busy} onClick={continueWithGoogle}>
+          Continue with Google
         </button>
 
         {/* The server's answer, spoken without stealing focus. */}

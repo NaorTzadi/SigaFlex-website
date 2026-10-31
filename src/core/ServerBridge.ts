@@ -179,6 +179,7 @@ export type Account = {
   createdAt: string;
   lastLoginAt: string | null;
   termsAcceptedAt: string | null;
+  hasPassword: boolean;
 };
 
 export type Credentials = {
@@ -257,6 +258,49 @@ async function resume(): Promise<Account | null> {
       return null;
     }
     throw error;
+  }
+}
+
+const GOOGLE_STATE_KEY = "fa_google_state";
+
+export type GoogleOutcome = "signedIn" | "termsRequired" | "failed";
+
+export function startGoogleSignIn(termsAccepted: boolean): boolean {
+  const bytes = window.crypto.getRandomValues(new Uint8Array(24));
+  const state = Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("");
+  try {
+    window.sessionStorage.setItem(GOOGLE_STATE_KEY, state);
+  } catch {
+    return false;
+  }
+  const query = new URLSearchParams({ state, terms: String(termsAccepted) });
+  window.location.assign(`${BASE_URL}${ENDPOINT.GOOGLE_START}?${query}`);
+  return true;
+}
+
+export async function finishGoogleSignIn(fragment: string): Promise<GoogleOutcome | null> {
+  const answer = new URLSearchParams(fragment.replace(/^#/, ""));
+  const code = answer.get("google");
+  const error = answer.get("google_error");
+  if (!code && !error) return null;
+
+  let expected: string | null = null;
+  try {
+    expected = window.sessionStorage.getItem(GOOGLE_STATE_KEY);
+    window.sessionStorage.removeItem(GOOGLE_STATE_KEY);
+  } catch {
+    return "failed";
+  }
+  if (!expected) return null;
+  if (answer.get("state") !== expected) return "failed";
+  if (error) return error === "terms" ? "termsRequired" : "failed";
+
+  try {
+    const account = await post<Account>(ENDPOINT.GOOGLE_FINISH, { code });
+    rememberSession(account.sessionToken, account.email, account.rememberToken);
+    return "signedIn";
+  } catch {
+    return "failed";
   }
 }
 

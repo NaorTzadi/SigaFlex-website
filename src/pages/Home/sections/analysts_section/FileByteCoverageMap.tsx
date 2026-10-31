@@ -95,9 +95,8 @@ export default function FileByteCoverageMap() {
   return (
     <Section
       id={HOME_SECTIONS.ANALYSTS}
-      eyebrow="04 — The evidence"
       title="Built for analysts"
-      lead="Every byte accounted for — including the ones nothing claims."
+      lead="An illustration of how the engine accounts for a file's bytes. In the application, bytes that nothing explains appear in the tree as regions of their own."
       tone="raised"
       hue="crimson"
     >

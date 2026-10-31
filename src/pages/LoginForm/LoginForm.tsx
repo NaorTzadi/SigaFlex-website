@@ -42,6 +42,31 @@ export default function LoginForm() {
     if (problem) problemRef.current?.focus();
   }, [problem]);
 
+  useEffect(() => {
+    const fragment = location.hash;
+    if (!fragment) return;
+    navigate({ pathname: location.pathname, hash: "" }, { replace: true, state: location.state });
+
+    void ServerBridge.finishGoogleSignIn(fragment).then((outcome) => {
+      if (outcome === "signedIn") {
+        navigate(ROUTES.HOME, { replace: true });
+      } else if (outcome === "termsRequired") {
+        setProblem("No account uses that Google address yet. Register to create one.");
+      } else if (outcome === "failed") {
+        setProblem("Signing in with Google did not complete. Try again.");
+      }
+    });
+  }, []);
+
+  function continueWithGoogle() {
+    setProblem("");
+    if (!ServerBridge.isConfigured()) {
+      setProblem("No server is configured for this site yet.");
+      return;
+    }
+    if (!ServerBridge.startGoogleSignIn(false)) setProblem("This browser blocks tab storage, which signing in with Google needs.");
+  }
+
   async function submit(event: FormEvent) {
     event.preventDefault();
     setProblem("");
@@ -180,6 +205,10 @@ export default function LoginForm() {
         >
           {busy && <span className="fa_spinner" aria-hidden="true" />}
           {busy ? "Signing in…" : "Sign in"}
+        </button>
+
+        <button className="fa_button account_submit" type="button" disabled={busy} onClick={continueWithGoogle}>
+          Continue with Google
         </button>
 
         <p className="account_links">

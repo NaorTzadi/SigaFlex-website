@@ -517,7 +517,15 @@ export default function AccountSettingsPage() {
           <Block name="password">
             {editing !== "password" && <Notice note={passwordNote} />}
 
-            <Row
+            {!account.hasPassword && (
+              <Row label="Password" value="Not set. You sign in with Google.">
+                <Link className="fa_button fa_button-small" to={ROUTES.PASSWORD}>
+                  Set a password
+                </Link>
+              </Row>
+            )}
+
+            {account.hasPassword && <Row
               label="Password"
               value={
                 <>
@@ -536,7 +544,7 @@ export default function AccountSettingsPage() {
                   Change
                 </button>
               )}
-            </Row>
+            </Row>}
 
             {editing === "password" && (
               <form
@@ -701,10 +709,10 @@ export default function AccountSettingsPage() {
 
           <Block name="plan">
             <p className={`${className}_lead`}>
-              {PRODUCT_NAME} is free while it is in development, and an account is not needed to use it.
-              There is nothing to pay and nothing to cancel.
+              {PRODUCT_NAME} is not released yet, and no plan can be activated or bought. Your account
+              has no subscription: there is nothing to pay and nothing to cancel.
             </p>
-            <Row label="Current plan" value="Free while in development">
+            <Row label="Current plan" value="None (not released yet)">
               <Link className="fa_button fa_button-small" to={ROUTES.PRICING}>
                 See plans
               </Link>

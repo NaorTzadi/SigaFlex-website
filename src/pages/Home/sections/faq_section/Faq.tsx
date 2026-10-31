@@ -23,23 +23,32 @@ export default function Faq() {
         </>
       )
     },
+    /* SAFEGUARD CLAIM-001 — see SAFEGUARDS.md */
     {
       question: "Can it change or damage a file?",
       answer: (
         <>
-          No. Files are opened read-only and nothing is ever written back to them. Members of a
-          container are decompressed in memory when you expand them and dropped when you collapse
-          them, so no temporary copies are left on disk either.
+          Files are opened read-only and nothing is written back to them. To inspect, preview,
+          copy, drag out or convert a member of a container, {PRODUCT_NAME} writes that member to its own
+          temporary folder, and the inspector keeps its working output there too. Files you drop
+          into the window are copied there before they are analysed. Exports, conversions and
+          screenshots are written where you choose, and the application keeps its own settings.
         </>
       )
     },
+    /* SAFEGUARD CLAIM-001 — see SAFEGUARDS.md */
     {
       question: "Is it safe to open something I do not trust?",
       answer: (
         <>
-          Analysis reads bytes; it never runs them. The disassembly is decoded, not executed. The
-          only things that run are the ones you start yourself: converting an Office document hands
-          it to Word or Excel, and the terminal runs what you type into it.
+          Analysis reads bytes; it does not run them. The disassembly is decoded, not executed.
+          Some actions do start programs, and only when you choose them: Run on the Track tab
+          launches the executable you are inspecting, converting a document hands it to Word,
+          Excel or PowerPoint, other conversions may use LibreOffice, ImageMagick, Blender or
+          Graphviz when they are installed, and the terminal runs what you type into it. Do not
+          press Run on a file you do not trust outside an isolated machine. Members written to the
+          temporary folder may be flagged by your antivirus. Reading a file without running it
+          lowers the risk but does not remove it, and {PRODUCT_NAME} is not a virus scanner.
         </>
       )
     },
@@ -47,9 +56,10 @@ export default function Faq() {
       question: "What if the extension is wrong, or missing?",
       answer: (
         <>
-          The name is never consulted. The first bytes are read, the structure they promise is
-          checked, and the file opens as what it turned out to be. A ZIP called report.pdf opens as
-          a ZIP.
+          The name is not used to identify a file. The first bytes are read, the structure they
+          promise is checked, and the file opens as what it turned out to be. A ZIP called
+          report.pdf opens as a ZIP. The formats offered for conversion are still chosen by the
+          file&apos;s extension.
         </>
       )
     },
@@ -58,8 +68,9 @@ export default function Faq() {
       answer: (
         <>
           It still opens. Raw bytes, readable strings and patterns work on anything, and the
-          coverage map segments the file by entropy and probes each region, so an archive buried
-          inside an unknown blob is still found and opened.
+          engine segments the file by entropy and probes each region, so an archive buried inside
+          an unknown blob is still found and opened. Bytes nothing explains appear in the tree as
+          their own regions.
         </>
       )
     },
@@ -69,27 +80,29 @@ export default function Faq() {
         <>
           Yes. The window has a real terminal with a command channel. Start Claude Code or Codex in
           it and the agent is briefed automatically: it can read the tree, screenshot the window,
-          open entries, switch views and export what the inspector shows. See{" "}
+          open files, inspect entries, convert files and export what the inspector shows. The agent may send what
+          it reads to its model provider, under that agent&apos;s own settings and terms. See{" "}
           <a href={`#${HOME_SECTIONS.TERMINAL}`}>the terminal</a>.
         </>
       )
     },
     {
-      question: "Which platforms does it run on?",
+      question: "Which platforms will it run on?",
       answer: (
         <>
-          Windows 10 and 11, 64-bit. Linux and macOS are planned with no date yet; the{" "}
+          Windows 10 and 11, 64-bit, first. Linux and macOS are planned with no date yet; the{" "}
           <Link to={ROUTES.DOWNLOAD}>download</Link> page will carry one as soon as there is one.
         </>
       )
     },
     {
-      question: "What does it cost, and how are accounts used?",
+      question: "What will it cost, and how are accounts used?",
       answer: (
         <>
-          It is free while it is in development. Your account can be connected to the application
-          and used on this site for reviews. Account connections use the internet; the application
-          can also be used offline. The plans are on the <Link to={ROUTES.PRICING}>pricing</Link> page.
+          {PRODUCT_NAME} is not released yet, and downloads, trials and paid plans are not
+          available. At release, a limited free version is planned without an account; trial and
+          paid access will require one. Today an account on this site is used for reviews. The
+          planned plans are on the <Link to={ROUTES.PRICING}>pricing</Link> page.
         </>
       )
     }
@@ -98,7 +111,6 @@ export default function Faq() {
   return (
     <Section
       id={HOME_SECTIONS.FAQ}
-      eyebrow="06 — Questions"
       title="Questions, answered"
       lead="The things people ask before they open a file they care about."
     >

@@ -33,11 +33,9 @@ type SectionProps = {
   /** Names the band when it has no visible title. */
   label?: string;
   lead?: string;
-  /** Short mono line above the title. */
-  eyebrow?: string;
   /** A band that sits on its own surface instead of the page background. */
   tone?: "raised" | "sunken";
-  /** The light a band carries: its bloom, eyebrow and rules. Amber when unsaid. */
+  /** The light a band carries: its bloom and rules. Amber when unsaid. */
   hue?: "blue" | "crimson";
   children?: ReactNode;
 };
@@ -48,7 +46,6 @@ export default function Section({
   level = "h2",
   label,
   lead,
-  eyebrow,
   tone,
   hue,
   children
@@ -72,8 +69,6 @@ export default function Section({
       <div className={`${className}_inner`}>
         {(title || lead) && (
           <div className={`${className}_head`} data-reveal="">
-            {eyebrow && <p className={`${className}_eyebrow fa_eyebrow`}>{eyebrow}</p>}
-
             {title && (
               <Heading className={`${className}_title`} id={headingId}>
                 {title}

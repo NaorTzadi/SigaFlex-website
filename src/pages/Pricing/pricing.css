@@ -25,17 +25,6 @@
   border-color: var(--fa-color-border-strong);
 }
 
-.pricing_plan-open {
-  background:
-    radial-gradient(26rem 12rem at 100% 0%, var(--fa-bloom-accent), transparent 70%),
-    var(--fa-color-surface);
-  border-color: var(--fa-color-accent);
-}
-
-.pricing_plan-open:hover {
-  border-color: var(--fa-color-accent);
-}
-
 /* The name, and whether the plan can be had today, on one line: the reader is
    scanning three of these side by side. */
 .pricing_name {
@@ -146,20 +135,8 @@
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1200px) {
   .pricing_plans {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-@media (min-width: 640px) {
-  .pricing_plan:last-child {
-    grid-column: span 2;
-  }
-}
-
-@media (min-width: 1024px) {
-  .pricing_plan:last-child {
-    grid-column: auto;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }

@@ -28,7 +28,7 @@ const CLAUDE_SESSION: Line[] = [
   { kind: "output", text: "   ├─ app.jar [JAR]" },
   { kind: "output", text: "   ├─ config.xml" },
   { kind: "output", text: "   └─ logo.png [PNG]" },
-  { kind: "command", text: "sigaflex inspect setup.zip/app.jar" },
+  { kind: "command", text: "sigaflex inspect file \"C:\\Users\\you\\Downloads\\installer.exe\\setup.zip\\app.jar\"" },
   { kind: "command", text: "sigaflex capture window" },
   { kind: "output", text: "…\\SigaFlex\\commands\\window.png" },
   { kind: "command", text: "sigaflex export inspected file data" },
@@ -45,7 +45,7 @@ const CODEX_SESSION: Line[] = [
   { kind: "command", text: "sigaflex show views list" },
   {
     kind: "output",
-    text: '["inspector-view","inspector-view-side-tab","inspector-view-display-box","inspector-view-display-box-readable-area","inspector-view-display-box-raw-area","inspector-view-display-box-disassembly-area","inspector-view-display-box-patterns-area","inspector-view-display-box-hexadecimal-area","inspector-view-display-box-c-code-area","tree-view","terminal-panel","top-bar","file-password-view","settings-panel"]'
+    text: '["inspector-view","inspector-view-side-tab","inspector-view-display-box","inspector-view-display-box-readable-area","inspector-view-display-box-raw-area","inspector-view-display-box-disassembly-area","inspector-view-display-box-patterns-area","inspector-view-display-box-hexadecimal-area","inspector-view-display-box-code-area","tree-view","terminal-panel","top-bar","file-password-view","settings-panel"]'
   },
   { kind: "command", text: "sigaflex show component settings-panel details" },
   { kind: "output", text: "SettingsPanel#settings-panel.settings-overlay [-310,-210 620x420] hidden" },
@@ -69,16 +69,19 @@ const TERMINALS: Array<{ name: string; session: Line[] }> = [
 ];
 
 const COMMAND_EXAMPLES: Array<{ command: string; does: string }> = [
-  { command: "fetch root path", does: "The file or folder the user gave the program." },
+  { command: "fetch absolute path \"\"", does: "The file or folder the user gave the program." },
   { command: "fetch tree [path]", does: "The tree as it is loaded, from the root or from any entry under it." },
   { command: "fetch absolute path <path>", does: "Where an entry lives on disk, or which container it is inside." },
-  { command: "open <path>", does: "Expands an entry in the tree, as a double-click would." },
-  { command: "inspect <path>", does: "Opens the inspector on an entry: Display, Readable, Raw, Patterns, Disassembly, Hexadecimal, C code." },
+  { command: "process file <path>", does: "Opens a file or folder in the program, replacing what is open." },
+  { command: "inspect file <path>", does: "Opens the inspector on an entry of the tree, as choosing Inspect would." },
+  { command: "fetch supported file extensions", does: "The file extensions the program can analyse." },
+  { command: "fetch conversion formats <path>...", does: "The formats the given files can be converted to." },
+  { command: "convert to <format> <folder> <path>...", does: "Converts files, including entries inside containers, into a folder." },
   { command: "show views list", does: "Every page and view the window has." },
   { command: "show component <view_id> details", does: "One view in full: children, position, size, style, what it does." },
   { command: "fetch visible components details", does: "What is in front of the user right now." },
   { command: "capture window", does: "A screenshot of the window, saved to a path." },
-  { command: "export inspected file data", does: "Details, readable text and disassembly of the inspected entry, as files." },
+  { command: "export inspected file data", does: "The tree, details, readable text, disassembly and decompiled code of the inspected entry, as files." },
   { command: "show available commands", does: "Lists the commands available in the terminal." }
 ];
 
@@ -107,12 +110,12 @@ const GIVES: Array<{ glyph: GlyphName; title: string; body: string }> = [
   {
     glyph: "arrowRight",
     title: "Drives the window",
-    body: "Opens entries, switches views, runs the commands you would have typed, and reports back in the same tab."
+    body: "Opens files, inspects entries, converts files, runs the commands you would have typed, and reports back in the same tab."
   },
   {
     glyph: "padlock",
-    title: "Stays on the machine",
-    body: "The command channel is a loopback socket. Whether the agent you run talks to a model is the agent's business, not the program's."
+    title: "Command channel stays local",
+    body: "The command channel is a loopback socket. The agent you run may send what it reads to its model provider, under that agent's own settings and terms."
   }
 ];
 
@@ -125,7 +128,7 @@ const AUDIENCES: InfoCard[] = [
   {
     glyph: "seal",
     title: "Security work",
-    body: "Disassembly, strings and the coverage map exported to files an agent can read, with the file never leaving the box."
+    body: "The tree, details, strings, disassembly and decompiled code exported to files an agent can read. What leaves the machine depends on the agent you choose."
   },
   {
     glyph: "user",
@@ -197,9 +200,8 @@ export default function AgentTerminalDemo() {
   return (
     <Section
       id={HOME_SECTIONS.TERMINAL}
-      eyebrow="02 — The Terminal"
       title="AI agents terminal support"
-      lead="A real shell inside the window, with a command channel. You can now use your AI agents to help you with your tasks."
+      lead="A real shell inside the window, with a command channel, so your AI agents can help you with your tasks."
       tone="raised"
     >
       <div className={className}>

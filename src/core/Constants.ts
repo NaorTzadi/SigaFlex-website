@@ -27,7 +27,7 @@ export const BRAND_NAME_PARTS = { silver: "Siga", gold: "Flex" } as const;
 
 /** The one-line answer, per the product brief. */
 export const TAGLINE =
-    "Opens any file, tells you what it actually is, and shows you everything inside it.";
+    "Opens any file, checks what it actually is, and shows you what is inside it.";
 
 /** The one address the site publishes: support, privacy requests and security reports. */
 export const CONTACT_EMAIL = "naorprojects1@gmail.com";
@@ -128,6 +128,8 @@ export const ENDPOINT = {
   DELETE_ACCOUNT: "/auth/delete-account",
   FORGOT_PASSWORD: "/auth/forgot-password",
   RESET_PASSWORD: "/auth/reset-password",
+  GOOGLE_START: "/auth/google/start",
+  GOOGLE_FINISH: "/auth/google/finish",
   REVIEWS: "/reviews",
   MY_REVIEW: "/reviews/mine"
 } as const;

@@ -15,7 +15,7 @@ const BEYOND_TEMPLATE: InfoCard[] = [
   {
     glyph: "convert",
     title: "Conversion",
-    body: "Media is converted by a bundled FFmpeg. Office documents go through Word and Excel when they are installed."
+    body: "Media is converted by a bundled FFmpeg. Office documents go through Word, Excel or PowerPoint, and other formats through LibreOffice, ImageMagick, Blender or Graphviz, when they are installed."
   },
   {
     glyph: "terminal",
@@ -37,18 +37,8 @@ export default function WhatItOpensSection() {
   );
 
   return (
-    <Section
-      id={HOME_SECTIONS.WHAT_IT_OPENS}
-      eyebrow="03 — The coverage"
-      title="What it opens"
-      lead="Archives, documents, executables, images, fonts, audio, video, 3D models."
-    >
-      <Section
-        id={HOME_SECTIONS.FORMATS}
-        level="h3"
-        title="Format coverage"
-        lead="Identified by bytes, not by extension."
-      >
+    <Section id={HOME_SECTIONS.WHAT_IT_OPENS} label="What it opens">
+      <Section id={HOME_SECTIONS.FORMATS} level="h3" title="Format coverage">
         <SupportedFormatSearch />
         <FileSignatureExamples />
       </Section>
@@ -56,7 +46,6 @@ export default function WhatItOpensSection() {
         id={HOME_SECTIONS.BEYOND}
         level="h3"
         title="Beyond analysis"
-        lead="Viewing, conversion, and a terminal with an agent command channel."
       >
         <InfoCardGrid items={beyond} />
       </Section>

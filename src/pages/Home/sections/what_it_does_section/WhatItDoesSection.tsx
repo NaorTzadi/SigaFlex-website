@@ -9,9 +9,7 @@ export default function WhatItDoesSection() {
   return (
     <Section
       id={HOME_SECTIONS.WHAT_IT_DOES}
-      eyebrow="01 — The window"
-      title="What it does"
-      lead="One file, one window, every question answered at once."
+      label="What it does"
       tone="sunken"
       hue="blue"
     >
@@ -35,7 +33,6 @@ export default function WhatItDoesSection() {
         id={HOME_SECTIONS.CAPABILITIES}
         level="h3"
         title="Capabilities"
-        lead="Readable, Raw, Patterns, Disassembly, Hexadecimal, C code — all over the same bytes."
       >
         <FileInspectorDemo />
       </Section>
@@ -43,7 +40,6 @@ export default function WhatItDoesSection() {
         id={HOME_SECTIONS.DEMO}
         level="h3"
         title="See it in action"
-        lead="A recording of the window doing all of this to real files, rather than a description of it."
       >
         <ProductDemoVideo />
       </Section>

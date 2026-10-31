@@ -5,8 +5,6 @@
  * question. The question a visitor actually arrives with is "does it open my
  * file?", so the band asks for a name and answers it.
  *
- * Closed, it is twelve group buttons with counts — the coverage claim, in one
- * line, with the detail folded away. Open a group and its formats appear.
  * Type anything and the matches surface across every group at once, matched on
  * the tag, on the engine's name for it, and on the extensions it usually
  * carries, so ".dll" finds PE.
@@ -211,7 +209,10 @@ export default function SupportedFormatSearch() {
                   </span>
                 ))}
                 <span className={`${className}_card_note`}>
-                  <Icon name="info" size="0.875em" /> Usually named this. Never identified by it.
+                  <Icon name="info" size="0.875em" />{" "}
+                  {selected.extensions.length > 0
+                    ? "Usually named this. Never identified by it."
+                    : "No standard extension. Identified by content."}
                 </span>
               </p>
             </div>

@@ -107,6 +107,7 @@
 .reviews_body {
   resize: vertical;
   min-height: 7rem;
+  max-height: 24rem;
 }
 
 .reviews_rating_row {

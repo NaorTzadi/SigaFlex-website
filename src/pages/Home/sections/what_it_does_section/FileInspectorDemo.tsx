@@ -37,7 +37,7 @@ import "./fileinspectordemo.css";
 
 const className = "fileinspectordemo";
 
-const TABS = ["Readable", "Raw", "Patterns", "Disassembly", "Hexadecimal", "C code"] as const;
+const TABS = ["Readable", "Raw", "Patterns", "Disassembly", "Hexadecimal", "Code"] as const;
 type Tab = (typeof TABS)[number];
 
 /** Tab names hold spaces; element ids cannot. */
@@ -200,7 +200,7 @@ export default function FileInspectorDemo() {
             </pre>
           )}
 
-          {tab === "C code" && (
+          {tab === "Code" && (
             <pre className={`${className}_pre`}>
               {C_CODE.map((line, row) => (
                 <span className={`${className}_row`} key={row}>

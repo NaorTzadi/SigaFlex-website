@@ -1,13 +1,6 @@
 /**
  * Every format the engine identifies, what it is called, what it is usually named on disk,
  * and one line on what it actually is.
- *
- * Tags, display names and extensions are the engine's own, from format_descriptor.cpp. The
- * descriptions are written for this site. Adding a format to the engine means adding it here
- * too: nothing keeps the two in step on its own.
- *
- * Left out: UNKNOWN and ARCHIVE are internal buckets rather than formats, and FBX_ASCII is
- * folded into FBX.
  */
 
 export type FormatEntry = {
@@ -83,6 +76,20 @@ export const FORMAT_GROUPS: FormatGroup[] = [
           "A TAR archive compressed with Zstandard. It combines TAR's file and directory records with a compressor designed for fast compression and decompression."
       },
       {
+        tag: "TAR.LZ",
+        name: "lzip-compressed TAR archive",
+        extensions: [".tar.lz", ".tlz"],
+        description:
+          "A TAR archive compressed with lzip. TAR records the files and directories, while the lzip wrapper compresses the archive using LZMA."
+      },
+      {
+        tag: "TAR.LZMA",
+        name: "LZMA-compressed TAR archive",
+        extensions: [".tar.lzma"],
+        description:
+          "A TAR archive compressed using the legacy LZMA stream format. Decompressing the stream reveals TAR's file and directory records."
+      },
+      {
         tag: "GZIP",
         name: "gzip stream",
         extensions: [".gz"],
@@ -111,6 +118,20 @@ export const FORMAT_GROUPS: FormatGroup[] = [
           "A lossless compression format using Zstandard, designed for fast compression and decompression. Used for compressed files, archives and software package payloads."
       },
       {
+        tag: "LZIP",
+        name: "lzip stream",
+        extensions: [".lz"],
+        description:
+          "A lossless compression format that wraps LZMA-compressed data with integrity information. It compresses a byte stream and is often paired with TAR to hold multiple files."
+      },
+      {
+        tag: "LZMA",
+        name: "LZMA stream (legacy .lzma)",
+        extensions: [".lzma"],
+        description:
+          "The legacy standalone LZMA compression format. Its header describes the compression settings and uncompressed size, followed by one compressed byte stream."
+      },
+      {
         tag: "AR",
         name: "ar archive",
         extensions: [".a", ".lib"],
@@ -123,6 +144,13 @@ export const FORMAT_GROUPS: FormatGroup[] = [
         extensions: [".cpio"],
         description:
           "An archive format that stores files and filesystem metadata as a sequence of entries. Used in Linux initramfs images and many RPM package payloads."
+      },
+      {
+        tag: "XAR",
+        name: "XAR archive",
+        extensions: [".xar", ".xip"],
+        description:
+          "An archive with a compressed XML table of contents describing its members and where their data is stored. It is also the container used by flat macOS installer packages."
       },
       {
         tag: "CAB",
@@ -171,6 +199,13 @@ export const FORMAT_GROUPS: FormatGroup[] = [
   {
     name: "Packages",
     formats: [
+      {
+        tag: "APPLE-PKG",
+        name: "macOS installer package",
+        extensions: [".pkg", ".mpkg"],
+        description:
+          "A flat macOS installer package stored as a XAR archive. Installer metadata describes the package or distribution alongside its installation payload."
+      },
       {
         tag: "JAR",
         name: "Java archive",
@@ -223,6 +258,135 @@ export const FORMAT_GROUPS: FormatGroup[] = [
     ]
   },
   {
+    name: "Disk images & filesystems",
+    formats: [
+      {
+        tag: "UDIF",
+        name: "Apple disk image",
+        extensions: [".dmg"],
+        description:
+          "An Apple UDIF disk image. A block map describes how stored or compressed chunks reconstruct a logical disk, which can hold partitions and filesystems."
+      },
+      {
+        tag: "APPLE-SPARSE-IMAGE",
+        name: "Apple sparse disk image",
+        extensions: [".sparseimage"],
+        description:
+          "An Apple disk image that stores allocated bands of a logical disk. Its band map records which parts are present without storing every unused region."
+      },
+      {
+        tag: "APPLE-ASIF",
+        name: "Apple sparse image (ASIF)",
+        extensions: [".asif"],
+        description:
+          "An Apple sparse disk image using the ASIF format. Its header and directory map stored data to regions of the logical disk."
+      },
+      {
+        tag: "APPLE-ENCRYPTED-IMAGE",
+        name: "Apple encrypted disk image",
+        extensions: [".dmg", ".sparseimage"],
+        description:
+          "An encrypted wrapper around an Apple disk image. The engine identifies the wrapper and requires a supplied password to unlock supported encrypted contents."
+      },
+      {
+        tag: "PARTITIONED-DISK",
+        name: "Partitioned disk image",
+        extensions: [".img", ".raw"],
+        description:
+          "A disk image carrying an MBR, GPT or Apple partition map. The partition table identifies regions of the disk that can contain separate filesystems."
+      },
+      {
+        tag: "HFS-PLUS",
+        name: "HFS+ volume",
+        extensions: [".hfs", ".hfsx"],
+        description:
+          "An Apple HFS+ or HFSX filesystem volume. Its catalog records folders, files and their metadata, while allocation structures locate their stored data."
+      },
+      {
+        tag: "APFS",
+        name: "APFS container",
+        extensions: [".apfs"],
+        description:
+          "An Apple File System container holding checkpointed volumes. Each volume has its own filesystem structures describing directories, files and their data."
+      },
+      {
+        tag: "NTFS",
+        name: "NTFS volume",
+        extensions: [".ntfs"],
+        description:
+          "A Windows NTFS filesystem volume. Its Master File Table and directory indexes describe files, folders, metadata and alternate data streams."
+      },
+      {
+        tag: "EXT-FILESYSTEM",
+        name: "ext2/ext3/ext4 filesystem",
+        extensions: [".ext2", ".ext3", ".ext4"],
+        description:
+          "A Linux ext2, ext3 or ext4 filesystem. Feature flags identify the variant, and its inode and directory structures describe the files and folders stored in the volume."
+      }
+    ]
+  },
+  {
+    name: "Virtual machines",
+    formats: [
+      {
+        tag: "VDI",
+        name: "VirtualBox disk image",
+        extensions: [".vdi"],
+        description:
+          "A virtual disk used by VirtualBox. Its header and block map describe the guest disk and how its blocks are stored in the image."
+      },
+      {
+        tag: "QCOW2",
+        name: "QEMU copy-on-write image",
+        extensions: [".qcow2", ".qcow"],
+        description:
+          "A QEMU virtual disk format with copy-on-write storage. Mapping tables locate guest disk data, with support for backing images and snapshots."
+      },
+      {
+        tag: "VHD",
+        name: "Virtual Hard Disk image",
+        extensions: [".vhd", ".avhd"],
+        description:
+          "A Virtual Hard Disk image representing a guest disk. Fixed, dynamic and differencing layouts describe how disk data is stored or inherited from a parent image."
+      },
+      {
+        tag: "VHDX",
+        name: "Virtual Hard Disk v2 image",
+        extensions: [".vhdx", ".avhdx"],
+        description:
+          "The second-generation Virtual Hard Disk format. Headers, metadata and block allocation tables describe the guest disk and its stored blocks."
+      },
+      {
+        tag: "VMDK",
+        name: "VMware virtual disk",
+        extensions: [".vmdk"],
+        description:
+          "A VMware virtual disk represented by a descriptor, binary extents or both. The format maps guest disk sectors to stored data and can reference parent images."
+      },
+      {
+        tag: "OVA",
+        name: "OVF package (OVA)",
+        extensions: [".ova"],
+        description:
+          "A virtual appliance packaged as a TAR archive whose first member is an OVF descriptor. It groups the virtual machine description with its disk images and other referenced files."
+      },
+      {
+        tag: "OVF",
+        name: "OVF descriptor",
+        extensions: [".ovf"],
+        description:
+          "An XML descriptor in the Open Virtualization Format. It describes a virtual appliance's hardware and references the disk images and other files belonging to the package."
+      },
+      {
+        tag: "VBOX",
+        name: "VirtualBox machine settings",
+        extensions: [".vbox", ".vbox-prev"],
+        description:
+          "A VirtualBox machine's XML settings file. It describes registered media, current storage attachments and snapshots, with references to files belonging to the machine."
+      }
+    ]
+  },
+  {
     name: "Executables & shortcuts",
     formats: [
       {
@@ -245,6 +409,41 @@ export const FORMAT_GROUPS: FormatGroup[] = [
         extensions: [".dylib", ".bundle"],
         description:
           "A binary format used for executables, libraries and object files on Apple platforms. A universal binary can package Mach-O files for multiple processor architectures."
+      },
+      {
+        tag: "MACH-O-UNIVERSAL",
+        name: "Mach-O universal binary",
+        extensions: [".dylib", ".bundle"],
+        description:
+          "An Apple universal binary containing separate Mach-O files for different processor architectures. Its architecture table locates each binary within the container."
+      },
+      {
+        tag: "DOS-MZ",
+        name: "DOS executable",
+        extensions: [".exe", ".ovl"],
+        description:
+          "A DOS executable using the MZ format. Its header describes the program's load image, relocations, memory requirements and entry point."
+      },
+      {
+        tag: "NE",
+        name: "16-bit Windows/OS/2 executable",
+        extensions: [".exe", ".dll", ".drv", ".fon"],
+        description:
+          "The New Executable format used by 16-bit Windows and OS/2. Segment tables, imports, entry points and resources describe the program behind its DOS stub."
+      },
+      {
+        tag: "LE",
+        name: "Linear executable",
+        extensions: [".exe", ".vxd", ".386"],
+        description:
+          "The Linear Executable format used by software including Windows virtual device drivers. Object, page and fixup tables describe how its code and data are loaded."
+      },
+      {
+        tag: "LX",
+        name: "OS/2 linear executable",
+        extensions: [".exe", ".dll"],
+        description:
+          "The LX executable format used by OS/2 programs and libraries. It records objects, pages, imports and fixups behind a DOS-compatible header."
       },
       {
         tag: "JAVA-CLASS",
@@ -303,23 +502,121 @@ export const FORMAT_GROUPS: FormatGroup[] = [
       {
         tag: "DOCX",
         name: "Word document",
-        extensions: [".docx", ".docm", ".dotx"],
+        extensions: [".docx"],
         description:
-          "An Office Open XML word-processing document packaged as ZIP. XML parts describe text, formatting and relationships to resources such as images; related .docm files can contain macros."
+          "An Office Open XML word-processing document packaged as ZIP. XML parts describe text, formatting and relationships to resources such as images."
+      },
+      {
+        tag: "DOCM",
+        name: "Word macro-enabled document",
+        extensions: [".docm"],
+        description:
+          "A Word document stored as an Office Open XML ZIP package that can contain VBA macros alongside its text, formatting and embedded resources."
+      },
+      {
+        tag: "DOTX",
+        name: "Word template",
+        extensions: [".dotx"],
+        description:
+          "An Office Open XML template for creating Word documents. Its ZIP package stores reusable document content, formatting, styles and resources."
+      },
+      {
+        tag: "DOTM",
+        name: "Word macro-enabled template",
+        extensions: [".dotm"],
+        description:
+          "A Word template that can include VBA macros. Its Office Open XML ZIP package combines reusable document content and styles with macro-related parts."
       },
       {
         tag: "XLSX",
         name: "Excel workbook",
-        extensions: [".xlsx", ".xlsm", ".xltx"],
+        extensions: [".xlsx"],
         description:
           "An Office Open XML spreadsheet packaged as ZIP. Its parts store worksheets, cell values, formulas, styles and other workbook data; text cells may use a shared string table or inline strings."
       },
       {
+        tag: "XLSM",
+        name: "Excel macro-enabled workbook",
+        extensions: [".xlsm"],
+        description:
+          "An Excel workbook stored as an Office Open XML ZIP package that can contain VBA macros alongside worksheet data, formulas and formatting."
+      },
+      {
+        tag: "XLTX",
+        name: "Excel template",
+        extensions: [".xltx"],
+        description:
+          "An Office Open XML template for creating Excel workbooks. Its ZIP package stores reusable worksheets, formulas, styles and workbook settings."
+      },
+      {
+        tag: "XLTM",
+        name: "Excel macro-enabled template",
+        extensions: [".xltm"],
+        description:
+          "An Excel workbook template that can include VBA macros. Its ZIP package holds reusable spreadsheet content and formatting with macro-related parts."
+      },
+      {
+        tag: "XLSB",
+        name: "Excel binary workbook",
+        extensions: [".xlsb"],
+        description:
+          "An Excel workbook packaged as ZIP with binary workbook and worksheet records. It stores spreadsheet data, formulas and styles and can include VBA macros."
+      },
+      {
+        tag: "XLAM",
+        name: "Excel add-in",
+        extensions: [".xlam"],
+        description:
+          "An Excel add-in stored as an Office Open XML ZIP package. It can provide reusable functions and commands through VBA code and supporting workbook parts."
+      },
+      {
         tag: "PPTX",
         name: "PowerPoint presentation",
-        extensions: [".pptx", ".pptm", ".potx"],
+        extensions: [".pptx"],
         description:
           "An Office Open XML presentation packaged as ZIP. Its parts describe slides, layouts, themes, notes and linked or embedded media."
+      },
+      {
+        tag: "PPTM",
+        name: "PowerPoint macro-enabled presentation",
+        extensions: [".pptm"],
+        description:
+          "A PowerPoint presentation stored as an Office Open XML ZIP package that can contain VBA macros alongside slides, themes, notes and media."
+      },
+      {
+        tag: "PPSX",
+        name: "PowerPoint show",
+        extensions: [".ppsx"],
+        description:
+          "An Office Open XML presentation saved as a PowerPoint slide show. Its ZIP package contains slides, layouts, themes and presentation resources."
+      },
+      {
+        tag: "PPSM",
+        name: "PowerPoint macro-enabled show",
+        extensions: [".ppsm"],
+        description:
+          "A PowerPoint slide show that can contain VBA macros. Its Office Open XML ZIP package stores the presentation and its supporting resources."
+      },
+      {
+        tag: "POTX",
+        name: "PowerPoint template",
+        extensions: [".potx"],
+        description:
+          "An Office Open XML template for creating PowerPoint presentations. Its ZIP package stores reusable slide content, layouts, themes and resources."
+      },
+      {
+        tag: "POTM",
+        name: "PowerPoint macro-enabled template",
+        extensions: [".potm"],
+        description:
+          "A PowerPoint presentation template that can include VBA macros. It combines reusable slides, layouts and themes with macro-related parts in a ZIP package."
+      },
+      {
+        tag: "PPAM",
+        name: "PowerPoint add-in",
+        extensions: [".ppam"],
+        description:
+          "A PowerPoint add-in stored as an Office Open XML ZIP package. It can contain VBA code and supporting resources that provide additional presentation commands."
       },
       {
         tag: "ODT",
@@ -352,8 +649,15 @@ export const FORMAT_GROUPS: FormatGroup[] = [
     ]
   },
   {
-    name: "Markup",
+    name: "Text & markup",
     formats: [
+      {
+        tag: "TXT",
+        name: "Plain text",
+        extensions: [".txt", ".text", ".log", ".md", ".markdown"],
+        description:
+          "Text without a required container or document signature. The engine identifies its character encoding and line structure, including text stored as logs or Markdown."
+      },
       {
         tag: "HTML",
         name: "HTML document",
@@ -402,6 +706,13 @@ export const FORMAT_GROUPS: FormatGroup[] = [
           "An individual email message stored with its headers and body. MIME structures can describe alternative body formats, inline resources and file attachments."
       },
       {
+        tag: "EMLX",
+        name: "Apple Mail message",
+        extensions: [".emlx"],
+        description:
+          "An individual message stored by Apple Mail. A byte count precedes the email message, with Apple Mail metadata following the message data."
+      },
+      {
         tag: "MBOX",
         name: "mailbox",
         extensions: [".mbox"],
@@ -421,6 +732,13 @@ export const FORMAT_GROUPS: FormatGroup[] = [
         extensions: [".db", ".sqlite", ".sqlite3", ".db3"],
         description:
           "A database file used by SQLite, an embedded SQL database engine. It stores tables, indexes and other database structures in pages within a single file."
+      },
+      {
+        tag: "HDF5",
+        name: "HDF5 data file",
+        extensions: [".h5", ".hdf5", ".he5"],
+        description:
+          "A Hierarchical Data Format file that organizes data into groups, datasets and attributes. It is used for structured scientific and numerical data."
       },
       {
         tag: "JSON",
@@ -517,6 +835,34 @@ export const FORMAT_GROUPS: FormatGroup[] = [
         extensions: [".psd", ".psb"],
         description:
           "Adobe Photoshop's document format, storing image data, layers, masks, channels and other editing information. The related PSB format supports larger documents."
+      },
+      {
+        tag: "TGA",
+        name: "Truevision TGA image",
+        extensions: [".tga", ".icb", ".vda", ".vst"],
+        description:
+          "A Truevision raster image format supporting color-mapped, true-color and grayscale pixels. Image data can be stored directly or compressed with run-length encoding."
+      },
+      {
+        tag: "RADIANCE-HDR",
+        name: "Radiance HDR image",
+        extensions: [".hdr", ".pic", ".rgbe", ".xyze"],
+        description:
+          "A high dynamic range image used by Radiance and other imaging tools. Pixels store RGB or XYZ color components with a shared exponent to represent a wide brightness range."
+      },
+      {
+        tag: "QOI",
+        name: "QOI image",
+        extensions: [".qoi"],
+        description:
+          "The Quite OK Image format, a lossless raster format for RGB and RGBA pixels. It uses compact pixel operations designed for simple, fast encoding and decoding."
+      },
+      {
+        tag: "NETPBM",
+        name: "Netpbm image",
+        extensions: [".pbm", ".pgm", ".ppm", ".pnm", ".pam", ".pfm"],
+        description:
+          "A family of portable bitmap, grayscale and color image formats. Text headers describe the image, followed by text or binary pixel data, including floating-point data in PFM."
       }
     ]
   },
@@ -793,7 +1139,14 @@ export const FORMAT_GROUPS: FormatGroup[] = [
         name: "Autodesk FBX model",
         extensions: [".fbx"],
         description:
-          "Autodesk's format for exchanging 3D scenes and animation. It can store models, materials, skeletons, cameras and animation data in binary or ASCII form."
+          "The binary form of Autodesk's format for exchanging 3D scenes and animation. It can store models, materials, skeletons, cameras and animation data."
+      },
+      {
+        tag: "FBX-ASCII",
+        name: "Autodesk FBX model (text)",
+        extensions: [".fbx"],
+        description:
+          "The text form of Autodesk FBX. Named, nested records describe scene objects, geometry, properties, connections and animation data."
       },
       {
         tag: "3DS",
@@ -864,11 +1217,32 @@ export const FORMAT_GROUPS: FormatGroup[] = [
           "A Unity archive for delivering assets such as models, textures and scenes at runtime. It contains serialized asset data and supporting resources, with optional compression."
       },
       {
+        tag: "UNITY-WEB-DATA",
+        name: "Unity WebGL data",
+        extensions: [".data"],
+        description:
+          "A data container used by Unity WebGL builds. Its directory records the names and locations of the files packaged for the game."
+      },
+      {
         tag: "UNITY-SERIALIZED",
         name: "Unity serialized file",
-        extensions: [".assets", ".unity", ".resource"],
+        extensions: [".assets", ".unity"],
         description:
           "Unity's binary format for serialized objects and asset data. It records object metadata, properties and references and is used in built game data and AssetBundles."
+      },
+      {
+        tag: "GODOT-CTEX",
+        name: "Godot compressed texture",
+        extensions: [".ctex"],
+        description:
+          "A Godot 4 imported texture. Its header describes dimensions and stored image data, which can use embedded image encoding or GPU texture compression."
+      },
+      {
+        tag: "GODOT-RSCC",
+        name: "Godot compressed file",
+        extensions: [],
+        description:
+          "A file written through Godot's compressed file wrapper. A header and block table describe compressed data; the wrapper can be used for resources with different filenames."
       },
       {
         tag: "RPA",
@@ -892,6 +1266,39 @@ export const FORMAT_GROUPS: FormatGroup[] = [
           "An encrypted image or audio asset used by RPG Maker MV or MZ. A format header and partial encryption wrap the original media; interpreting the payload depends on the encryption key or recoverable file structure."
       }
     ]
+  },
+  {
+    name: "Containers",
+    formats: [
+      {
+        tag: "ISO-BMFF",
+        name: "ISO base media container",
+        extensions: [],
+        description:
+          "A box-based container underlying formats such as MP4 and HEIF. This identity is used when the structure is recognized without establishing a more specific supported format."
+      },
+      {
+        tag: "RIFF",
+        name: "RIFF container",
+        extensions: [],
+        description:
+          "The Resource Interchange File Format, which organizes data into named chunks. This entry covers recognized RIFF structures outside specific formats such as WAVE, AVI and WebP."
+      },
+      {
+        tag: "IFF",
+        name: "IFF container",
+        extensions: [],
+        description:
+          "The Interchange File Format, a chunk-based container with big-endian size fields. The engine can inspect its generic structure when no more specific supported form is identified."
+      },
+      {
+        tag: "EBML",
+        name: "EBML document",
+        extensions: [],
+        description:
+          "Extensible Binary Meta Language, which stores nested elements with identifiers and lengths. This identity covers recognized EBML documents beyond the specific Matroska and WebM formats."
+      }
+    ]
   }
 ];
 
@@ -899,11 +1306,6 @@ export const FORMAT_TOTAL = FORMAT_GROUPS.reduce((sum, group) => sum + group.for
 
 /**
  * Leading signatures, for the page's own probe.
- *
- * This is deliberately not the engine. The engine confirms a signature against
- * the structure behind it, and settles another sixty formats by parsing them
- * when they carry no signature of their own. This table is the first stage only,
- * and the ones it cannot do are the point rather than a gap.
  *
  * Ordered most specific first: the first entry that matches wins, so CR2 has to
  * come before TIFF, HEIF before MP4 and UDF before ISO.

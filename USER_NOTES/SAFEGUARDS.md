@@ -16,8 +16,10 @@ A new protection gets a new entry in the same change that adds it.
 | PRIV-004 | The YouTube player loads only on the visitor's click | `src/pages/Home/sections/what_it_does_section/ProductDemoVideo.tsx` |
 | PRIV-005 | Disclosures match what the code does | `CookieConsent.tsx`, `RegistrationForm.tsx`, `src/pages/Policies/Privacy.tsx`, `ProductDemoVideo.tsx`, `LICENSES_INDEX_MAP.md`, `OUTSIDE_ROUTES.md` |
 | PRIV-006 | The visitor can stop and unload the video player | `src/pages/Home/sections/what_it_does_section/ProductDemoVideo.tsx` |
+| REV-001 | Review posting is public, informed and reportable | `src/pages/Home/sections/reviews_section/Reviews.tsx`, `src/pages/Policies/Terms.tsx` |
 | LIC-001 | Licence index identifies original notice sources | `LICENSES_INDEX_MAP.md`, `src/assets/fonts/`, `src/assets/icons/` |
 | LIC-002 | Website licence notices ship with the production website | `src/pages/Policies/Licenses.tsx`, `src/vite-env.d.ts`, `vite.config.ts` |
+| CLAIM-001 | Safety claims match what the application does | `src/pages/Home/sections/faq_section/Faq.tsx`, `src/pages/Home/sections/what_it_does_section/ContainmentTree.tsx` |
 
 ## PRIV-001 — Non-necessary cookies wait for consent
 
@@ -74,8 +76,10 @@ cookie answer.
 connections. A change to cookies, storage or outside requests updates the relevant
 disclosures in the same change.
 
-The current first-party inventory has two cookies (`fa_consent`, `fa_remember`) and two
-session-storage entries (`fa_session`, `file-analyzer.review-draft`). Privacy states
+The current first-party inventory has two cookies (`fa_consent`, `fa_remember`) and three
+session-storage entries (`fa_session`, `fa_google_state`, `file-analyzer.review-draft`).
+Privacy states what Google sign-in hands the server (verified address and Google account
+identifier) and that nothing else from Google is stored. Privacy states
 their purposes and lifetimes, including draft removal after successful posting and
 browser session restoration. The notices do not describe today's answer as permission
 for unspecified future optional purposes. The YouTube disclosure identifies Google
@@ -87,7 +91,8 @@ is harmless.
 
 `LICENSES_INDEX_MAP.md` records licence paths, third-party usage, font sources and
 provider information. The `/licenses` page uses only local notice text and download assets;
-`OUTSIDE_ROUTES.md` records the Google notice links and the current contact address.
+`OUTSIDE_ROUTES.md` records the Google notice links, the Google sign-in redirect and the
+current contact address.
 
 ## PRIV-006 — The visitor can stop and unload the video player
 
@@ -98,6 +103,18 @@ not claim to delete data Google already received or cookies/storage already set.
 
 **Why:** visitors need a way to end playback and remove the embedded player after
 activating it, with accurate information about what that action does.
+
+## REV-001 — Review posting is public, informed and reportable
+
+**Must hold:** the review form shows, before the post button, that the shown name, rating
+and review are public, and links the review rules (Terms, `#terms-reviews`) and how
+reviews are stored (Privacy, `#privacy-reviews`). The shown name is one the reviewer types;
+it is never prefilled from the account e-mail. The Terms review section states how to
+report a review and to which address.
+
+**Why:** reviewers must know what becomes public before they publish it, an e-mail-derived
+default can expose part of an address the reviewer never chose to show, and people affected
+by a review need a stated way to raise it.
 
 ## LIC-001 — Licence index identifies original notice sources
 
@@ -135,3 +152,19 @@ When the shipped dependency or asset set changes, update the public notices acco
 **Why:** storing notices only in the repository does not include them in the website
 distributed to visitors. Direct imports keep public notices tied to their original
 texts and include both readable notices and standalone copies in the production build.
+
+## CLAIM-001 — Safety claims match what the application does
+
+**Must hold:** the site never says the application runs nothing or writes nothing to disk.
+The "Is it safe" FAQ answer names every action that starts a program: Run on the Track tab
+(launches the inspected executable), conversion through Word, Excel, PowerPoint, LibreOffice,
+ImageMagick, Blender or Graphviz, and the terminal. It warns against pressing Run on untrusted
+files. The "Can it change or damage a file" answer and the containment-tree note say that
+container members are written to the application's temporary folder when inspected, previewed,
+copied, dragged out or converted, and that dropped files are copied there. "Read-only, nothing
+written back" applies to the user's own files only. When the application gains an action that
+executes code or writes to disk, these texts are updated in the same change.
+
+**Why:** a visitor relies on these answers when deciding whether to open an untrusted file. A
+claim that nothing runs or nothing touches the disk, while the application can launch the file
+or extract it, exposes users to harm and the project to liability.

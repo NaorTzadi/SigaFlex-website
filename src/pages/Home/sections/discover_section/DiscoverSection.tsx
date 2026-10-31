@@ -9,19 +9,19 @@ export default function DiscoverSection() {
     {
       glyph: "arrowDown",
       title: "Download",
-      body: "Windows desktop. Runs offline, opens files read-only, writes nothing back.",
+      body: "Upcoming Windows desktop application. Downloads are not available yet.",
       to: ROUTES.DOWNLOAD
     },
     {
       glyph: "tag",
       title: "Pricing",
-      body: "Free while it is in development, and the shape of the plans that come after.",
+      body: "The plans planned for release. Nothing can be tried or bought yet.",
       to: ROUTES.PRICING
     },
     {
       glyph: "user",
       title: "Register",
-      body: "An account for licences and updates. Nothing you open is ever uploaded.",
+      body: "A free account, used for reviews on this site today and for trials and plans at release.",
       to: ROUTES.REGISTER
     },
     {
@@ -33,7 +33,7 @@ export default function DiscoverSection() {
   ];
 
   return (
-    <Section id={HOME_SECTIONS.DISCOVER} eyebrow="07 — Next" title="Discover more">
+    <Section id={HOME_SECTIONS.DISCOVER} title="Discover more">
       <InfoCardGrid items={discover} />
     </Section>
   );

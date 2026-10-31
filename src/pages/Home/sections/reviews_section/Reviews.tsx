@@ -38,10 +38,6 @@ function dateOf(stamp: string): string {
   });
 }
 
-function nameFrom(email: string): string {
-  return email.split("@")[0].slice(0, REVIEW_NAME_MAX_LENGTH);
-}
-
 type Draft = { displayName: string; rating: number; body: string };
 
 /*
@@ -86,7 +82,6 @@ function dropDraft() {
 
 export default function Reviews() {
   const signedIn = useGlobal("signedIn");
-  const accountEmail = useGlobal("accountEmail");
 
   const [written, setWritten] = useState<Review[]>([]);
   const [loaded, setLoaded] = useState(false);
@@ -149,10 +144,6 @@ export default function Reviews() {
       current = false;
     };
   }, [signedIn]);
-
-  useEffect(() => {
-    if (signedIn && !displayName && accountEmail) setDisplayName(nameFrom(accountEmail));
-  }, [signedIn, accountEmail, displayName]);
 
   /* The button is at the foot of the form and the answer is at its head, so the
      answer takes focus rather than waiting to be noticed. */
@@ -230,9 +221,7 @@ export default function Reviews() {
   return (
     <Section
       id={HOME_SECTIONS.REVIEWS}
-      eyebrow="05 — The verdict"
       title="What people say"
-      lead="Reviews left by people with an account. One each, and they can change or remove their own."
       tone="sunken"
       hue="blue"
     >
@@ -338,6 +327,14 @@ export default function Reviews() {
                 {`${body.length} of ${REVIEW_BODY_MAX_LENGTH} characters. One review per account: posting again replaces the one you left.`}
               </p>
             </div>
+
+            {/* SAFEGUARD REV-001 — see SAFEGUARDS.md */}
+            <p className={`${className}_hint`}>
+              The name shown, your rating and your review are public. Do not include personal
+              details. <Link to={`${ROUTES.TERMS}#terms-reviews`}>Review rules and reporting</Link>
+              {" · "}
+              <Link to={`${ROUTES.PRIVACY}#privacy-reviews`}>How reviews are stored</Link>
+            </p>
 
             <div className={`${className}_actions`}>
               <button className="fa_button fa_button-primary" type="submit" disabled={busy}>

@@ -72,8 +72,6 @@ export default function ProductIntroduction() {
 
       <div className={`${className}_inner`}>
         <div className={`${className}_copy`}>
-          <p className={`${className}_eyebrow fa_eyebrow`}>Windows desktop · offline · read-only</p>
-
           <h1 className={`${className}_title`} id="hero-heading" aria-label={PRODUCT_NAME}>
             <BrandName animated />
           </h1>

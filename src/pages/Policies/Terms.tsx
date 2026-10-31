@@ -56,6 +56,12 @@ export default function Terms() {
             have the right to publish, or anything aimed at a person rather than the software. A
             review that does can be removed without warning.
           </p>
+          {/* SAFEGUARD REV-001 — see SAFEGUARDS.md */}
+          <p>
+            To report a review — because it is about you, uses your work, impersonates someone or
+            breaks these rules — write to <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>,
+            naming the review and the reason.
+          </p>
         </>
       )
     },

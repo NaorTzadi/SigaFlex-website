@@ -49,7 +49,7 @@ const ANSWERS = [
   "File viewing",
   "Metadata",
   "Format details",
-  "Coverage"
+  "Unaccounted regions"
 ];
 
 export default function AnalysisToolsComparison() {

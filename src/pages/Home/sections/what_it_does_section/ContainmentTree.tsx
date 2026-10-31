@@ -251,10 +251,12 @@ export default function ContainmentTree() {
         })}
       </div>
 
+      {/* SAFEGUARD CLAIM-001 — see SAFEGUARDS.md */}
       <p className={`${className}_note`}>
-        Four formats deep — <span className={`${className}_mono`}>PE → ZIP → JAR → class</span> — and
-        nothing was written to disk to get there. Each level is decompressed in memory when you open
-        it, and thrown away when you close it.
+        Four formats deep — <span className={`${className}_mono`}>PE → ZIP → JAR → class</span> — in
+        one tree, without extracting anything yourself. Expanding a container lists what is inside
+        it; a member is written to the application&apos;s temporary folder only when you inspect,
+        preview, copy, drag out or convert it.
       </p>
     </div>
   );

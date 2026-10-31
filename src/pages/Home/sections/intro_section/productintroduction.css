@@ -47,10 +47,6 @@
   max-width: 46rem;
 }
 
-.productintroduction_eyebrow {
-  margin: 0 0 var(--fa-space-6);
-}
-
 .productintroduction_title {
   display: flex;
   align-items: center;

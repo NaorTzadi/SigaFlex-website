@@ -77,6 +77,17 @@ export default function Privacy() {
               </tr>
               <tr>
                 <th scope="row">
+                  <code>fa_google_state</code>
+                  <span className={`${className}_storage_type`}>Session storage</span>
+                </th>
+                <td>
+                  A random value that confirms the answer coming back from Google belongs to the
+                  sign-in you started in this tab.
+                </td>
+                <td>Removed when you return from Google, or at the end of the tab session.</td>
+              </tr>
+              <tr>
+                <th scope="row">
                   <code>file-analyzer.review-draft</code>
                   <span className={`${className}_storage_type`}>Session storage</span>
                 </th>
@@ -111,6 +122,17 @@ export default function Privacy() {
             password itself — and the times you registered, accepted the terms, confirmed the
             address and last signed in. It also counts failed sign-in attempts and, after five,
             locks the account for fifteen minutes.
+          </p>
+          <p>
+            If you sign in with Google, Google tells the server your e-mail address, that Google
+            has verified it, and an identifier for your Google account. The server stores the
+            address and that identifier to recognise you, and nothing else from Google. Your Google
+            password never reaches us. An account made this way has no password here until you set
+            one. Google&apos;s handling of the sign-in is covered by the{" "}
+            <a href={EXTERNAL_LINKS.GOOGLE_PRIVACY_POLICY} target="_blank" rel="noreferrer noopener">
+              Google Privacy Policy (opens in a new tab)
+            </a>
+            .
           </p>
           <p>
             Confirmation and password-reset links are stored only as a SHA-256 hash of the token, so
