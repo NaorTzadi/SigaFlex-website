@@ -19,6 +19,10 @@ globally through the website. SigaFlex is currently an upcoming product.
 - Account creation is optional for free users.
 - Downloads, trials, and purchases must not be presented as available until those features actually launch.
 
+the paid license is active for a year since the moment the user paid
+if you stop paying you fallback to the free version.
+renewal happens automatically 
+
 Device compatability
 the skeleton must support desktop/mobile layouts even before actual styling is chosen.
 

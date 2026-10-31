@@ -1,8 +1,23 @@
 # SigaFlex: deferred software-release and commercial legal review
 
-**Created 31 October 2026 by separating future-only material from `PRE_LAUNCH_LEGAL_REVIEW.md`.** This file retains issues identified in that review, not newly researched legal conclusions. The review's law references and applicability limitations are preserved below. No product, installer, desktop trial, paid plan, subscription, or checkout is presently available on the website.
+**Created 31 October 2026 by separating future-only material from `SIGAFLEX_WEBSITE_LEGAL_REVIEW.md`.** This file retains issues identified in that review, not newly researched legal conclusions. The review's law references and applicability limitations are preserved below. No product, installer, desktop trial, paid plan, subscription, or checkout is presently available on the website.
 
 **Status: deferred.** Nothing here is an obligation to add or activate these features now. Reassess applicable law and actual release plans when development reaches the relevant stage. Distinguish legal requirements from optional contract design, engineering advice, and compliance assessments. Operating status at the time of the review: individual based in Israel, not a registered business.
+
+## Confirmed planned distribution, trial and subscription model (31 October 2026)
+
+These are **owner-confirmed product decisions**, not current live website features, finalized legal terms or jurisdictional clearance:
+
+- Anyone can download and install the **same installer** without an account or payment. The limited free tier works without an account.
+- Free account registration is optional and does not create a payment obligation. A temporary expanded/full trial **requires a free account**; its duration and paid-conversion behavior remain undecided.
+- A paid licence requires an account and successful payment. The planned paid product is a **yearly subscription with automatic renewal enabled by default**; subscribing must be a separate, informed action from creating a free account.
+- The first paid entitlement lasts **one year from the instant of successful payment**. Successful renewals extend paid access for subsequent yearly periods. Cancelling automatic renewal leaves the already paid period intact. Once the paid period ends without a successful renewal extending it, the same installation **reverts to the limited free tier**, not a perpetual old paid version.
+- Upgrading access needs no new download or installation. Activated software operates offline without continuous login or licence-server connections. Later billing/renewal information and offline entitlements must be reconciled reliably; engineering mechanism is not yet decided.
+- No actual product download, trial activation, paid order, recurring charge or subscription-management portal exists on the website at the review date.
+
+**Future fill-in register:** `[TRIAL_LENGTH]`, `[TRIAL_END_BEHAVIOR]`, `[TRIAL_PAYMENT_METHOD_IF_ANY]`, `[PRICE]`, `[CURRENCY]`, `[TAX_PRESENTATION]`, `[RENEWAL_BILLING_ANCHOR_AND_CALENDAR_RULE]`, `[FAILED_PAYMENT_BEHAVIOR]`, `[CANCELLATION_METHOD]`, `[MANDATORY_RENEWAL_NOTICE_IF_APPLICABLE]`, `[REFUND_AND_STATUTORY_CANCELLATION_BY_MARKET]`, `[TRADER_DETAILS_AS_LEGALLY_REQUIRED]`, `[PERSONAL_AND_COMMERCIAL_USE_RIGHTS]`, `[SOFTWARE_LICENCE_TERMS]`, and `[RELEASE_SYSTEM_REQUIREMENTS]`. **Do not choose these legal/commercial facts by guesswork, and do not activate checkout with them unresolved.** A separate EULA page, checkbox, refund page, or cancellation button is not automatically mandated everywhere; determine the actual obligations for the launched offering and applicable markets.
+
+**Website-ready interface preparation, without publication:** reserve clearly named content slots for Download, Pricing, Desktop Licence, Trial Terms, Subscription Terms, renewal cancellation/management, statutory cancellation/refunds where applicable, and trader/checkout privacy disclosures. Use existing routes where sensible. The companion website review specifies what can remain “Coming soon” now. Static scaffolding is optional; live billing, cancellation, entitlement expiry and legally timed disclosures require real implementation and verification later.
 
 ## When this file becomes relevant
 
@@ -25,9 +40,9 @@ Where mandatory consumer rights apply, software and purchase terms cannot simply
 
 **Original evidence:** the website displayed “Open now” and “Start free trial” while linking to a download page with no installer, and did not state a trial duration. The present website review retains the immediate task of correcting the premature availability claims. **No checkout or active payment flow was found** in the review.
 
-**If a trial becomes real:** define the actual duration, any access/use limitations, whether it converts to paid use, and the facts that users need before committing. Distinguish a free trial from free development use or a free software tier; do not promise a trial that has not launched.
+**If a trial becomes real:** it requires a free account and grants temporary expanded/full access. Define the actual duration, limitations, expiry and any conversion mechanism (not yet chosen), and give any required disclosures before activation. Do **not** infer an automatic paid conversion from the existence of an account. Distinguish the trial from the permanent accountless free tier.
 
-**If charging or offering covered consumer sales:** determine final prices/currency/taxes; commercial-use rights; recurring billing/renewal; cancellation/refund duties; relevant software functionality/compatibility disclosures; and trader/contact information. Give the pre-contract information and confirmation **required by applicable law**. Do not assume digital downloads are always nonrefundable: jurisdiction-specific consent, acknowledgment, and exceptions may matter. [EU: online selling and digital-content rules](https://europa.eu/youreurope/business/selling-in-eu/selling-goods-services/ecommerce-distance-selling/index_en.htm).
+**If charging or offering covered consumer sales:** the product model is an annual auto-renewing paid licence, with a one-year initial paid period measured from successful payment, cancellation preserving the paid-through date, and eventual free-tier fallback if renewal does not extend it. Determine final prices/currency/taxes, exact anniversary/time-zone/calendar and failed-payment rules; commercial-use rights; legally required renewal/cancellation/refund duties; relevant software functionality/compatibility disclosures; and trader/contact information. Give the pre-contract information and confirmation **required by applicable law**. Do not assume digital downloads are always nonrefundable: jurisdiction-specific consent, acknowledgment, and exceptions may matter. [EU: online selling and digital-content rules](https://europa.eu/youreurope/business/selling-in-eu/selling-goods-services/ecommerce-distance-selling/index_en.htm).
 
 If Israeli online-consumer cancellation duties apply, assess any required prominent cancellation route/disclosures; deleting a website account is not equivalent to subscription cancellation. [Knesset: consumer cancellation amendment](https://main.knesset.gov.il/Activity/Legislation/Laws/Pages/LawBill.aspx?lawitemid=2002974).
 
@@ -47,7 +62,7 @@ At product release, verify actual software functionality, format coverage, depen
 
 ## F05 — Future checkout/accessibility and overseas commerce (original L10/L16)
 
-The current website's accessibility and privacy applicability are **not deferred**. Assess those in `PRE_LAUNCH_LEGAL_REVIEW.md` for the site as it exists.
+The current website's accessibility and privacy applicability are **not deferred**. Assess those in `SIGAFLEX_WEBSITE_LEGAL_REVIEW.md` for the site as it exists.
 
 If a checkout or other qualifying e-commerce service is added, assess any additionally applicable accessibility obligations and exemptions; the original review specifically flagged EU e-commerce accessibility rules for covered services and potential microenterprise exceptions. It did not establish that every future transaction triggers those rules. [EU: accessibility requirements and exceptions](https://europa.eu/youreurope/business/selling-in-eu/selling-goods-services/accessibility/index_en.htm).
 
@@ -61,4 +76,4 @@ Before actual distribution or sales in each relevant market, assess any applicab
 - [ ] When adding checkout/distribution features: assess their own accessibility, privacy, localization and jurisdictional requirements.
 - [ ] Recheck source and applicable law at that time: the 29–31 October 2026 website review was not a live software, installer, payment or jurisdiction-by-jurisdiction audit.
 
-**Website integration placeholder:** website navigation may reserve routes or components for Download, Pricing, Licensing and product-specific legal notices, but they should be inactive or accurately labeled “Coming soon”; do not present operative legal terms for offerings that do not exist yet. The separate [current website review](PRE_LAUNCH_LEGAL_REVIEW.md) owns what must be corrected on the site **now**.
+**Website integration placeholder:** website navigation may reserve routes or components for Download, Pricing, Licensing and product-specific legal notices, but they should be inactive or accurately labeled “Coming soon”; do not present operative legal terms for offerings that do not exist yet. The separate [current website review](SIGAFLEX_WEBSITE_LEGAL_REVIEW.md) owns what must be corrected on the site **now**.

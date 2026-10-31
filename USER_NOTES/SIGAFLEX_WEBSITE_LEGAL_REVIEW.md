@@ -1,14 +1,14 @@
- SigaFlex: website-only pre-launch legal review
+# SigaFlex: website-only pre-launch legal review
 
 Review date: **29 October 2026**. Intended audience: **worldwide**, as confirmed by the owner.
 
 Operator status: **an individual, not a registered business**. Operating country: **Israel**. Both confirmed by the owner on **31 October 2026**. The installer is not currently hosted or offered for download. Worldwide is the intended audience, not a change to the operator's country or evidence of clearance in every market.
 
-Outstanding findings and current source rechecked **31 October 2026**. Scope separation updated **31 October 2026**.
+Outstanding findings and current source rechecked **31 October 2026**. Scope separation and future-page readiness plan updated **31 October 2026**.
 
-**Current scope only:** the live/pending informational SigaFlex website promoting an *upcoming* desktop product, including the website's existing or enabled account, review, marketing, video, file-detector, and website/API features. **No SigaFlex desktop installer, download, active desktop trial, or payment/checkout is available.** A present-tense promise about any of those features is a website-copy issue now, but implementing their legal/operational terms belongs to the separate [future product release review](FUTURE_SIGAFLEX_RELEASE_LEGAL_REVIEW.md). A future-facing mention here is a placeholder, not a current launch gate.
+**Current scope only:** the live/pending informational SigaFlex website promoting an *upcoming* desktop product, including the website's existing or enabled account, review, marketing, video, file-detector, and website/API features. **No SigaFlex desktop installer, download, active desktop trial, or payment/checkout is available.** A present-tense promise about any of those features is a website-copy issue now, but implementing their legal/operational terms belongs to the separate [future product release review](../../../../Downloads/FUTURE_SIGAFLEX_RELEASE_LEGAL_REVIEW.md). A future-facing mention here is a placeholder, not a current launch gate.
 
-**Legal-minimum rule for this review:** distinguish obligations supported by applicable law from conditional applicability and optional risk/engineering recommendations. No recommendation should become a purported legal requirement solely because it appears in the checklist.
+**Legal-minimum rule for this review:** label each item **current legal duty (where applicable)**, **applicability to determine**, **current inaccurate claim to fix**, **optional preparation**, or **future-only**. Link mandatory items to a legal provision or regulator guidance and the specific site behavior/market that triggers them. Unknown applicability means *unresolved*, not *mandatory by default*. A recommended security pattern, extra website page, process, or lawyer review is not automatically a statutory requirement. Do the least needed to meet an obligation once established; do not promise complete legal clearance or zero lawsuit risk.
 
 This file lists outstanding work only. Completed findings are removed; remaining IDs retain their original numbering. Conditional work applies only when the relevant feature or market is in scope; it is not automatically a blocker for an informational launch.
 
@@ -20,7 +20,42 @@ This is a source-based risk review, not legal clearance or a guarantee against l
 
 The current scope is the website and any enabled accounts, reviews, email and request logging. Applicable identification/privacy duties, data security and accessibility may concern that scope even without a hosted installer; determine actual applicability rather than assuming each rule covers every site. This report does not establish a requirement to register a business, publish a home address or identity number, or display Israel as a standalone mandatory country notice for the current site. Naming the responsible person for covered personal-data collection is a separate issue from business registration. Website operational arrangements mean who handles website data, access, retention, backups and privacy requests; they are internal practices whose legally required effects must be described accurately, not a requirement to publish every implementation detail.
 
-**Future placeholder:** preserve a path in the website architecture/content for a later software licence, actual downloads, trial and payment terms, and any legally required sales notices. Do **not** populate those with operative product/download/sales terms, add those features, or count them as outstanding current-site legal work. Details are tracked only in [FUTURE_SIGAFLEX_RELEASE_LEGAL_REVIEW.md](FUTURE_SIGAFLEX_RELEASE_LEGAL_REVIEW.md).
+**Future readiness:** preserve an identifiable place in the website structure for later download, desktop licence, trial, paid subscription, cancellation and any required sales disclosures. Known behavior and fill-in fields are specified in **Future website placeholders** below and expanded in [FUTURE_SIGAFLEX_RELEASE_LEGAL_REVIEW.md](../../../../Downloads/FUTURE_SIGAFLEX_RELEASE_LEGAL_REVIEW.md). This is **design preparation**, not a direction to activate, publish binding future contracts, or build billing now.
+
+## Future website placeholders — specific design, not current obligations
+
+**Purpose.** Make future website integration simple, without silently treating future software/commerce duties as current duties. The text and route names below are *proposed content slots*, not confirmation that a route/component exists, and not a legal ruling that each page must exist separately. Reuse existing `Pricing`, `Download`, `Terms`, and `/licenses` routes where appropriate; a separate route is only needed if applicable law or the chosen product flow makes it necessary. An inactive component may be planned in documentation without being built today.
+
+### Confirmed product decisions to preserve
+
+- **Now:** SigaFlex is an upcoming desktop product. No installer, download, active trial, purchase, subscription or payment is offered. Free website account registration may exist; registration alone is not a purchase or subscription.
+- **When downloads launch:** one installer, downloadable and installable by anyone **without account or payment**. Limited-functionality **free tier requires no account**.
+- **Trial after activation launches:** a **free account is required** to activate temporary expanded/full functionality. Trial length and whether a payment method is requested are **not settled**; do not imply automatic conversion to a paid subscription.
+- **Paid after commerce launches:** account and successful payment required; an annual, automatically renewing subscription is the planned default. **The first paid entitlement runs for one year beginning at the moment of successful payment**. On an ordinary successful annual renewal, paid access continues for the next yearly period. Cancelling future automatic renewal **does not remove the already paid period**. If a paid period expires without a successful renewal extending it, the same installed application **falls back to the limited free tier**, without a reinstall or perpetual paid-version access.
+- Users move between free, trial and paid **without reinstalling**. Activated use must function **offline without ongoing login or continuous licence-server access**. Final handling of offline subscription expiry and renewal synchronization must match those promises before release.
+
+### Prepared content/structure slots
+
+| Slot / possible route | Current public behavior | Ready for later; fill only when the feature actually launches | Legal status |
+| --- | --- | --- | --- |
+| Download (`/download`) | “SigaFlex is coming soon. Downloads are not yet available.” No operative download button. | Installer link, supported Windows versions/requirements, free-tier availability, and other disclosures if legally required. One installer serves all tiers. | Future; no obligation to distribute now. |
+| Pricing / access (`/pricing` or existing Pricing) | Upcoming product; no “Start trial,” “Buy,” “Ships today,” or active price/checkout claim. | Explain free/accountless tier, account-based trial, paid annual tier; add final price/currency/taxes and the pre-purchase renewal/cancellation information required in applicable markets. | Correct present false availability now; sales details future. |
+| Desktop software licence (proposed `/software-license`, or a clearly separated section of existing `/licenses`) | No operative grant of a desktop licence for a nonexistent download. A labelled “Software licence — to be published at release” placeholder may be internal only. | Identity of licensor, rights and restrictions, personal/commercial usage, distribution, third-party notices, software scope, updates/support if promised, and non-waivable rights. Decide later whether a click-through, in-installer notice or another presentation is required/appropriate. | A distinct EULA page/clickbox is **not presumed universally mandatory**. |
+| Trial terms (section of Pricing or separate page if needed) | Inactive. No countdown or trial CTA. | Actual duration `[TRIAL_LENGTH]`, eligibility, access limitations, start/end event, and whether a trial ever converts to a paid offer. Do not insert an automatic charge without explicit actual agreement and legally required disclosures. | Future, conditional on real trial. |
+| Paid subscription terms (Pricing/checkout plus linked full terms) | Inactive. Website account registration never implies payment or auto-renewal. | Annual fee `[PRICE] [CURRENCY]`, taxes, billing start, renewal date/time and cadence, automatic-renewal notice where applicable, payment failures, cancellation mechanism, continued paid access until paid end, fallback to free, refund/cancellation rights and any required confirmation/records. | Future; exact presentation and notices depend on market. |
+| Subscription management / cancellation (possible account area) | No payment management controls for a non-existent subscription. | A way to stop **future renewals** without deleting the account; display paid-until date and entitlement; add any jurisdiction-required online cancellation method. Refunds are separate and cannot be assumed categorically unavailable for digital software. | Future, conditional on selling subscriptions. |
+| Future trader/sales privacy details | No checkout, payment collection, or sales-trader details falsely presented as currently active. | Insert legally required operator/trader identification and contact/address information (which may differ from current privacy notice), payment-provider/checkout data disclosures, invoicing and any required market-specific information. | Future; do not invent a company, private street address or a current registration duty. |
+
+**Reference wording allowed now (only if the website actually wants to describe the plan):** “SigaFlex is an upcoming Windows desktop application. Downloads, trials and paid subscriptions are not yet available. At release, a limited free version is planned without an account; expanded trial and paid access will require an account.” This is an *optional sample of truthful planned-feature messaging*, not required legal text, and it should be revised if plans change.
+
+### Activation triggers — do not treat as current checklist tasks
+
+1. **Before publishing the installer:** replace coming-soon copy, verify advertised functions and any actual software-use/legal notices, and audit applicable included third-party licences. Decide the user-facing desktop licence mechanism, if needed.
+2. **Before enabling a real trial:** complete `[TRIAL_LENGTH]` and actual activation/end/paid-conversion behavior; display any legally necessary trial disclosures **before** activation.
+3. **Before offering/charging the annual subscription:** fill every unresolved price, renewal, cancellation, refund, trader and checkout slot; implement the legally required disclosures, approvals and controls for the markets served. Test one-year entitlement, offline operation, cancellation and free fallback.
+4. **If the software/commerce feature changes the website's data flows, jurisdictions or accessibility scope:** reassess the *additional* obligations caused by that specific change, not the whole future checklist as a blanket current obligation.
+
+**Not a promise that future work is only text replacement:** Routes, page sections and static text can be prepared now. Actual checkout consent, billing records, renewal/cancellation mechanics, entitlement transitions, legally required notice timing and market-specific rules may also require working implementation and testing when activated. Do not fake those capabilities with placeholders.
 
 ## Scope and evidence
 
@@ -38,15 +73,15 @@ Evidence labels used below:
 - **Conditional:** depends on a feature being enabled or a law applying.
 - **Unverified:** needs operational evidence, provenance, or jurisdiction-specific review.
 
-## Next implementation batch
+## Current website: smallest useful implementation batch (once applicable)
 
 | Order | Item | Work to start with | Effort |
 | --- | --- | --- | --- |
-| 1 | L12: review posting UI | Explain public visibility next to posting controls, link privacy/review rules, and stop deriving the default public name from the email address. | Small |
-| 2 | L14 and L09: availability wording | Align Pricing, Download and related copy with the unpublished installer; remove active-trial and available-download claims. | Small |
+| 1 | L14 and L09: current availability and product claims | Align Pricing, Download and related claims with the unpublished installer; remove active-trial and available-download claims. | Small |
+| 2 | L01–L03: privacy information for active website collection | Verify current data flows; publish only the disclosures actually required and ensure they are accurate. Individual operator identity and live service/provider facts remain unresolved. | Depends on evidence |
+| 3 | L12: public review publication notice, *if posting is enabled* | Resolve whether the visible name/contents are disclosed appropriately under applicable law. No specific report button or dashboard is presumed mandatory. | Small if applicable |
 
-These are focused website changes that do not require operator or hosting decisions.
-Persistent sign-in remains in L04, and moderation arrangements remain in L12.
+These are focused **current-site issues**, not a declaration that every design suggestion in the detailed review is legally required. L04 remains a cookie applicability assessment; L10 is an accessibility coverage/exemption decision; L15 is a security-duties check, not a mandatory checklist of every OWASP pattern. Do not build future product/checkout pages as an immediate legal task.
 Finalizing L01/L02 for public data collection still requires the individual's name to publish and verification of the
 configured providers, data locations, contracts and retention rules.
 
@@ -61,7 +96,7 @@ These are **website-only** suggested checkpoints, **not** a claim that each is m
 | L03 | Server logging exceeds the notice; retention is incomplete | Before enabling the public API | Confirmed |
 | L04 | Automatic persistent sign-in needs assessment or an informed choice | Before public account activation | Confirmed behavior; exemptions depend on the requested purpose |
 | L09 | Remaining disk-write, safety, coverage and AI-data claims need qualification | Before public launch | Confirmed copy; desktop behavior unverified |
-| L10 | Accessibility statement is missing; conformance remains unverified | Before public launch unless a valid exemption applies | Confirmed missing statement; technical assessment pending |
+| L10 | Accessibility obligations/exemption must be established; missing statement alone is not proof of a legal violation | Check scope and potential lawful small-operator exemption first | Confirmed no statement; applicability and turnover unverified |
 | L11 | Website/account/review terms need correct current scope; desktop licence wording is premature | If website terms are used or accounts/reviews are enabled | Confirmed gaps; enforceability is jurisdiction-specific |
 | L12 | Reviews need clearer publication/privacy information and moderation arrangements | Before enabling public reviews | Confirmed UI/backend gaps |
 | L14 | Current website falsely implies an available download/active free trial | Correct existing public copy now; actual trial/payment terms deferred | Confirmed; no installer/checkout found |
@@ -80,7 +115,7 @@ These are **website-only** suggested checkpoints, **not** a claim that each is m
 
 **Verified rule and scope:** Israel's section 11 collection notice for covered personal-data processing includes the controller's name and contact details, alongside purpose, voluntariness/consequences, recipients and access/correction rights. This concerns the person responsible for the data, not incorporation. The database definition has exclusions, including personal nonbusiness collections; an individual is not automatically exempt merely because no company is registered. Assess the actual public account/review activity rather than claiming every personal website must display its author's legal name. [Israel PPA: collection-notice guidance](https://www.gov.il/BlobFolder/legalinfo/duty_to_notify/he/notify13.pdf), [Israel PPA: database scope and duties](https://www.gov.il/BlobFolder/generalpage/manager_duties/he/InfoDuties_new.pdf).
 
-**Future placeholder:** sales-stage trader/address disclosures are tracked in [the future product review](FUTURE_SIGAFLEX_RELEASE_LEGAL_REVIEW.md); they are not an established requirement for the current no-sale website.
+**Future placeholder:** sales-stage trader/address disclosures are tracked in [the future product review](../../../../Downloads/FUTURE_SIGAFLEX_RELEASE_LEGAL_REVIEW.md); they are not an established requirement for the current no-sale website.
 
 ### L02 — Complete the privacy notice against the actual data lifecycle
 
@@ -142,13 +177,13 @@ Advertising claims should be truthful and supported; a footer disclaimer does no
 
 **Confirmed evidence:** there is no accessibility statement route or footer link in `Routing.tsx`/`Footer.tsx`. The local project notes request WCAG compliance, but no conformance assessment was supplied. Video captions/audio description and actual keyboard, screen-reader, contrast, zoom/reflow, and dialog behavior remain unverified.
 
-**Change:** assess the whole site and public media against the legally applicable standard; fix barriers; publish an accurate accessibility statement with implemented measures, known limitations, assistance/contact information, and coordinator details if required. Include registration, cookie/policy dialogs, file picking, reviews, menus, motion, and the video. For moving content, check pause/stop requirements; reduced-motion handling is useful but does not establish every applicable criterion is met. [W3C: WCAG 2.2](https://www.w3.org/TR/WCAG22/).
+**Conditional change:** first determine whether the website is covered and whether a valid exemption applies. If covered without exemption, implement the legally required accessibility features and only the legally required statement/contact details. Do not equate W3C best practices with mandatory legal standards. If accessibility duties apply, assess the covered functionality, including registration, cookie/policy dialogs, file picking, reviews, menus, motion and video. For moving content, check pause/stop requirements; reduced-motion handling is useful but does not establish every applicable criterion is met. [W3C: WCAG 2.2](https://www.w3.org/TR/WCAG22/).
 
-Israel's guidance addresses commercial information as well as sales, new-site accessibility, and conditional exemptions. Document the current exemption criteria and actual business figures if relying on one; an unfinished or free website is not by itself evidence of exemption. Check the applicable Israeli Standard 5568 requirements rather than treating WCAG 2.2 as the automatically mandated version. [Israel: public-service/commerce scope](https://www.gov.il/he/pages/website_accessibility?chapterIndex=3), [new-site timing](https://www.gov.il/he/pages/website_accessibility?chapterIndex=6), [exemptions](https://www.gov.il/he/pages/website_accessibility?chapterIndex=8), [service-accessibility regulations, including statement provisions](https://www.gov.il/BlobFolder/guide/accommodating_service_providing_rules/he/sitedocs_service_acessibility_regulations.pdf).
+Israel's regulator says a qualifying exempt dealer (עוסק פטור) or a covered service provider with turnover below ₪120,000 can use a **self-exemption** from internet-service accessibility, without applying to the regulator. Eligibility must actually be established and the exemption/underlying turnover evidence retained if relied upon: the regulator says it may need to be shown in enforcement or litigation. Not being formally registered, not yet selling software, or having an unfinished website is **not by itself** proof. Do not automatically require a full conformance project or an accessibility-statement route until coverage and exemption are resolved. For non-exempt duties, use the applicable Israeli Standard 5568, not automatically WCAG 2.2. [Israel: public-service/commerce scope](https://www.gov.il/he/pages/website_accessibility?chapterIndex=3), [new-site timing](https://www.gov.il/he/pages/website_accessibility?chapterIndex=6), [exemptions](https://www.gov.il/he/pages/website_accessibility?chapterIndex=8), [service-accessibility regulations, including statement provisions](https://www.gov.il/BlobFolder/guide/accommodating_service_providing_rules/he/sitedocs_service_acessibility_regulations.pdf).
 
 For US business coverage, DOJ guidance describes ADA obligations, but the exact application to an overseas software-only business requires legal assessment. Do not assume the public-sector technical rule automatically governs this private site. [US DOJ: web accessibility](https://www.ada.gov/resources/web-guidance/).
 
-**Future placeholder:** assess any applicable checkout/e-commerce accessibility rules if a trial, purchase or other covered service is later offered; see [the future product review](FUTURE_SIGAFLEX_RELEASE_LEGAL_REVIEW.md).
+**Future placeholder:** assess any applicable checkout/e-commerce accessibility rules if a trial, purchase or other covered service is later offered; see [the future product review](../../../../Downloads/FUTURE_SIGAFLEX_RELEASE_LEGAL_REVIEW.md).
 
 ### L11 — Keep website and account terms limited to the current service
 
@@ -156,7 +191,7 @@ For US business coverage, DOJ guidance describes ADA obligations, but the exact 
 
 **Current website scope:** assess website/account/review rules and the enforceability of their actual terms. Do not suggest that continued browsing necessarily constitutes contractual acceptance, or that broad liability exclusions override applicable mandatory rights. An accepted policy version is an evidence recommendation, **not** a universal legally required database field. Whether any website Terms of Service document is required at all is **not established** by this review. Keep contractual acceptance distinct from optional privacy or marketing consent; accepting a privacy policy is not blanket consent. [EU: unfair contract terms](https://europa.eu/youreurope/citizens/consumers/unfair-treatment/unfair-contract-terms/index_en.htm).
 
-**Future placeholder:** remove, disable, or clearly mark inapplicable any software licence/redistribution/update/support terms that wrongly imply an available program. A separate desktop software licence and any required sales terms can be added when those offerings become real; see [the future product review](FUTURE_SIGAFLEX_RELEASE_LEGAL_REVIEW.md). No desktop licence text needs to be drafted for this website-only launch.
+**Future placeholder:** remove, disable, or clearly mark inapplicable any software licence/redistribution/update/support terms that wrongly imply an available program. Preserve the proposed software-licence content slot described above, with legal text deferred until its actual permitted uses and applicable obligations are established. See [the future product review](../../../../Downloads/FUTURE_SIGAFLEX_RELEASE_LEGAL_REVIEW.md). No desktop licence text needs to be operative for this website-only launch.
 
 ### L12 — Make public reviews transparent and manageable
 
@@ -174,7 +209,7 @@ The server returns only the newest 100 reviews; the client calculates the count/
 
 **Change now:** describe SigaFlex as an **upcoming product** and make Pricing, Download, CTA buttons, and other availability claims accurate. Do not invite visitors to begin a trial or download a program that cannot be obtained. Retaining a future download/pricing route in the site's structure does not make a trial or purchase active.
 
-**Future placeholder:** trial duration, licences, pricing, billing, cancellations, refunds, tax/invoicing, and commercial terms belong exclusively in [the future product review](FUTURE_SIGAFLEX_RELEASE_LEGAL_REVIEW.md). They are **not** current website requirements or unfinished current checkout functionality.
+**Future placeholder:** website integration slots for actual downloading, trial, annual auto-renewing subscriptions, billing, cancellations, refunds, tax/invoicing and commercial notices are outlined in **Future website placeholders** above. Their future legal/operational work belongs in [the future product review](../../../../Downloads/FUTURE_SIGAFLEX_RELEASE_LEGAL_REVIEW.md). They are **not** current website requirements or unfinished current checkout functionality.
 
 ### L15 — Verify deployment security and privacy operations
 
@@ -234,6 +269,6 @@ The following are a **website-only review checklist**, not a declaration that ev
 - [ ] L16 and conditional checks: determine applicability to **current** website visitors, data, marketing, brands and publication targets.
 - [ ] Verify the website's deployed pages, assets, network/storage behavior, and applicable legal links. A successful build alone does not establish legal compliance.
 
-**Future placeholder (not a current checkbox):** download/installer and desktop licences, actual software-release validation, trial activation, payments, subscriptions, consumer sales/returns, and software-distribution laws are tracked in [FUTURE_SIGAFLEX_RELEASE_LEGAL_REVIEW.md](FUTURE_SIGAFLEX_RELEASE_LEGAL_REVIEW.md). Leave the corresponding website sections inactive or clearly marked “Coming soon” until the offering exists.
+**Future placeholder (not a current checkbox):** reserve the named website sections/content slots in **Future website placeholders** above. Download/installer and desktop licences, real trial activation, yearly auto-renewing paid access, legally applicable cancellation/refunds, sales information and distribution duties are tracked in [FUTURE_SIGAFLEX_RELEASE_LEGAL_REVIEW.md](../../../../Downloads/FUTURE_SIGAFLEX_RELEASE_LEGAL_REVIEW.md). Do not activate these sections or imply that the software or subscription is available. A documentation-only placeholder is enough today.
 
 When implementing present website fixes, keep `USER_NOTES/SAFEGUARDS.md`, `LICENSES_INDEX_MAP.md`, and `OUTSIDE_ROUTES.md` consistent with the actual behavior. Do not weaken the existing file-locality, consent-gating, or click-to-load protections while correcting their disclosures.
