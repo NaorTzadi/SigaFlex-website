@@ -30,7 +30,7 @@ const REQUIREMENTS: Array<{ glyph: GlyphName; text: string }> = [
 ];
 
 const PLANNED: Array<{ glyph: GlyphName; name: string; note: string }> = [
-  { glyph: "terminal", name: "Linux", note: "Planned" },
+  { glyph: "penguin", name: "Linux", note: "Planned" },
   { glyph: "apple", name: "macOS", note: "Planned" }
 ];
 

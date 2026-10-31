@@ -19,13 +19,13 @@ export default function DiscoverSection() {
       to: ROUTES.PRICING
     },
     {
-      glyph: "user",
+      glyph: "userPlus",
       title: "Register",
       body: "A free account, used for reviews on this site today and for trials and plans at release.",
       to: ROUTES.REGISTER
     },
     {
-      glyph: "clipboard",
+      glyph: "book",
       title: "Third-party licences",
       body: "Everything bundled, what it is for, and the terms it ships under.",
       to: ROUTES.LICENSES

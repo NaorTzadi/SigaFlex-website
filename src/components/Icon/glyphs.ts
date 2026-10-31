@@ -6,9 +6,10 @@
  * `externalLink`, `calendar` and `padlock`, which are drawn here because only the website has a
  * password to reveal, an address to write to, a channel to link and a link that
  * leaves the site. `chevronDown`, `chevronRight`, `arrowRight`, `image`, `grid`,
- * `user`, `signOut`, `star`, `starOutline`, `error`, `convert` and `apple` are drawn here for
- * the same reason: a disclosure marker, a picture, a person, a rating and a
- * platform the window itself never has to name. `inspect` is redrawn rather than
+ * `user`, `signOut`, `star`, `starOutline`, `error`, `convert`, `apple`, `idCard`, `database`,
+ * `cookie`, `robot`, `shield`, `comment`, `devices`, `creditCard`, `trash`, `fileDetails`,
+ * `book`, `camera`, `cursor`, `lightbulb`, `userPlus` and `penguin` are drawn here for
+ * the same reason: things the window itself never has to name. `inspect` is redrawn rather than
  * lifted, because the app's path runs past the 16x16 box and clips its own handle.
  * `claude`, `codex` and `gemini` are the vendors' own marks, taken from LobeHub Icons
  * (MIT) and scaled onto the 16x16 grid; see LICENSES_INDEX_MAP.md. Nothing else here is a
@@ -72,6 +73,22 @@ export const GLYPHS = {
   calendar: "M4 1.6h1.6v1.4h4.8V1.6H12v1.4h1.4c.5 0 .8.3.8.8v9.6c0 .5-.3.8-.8.8H2.6c-.5 0-.8-.3-.8-.8V3.8c0-.5.3-.8.8-.8H4V1.6zM3.4 6.2v6.6h9.2V6.2H3.4z",
   padlock: "M8 1.8a3.2 3.2 0 0 0-3.2 3.2v1.6h-.9c-.5 0-.9.4-.9.9v5.8c0 .5.4.9.9.9h8.2c.5 0 .9-.4.9-.9V7.5c0-.5-.4-.9-.9-.9h-.9V5A3.2 3.2 0 0 0 8 1.8zm0 1.6c.9 0 1.6.7 1.6 1.6v1.6H6.4V5c0-.9.7-1.6 1.6-1.6zM7.2 8.9v2.6h1.6V8.9H7.2z",
   question: "M8 1.4a6.6 6.6 0 1 0 0 13.2A6.6 6.6 0 0 0 8 1.4zm0 1.6a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 1.6c-1.5 0-2.6 1-2.7 2.4h1.6c.1-.5.5-.9 1.1-.9.6 0 1 .4 1 .9 0 .5-.3.8-.8 1.2-.7.5-1 1-1 1.8v.3h1.6v-.2c0-.4.2-.7.7-1.1.7-.5 1.2-1.1 1.2-2 0-1.4-1.1-2.4-2.7-2.4zm-.8 6.4v1.6h1.6V11H7.2z",
+  idCard: "M2.2 3h11.6c.7 0 1.2.5 1.2 1.2v7.6c0 .7-.5 1.2-1.2 1.2H2.2C1.5 13 1 12.5 1 11.8V4.2C1 3.5 1.5 3 2.2 3zM2.4 4.4v7.2h11.2V4.4H2.4zM5.5 5.6a1.3 1.3 0 1 1 0 2.6 1.3 1.3 0 0 1 0-2.6zM3.6 10.6c.2-1 1-1.6 1.9-1.6s1.7.6 1.9 1.6H3.6zM8.6 6.2h3.8v1.2H8.6V6.2zm0 2.4h2.8v1.2H8.6V8.6z",
+  database: "M8 1.6c3 0 5.5.8 5.5 1.8S11 5.2 8 5.2 2.5 4.4 2.5 3.4 5 1.6 8 1.6zM2.5 4.4c0 1 2.5 1.8 5.5 1.8s5.5-.8 5.5-1.8v3.2c0 1-2.5 1.8-5.5 1.8S2.5 8.6 2.5 7.6V4.4zm0 4.2c0 1 2.5 1.8 5.5 1.8s5.5-.8 5.5-1.8v3.2c0 1-2.5 1.8-5.5 1.8s-5.5-.8-5.5-1.8V8.6z",
+  cookie: "M8 1.6a6.4 6.4 0 1 0 6.4 6.6A2.7 2.7 0 0 1 11 5 3 3 0 0 1 8 1.6zM5.4 5.1a.9.9 0 1 0 0 1.8.9.9 0 0 0 0-1.8zm1.2 4.6a.9.9 0 1 0 0 1.8.9.9 0 0 0 0-1.8zm3.8-.6a.9.9 0 1 0 0 1.8.9.9 0 0 0 0-1.8z",
+  robot: "M3.9 5h8.2c.8 0 1.4.6 1.4 1.4v6.2c0 .8-.6 1.4-1.4 1.4H3.9c-.8 0-1.4-.6-1.4-1.4V6.4c0-.8.6-1.4 1.4-1.4zM5.8 7.5a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2zm4.4 0a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2zM5.8 11.2h4.4v1H5.8v-1zM7.4 3.4h1.2V5H7.4V3.4zM8 1.1a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2zM1 8h1.5v3H1V8zm12.5 0H15v3h-1.5V8z",
+  shield: "M8 1.2 13.6 3.4v4.2c0 3.4-2.4 6-5.6 7.2C4.8 13.6 2.4 11 2.4 7.6V3.4L8 1.2zm0 1.7L3.9 4.5v3.1c0 2.6 1.7 4.6 4.1 5.6V2.9z",
+  comment: "M2.6 2.2h10.8c.7 0 1.2.5 1.2 1.2v7c0 .7-.5 1.2-1.2 1.2H7.2L4 14.2v-2.6H2.6c-.7 0-1.2-.5-1.2-1.2v-7c0-.7.5-1.2 1.2-1.2zM4.2 4.8v1.2h7.6V4.8H4.2zm0 2.6v1.2h5.2V7.4H4.2z",
+  devices: "M1 2.4h10v7.2H1V2.4zm1.2 1.2v4.8h7.6V3.6H2.2zM5 9.6h2v1.6h1.8v1.2H3.2v-1.2H5V9.6zM12.6 5.4h1.8c.4 0 .6.2.6.6v7c0 .4-.2.6-.6.6h-1.8c-.4 0-.6-.2-.6-.6V6c0-.4.2-.6.6-.6zm.2 1.2v5.2h1.4V6.6h-1.4z",
+  creditCard: "M2.2 3h11.6c.7 0 1.2.5 1.2 1.2v7.6c0 .7-.5 1.2-1.2 1.2H2.2C1.5 13 1 12.5 1 11.8V4.2C1 3.5 1.5 3 2.2 3zM2.4 7.2v4.4h11.2V7.2H2.4zm0-2.8v1.2h11.2V4.4H2.4zM3.6 9.6h3v1H3.6v-1z",
+  trash: "M6 1.4h4l.6 1.2H14v1.4H2V2.6h3.4L6 1.4zM3.2 5h9.6l-.7 8.6c-.1.6-.5 1-1.1 1H5c-.6 0-1-.4-1.1-1L3.2 5zm2.6 1.6.3 6.2h1.2L7 6.6H5.8zm3.2 0-.3 6.2h1.2l.3-6.2H9z",
+  fileDetails: "M3.6 1.6h5.3L13 5.7v8.2c0 .3-.2.5-.5.5H3.6c-.3 0-.5-.2-.5-.5V2.1c0-.3.2-.5.5-.5zM5 7v1.2h6V7H5zm0 2.4v1.2h6V9.4H5zm0 2.4V13h4v-1.2H5z",
+  book: "M1.4 3c2.2-.4 4.6 0 6 1.2v9.6c-1.4-1-3.8-1.4-6-1V3zm13.2 0v9.8c-2.2-.4-4.6 0-6 1V4.2c1.4-1.2 3.8-1.6 6-1.2z",
+  camera: "M5.6 2.6h4.8l1 1.6h2.4c.7 0 1.2.5 1.2 1.2v7c0 .7-.5 1.2-1.2 1.2H2.2c-.7 0-1.2-.5-1.2-1.2v-7c0-.7.5-1.2 1.2-1.2h2.4l1-1.6zM8 6a2.9 2.9 0 1 0 0 5.8A2.9 2.9 0 0 0 8 6zm0 1.4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z",
+  cursor: "M3 1.4V13l2.9-2.7 2.3 4.6 1.8-.9-2.3-4.5 4-.3L3 1.4z",
+  lightbulb: "M8 1.2a4.6 4.6 0 0 0-2.7 8.3c.5.4.8.9.8 1.5v.6h3.8V11c0-.6.3-1.1.8-1.5A4.6 4.6 0 0 0 8 1.2zM6.1 12.4h3.8v1.2H6.1v-1.2zm.7 1.8h2.4v.8H6.8v-.8z",
+  userPlus: "M6 2.4a2.8 2.8 0 1 1 0 5.6 2.8 2.8 0 0 1 0-5.6zm0 6.8c2.9 0 5.2 1.8 5.6 4.2H.4c.4-2.4 2.7-4.2 5.6-4.2zM12.4 3.2h1.2v2h2v1.2h-2v2h-1.2v-2h-2V5.2h2v-2z",
+  penguin: "M8 1.4c-1.9 0-2.9 1.6-2.9 3.5v2.3C3.9 8.4 2.8 10 2.8 11.6c0 1.3.9 2.2 2.1 2.2h6.2c1.2 0 2.1-.9 2.1-2.2 0-1.6-1.1-3.2-2.3-4.4V4.9c0-1.9-1-3.5-2.9-3.5zM8 7.6c-1.3 0-2.3 1.7-2.3 3.4 0 1.1.8 1.7 2.3 1.7s2.3-.6 2.3-1.7c0-1.7-1-3.4-2.3-3.4zM7 3.6a.5.5 0 1 0 0 1 .5.5 0 0 0 0-1zm2 0a.5.5 0 1 0 0 1 .5.5 0 0 0 0-1z",
 } as const;
 
 export type GlyphName = keyof typeof GLYPHS;

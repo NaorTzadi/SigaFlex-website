@@ -98,7 +98,7 @@ const GIVES: Array<{ glyph: GlyphName; title: string; body: string }> = [
     body: "The terminal's working directory carries CLAUDE.md and AGENTS.md. Claude Code or Codex started there already knows the commands and the rules."
   },
   {
-    glyph: "eye",
+    glyph: "camera",
     title: "Sees what you see",
     body: "A screenshot of the window, the list of views, and the details of every visible component, on request."
   },
@@ -108,7 +108,7 @@ const GIVES: Array<{ glyph: GlyphName; title: string; body: string }> = [
     body: "The tree, any entry's place on disk, and the inspector's details, strings and disassembly as plain files."
   },
   {
-    glyph: "arrowRight",
+    glyph: "cursor",
     title: "Drives the window",
     body: "Opens files, inspects entries, converts files, runs the commands you would have typed, and reports back in the same tab."
   },
@@ -126,12 +126,12 @@ const AUDIENCES: InfoCard[] = [
     body: "Hand the agent a build artifact and ask what is in it, what changed, or why the manifest disagrees with the class files."
   },
   {
-    glyph: "seal",
+    glyph: "shield",
     title: "Security work",
     body: "The tree, details, strings, disassembly and decompiled code exported to files an agent can read. What leaves the machine depends on the agent you choose."
   },
   {
-    glyph: "user",
+    glyph: "lightbulb",
     title: "Curious use",
     body: "Ask in plain words what a file is and what it is hiding. The agent runs the commands; you read the answer."
   }

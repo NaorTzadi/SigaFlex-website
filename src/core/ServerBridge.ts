@@ -139,6 +139,26 @@ export function isConfigured(): boolean {
   return BASE_URL.length > 0;
 }
 
+/* --- robot check ----------------------------------------------------- */
+
+export type HumanChallenge = {
+  salt: string;
+  challenge: string;
+  maxNumber: number;
+  signature: string;
+};
+
+export type HumanProof = {
+  salt: string;
+  number: number;
+  challenge: string;
+  signature: string;
+};
+
+export function humanChallenge(): Promise<HumanChallenge> {
+  return get<HumanChallenge>(ENDPOINT.CHALLENGE);
+}
+
 /* --- registration ---------------------------------------------------- */
 
 export type RegistrationRequest = {
@@ -146,6 +166,7 @@ export type RegistrationRequest = {
   password: string;
   /** Recorded server-side. Enforcing it only in the browser records nothing. */
   termsAccepted: boolean;
+  proof: HumanProof;
 };
 
 export type RegistrationResult = {
@@ -356,8 +377,8 @@ export async function confirmEmail(token: string): Promise<boolean> {
  * Asks for a reset link. Always succeeds, whether or not that address is
  * registered -- the answer to this must not be a way to ask who has an account.
  */
-export function requestPasswordReset(email: string): Promise<void> {
-  return post<void>(ENDPOINT.FORGOT_PASSWORD, { email });
+export function requestPasswordReset(email: string, proof: HumanProof): Promise<void> {
+  return post<void>(ENDPOINT.FORGOT_PASSWORD, { email, proof });
 }
 
 /** True when the link was still good; 410 means it was spent or expired. */

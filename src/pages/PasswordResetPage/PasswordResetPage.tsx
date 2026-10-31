@@ -15,6 +15,7 @@ import { useEffect, useRef, useState } from "react";
 import type { FormEvent } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 
+import HumanCheck from "../../components/HumanCheck/HumanCheck";
 import Icon from "../../components/Icon/Icon";
 import { PASSWORD_MIN_LENGTH } from "../../core/Constants";
 import * as ServerBridge from "../../core/ServerBridge";
@@ -35,6 +36,7 @@ export default function PasswordResetPage() {
   const [problem, setProblem] = useState("");
   const [outcome, setOutcome] = useState<Outcome | null>(null);
   const [busy, setBusy] = useState(false);
+  const [proof, setProof] = useState<ServerBridge.HumanProof | null>(null);
 
   const announceRef = useRef<HTMLDivElement>(null);
 
@@ -50,6 +52,10 @@ export default function PasswordResetPage() {
       setProblem("Enter your e-mail address.");
       return;
     }
+    if (!proof) {
+      setProblem("Tick the box to show you are not a robot.");
+      return;
+    }
     if (!ServerBridge.isConfigured()) {
       setProblem("No server is configured for this site yet.");
       return;
@@ -57,16 +63,21 @@ export default function PasswordResetPage() {
 
     setBusy(true);
     try {
-      await ServerBridge.requestPasswordReset(email.trim());
+      await ServerBridge.requestPasswordReset(email.trim(), proof);
       setOutcome({
         good: true,
         message:
           "If that address has an account, a link is on its way. It expires in 30 minutes."
       });
-    } catch {
-      setProblem("The server could not be reached. Try again in a moment.");
+    } catch (error) {
+      setProblem(
+        error instanceof ServerBridge.ServerError && error.status === 403
+          ? error.message
+          : "The server could not be reached. Try again in a moment."
+      );
     } finally {
       setBusy(false);
+      setProof(null);
     }
   }
 
@@ -187,6 +198,8 @@ export default function PasswordResetPage() {
             />
           </div>
         )}
+
+        {!token && <HumanCheck id="password-proof" proof={proof} onChange={setProof} />}
 
         <button
           className="fa_button fa_button-primary account_submit"

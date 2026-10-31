@@ -20,11 +20,11 @@ type Note = { good: boolean; message: string; field?: string } | null;
 const BLOCKS = {
   email: { title: "E-mail address", glyph: "mail" },
   password: { title: "Password", glyph: "padlock" },
-  review: { title: "Your review", glyph: "seal" },
-  sessions: { title: "Signed-in devices", glyph: "chip" },
-  plan: { title: "Plan", glyph: "tag" },
+  review: { title: "Your review", glyph: "comment" },
+  sessions: { title: "Signed-in devices", glyph: "devices" },
+  plan: { title: "Plan", glyph: "creditCard" },
   data: { title: "Your data", glyph: "export" },
-  delete: { title: "Delete your account", glyph: "warning" }
+  delete: { title: "Delete your account", glyph: "trash" }
 } as const satisfies Record<string, { title: string; glyph: GlyphName }>;
 
 type BlockName = keyof typeof BLOCKS;
@@ -360,7 +360,7 @@ export default function AccountSettingsPage() {
         <p className="account_eyebrow fa_eyebrow">Account</p>
         <h1 className="page_title">Your account</h1>
         <div className={cx("account_card", `${className}_empty`)}>
-          <Icon className={`${className}_empty_glyph`} name="info" size="2.5em" />
+          <Icon className={`${className}_empty_glyph`} name="warning" size="2.5em" />
           <p className={`${className}_empty_message`}>
             Your details could not be read. The server may be unreachable, or this session may have
             ended while the page was open.

@@ -128,6 +128,7 @@ export const ENDPOINT = {
   DELETE_ACCOUNT: "/auth/delete-account",
   FORGOT_PASSWORD: "/auth/forgot-password",
   RESET_PASSWORD: "/auth/reset-password",
+  CHALLENGE: "/auth/challenge",
   GOOGLE_START: "/auth/google/start",
   GOOGLE_FINISH: "/auth/google/finish",
   REVIEWS: "/reviews",

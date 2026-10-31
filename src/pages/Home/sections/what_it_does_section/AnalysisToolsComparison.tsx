@@ -21,7 +21,7 @@ const TOOLS: Tool[] = [
     detail: "Read-only views let you examine the data without editing the file."
   },
   {
-    glyph: "seal",
+    glyph: "fileDetails",
     name: "Format-specific details",
     gives: "Identify the format and extract metadata and extended details.",
     detail: "Inspect information specific to the file format, beyond its signature."

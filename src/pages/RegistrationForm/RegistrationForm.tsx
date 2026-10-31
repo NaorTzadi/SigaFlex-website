@@ -17,6 +17,7 @@ import { useEffect, useRef, useState } from "react";
 import type { FormEvent } from "react";
 import { Link } from "react-router-dom";
 
+import HumanCheck from "../../components/HumanCheck/HumanCheck";
 import Icon from "../../components/Icon/Icon";
 import PolicyDialog from "../../components/PolicyDialog/PolicyDialog";
 import type { PolicyKind } from "../../components/PolicyDialog/PolicyDialog";
@@ -35,27 +36,28 @@ type Values = {
   password: string;
   confirm: string;
   terms: boolean;
+  proof: ServerBridge.HumanProof | null;
 };
 
 type Errors = Partial<Record<keyof Values, string>>;
 
-const EMPTY: Values = { email: "", password: "", confirm: "", terms: false };
+const EMPTY: Values = { email: "", password: "", confirm: "", terms: false, proof: null };
 
 /** What a reader should know before handing over an address. */
 const NOTES: Array<{ glyph: GlyphName; title: string; body: string }> = [
   {
-    glyph: "seal",
+    glyph: "idCard",
     title: `Your ${PRODUCT_NAME} account`,
     body: `${PRODUCT_NAME} works offline and opens files read-only. Connecting an account uses the internet.`
   },
   {
-    glyph: "info",
+    glyph: "database",
     title: "What is stored",
     body: "Your address, and a password the server hashes. No file you open ever leaves your machine."
   },
   /* SAFEGUARD PRIV-005 — see SAFEGUARDS.md */
   {
-    glyph: "success",
+    glyph: "cookie",
     title: "Cookies and storage",
     body: "Two cookies support your cookie choice and sign-in. Tab storage keeps your session, a review draft when sign-in is needed, and a one-time check while you sign in with Google. The privacy policy explains each item."
   }
@@ -65,7 +67,8 @@ const FIELD_LABEL: Record<keyof Values, string> = {
   email: "E-mail address",
   password: "Password",
   confirm: "Confirm password",
-  terms: "Terms"
+  terms: "Terms",
+  proof: "Robot check"
 };
 
 function validate(values: Values): Errors {
@@ -81,6 +84,8 @@ function validate(values: Values): Errors {
   if (values.confirm !== values.password) errors.confirm = "The two passwords do not match.";
 
   if (!values.terms) errors.terms = "You have to accept the terms to register.";
+
+  if (!values.proof) errors.proof = "Tick the box to show you are not a robot.";
 
   return errors;
 }
@@ -145,7 +150,8 @@ export default function RegistrationForm() {
       const result = await ServerBridge.register({
         email: values.email.trim(),
         password: values.password,
-        termsAccepted: values.terms
+        termsAccepted: values.terms,
+        proof: values.proof!
       });
       setServerMessage(
         !result.confirmationRequired
@@ -156,7 +162,9 @@ export default function RegistrationForm() {
       );
       setDone(true);
     } catch (error) {
-      if (error instanceof ServerBridge.ServerError && error.status === 409) {
+      if (error instanceof ServerBridge.ServerError && error.status === 403) {
+        setErrors({ proof: error.message });
+      } else if (error instanceof ServerBridge.ServerError && error.status === 409) {
         setErrors({ email: "That address is already registered." });
       } else if (error instanceof ServerBridge.ServerError && error.status === 422) {
         /* The server keeps its own password rules and explains which one failed. */
@@ -170,6 +178,7 @@ export default function RegistrationForm() {
       }
     } finally {
       setBusy(false);
+      setValues((current) => ({ ...current, proof: null }));
     }
   }
 
@@ -309,6 +318,22 @@ export default function RegistrationForm() {
             <p className={`${className}_error`} id="register-terms-error">
               <Icon name="warning" size="1em" />
               {shown.terms}
+            </p>
+          )}
+        </div>
+
+        <div className={`${className}_field`}>
+          <HumanCheck
+            id="register-proof"
+            proof={values.proof}
+            invalid={Boolean(shown.proof)}
+            describedBy={shown.proof ? "register-proof-error" : undefined}
+            onChange={(proof) => change("proof", proof)}
+          />
+          {shown.proof && (
+            <p className={`${className}_error`} id="register-proof-error">
+              <Icon name="warning" size="1em" />
+              {shown.proof}
             </p>
           )}
         </div>
