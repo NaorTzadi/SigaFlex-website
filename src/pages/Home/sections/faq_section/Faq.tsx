@@ -14,12 +14,12 @@ type Entry = { question: string; answer: ReactNode };
 export default function Faq() {
   const entries: Entry[] = [
     {
-      question: "Does anything leave my machine?",
+      question: "Does it need an internet connection?",
       answer: (
         <>
-          No. {PRODUCT_NAME} runs offline and makes no network calls. It never asks you to sign in,
-          and nothing you open is uploaded anywhere. The probe on this page keeps the same promise:
-          it reads the opening bytes in your browser tab and sends nothing.
+          No. {PRODUCT_NAME} can be used offline. Connecting an account uses the internet. The
+          format check on this page reads the opening bytes locally in your browser without
+          uploading the file.
         </>
       )
     },
@@ -84,12 +84,12 @@ export default function Faq() {
       )
     },
     {
-      question: "What does it cost, and do I need an account?",
+      question: "What does it cost, and how are accounts used?",
       answer: (
         <>
-          It is free while it is in development, and the application itself never needs an
-          account. An account is for this site: reviews, and the plan you are on once there is one.
-          The shape of the plans is on the <Link to={ROUTES.PRICING}>pricing</Link> page.
+          It is free while it is in development. Your account can be connected to the application
+          and used on this site for reviews. Account connections use the internet; the application
+          can also be used offline. The plans are on the <Link to={ROUTES.PRICING}>pricing</Link> page.
         </>
       )
     }

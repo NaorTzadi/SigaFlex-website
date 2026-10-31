@@ -24,7 +24,7 @@ const BUILD: { version: string; released: string; size: string; sha256: string; 
    the reader's machine, not something we guarantee, so it is not ticked. */
 const REQUIREMENTS: Array<{ glyph: GlyphName; text: string }> = [
   { glyph: "success", text: "Windows 10 or Windows 11, 64-bit" },
-  { glyph: "success", text: "No account, and no internet connection — the application never calls out" },
+  { glyph: "success", text: "Works offline; connecting an account uses the internet" },
   { glyph: "success", text: "Files are opened read-only; nothing is ever written back to them" },
   { glyph: "info", text: "Microsoft Word or Excel, only if you want Office documents converted" }
 ];
@@ -39,7 +39,7 @@ export default function Download() {
     <article className={`page ${className}`}>
       <p className="page_eyebrow fa_eyebrow">Get it</p>
       <h1 className="page_title">Download</h1>
-      <p className="page_lead">Windows desktop. No account, no cloud.</p>
+      <p className="page_lead">Windows desktop. Works offline.</p>
 
       <div className={`${className}_build`}>
         <Icon className={`${className}_mark`} name="windows" size="3.5em" />
@@ -119,10 +119,10 @@ export default function Download() {
         </ul>
 
         <p className={`${className}_licences`}>
-          Everything bundled with the application, and the terms it ships under, are listed under{" "}
-          <Link to={ROUTES.LICENSES}>Third-Party Licenses</Link>. It is free to use while it is in
-          development — what comes after that is on the <Link to={ROUTES.PRICING}>pricing</Link>{" "}
-          page.
+          Notices for this website&apos;s libraries, fonts and icons are listed under{" "}
+          <Link to={ROUTES.LICENSES}>Third-Party Licenses</Link>. The application is free to use while
+          it is in development — what comes after that is on the{" "}
+          <Link to={ROUTES.PRICING}>pricing</Link> page.
         </p>
       </section>
     </article>

@@ -1,0 +1,59 @@
+.licenses_notices {
+  display: grid;
+  gap: var(--fa-space-4);
+  margin-top: var(--fa-space-6);
+}
+
+.licenses_notice {
+  min-width: 0;
+  gap: var(--fa-space-4);
+}
+
+.licenses_notice_title {
+  margin: 0;
+  font-size: var(--fa-text-base);
+}
+
+.licenses_meta {
+  margin: var(--fa-space-2) 0 0;
+  color: var(--fa-color-text-secondary);
+  font-size: var(--fa-text-sm);
+  overflow-wrap: anywhere;
+}
+
+.licenses_details {
+  min-width: 0;
+}
+
+.licenses_summary {
+  color: var(--fa-color-accent);
+  font-size: var(--fa-text-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.licenses_summary:focus-visible {
+  outline: 2px solid var(--fa-color-focus);
+  outline-offset: var(--fa-space-2);
+  border-radius: var(--fa-radius-sm);
+}
+
+.licenses_text {
+  max-width: 100%;
+  margin: var(--fa-space-4) 0 0;
+  padding: var(--fa-space-4);
+  border: var(--fa-border-width) solid var(--fa-color-border);
+  border-radius: var(--fa-radius-md);
+  background: var(--fa-color-surface-sunken);
+  color: var(--fa-color-text-secondary);
+  font-family: var(--fa-font-mono);
+  font-size: var(--fa-text-sm);
+  line-height: var(--fa-line-body);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.licenses_download {
+  align-self: flex-start;
+  font-size: var(--fa-text-sm);
+}

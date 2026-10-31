@@ -1,88 +1,167 @@
-/**
- * Third-Party Licenses. Policy content lives together in this directory.
- *
- * This route is mandatory, not optional: the application distributes FFmpeg,
- * and the LGPL obliges us to publish the licence text, the copyright notices,
- * the build configuration, and a route to the exact corresponding source.
- * It is reserved here while empty so it cannot be dropped later.
- *
- * It is also the one page that links outside our own domain. Every such link
- * is recorded in OUTSIDE_ROUTES.md and declared in Constants.EXTERNAL_LINKS.
- */
+import { version as reactVersion } from "react/package.json";
+import { version as reactDomVersion } from "react-dom/package.json";
+import { version as schedulerVersion } from "scheduler/package.json";
+import { version as routerVersion } from "react-router/package.json";
+import { version as routerDomVersion } from "react-router-dom/package.json";
 
-import Icon from "../../components/Icon/Icon";
-import { EXTERNAL_LINKS, PRODUCT_NAME } from "../../core/Constants";
+import TableOfContents from "../../components/TableOfContents/TableOfContents";
+import reactLicense from "../../../node_modules/react/LICENSE?raw";
+import reactLicenseUrl from "../../../node_modules/react/LICENSE?url&no-inline";
+import routerLicense from "../../../node_modules/react-router/LICENSE.md?raw";
+import routerLicenseUrl from "../../../node_modules/react-router/LICENSE.md?url&no-inline";
+import plexLicense from "../../assets/fonts/IBM-Plex-LICENSE.txt?raw";
+import plexLicenseUrl from "../../assets/fonts/IBM-Plex-LICENSE.txt?url&no-inline";
+import audiowideLicense from "../../assets/fonts/Audiowide-OFL.txt?raw";
+import audiowideLicenseUrl from "../../assets/fonts/Audiowide-OFL.txt?url&no-inline";
+import iconsLicense from "../../assets/icons/LobeHub-1.95.1-LICENSE.txt?raw";
+import iconsLicenseUrl from "../../assets/icons/LobeHub-1.95.1-LICENSE.txt?url&no-inline";
 import "../page.css";
+import "./licenses.css";
 
-/** What travels inside the application, and what each one is there to do. */
-const BUNDLED: Array<{ name: string; purpose: string }> = [
-  { name: "UnRAR", purpose: "Reads RAR archives." },
-  { name: "zlib", purpose: "Deflate — the compression inside ZIP, PNG and much else." },
-  { name: "LZMA SDK", purpose: "7-Zip's compression, and the .7z container." },
-  { name: "Zstandard", purpose: "Zstd streams, wherever they turn up." },
-  { name: "stb_image", purpose: "Decodes images so their pixels can be counted." },
-  { name: "Capstone", purpose: "The disassembler behind the instruction view." },
-  { name: "JavaFX", purpose: "The windows, panes and controls the application is drawn with." },
-  { name: "Java libraries", purpose: "Everything else the application carries on its classpath." }
+const className = "licenses";
+
+type LicenseNotice = {
+  id: string;
+  name: string;
+  version: string;
+  license: string;
+  text: string;
+  url: string;
+  filename: string;
+};
+
+/* SAFEGUARD LIC-002 — see SAFEGUARDS.md */
+const SECTIONS: Array<{ id: string; title: string; notices: LicenseNotice[] }> = [
+  {
+    id: "licenses-javascript",
+    title: "JavaScript libraries",
+    notices: [
+      {
+        id: "licenses-react",
+        name: "React, React DOM and Scheduler",
+        version: `React ${reactVersion} · React DOM ${reactDomVersion} · Scheduler ${schedulerVersion}`,
+        license: "MIT",
+        text: reactLicense,
+        url: reactLicenseUrl,
+        filename: "React-LICENSE.txt"
+      },
+      {
+        id: "licenses-router",
+        name: "React Router and React Router DOM",
+        version: `React Router ${routerVersion} · React Router DOM ${routerDomVersion}`,
+        license: "MIT",
+        text: routerLicense,
+        url: routerLicenseUrl,
+        filename: "React-Router-LICENSE.txt"
+      }
+    ]
+  },
+  {
+    id: "licenses-fonts",
+    title: "Fonts",
+    notices: [
+      {
+        id: "licenses-plex",
+        name: "IBM Plex Sans and IBM Plex Mono",
+        version: "",
+        license: "SIL Open Font License 1.1",
+        text: plexLicense,
+        url: plexLicenseUrl,
+        filename: "IBM-Plex-LICENSE.txt"
+      },
+      {
+        id: "licenses-audiowide",
+        name: "Audiowide",
+        version: "Version 1.003",
+        license: "SIL Open Font License 1.1",
+        text: audiowideLicense,
+        url: audiowideLicenseUrl,
+        filename: "Audiowide-OFL.txt"
+      }
+    ]
+  },
+  {
+    id: "licenses-icons",
+    title: "Icons",
+    notices: [
+      {
+        id: "licenses-lobehub",
+        name: "LobeHub Icons",
+        version: "Version 1.95.1 · Claude, Codex and Gemini icons",
+        license: "MIT",
+        text: iconsLicense,
+        url: iconsLicenseUrl,
+        filename: "LobeHub-LICENSE.txt"
+      }
+    ]
+  }
 ];
 
 export default function Licenses() {
   return (
-    <article className="page">
-      <p className="page_eyebrow fa_eyebrow">Notices</p>
-      <h1 className="page_title">Third-Party Licenses</h1>
-      <p className="page_lead">
-        Components distributed with the application, and the notices they carry.
-      </p>
-
-      <p className="page_note">
-        <Icon name="info" size="1em" />
-        {PRODUCT_NAME} is not published yet, so the notices below are reserved rather than written.
-        Each entry gets its version, its licence text and its copyright line when the build that
-        carries it ships.
-      </p>
-
-      <section className="page_block" aria-labelledby="licenses-ffmpeg">
-        <h2 className="page_block_title" id="licenses-ffmpeg">
-          FFmpeg
-        </h2>
-        <p>
-          FFmpeg converts what the application cannot read directly. It is distributed under the
-          LGPL, which obliges us to publish its licence text, its copyright notices, the
-          configuration the build was made with, and a route to the exact source that build came
-          from.
-        </p>
-        <p className="page_placeholder">
-          Version and build configuration, the LGPL text, FFmpeg&apos;s copyright notice, and the
-          notices of the libraries inside that build go here.
-        </p>
-        <p>
-          <a href={EXTERNAL_LINKS.FFMPEG_SOURCE} rel="noreferrer noopener" target="_blank">
-            Corresponding FFmpeg source{" "}
-            <Icon name="externalLink" size="0.875em" />
-            <span className="page_external_note"> (opens ffmpeg.org in a new tab)</span>
-          </a>
-        </p>
-      </section>
-
-      <section className="page_block" aria-labelledby="licenses-bundled">
-        <h2 className="page_block_title" id="licenses-bundled">
-          Other bundled components
-        </h2>
-        <p>
-          Each of these travels inside the application and carries its own terms. Where one of them
-          gives you more than our terms do, it wins for that component.
+    <article className={className}>
+      <div className="page">
+        <p className="page_eyebrow fa_eyebrow">Notices</p>
+        <h1 className="page_title">Third-Party Licenses</h1>
+        <p className="page_lead">
+          The libraries, fonts and icons used by this website, with their copyright notices and
+          license terms.
         </p>
 
-        <ul className="page_cards">
-          {BUNDLED.map((component) => (
-            <li className="page_card" key={component.name}>
-              <p className="page_card_title">{component.name}</p>
-              <p className="page_card_body">{component.purpose}</p>
-            </li>
-          ))}
-        </ul>
-      </section>
+        <div className="page_layout">
+          <TableOfContents label="Sections of the licenses page" entries={SECTIONS} />
+
+          <div className="page_prose">
+            {SECTIONS.map((section) => (
+              <section
+                className="page_block"
+                id={section.id}
+                key={section.id}
+                aria-labelledby={`${section.id}-heading`}
+              >
+                <h2 className="page_block_title" id={`${section.id}-heading`}>
+                  {section.title}
+                </h2>
+
+                <div className={`${className}_notices`}>
+                  {section.notices.map((notice) => (
+                    <article
+                      className={`page_card ${className}_notice`}
+                      key={notice.id}
+                      aria-labelledby={notice.id}
+                    >
+                      <header>
+                        <h3 className={`${className}_notice_title`} id={notice.id}>
+                          {notice.name}
+                        </h3>
+                        {notice.version && <p className={`${className}_meta`}>{notice.version}</p>}
+                        <p className={`${className}_meta`}>{notice.license}</p>
+                      </header>
+
+                      {/* SAFEGUARD LIC-002 — see SAFEGUARDS.md */}
+                      <details className={`${className}_details`}>
+                        <summary className={`${className}_summary`} aria-describedby={notice.id}>
+                          Read the full license
+                        </summary>
+                        <pre className={`${className}_text`}>{notice.text}</pre>
+                      </details>
+
+                      <a
+                        className={`${className}_download`}
+                        href={notice.url}
+                        download={notice.filename}
+                        aria-label={`Download the license text for ${notice.name}`}
+                      >
+                        Download license text
+                      </a>
+                    </article>
+                  ))}
+                </div>
+              </section>
+            ))}
+          </div>
+        </div>
+      </div>
     </article>
   );
 }

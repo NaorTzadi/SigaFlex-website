@@ -45,18 +45,19 @@ const EMPTY: Values = { email: "", password: "", confirm: "", terms: false };
 const NOTES: Array<{ glyph: GlyphName; title: string; body: string }> = [
   {
     glyph: "seal",
-    title: "For the site, not the app",
-    body: `${PRODUCT_NAME} runs offline and opens files read-only. Nothing here is needed to use it.`
+    title: `Your ${PRODUCT_NAME} account`,
+    body: `${PRODUCT_NAME} works offline and opens files read-only. Connecting an account uses the internet.`
   },
   {
     glyph: "info",
     title: "What is stored",
     body: "Your address, and a password the server hashes. No file you open ever leaves your machine."
   },
+  /* SAFEGUARD PRIV-005 — see SAFEGUARDS.md */
   {
     glyph: "success",
-    title: "No tracking",
-    body: "This site sets one cookie, and only the one you agreed to. There is nothing else to opt out of."
+    title: "Cookies and storage",
+    body: "Two cookies support your cookie choice and sign-in. Tab storage keeps your session and a review draft when sign-in is needed. The privacy policy explains each item."
   }
 ];
 
@@ -191,7 +192,7 @@ export default function RegistrationForm() {
       <div className={`${className}_main`}>
         <h1 className="page_title">Register</h1>
         <p className="page_lead">
-          An account is for the site — the application itself never asks for one.
+          Use your account on this site and connect it to the application.
         </p>
 
         {/* Announced when it appears, and focused, so a correction is never missed. */}

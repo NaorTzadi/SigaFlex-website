@@ -59,8 +59,8 @@ wherever Account itself is not the component. Those stay literal strings. Icon i
 exception: it takes a className prop from its callers, so a const of that name would shadow
 it, and its single class is already its own name.
 
-## Third parties md file
-If for any reason we need to use third parties then we should add their name, where they are used and why.
+## Third-party index
+Record third-party names, versions, licences, licence paths, where they are used and why in LICENSES_INDEX_MAP.md.
 
 ## Routing outside the main domain md file
 If we route a user to a url path outside the website domain they we need to add the outside url path, where we route to it, and why.
@@ -114,6 +114,8 @@ After implementation:
 4. Summarize the implemented behavior.
 
 ## Working rules
+if you need something from me that you cannot do on your own, write "👦"
+
 When implementing or modifying this project, prioritize structural simplicity, low coupling, and maintainability.
 
 Do not interpret this as "write the minimum possible amount of code" or "avoid creating classes." Use abstractions when they provide a real architectural benefit. The goal is to find the simplest structure that cleanly represents the required behavior without unnecessary indirection.
@@ -199,44 +201,3 @@ Do not perform unrelated large-scale refactoring simply to reduce code. Preserve
 * Do not repeat the same information in a summary or conclusion after already explaining it.
 * Be direct when something is wrong, uncertain, unsupported, or cannot be verified.
 
-
-## Session history command
-
-Do not update, create, inspect, or modify `CLAUDE_HISTORY.md` during normal work.
-
-Only perform the history workflow when the user explicitly gives the command:
-
-`overwrite history`
-
-When that exact command is given:
-
-1. Read this section.
-2. Inspect the current project state.
-3. Completely overwrite `CLAUDE_HISTORY.md`.
-4. Do not append to the existing content.
-5. Record only the information needed to continue in a future session.
-6. Do not continue implementation, build, test, run Git commands, delete files, or make unrelated changes.
-
-Use this structure:
-
-# Claude Project History
-
-## Current objective
-
-## Current project state
-
-## Changes made recently
-
-## Active or incomplete work
-
-## Open issues
-
-## Decisions awaiting the user
-
-## Next steps
-
-## Important contracts and constraints
-
-## Files that may be obsolete
-
-## Relevant environment and paths

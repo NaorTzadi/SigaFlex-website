@@ -107,12 +107,6 @@
   font-size: var(--fa-text-sm);
 }
 
-@media (min-width: 640px) {
-  .productintroduction_facts {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-}
-
 @media (min-width: 1024px) {
   .productintroduction_facts {
     gap: var(--fa-space-4) var(--fa-space-12);

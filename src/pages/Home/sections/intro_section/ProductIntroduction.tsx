@@ -60,9 +60,7 @@ const SLIDES: ScreenshotSlide[] = [
 /** The claims worth making before a reader scrolls at all. */
 const FACTS: Array<{ value: string; label: string }> = [
   { value: String(FORMAT_TOTAL), label: "formats by content" },
-  { value: "Any", label: "levels of containment" },
-  { value: "0", label: "bytes written to disk" },
-  { value: "0", label: "network calls" }
+  { value: "Any", label: "levels of containment" }
 ];
 
 export default function ProductIntroduction() {

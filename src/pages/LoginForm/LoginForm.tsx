@@ -101,7 +101,7 @@ export default function LoginForm() {
   return (
     <>
       <h1 className="page_title">Sign in</h1>
-      <p className="page_lead">This account is for the site. The application never asks you to sign in.</p>
+      <p className="page_lead">Use your account on this site and connect it to the application.</p>
 
       <form className="account_card" onSubmit={submit} noValidate>
         <p className="account_error" ref={problemRef} tabIndex={-1} role="alert">

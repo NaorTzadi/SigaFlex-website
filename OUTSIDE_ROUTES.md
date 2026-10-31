@@ -10,14 +10,17 @@ outside URL is written inline in a component.
 
 | URL | Where we link to it | Why |
 | --- | --- | --- |
-| mailto:holder@gmail.com | `src/pages/Contact/Contact.tsx`, `src/pages/Privacy/Privacy.tsx`, `src/pages/Terms/Terms.tsx` | The only way to reach us. It hands the reader off to their own mail client, which is outside the site. Declared as `Constants.CONTACT_EMAIL`; the address is a placeholder until the real one is chosen. |
-| https://ffmpeg.org/download.html | `src/pages/Licenses/Licenses.tsx`, "Corresponding FFmpeg source" | The LGPL obliges us to give access to the exact corresponding source of the FFmpeg build the application distributes. |
+| mailto:naorprojects1@gmail.com | `src/pages/Contact/Contact.tsx`, `src/pages/Policies/Privacy.tsx`, `src/pages/Policies/Terms.tsx` | Support, privacy requests and security reports through the visitor's own mail client. Declared as `Constants.CONTACT_EMAIL`. |
 | https://www.youtube.com/@SigaFlex | `src/components/Footer/Footer.tsx`, the YouTube glyph | The official SigaFlex YouTube channel. Declared as `Constants.EXTERNAL_LINKS.YOUTUBE_CHANNEL`. |
 | https://www.instagram.com/sigaflex/ | `src/components/Footer/Footer.tsx`, the Instagram glyph beside YouTube | The SigaFlex Instagram profile. Declared as `Constants.EXTERNAL_LINKS.INSTAGRAM_PROFILE`. |
-| https://www.youtube-nocookie.com/embed/hunAcThQbF4 | `src/pages/Home/sections/what_it_does_section/ProductDemoVideo.tsx`, the demonstration video | The demonstration video is streamed rather than shipped, so the file stays out of the repository. The browser fetches the player from Google, which is a row here by the rule below even though the reader is never sent away from the page. Nothing is fetched until the reader presses play on the placeholder (safeguard PRIV-004); the no-cookie host is used on top of that. Declared as `Constants.EXTERNAL_LINKS.DEMO_VIDEO`. |
+| https://policies.google.com/privacy | `ProductDemoVideo.tsx` before playback, and `src/pages/Policies/Privacy.tsx` | Google's privacy notice explains the provider's data handling before the visitor chooses to load the video. Opens a new tab only when the visitor follows the link. Declared as `Constants.EXTERNAL_LINKS.GOOGLE_PRIVACY_POLICY`. |
+| https://policies.google.com/technologies/cookies | `ProductDemoVideo.tsx` before playback, and `src/pages/Policies/Privacy.tsx` | Google's explanation of cookies and similar storage technologies used by its services. Opens a new tab only when the visitor follows the link. Declared as `Constants.EXTERNAL_LINKS.GOOGLE_COOKIES`. |
+| https://www.youtube-nocookie.com/embed/hunAcThQbF4 | `src/pages/Home/sections/what_it_does_section/ProductDemoVideo.tsx`, the demonstration video | The video player loads only after Play, independently of the cookie answer. The visitor sees data/storage information first and can stop and unload the player afterward. Unloading removes the iframe; it does not erase provider data or storage. Safeguards PRIV-004 and PRIV-006 apply. Declared as `Constants.EXTERNAL_LINKS.DEMO_VIDEO`. |
 
 ## Rules
 
+- The `/licenses` page displays local notice texts and links local download assets;
+  it does not navigate to the upstream URLs reproduced as plain text in those notices.
 - The link carries `rel="noreferrer noopener"` and, when it opens in a new tab,
   says so in its own text — a reader using a screen reader is told before they
   follow it, not after.

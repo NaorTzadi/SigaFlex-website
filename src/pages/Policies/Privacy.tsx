@@ -3,9 +3,12 @@ import PolicyDraftNotice from "./PolicyDraftNotice";
 
 import TableOfContents from "../../components/TableOfContents/TableOfContents";
 import Icon from "../../components/Icon/Icon";
-import { CONTACT_EMAIL, POLICY_UPDATED, SITE_NAME, SITE_OPERATOR } from "../../core/Constants";
+import { CONTACT_EMAIL, EXTERNAL_LINKS, POLICY_UPDATED, SITE_NAME, SITE_OPERATOR } from "../../core/Constants";
 import { ROUTES } from "../../Routing";
 import "../page.css";
+import "./privacy.css";
+
+const className = "privacy";
 
 export default function Privacy() {
   /* One list, read twice: once as the contents down the side, once as the
@@ -30,16 +33,70 @@ export default function Privacy() {
       body: (
         <>
           <p>
-            One cookie, <code>fa_consent</code>, records your answer to the cookie question and
-            lasts a year. If you decline, nothing beyond what signing in needs is ever written; if
-            you accept, anything added later is still held to that answer.
+            This website uses two first-party cookies and two tab-storage entries for your cookie
+            choice, sign-in and review-draft recovery. They may be used whether you accept or
+            decline the cookie question; sign-in and draft storage are used when those features
+            are needed.
+          </p>
+          <table className={`${className}_storage_table`}>
+            <caption>Cookies and browser storage set by this website</caption>
+            <thead>
+              <tr>
+                <th scope="col">Item</th>
+                <th scope="col">Purpose</th>
+                <th scope="col">Lifetime</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">
+                  <code>fa_consent</code>
+                  <span className={`${className}_storage_type`}>Cookie</span>
+                </th>
+                <td>Records your Accept or Decline choice.</td>
+                <td>365 days after your answer.</td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  <code>fa_remember</code>
+                  <span className={`${className}_storage_type`}>Cookie</span>
+                </th>
+                <td>
+                  A token that restores sign-in on a later visit. It is set after authentication
+                  when the server issues a remember token.
+                </td>
+                <td>Up to 30 days; replaced when used and removed when you sign out.</td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  <code>fa_session</code>
+                  <span className={`${className}_storage_type`}>Session storage</span>
+                </th>
+                <td>A session token used for authenticated requests in this tab.</td>
+                <td>The tab session; removed earlier on sign-out or session rejection.</td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  <code>file-analyzer.review-draft</code>
+                  <span className={`${className}_storage_type`}>Session storage</span>
+                </th>
+                <td>
+                  Your display name, rating and review text, saved when posting requires sign-in
+                  so you can resume afterward.
+                </td>
+                <td>Until successful posting or the end of the tab session.</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>
+            Session storage belongs to the tab. Your browser may restore it when restoring a
+            browsing session. Browser settings can remove or block cookies and storage.
           </p>
           <p>
-            While you are signed in, your session token is kept in the browser&apos;s sessionStorage
-            rather than in a cookie, so it is never attached to a request made by another site and
-            it is gone when the tab closes. A second cookie, <code>fa_remember</code>, holds a token
-            that signs you back in on your next visit. It lasts thirty days, is replaced every time
-            it is used, and is removed when you sign out.
+            We do not set first-party analytics or advertising cookies. A new optional purpose
+            that needs consent will require a separate choice before it is enabled; today&apos;s
+            answer does not authorize new purposes. YouTube&apos;s player has its own browser-storage
+            behavior, described below.
           </p>
         </>
       )
@@ -90,22 +147,34 @@ export default function Privacy() {
     /* SAFEGUARD PRIV-005 — see SAFEGUARDS.md */
     {
       id: "privacy-third-parties",
-      title: "One third party",
+      title: "YouTube demonstration video",
       body: (
         <>
           <p>
-            There is no analytics, no advertising and no third-party script. The fonts are served
-            from this site rather than from a font service, so opening a page tells nobody but us
-            that you were here.
+            Fonts are served from this website. We do not add first-party analytics or advertising
+            scripts. The home-page demonstration video is hosted by YouTube (Google) and uses
+            its <code>youtube-nocookie.com</code> player.
           </p>
           <p>
-            The exception is the demonstration video on the home page. Its player comes from
-            YouTube&apos;s <code>youtube-nocookie.com</code> rather than from youtube.com, and it is
-            not part of the page until you press play on it. Accepting cookies does not load it;
-            only that press does. From that point your browser is talking to YouTube directly:
-            Google receives what any request carries — your IP address, what your browser says it
-            is, and which page asked — and the player may store data in your browser. None of that
-            reaches us, and if you never press play nothing is requested from YouTube at all.
+            The player is not loaded until you press Play. Accepting the cookie question does not
+            load it. Playing shares your IP address, browser and viewing information with Google,
+            and the player may use cookies or other browser storage.
+          </p>
+          <p>
+            The Stop and unload video control removes the player and returns to the Play button.
+            It does not erase data Google already received or clear its browser storage. You can
+            manage stored data through your browser and Google&apos;s controls.
+          </p>
+          <p>
+            Read the{" "}
+            <a href={EXTERNAL_LINKS.GOOGLE_PRIVACY_POLICY} target="_blank" rel="noreferrer noopener">
+              Google Privacy Policy (opens in a new tab)
+            </a>{" "}
+            and{" "}
+            <a href={EXTERNAL_LINKS.GOOGLE_COOKIES} target="_blank" rel="noreferrer noopener">
+              Google cookie information (opens in a new tab)
+            </a>
+            . Following either link opens Google&apos;s website at your request.
           </p>
         </>
       )
@@ -131,38 +200,40 @@ export default function Privacy() {
   ];
 
   return (
-    <article className="page">
-      <p className="page_eyebrow fa_eyebrow">Policy</p>
-      <h1 className="page_title">Privacy</h1>
-      <PolicyDraftNotice />
-      <p className="page_lead">
-        What this site stores, why, and for how long. Written against what the code actually does.
-      </p>
-      <p className="page_meta">
-        <Icon name="calendar" size="1em" />
-        Last updated {POLICY_UPDATED}
-      </p>
+    <article className={className}>
+      <div className="page">
+        <p className="page_eyebrow fa_eyebrow">Policy</p>
+        <h1 className="page_title">Privacy</h1>
+        <PolicyDraftNotice />
+        <p className="page_lead">
+          What this site stores, why, and for how long. Written against what the code actually does.
+        </p>
+        <p className="page_meta">
+          <Icon name="calendar" size="1em" />
+          Last updated {POLICY_UPDATED}
+        </p>
 
-      <div className="page_layout">
-        <TableOfContents
-          label="Sections of the privacy page"
-          entries={sections.map(({ id, title }) => ({ id, title }))}
-        />
+        <div className="page_layout">
+          <TableOfContents
+            label="Sections of the privacy page"
+            entries={sections.map(({ id, title }) => ({ id, title }))}
+          />
 
-        <div className="page_prose">
-          {sections.map((section) => (
-            <section
-              className="page_block"
-              id={section.id}
-              key={section.id}
-              aria-labelledby={`${section.id}-heading`}
-            >
-              <h2 className="page_block_title" id={`${section.id}-heading`}>
-                {section.title}
-              </h2>
-              {section.body}
-            </section>
-          ))}
+          <div className="page_prose">
+            {sections.map((section) => (
+              <section
+                className="page_block"
+                id={section.id}
+                key={section.id}
+                aria-labelledby={`${section.id}-heading`}
+              >
+                <h2 className="page_block_title" id={`${section.id}-heading`}>
+                  {section.title}
+                </h2>
+                {section.body}
+              </section>
+            ))}
+          </div>
         </div>
       </div>
     </article>

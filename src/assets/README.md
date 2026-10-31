@@ -63,12 +63,12 @@ Self-hosted `woff2` in `src/assets/fonts/`, declared with `@font-face` in
 `theme.css` — the font is part of the theme, so it lives with the theme.
 
 A font loaded from Google Fonts or any other host is a third party and a request
-leaving our domain: it needs a row in `THIRD_PARTIES.md` **and** one in
+leaving our domain: it needs a row in `LICENSES_INDEX_MAP.md` **and** one in
 `OUTSIDE_ROUTES.md`.
 
 ## Licensing
 
 Every font, icon set, stock image or clip that we did not make ourselves needs a
-row in `THIRD_PARTIES.md` saying where it is used and under what licence. Some
+row in `LICENSES_INDEX_MAP.md` saying where it is used and under what licence. Some
 licences also require attribution visible on the site itself — check before
 using, not after.

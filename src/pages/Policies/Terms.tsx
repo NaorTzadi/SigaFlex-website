@@ -22,9 +22,10 @@ export default function Terms() {
       title: "What these cover",
       body: (
         <p>
-          Using this site means accepting what is written here. An account is for the site only —
-          the application never asks you to sign in, and everything it does works without one. What
-          is stored about you is set out in the <Link to={ROUTES.PRIVACY}>privacy</Link> page.
+          Using this site means accepting what is written here. Your account can be used on this
+          site and connected to the application. The application can be used offline; connecting
+          an account uses the internet. What is stored about you is set out in the{" "}
+          <Link to={ROUTES.PRIVACY}>privacy</Link> page.
         </p>
       )
     },
@@ -75,8 +76,9 @@ export default function Terms() {
       body: (
         <p>
           {PRODUCT_NAME} is licensed to you for your own use, not sold. Components distributed with
-          it carry their own licences, which travel with the application and are published on the{" "}
-          <Link to={ROUTES.LICENSES}>third-party licences</Link> page; where one of those licences
+          it carry their own licences, which travel with the application. Notices for this
+          website&apos;s components are published on the{" "}
+          <Link to={ROUTES.LICENSES}>third-party licences</Link> page; where a component&apos;s licence
           gives you more than these terms do, it wins for that component.
         </p>
       )

@@ -63,9 +63,15 @@ export default function CookieConsent() {
 
       {/* SAFEGUARD PRIV-005 — see SAFEGUARDS.md */}
       <p className={`${className}_text`}>
-        This site stores your answer to this question and, once you sign in, what keeps you signed
-        in. Nothing else is stored, and anything we add later — a preference, a measurement — is
-        held to that answer.
+        This site uses two cookies for your cookie choice and sign-in. Tab storage also keeps your
+        session and a review draft when posting needs you to sign in. These functions work whether
+        you accept or decline.
+      </p>
+
+      <p className={`${className}_text`}>
+        We do not set first-party analytics or advertising cookies. If a new optional purpose needs
+        your consent, we will ask separately before enabling it. Today&apos;s answer does not cover
+        new purposes.
       </p>
 
       <p className={`${className}_text`}>
@@ -76,7 +82,7 @@ export default function CookieConsent() {
 
       <div className={`${className}_actions`}>
         <button
-          className={`fa_button fa_button-primary ${className}_button`}
+          className={`fa_button ${className}_button`}
           type="button"
           /* The first thing focused when the box opens. */
           autoFocus

@@ -11,7 +11,7 @@
  * platform the window itself never has to name. `inspect` is redrawn rather than
  * lifted, because the app's path runs past the 16x16 box and clips its own handle.
  * `claude`, `codex` and `gemini` are the vendors' own marks, taken from LobeHub Icons
- * (MIT) and scaled onto the 16x16 grid; see THIRD_PARTIES.md. Nothing else here is a
+ * (MIT) and scaled onto the 16x16 grid; see LICENSES_INDEX_MAP.md. Nothing else here is a
  * third party: no icon set to license, no request to make.
  *
  * Regenerate rather than edit by hand if the app's glyphs change.

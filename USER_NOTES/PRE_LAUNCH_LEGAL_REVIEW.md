@@ -2,21 +2,29 @@
 
 Review date: **29 October 2026**. Intended audience: **worldwide**, as confirmed by the owner.
 
+Operator status: **an individual, not a registered business**. Operating country: **Israel**. Both confirmed by the owner on **31 October 2026**. The installer is not currently hosted or offered for download. Worldwide is the intended audience, not a change to the operator's country or evidence of clearance in every market.
+
+Outstanding findings and current source rechecked **31 October 2026**.
+
+This file lists outstanding work only. Completed findings are removed; remaining IDs retain their original numbering. Conditional work applies only when the relevant feature or market is in scope; it is not automatically a blocker for an informational launch.
+
 ## Launch assessment
 
-**Changes are needed before public launch.** The clearest issues are unfinished operator/policy details, inaccurate privacy disclosures, incomplete website license notices, unverified rights to screenshot content, and overly broad product claims. Accounts, software downloads, and payments create additional obligations at different stages.
+**Changes are needed before public launch.** The clearest remaining issues are unfinished operator/policy details, inaccurate privacy disclosures, and overly broad product claims. Accounts and payments create additional obligations at different stages.
 
-This is a source-based risk review, not legal clearance or a guarantee against lawsuits. A worldwide launch cannot be cleared against every country's laws from a repository review. The operating country, legal owner, hosting arrangements, and paid-launch plan remain unconfirmed. Have a lawyer use this report to finalize the applicable policies and market coverage; do not treat adding legal pages as sufficient by itself.
+This is a source-based risk review, not legal clearance or a guarantee against lawsuits. A worldwide launch cannot be cleared against every country's laws from a repository review. The owner will operate as an individual in Israel; the name to publish where identification is required and the paid-launch plan remain unresolved. Deployment files now identify several providers, but their live settings, contracts, retention and backup arrangements still need verification. Professional review is recommended for unresolved applicability, policy and sales questions; it is not presented as a universal requirement to hire a lawyer before publishing a personal project.
 
-**Only this report was added. No production code or policies were changed.**
+The current scope is the website and any enabled accounts, reviews, email and request logging. Applicable identification/privacy duties, data security and accessibility concern that scope even without a hosted installer. This report does not establish a requirement to register a business, publish a home address or identity number, or display Israel as a standalone mandatory country notice for the current site. Naming the responsible person for covered personal-data collection is a separate issue from business registration. Desktop distribution/licence work becomes relevant before offering the program; prices, billing, renewal, cancellation and refund terms become relevant before an active trial or paid offer. Website operational arrangements mean who handles website data, access, retention, backups and privacy requests; they are internal practices whose relevant effects must be described accurately, not a requirement to publish every implementation detail.
 
 ## Scope and evidence
 
 Reviewed the website's routes, account and review forms, browser storage, file detector, video embed, marketing copy, policy pages, dependencies, fonts, icons, public files, existing `dist/` output, and all five product screenshots. Also read relevant source in the adjacent `../file-analyzer-server` module to check the website's server-related promises.
 
-Online references below are legislation, regulators, standards bodies, official project licenses, or the apparent asset publisher. Sources were checked on the review date. Some government pages blocked direct retrieval; where relevant, their official indexed text was available. The Porsche asset match is an inference, identified explicitly below.
+The 31 October recheck compared the remaining findings with current website/server source and the deployment files, including `wrangler.toml`, `../file-analyzer-server/deploy/wrangler.toml`, `cloudflare-worker.js` and `DEPLOY.md`. Desktop-application dependency licensing remains outside this website review's scope.
 
-The application was not run; no live browser/network, accessibility, penetration, payment, or deployed-host checks were performed. The desktop application's complete code, installer, native dependencies, and runtime behavior were not audited. The existing `dist/` directory was inspected as an existing artifact, not certified as a fresh build. Secret environment values were not read or reproduced. No tests or builds were run for this documentation-only change.
+Online references below are legislation, regulators, standards bodies, or official project licenses. Sources were checked on the original review date; the FTC advertising guidance, ICO privacy-notice/storage guidance and OWASP session guidance were rechecked on 31 October. The remaining country references were not revalidated in this source recheck. Some government pages blocked direct retrieval during the original review; where relevant, their official indexed text was available.
+
+Neither the original review nor this recheck ran the application or performed live browser/network, accessibility, penetration, payment, or deployed-host checks. The desktop application's complete code, installer, native dependencies, and runtime behavior were not audited. The original `dist/` directory was inspected as an existing artifact, not certified as a fresh build; this recheck did not certify the current output. Secret environment values were not read or reproduced. No tests or builds were run for these documentation-only reviews.
 
 Evidence labels used below:
 
@@ -24,54 +32,57 @@ Evidence labels used below:
 - **Conditional:** depends on a feature being enabled or a law applying.
 - **Unverified:** needs operational evidence, provenance, or jurisdiction-specific review.
 
+## Next implementation batch
+
+| Order | Item | Work to start with | Effort |
+| --- | --- | --- | --- |
+| 1 | L12: review posting UI | Explain public visibility next to posting controls, link privacy/review rules, and stop deriving the default public name from the email address. | Small |
+| 2 | L14 and L09: availability wording | Align Pricing, Download and related copy with the unpublished installer; remove active-trial and available-download claims. | Small |
+
+These are focused website changes that do not require operator or hosting decisions.
+Persistent sign-in remains in L04, and moderation arrangements remain in L12.
+Finalizing L01/L02 for public data collection still requires the individual's name to publish and verification of the
+configured providers, data locations, contracts and retention rules.
+
 ## Priorities
 
 These are recommended release gates, not a claim that each item is universally required by law.
 
 | ID | Finding | Recommended gate | Evidence |
 | --- | --- | --- | --- |
-| L01 | Operator, jurisdiction, and domain are placeholders; policies remain drafts | Before public launch | Confirmed |
+| L01 | Individual operator is confirmed; identification/policy text remains unfinished | Before covered account/review collection; finalize published placeholders | Confirmed; individual based in Israel |
 | L02 | Privacy notice lacks important disclosures and operational detail | Before collecting visitor/account data | Confirmed omissions; applicability varies |
 | L03 | Server logging exceeds the notice; retention is incomplete | Before enabling the public API | Confirmed |
-| L04 | Consent text anticipates future purposes; withdrawal and storage inventory need work | Before public launch/account activation | Confirmed; storage exemptions need assessment |
-| L05 | YouTube activation needs fuller information | Before enabling the public embed | Confirmed disclosure gap; legal result conditional |
-| L06 | Website JavaScript and copied-icon license notices are incomplete | Before distributing the website bundle | Confirmed in inspected output/source |
-| L07 | Font license delivery and Audiowide documentation need completion | Before public launch | Confirmed documentation/output gaps |
-| L08 | Rights and attribution for screenshot content are unverified | Before publishing those images/video | Unverified, with a specific likely licensed model |
-| L09 | Absolute offline, disk-write, safety, and coverage claims need qualification | Before public launch | Confirmed copy; desktop behavior unverified |
+| L04 | Automatic persistent sign-in needs assessment or an informed choice | Before public account activation | Confirmed behavior; exemptions depend on the requested purpose |
+| L09 | Remaining disk-write, safety, coverage and AI-data claims need qualification | Before public launch | Confirmed copy; desktop behavior unverified |
 | L10 | Accessibility statement is missing; conformance remains unverified | Before public launch unless a valid exemption applies | Confirmed missing statement; technical assessment pending |
 | L11 | Terms need final scope, acceptance evidence, and consumer-rights review | Before accounts/downloads; revisit before sales | Confirmed gaps; enforceability is jurisdiction-specific |
 | L12 | Reviews need clearer publication/privacy information and moderation arrangements | Before enabling public reviews | Confirmed UI/backend gaps |
-| L13 | Desktop license/source compliance is unfinished, especially FFmpeg | Before publishing any installer | Confirmed placeholders; binary compliance unverified |
 | L14 | Trial and paid terms are unfinished | Before presenting an active trial or accepting payment | Confirmed; no checkout found |
 | L15 | Deployment security and privacy operations need evidence | Before public accounts/API | Confirmed code concerns; deployment unverified |
 | L16 | Worldwide availability needs a regional applicability and localization plan | Before claiming worldwide readiness | Unverified country coverage |
-
-## Protections already present
-
-- `FileFormatDetector.tsx` reads a bounded file slice with browser APIs; no file-upload call was found in that flow.
-- No analytics SDK, advertising tag, remote font request, or directly loaded third-party script was found in the reviewed website source. This does not establish what a hosting provider or activated iframe does.
-- `ProductDemoVideo.tsx` creates the YouTube iframe only after a click. It does not request a remote thumbnail or preconnect before activation.
-- Privacy, terms, licenses, and contact routes exist and are linked from the footer.
-- Registration has an unchecked terms box; the adjacent server enforces acceptance and records a timestamp. Review ownership and deletion also have server-side support.
-- Relevant server source uses bcrypt, hashed authentication-link tokens, expiry, lockout, and account deletion with review deletion through a database foreign key.
-- Accessibility features include a skip link, input labels, error announcements, page titles/focus handling, image alternatives, reduced-motion handling, and carousel pause controls. These are useful evidence, but not proof of full conformance.
 
 ## Detailed findings and changes
 
 ### L01 — Publish real operator details and finalized policies
 
-**Confirmed evidence:** `src/core/Constants.ts` defines `SITE_OPERATOR = "Holder"`, `SITE_JURISDICTION = "Holder"`, and `SITE_URL = "https://holder.com"`. `PolicyDraftNotice.tsx` explicitly labels both privacy and terms as placeholder drafts. The footer attributes copyright to `Holder`. `index.html`, `public/robots.txt`, and `public/sitemap.xml` also contain the placeholder domain.
+**Confirmed evidence:** `src/core/Constants.ts` still defines `SITE_OPERATOR = "Holder"` and `SITE_JURISDICTION = "Holder"`. `PolicyDraftNotice.tsx` explicitly labels both privacy and terms as placeholder drafts. The footer attributes copyright to `Holder`.
 
-**Change:** identify the actual individual or entity operating SigaFlex, its country, a working contact address, and the business/address/registration details required in its markets. Set the real domain throughout. Finalize the documents and their actual effective/update dates before removing the draft warning. `CONTACT_EMAIL` already contains a non-placeholder address; verify control of it rather than replacing it just because `OUTSIDE_ROUTES.md` is stale.
+**Confirmed owner information:** the owner operates SigaFlex personally from Israel, without a registered business, and intends to serve a worldwide audience. Do not ask again whether the operator is a company. The remaining identification detail is the individual's name to publish where required for personal-data collection. Israel is the operating country; `SITE_JURISDICTION` is used for a chosen governing-law clause, not a mandatory country field that every personal website must display.
 
-Controller identification is part of Israel's collection notice requirements. EU consumer-facing distance sales can also require trader identity and contact details. A brand name alone does not settle who the responsible operator is. [Israel PPA: collection-notice guidance](https://www.gov.il/BlobFolder/legalinfo/duty_to_notify/he/notify13.pdf), [EU: distance-selling information](https://europa.eu/youreurope/business/selling-in-eu/selling-goods-services/ecommerce-distance-selling/index_en.htm).
+**Change for covered personal-data collection:** identify the responsible individual and provide working contact details in the collection/privacy information. Showing that the operator is based in Israel is a transparency recommendation, not a separately established universal country-notice duty. Do not require company details for an individual, or infer a present duty to publish a home address or identity number. Finalize relevant documents and their actual effective/update dates before removing the draft warning. `CONTACT_EMAIL` already contains a non-placeholder address; verify control of the published contact address. Do not invent a company name or treat sales-stage disclosures as an instruction to register a business, add checkout or host an installer now.
+
+**Verified rule and scope:** Israel's section 11 collection notice for covered personal-data processing includes the controller's name and contact details, alongside purpose, voluntariness/consequences, recipients and access/correction rights. This concerns the person responsible for the data, not incorporation. The database definition has exclusions, including personal nonbusiness collections; an individual is not automatically exempt merely because no company is registered. Assess the actual public account/review activity rather than claiming every personal website must display its author's legal name. [Israel PPA: collection-notice guidance](https://www.gov.il/BlobFolder/legalinfo/duty_to_notify/he/notify13.pdf), [Israel PPA: database scope and duties](https://www.gov.il/BlobFolder/generalpage/manager_duties/he/InfoDuties_new.pdf).
+
+Sales-stage trader/address disclosures must be assessed if the project begins making relevant offers or sales. They are not an established current requirement for this no-sale stage. [EU: distance-selling information](https://europa.eu/youreurope/business/selling-in-eu/selling-goods-services/ecommerce-distance-selling/index_en.htm).
 
 ### L02 — Complete the privacy notice against the actual data lifecycle
 
-**Confirmed evidence:** `src/pages/Policies/Privacy.tsx` describes accounts, reviews, selected security logs, browser tokens, and YouTube. It omits the review draft in `sessionStorage`, accepted-request logs, support correspondence, actual service providers, and many retention periods. Its heading promises to explain how long data is kept, but most server-held categories have no period or criterion.
+**Confirmed evidence:** `src/pages/Policies/Privacy.tsx` omits accepted-request logs, support correspondence, the configured hosting/database/email providers, server-side session records, email-rate-limit records, and many retention periods. Its heading promises to explain how long data is kept, but most server-held categories have no period or criterion.
 
-**Change:** make a data inventory first, then publish an accurate notice. For each relevant activity, identify data, purpose, recipients, storage location, retention/deletion rule, and the user's choices. Include website/CDN/API hosting, database/backups, email delivery, support email, and administrative access. These providers are unconfirmed; do not invent their names or countries. Explain whether information is optional and what happens if it is withheld. Provide an accessible notice at registration, reviews, and relevant support collection points.
+**Change:** make a data inventory first, then publish an accurate notice. For each relevant activity, identify data, purpose, recipients, storage location, retention/deletion rule, and the user's choices. Include website/CDN/API hosting, database/backups, email delivery, support email, and administrative access. Current configuration/documentation identifies Cloudflare for the website/API proxy, Google Cloud Run in `europe-west4`, Aiven MySQL in `ams`, and Gmail SMTP; the support address is also Gmail. The server deployment guide calls the website Cloudflare Pages, while the website now has a Workers static-assets configuration, so confirm the actual deployment. Verify the active services, contractual arrangements, backup locations and access; a configured compute/database region does not establish where every provider processes data. Explain whether information is optional and what happens if it is withheld. Complete the registration notice and add notices at reviews and relevant support collection points.
+
+Use existing retention behavior rather than inventing missing jobs: server sessions expire after 30 minutes idle or 12 hours absolute, unconfirmed accounts are eligible for removal after seven days, and hashed-recipient email-budget records after one day, with periodic cleanup. Disclose those rules and the remaining account, review, security-log, support and backup lifecycles accurately.
 
 For EU/UK coverage, address applicable lawful bases, legitimate interests, transfers/safeguards, rights and complaints, consent withdrawal, and any representative/DPO details that are actually required. A privacy-policy acknowledgment is not blanket consent for unrelated processing. The ICO's notice checklist covers these disclosures; its page is marked under review, so verify UK updates when finalizing. [ICO: right to be informed](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/individual-rights/individual-rights/right-to-be-informed/).
 
@@ -85,79 +96,32 @@ Do not promise unlimited deletion or instantaneous removal from all backups unle
 
 - `ServerSecurity/RequestsFilter.java#doFilter` logs both accepted and rejected requests, including IP, method, and path. The privacy notice only discusses requests turned away.
 - `Users/AuthController.java` logs email addresses for registration, login, and account-related requests. `CustomLogger.dev` uses INFO logging when enabled; its name does not mean development-only.
-- `EmailService.java` logs delivery addresses. With no mail transport configured, its fallback can log the full confirmation/reset link, including a live token.
-- `Daemon.java#dropExpired` cleans expired blocks/tokens and unconfirmed accounts. `UsersService.UNCONFIRMED_LIFETIME` is seven days. No security-event purge was found in the reviewed security service/daemon.
+- `EmailService.java` logs delivery addresses.
+- No security-event purge was found in the reviewed `ServerSecurityService`/`Daemon`; application/infrastructure log retention and access are not established by the checked files.
 
-**Change:** inventory and minimize application, infrastructure, email, and security logs; suppress raw live tokens; set appropriate access restrictions and retention/deletion jobs. Disclose ordinary request logging and relevant account/support logs. Distinguish six-hour IP-block expiry from retention of the event and log records behind that block. Check whether the deployed proxy records real client IPs or only the proxy address.
+**Change:** inventory and minimize application, infrastructure, email, and security logs; set appropriate access restrictions and retention/deletion jobs for the remaining categories. Disclose ordinary request logging and relevant account/support logs. Distinguish six-hour IP-block expiry from retention of the event and log records behind that block. The Worker now forwards Cloudflare's client IP through a secret-protected header, and `RequestsFilter` uses it when configured, grouping IPv6 addresses by /64. Verify that this configuration is active and describe the actual logged identifier; do not assume all requests are recorded only under the proxy address.
 
 Select defensible retention periods based on actual purposes and legal obligations; do not invent a universal number of days. Privacy transparency and data-security duties continue beyond the database table. [Israel PPA: security-regulations FAQ](https://www.gov.il/he/pages/data_security_fqa?chapterIndex=1), [ICO: privacy-information checklist](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/individual-rights/individual-rights/right-to-be-informed/).
 
-### L04 — Make storage disclosures and consent accurate and specific
+### L04 — Assess automatic persistent sign-in
+
+**Remaining evidence:** a successful login automatically accepts a persistent remember token for up to thirty days; `LoginForm.tsx` has no separate remember-me choice.
+
+**Remaining work:** assess whether automatic persistent sign-in is necessary for the service the visitor requested, or offer an informed persistence choice. Assess browser storage against the applicable exemptions; session storage is not automatically outside storage rules. No optional first-party purpose currently depends on the cookie answer, so reopening that answer is not treated as a missing current consent control. If a new purpose requires consent, implement its choice and withdrawal controls before enabling it.
+
+There is no universal requirement for every website to display an Accept/Decline modal. Exempt storage may need information rather than consent, and UK exceptions must not be assumed to apply worldwide. [ICO: current exceptions](https://ico.org.uk/for-organisations/direct-marketing-and-privacy-and-electronic-communications/guidance-on-the-use-of-storage-and-access-technologies/what-are-the-exceptions/), [ICO: specific consent and withdrawal](https://ico.org.uk/for-organisations/direct-marketing-and-privacy-and-electronic-communications/guidance-on-the-use-of-storage-and-access-technologies/how-do-we-manage-consent-in-practice/).
+
+Preserve the existing safeguards when changing sign-in or consent behavior.
+
+### L09 — Substantiate the remaining product claims
+
+The owner confirmed that the application can be used without an internet connection,
+while account connections make network requests. Website wording should preserve
+that distinction.
 
 **Confirmed evidence:**
 
-- `CookiesManager.ts` defines `fa_consent` for 365 days and `fa_remember` for 30 days. `ServerBridge.ts` stores `fa_session` in `sessionStorage`.
-- `Reviews.tsx` stores `file-analyzer.review-draft` in `sessionStorage` without going through `CookiesManager`. The privacy notice omits it.
-- The registration sidebar says the site sets one cookie, only after agreement. The actual implementation can set two, and treats both as necessary.
-- The banner and privacy notice say future preferences/measurement will be governed by today's answer. There is no visible mechanism to reopen cookie choices after answering.
-- A successful login automatically accepts the server's persistent remember token; `LoginForm.tsx` has no separate remember-me choice.
-
-**Change:** publish a complete cookie/storage table, with purpose, provider, lifetime, and the applicable exemption or consent approach. Correct the one-cookie claim. Explain and assess the review draft as part of the user-requested review flow; using session storage does not itself avoid storage rules. Assess whether automatic 30-day sign-in is necessary for what the user requested, or offer an informed persistence choice.
-
-Delete the promise that acceptance now authorizes unspecified future measurement. If a future purpose requires consent, obtain it before activating that purpose and make withdrawal as easy as acceptance. Do not let a new tracker bypass the system through storage APIs outside `CookiesManager`. [ICO: storage/access technologies include web storage](https://ico.org.uk/for-organisations/direct-marketing-and-privacy-and-electronic-communications/guidance-on-the-use-of-storage-and-access-technologies/what-are-storage-and-access-technologies/), [ICO: specific consent, changes, and withdrawal](https://ico.org.uk/for-organisations/direct-marketing-and-privacy-and-electronic-communications/guidance-on-the-use-of-storage-and-access-technologies/how-do-we-manage-consent-in-practice/).
-
-There is **no universal requirement for every website to display an Accept/Decline cookie modal**. Properly exempt storage may need information rather than consent. Current UK guidance includes newer purpose-specific exceptions; EU member-state rules require separate assessment. Do not assume UK exceptions apply worldwide. [ICO: current exceptions](https://ico.org.uk/for-organisations/direct-marketing-and-privacy-and-electronic-communications/guidance-on-the-use-of-storage-and-access-technologies/what-are-the-exceptions/).
-
-Changing this area must preserve the protections registered in `SAFEGUARDS.md`. The modal's refusal to close on Escape is a project design choice, not a universal legal requirement. Also review equal prominence: Accept has primary styling while Decline does not; visual fairness was not measured.
-
-### L05 — Finish the YouTube activation disclosure
-
-**Confirmed evidence:** `ProductDemoVideo.tsx` warns that pressing play connects to YouTube/Google. The fuller privacy text mentions IP/browser/page information and potential browser storage, but the activation control does not mention storage or provide Google's relevant privacy/storage information. No player-deactivation control is provided after activation.
-
-**Change:** retain the click-before-load design. At activation, give clear, accessible information about the provider, browser storage/data sharing, and the relevant provider notice; assess whether the actual player needs additional consent for its purposes. Provide a way to stop/unload the embed where appropriate, and verify any consent withdrawal stops further optional activity. An external video link is another possible design, subject to updating the safeguards consistently.
-
-The ICO specifically addresses embedded videos and just-in-time information. Its treatment depends on purposes and configuration; `youtube-nocookie.com` alone does not establish that no data processing occurs or that every jurisdiction's consent rules are satisfied. [ICO: embedded content and exceptions](https://ico.org.uk/for-organisations/direct-marketing-and-privacy-and-electronic-communications/guidance-on-the-use-of-storage-and-access-technologies/what-are-the-exceptions/).
-
-Recheck the broad “no third-party script” and “opening a page tells nobody but us” wording for the activated iframe and the actual hosting providers. Separate scripts directly added by this site from activity inside a loaded third-party player.
-
-### L06 — Ship the website's own open-source notices
-
-**Confirmed evidence:** the public `/licenses` page reserves desktop-app notices. `THIRD_PARTIES.md` explicitly distinguishes itself from that page, and is not copied into the inspected `dist/`. Production dependencies include MIT-licensed React, React DOM, React Router, and Scheduler. Their installed license files include permission-notice obligations.
-
-The existing minified bundle retains abbreviated copyright/license comments, but refers to root `LICENSE`/`LICENSE.md` files that are not in the deployed output. It does not contain the full MIT permission text. Copied LobeHub icons have no accompanying full LobeHub notice in the website assets/page or inspected output.
-
-**Change:** inventory the actual shipped dependency graph and copied components, preserve the exact applicable copyright lines, and include complete required license texts in the distributed website. A public notice file and a website section of `/licenses` are practical options; no specific page name is mandated. Check the fresh production artifact, rather than relying on `node_modules` or private Markdown records.
-
-MIT permits commercial use subject to its conditions; it does not generally require disclosure of this site's proprietary source. [MIT license text](https://opensource.org/license/mit), [LobeHub's published license](https://raw.githubusercontent.com/lobehub/lobe-icons/master/LICENSE). Confirm the license for the exact copied icon version recorded as 1.95.1.
-
-### L07 — Complete font notices and their delivery
-
-**Confirmed evidence:** `FONT_PATHS` and CSS ship `Audiowide-Regular.ttf`, IBM Plex Sans, and IBM Plex Mono. `THIRD_PARTIES.md` documents Plex but not Audiowide. `IBM-Plex-LICENSE.txt` exists in source but is absent from the inspected `dist/`.
-
-Audiowide's inspected font metadata includes copyright and a reference to OFL 1.1, not its full license text. Google's published font directory identifies Audiowide under OFL 1.1. The compressed Plex fonts' embedded license metadata was not fully inspected, so absence of a separate deployed TXT file alone is not proof those fonts violate the license.
-
-**Change:** document Audiowide's origin, author, and license; ensure each distributed font carries the required copyright and full license in an allowed, accessible form. Shipping notice files explicitly is a straightforward way to remove uncertainty. If the Plex files were subsetted or otherwise modified, check the license's reserved-name conditions for that exact modification and internal font naming.
-
-Commercial website use is allowed under OFL subject to its conditions; paying for these fonts is not a general requirement. [Audiowide's official distributed OFL text](https://raw.githubusercontent.com/google/fonts/main/ofl/audiowide/OFL.txt). The local `src/assets/fonts/IBM-Plex-LICENSE.txt` contains the applicable Plex text.
-
-### L08 — Establish rights to the content inside screenshots and the video
-
-**Confirmed evidence:** `colors-photo.png` prominently displays a landscape photograph; `display-3d-model.png` displays `free_porsche_911_carrera_4s.glb`, a branded car model, and a visible creator credit. Other screenshots show a third-party executable's content, an archive tree, AI interfaces, and local Windows user/workspace paths. No media-rights/provenance record was found in the reviewed website documents.
-
-**Specific lead, not a proven asset identity:** the model title and appearance suggest Lionsharp Studios' published **(FREE) Porsche 911 Carrera 4S**. Its publisher's indexed page lists **CC Attribution-ShareAlike**. Confirm the original downloaded asset, creator, and exact license version; do not assume every similarly named upload has the same license. [Apparent original publisher page](https://sketchfab.com/3d-models/free-porsche-911-carrera-4s-d01b254483794de3819786d93e0e1ebf).
-
-**Change:** record the source, copyright owner, license/permission, required credits, and permitted promotional use for every photo, model, icon, screenshot subject, and demo-video element, including music. Add attribution/license/change notices where required, obtain permission, or replace uncertain material with cleared examples. A creator credit rendered inside an image may not provide every required notice. Determine whether the model render/screenshot is adapted material and what ShareAlike requires for that material; do not assume it forces the whole proprietary application to be open sourced. A BY-SA license permits commercial use but has conditions. [Creative Commons: BY-SA 4.0 summary, subject to confirming the actual version](https://creativecommons.org/licenses/by-sa/4.0/).
-
-Owning the screenshot does not automatically establish rights to the photograph/model visible inside it. Conversely, this review does not establish infringement: ownership, permission, or a legal exception may exist outside the repository. [US Copyright Office: photographs and permissions](https://www.copyright.gov/engage/photographers/).
-
-Replace unnecessary personal paths/account details with sanitized examples. Check the video for the same exposure and rights issues.
-
-### L09 — Narrow and substantiate the marketing claims
-
-**Confirmed evidence:**
-
-- The hero states “0 bytes written to disk” and “0 network calls.”
-- `Faq.tsx` says nothing leaves the machine and no temporary copies are left on disk.
+- `Faq.tsx` still says that no temporary copies are left on disk.
 - `AgentTerminalDemo.tsx` advertises exporting files/screenshots and AI tools, and says a file never leaves the box. It separately acknowledges that agents may contact a model.
 - The tagline promises to open any file and show everything inside it. The website's format catalog is a manually defined list; the desktop implementation was not verified against it.
 - `Download.tsx` says the installer is unpublished but also says Windows ships today; pricing advertises a trial as open now.
@@ -182,17 +146,17 @@ EU e-commerce accessibility requirements have applied to covered new services si
 
 ### L11 — Finalize contract scope and retain meaningful acceptance evidence
 
-**Confirmed evidence:** the terms rely on website use/continued use as acceptance, license the application only “for your own use,” exclude liability broadly, and allow terms to change. The registration checkbox is a stronger affirmative step, but the client sends only `termsAccepted: boolean`; the server's `User` records `termsAcceptedAt` without the accepted policy version.
+**Confirmed evidence:** the terms rely on website use/continued use as acceptance, license the application only “for your own use,” exclude liability broadly, and allow terms to change. The client sends only `termsAccepted: boolean`; the server's `User` records `termsAcceptedAt` without the accepted policy version. The terms preserve third-party licence rights but do not expressly preserve mandatory consumer rights.
 
 **Change:** distinguish website terms, account/review rules, and the desktop license. Define permitted personal/commercial use, redistribution and restrictions, support/update obligations, and the status of the free release consistently. Present the actual software license at a meaningful point before installation/use where needed. Preserve the accepted terms version and its text, date, and relevant acceptance event. Treat version records as an evidence recommendation, not a universal statutory database schema requirement.
 
-Have counsel review liability limits, changes/notification, termination, dispute terms, and governing law for the operator and worldwide consumers. Explicitly preserve mandatory consumer rights and third-party license rights. Do not assume “as is,” a checkbox, continued browsing, or a chosen jurisdiction prevents claims. EU guidance identifies several one-sided liability/change provisions as potentially unfair. [EU: unfair contract terms](https://europa.eu/youreurope/citizens/consumers/unfair-treatment/unfair-contract-terms/index_en.htm).
+Have counsel review liability limits, changes/notification, termination, dispute terms, and governing law for the operator and worldwide consumers. Explicitly preserve mandatory consumer rights. Do not assume “as is,” a checkbox, continued browsing, or a chosen jurisdiction prevents claims. EU guidance identifies several one-sided liability/change provisions as potentially unfair. [EU: unfair contract terms](https://europa.eu/youreurope/citizens/consumers/unfair-treatment/unfair-contract-terms/index_en.htm).
 
 Keep contract acceptance distinct from any optional privacy/marketing consent. A separate checkbox consenting to the entire privacy policy is not a universal fix.
 
 ### L12 — Make public reviews transparent and manageable
 
-**Confirmed evidence:** `Reviews.tsx` offers a public name, rating, and body, but does not explain public visibility next to the posting controls or link the review rules there. It derives a default display name from the email prefix. The terms/privacy pages elsewhere explain publication and ownership. User withdrawal exists; no complaint/report UI or moderator-facing removal endpoint was found in the reviewed website/review controller.
+**Confirmed evidence:** `Reviews.tsx` does not explain public visibility next to the posting controls or link the review rules/privacy notice there. It derives a default display name from the email prefix. No review-complaint route or moderator-facing removal endpoint was found in the reviewed website/review controller; the general contact address alone does not establish the internal handling process.
 
 **Change:** add a clear just-in-time publication notice and link the relevant rules/privacy information. Prefer an explicitly chosen pseudonym to an email-derived default. Establish a monitored route and internal process for privacy complaints, copyright complaints, defamation/unlawful material, impersonation, and moderation. An administrator can use an appropriate internal workflow; a particular public report button is not a universal legal requirement. Assess intermediary obligations for the actual launch markets and service classification before enabling reviews.
 
@@ -200,21 +164,9 @@ Publish genuine feedback fairly. Do not fabricate reviews, condition incentives 
 
 The server returns only the newest 100 reviews; the client calculates the count/average over that response. If the total later exceeds 100, label the summary as the displayed subset or return an accurate overall aggregate. This is a future presentation issue, not evidence that the current ratings are fabricated.
 
-### L13 — Complete desktop distribution compliance before any installer goes live
-
-**Confirmed evidence:** `Download.tsx` has `BUILD = null`. `/licenses` expressly reserves version, copyright, configuration, and license text. `EXTERNAL_LINKS.FFMPEG_SOURCE` points to FFmpeg's generic download page, although its label says corresponding source.
-
-**Change before enabling a download:** identify every exact bundled binary/library/version and its applicable license; ship the required notices with the installer and provide source/relinking materials where required. Cover the JRE/JavaFX distribution and native components, not just the names in the placeholder list.
-
-For FFmpeg, inspect the actual build flags, libraries, modifications, and distribution arrangement. It is not safe to describe every FFmpeg binary as LGPL: GPL/nonfree options can change the result. Provide the exact corresponding source and build information through a compliant arrangement. A generic upstream download page is not evidence of this. FFmpeg's own checklist describes one route to compliance, including matching source, notices, configuration, and source hosting. [FFmpeg: legal considerations and compliance checklist](https://ffmpeg.org/legal.html).
-
-For UnRAR, zlib, LZMA SDK, Zstandard, stb_image, Capstone, JavaFX/JRE, and remaining Java libraries, check the exact artifact's terms and any special restrictions/exceptions. Do not infer all are interchangeable permissive licenses. Whether the desktop application may remain proprietary depends on the actual combination and compliance approach; no conclusion was reached from the website placeholders. Assess codec/patent and distribution-country issues separately where relevant.
-
-This gate applies to free downloads too. An informational site with no distributed installer does not itself prove a desktop distribution violation.
-
 ### L14 — Finish trial and consumer-sale terms before monetization
 
-**Confirmed evidence:** the pricing page clearly labels `$X`/`$XX` as placeholders and says nothing can be bought. No checkout, card collection, or active subscription flow was found. The free-trial card nevertheless says “Open now,” sends users to a nonexistent download, and does not specify the trial duration. Other copy calls development use free without that limit.
+**Confirmed evidence:** the free-trial card says “Open now” and “Start free trial,” links to `/download` while that page has no published installer, and does not specify the trial duration. Other copy calls development use free without that limit. Paid checkout/subscription work below is conditional; no current payment flow was found.
 
 **Change now:** state one accurate availability/development/free-trial position and remove misleading active-trial wording until there is a real offer.
 
@@ -226,19 +178,23 @@ Reassess payment-provider contracts, privacy disclosures, tax/invoicing, and cou
 
 ### L15 — Verify deployment security and privacy operations
 
-**Confirmed code concerns:** `CookiesManager.ts` writes the remember token without `Secure`; JavaScript-set cookies cannot be `HttpOnly`. The session token is readable through `sessionStorage`. `ServerBridge.ts` accepts its configured API URL without requiring HTTPS. Confirmation/reset tokens remain in the browser query string. Host-level security configuration was not supplied.
+**Confirmed code concerns:** `CookiesManager.ts` writes the remember token without `Secure`; JavaScript-set cookies cannot be `HttpOnly`. The session token is readable through `sessionStorage`. `ServerBridge.ts` accepts its configured API URL without requiring HTTPS. Confirmation/reset tokens remain in the browser query string. The checked files do not establish the website's live CSP, security headers, HTTPS redirect or HSTS settings.
 
-**Change/verify before real accounts:** use HTTPS for the website/API, protect authentication cookies in production, and review a server-set HttpOnly remember-token design with the necessary transport/CSRF implications. Review XSS defenses, CSP, session expiry/revocation, and token removal/redaction from URLs/logs where practical. These are risk-based engineering recommendations, not a statement that a law prescribes one specific token architecture. [OWASP: session management](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html).
+`../file-analyzer-server/deploy/DEPLOY.md` also documents distinguishable registration responses for new, pending and confirmed addresses, retained for controlled testing. Decide and address the public-launch account-enumeration risk before enabling registration.
 
-Document the hosting/provider arrangements, administrative permissions, backup protection/restoration, deletion schedule, supplier access, and incident response. Verify the live service rather than assuming the Vite development configuration establishes deployment security. Data-security duties can apply even if a database is exempt from registration. [Israel PPA: security-regulations FAQ](https://www.gov.il/he/pages/data_security_fqa?chapterIndex=1).
+**Change/verify before real accounts:** enforce and verify HTTPS for the website/API, protect authentication cookies in production, and review a server-set HttpOnly remember-token design with the necessary transport/CSRF implications. Review XSS defenses, CSP and token removal/redaction from URLs/logs where practical. Verify the implemented session expiry/revocation in the deployed service rather than treating those mechanisms as missing. These are risk-based engineering recommendations, not a statement that a law prescribes one specific token architecture. [OWASP: session management](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html).
+
+Verify the video provider's actual network/storage behavior on the deployed site before and after Play and unloading, and assess any consent requirements for its actual purposes.
+
+Verify the documented Cloudflare/Cloud Run/Aiven deployment against the live service, including proxy authentication, database permissions, provider access and regional settings. Document the remaining contractual, administrative, backup/restoration, deletion and incident-response arrangements. Data-security duties can apply even if a database is exempt from registration. [Israel PPA: security-regulations FAQ](https://www.gov.il/he/pages/data_security_fqa?chapterIndex=1).
 
 Have a real privacy-request procedure: monitored contact, proportionate identity checks, coverage of database/logs/suppliers/backups, applicable deadlines, and documented responses. A self-service account-delete button alone does not cover every privacy right. Classify incidents and prepare the applicable notification process; Israeli serious-incident reporting depends on the regulations and database classification. [Israel PPA: serious data-breach reporting](https://www.gov.il/he/service/report-of-data-breach).
 
-Deploy the intended production output only, with direct navigation to `/privacy`, `/terms`, and other legal routes working. Confirm secrets, environment files, private notes, source maps with sensitive material, and unrelated directories are not published. The absence of deployment configuration is an unverified item, not proof those files are currently exposed.
+Verify that the deployed website uses the intended `dist` output and that direct navigation to `/privacy`, `/terms`, `/licenses` and other legal routes works. `wrangler.toml` already limits static assets to `./dist` and configures single-page-application fallback; verify the output contents and live behavior rather than adding a missing configuration. Confirm secrets, environment files, private notes, source maps with sensitive material and unrelated directories are not published. Source configuration alone does not prove what is deployed.
 
 ### L16 — Treat worldwide coverage as a separate workstream
 
-The user confirmed a global audience. Accessibility of a site from a country does not by itself settle every law's territorial reach, but intentionally offering services globally creates a stronger reason to assess destination-country requirements. EU guidance expressly distinguishes mere accessibility from offering services to people in the Union. [EDPB: territorial scope guidance](https://www.edpb.europa.eu/sites/default/files/files/file1/edpb_guidelines_3_2018_territorial_scope_after_public_consultation_en_0.pdf).
+The owner confirmed an Israeli base and an intended global audience. Accessibility of a site from a country does not by itself settle every law's territorial reach, but intentionally offering services globally creates a stronger reason to assess destination-country requirements. Assess the website's accounts/reviews separately from future software distribution and sales; a free service can also fall within privacy rules. EU guidance expressly distinguishes mere accessibility from offering services to people in the Union. [EDPB: territorial scope guidance](https://www.edpb.europa.eu/sites/default/files/files/file1/edpb_guidelines_3_2018_territorial_scope_after_public_consultation_en_0.pdf), [European Commission: GDPR scope, including free services](https://commission.europa.eu/law/law-topic/data-protection/information-business-and-organisations/application-gdpr_en).
 
 The following is an applicability screen, not country-by-country clearance:
 
@@ -246,7 +202,7 @@ The following is an applicability screen, not country-by-country clearance:
 | --- | --- | --- |
 | EU/EEA | Determine GDPR scope, any representative obligation, provider/transfer arrangements, national cookie rules, consumer protections, accessibility, and required local disclosures/languages. Do not assume a free service is outside privacy rules. | [EDPB territorial scope](https://www.edpb.europa.eu/sites/default/files/files/file1/edpb_guidelines_3_2018_territorial_scope_after_public_consultation_en_0.pdf) |
 | UK | Assess UK privacy scope/representation separately, and use current PECR rules rather than an old universal cookie checklist. The ICO storage guidance was updated in April 2026. | [ICO: storage/access guidance](https://ico.org.uk/for-organisations/direct-marketing-and-privacy-and-electronic-communications/guidance-on-the-use-of-storage-and-access-technologies/) |
-| Israel, if operating there or otherwise within scope | Confirm controller/security duties and whether database registration/notification or a DPO is required. Amendment 13 narrowed registration; ordinary accounts do not automatically mean a database must be registered. | [PPA: registration after Amendment 13](https://www.gov.il/he/service/registration_in_the_database), [PPA: Amendment 13 Q&A](https://www.gov.il/he/pages/tikun13_qa?chapterIndex=6) |
+| Israel (confirmed operating country) | Assess and implement the applicable controller/security duties and determine whether database registration/notification or a DPO is required. Amendment 13 narrowed registration; ordinary accounts do not automatically mean a database must be registered. | [PPA: registration after Amendment 13](https://www.gov.il/he/service/registration_in_the_database), [PPA: Amendment 13 Q&A](https://www.gov.il/he/pages/tikun13_qa?chapterIndex=6) |
 | US/California | Screen state-specific privacy and consumer rules. CCPA has coverage criteria; do not assume every small site needs a sale/share opt-out link. Conversely, being below CCPA thresholds does not settle other laws such as CalOPPA's privacy-policy requirements. Assess actual tracking before writing DNT disclosures. | [California AG: CCPA coverage](https://oag.ca.gov/privacy/ccpa), [California AG: privacy-policy/CalOPPA guidance](https://oag.ca.gov/sites/all/files/agweb/pdfs/cybersecurity/making_your_privacy_practices_public.pdf) |
 | Canada | Assess PIPEDA/provincial scope and establish meaningful, understandable consent and privacy practices where required; a generic EU lawful-basis paragraph is not a substitute. | [Canada OPC: meaningful consent](https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/p_principle/principles/p_consent/) |
 | Quebec language requirements | The website is English-only. Determine whether offering the product in Quebec triggers French-language website/commercial-document requirements and implement the required localized content. Do not assume every foreign site is covered merely because it is reachable. | [OQLF: websites, social media, and commercial publications](https://www.oqlf.gouv.qc.ca/francisation/entreprises/memo-assistant-francisation/publications/fiche-medias-sociaux-sites-web-doc-publicitaires.pdf) |
@@ -267,17 +223,15 @@ Cross-border handling must follow the actual transfer route, not a generic state
 
 ## Release checklist
 
-- [ ] Confirm operator country/entity, target-market treatment, hosting/providers, and whether launch is informational, free download, or paid.
+- [ ] Resolve the individual's name/contact notice for covered collection, target-market treatment and the configured providers' actual data handling, using the confirmed individual-in-Israel and website-without-installer scope. No business-registration requirement is established by this review. Reassess before enabling downloads, an active trial or payments.
 - [ ] Resolve L01; publish final, accurate legal notices and real contact/business information.
-- [ ] Resolve L02–L05 for the actual enabled storage, account, email, logging, and video behavior.
-- [ ] Resolve L06–L08; make license notices available in the deployed artifact and retain media permissions/credits.
+- [ ] Resolve L02–L04 for account/privacy information, remaining logging/retention gaps, and automatic persistent sign-in.
 - [ ] Resolve L09; match claims and availability to the actual release.
 - [ ] Resolve L10; verify accessibility and document any valid exemption.
 - [ ] Resolve L11–L12 before accepting accounts/reviews; retain final acceptance evidence and establish complaint handling.
-- [ ] Resolve L13 before adding an installer; check its actual binary/dependency inventory.
 - [ ] Resolve L14 before any paid/trial offer becomes active.
 - [ ] Resolve L15 in the production deployment; confirm operational privacy/security procedures.
 - [ ] Complete L16's market review and remaining children/email/brand decisions.
 - [ ] Rebuild the intended release and verify the deployed pages, artifacts, network/storage behavior, and legal links after fixes. A successful build alone does not establish legal compliance.
 
-When implementing fixes, keep `SAFEGUARDS.md`, `THIRD_PARTIES.md`, and `OUTSIDE_ROUTES.md` consistent with the actual behavior. In particular, `OUTSIDE_ROUTES.md` still names a placeholder contact email and old policy paths. Do not weaken the existing file-locality, consent-gating, or click-to-load protections while correcting their disclosures.
+When implementing fixes, keep `USER_NOTES/SAFEGUARDS.md`, `LICENSES_INDEX_MAP.md`, and `OUTSIDE_ROUTES.md` consistent with the actual behavior. Do not weaken the existing file-locality, consent-gating, or click-to-load protections while correcting their disclosures.

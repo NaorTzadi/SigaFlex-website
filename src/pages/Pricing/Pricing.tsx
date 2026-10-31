@@ -140,9 +140,9 @@ export default function Pricing() {
           What applies today
         </h2>
         <p>
-          The Windows build is free to download and use while {PRODUCT_NAME} is in development, and
-          the application never asks you to sign in. An account is for this site — reviews, and the
-          plan you are on once there is one to be on.
+          {PRODUCT_NAME} is free to use while it is in development and works offline. Connecting
+          an account uses the internet. Your account is also used for reviews on this site and
+          for plans once they become available.
         </p>
         <p className={`${className}_ask`}>
           Questions about a plan before they are settled? <Link to={ROUTES.CONTACT}>Write to us</Link>.

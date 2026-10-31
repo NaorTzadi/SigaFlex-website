@@ -42,16 +42,17 @@ export const SITE_OPERATOR = "Holder";
 export const SITE_JURISDICTION = "Holder";
 
 /** Shown on the Terms and the Privacy pages as the date they last changed. */
-export const POLICY_UPDATED = "19 September 2026";
+export const POLICY_UPDATED = "30 October 2026";
 
 /**
  * Every link that leaves this domain. Adding one here is not enough:
  * it must also be recorded in OUTSIDE_ROUTES.md.
  */
 export const EXTERNAL_LINKS = {
-  FFMPEG_SOURCE: "https://ffmpeg.org/download.html",
   YOUTUBE_CHANNEL: "https://www.youtube.com/@SigaFlex",
   INSTAGRAM_PROFILE: "https://www.instagram.com/sigaflex/",
+  GOOGLE_PRIVACY_POLICY: "https://policies.google.com/privacy",
+  GOOGLE_COOKIES: "https://policies.google.com/technologies/cookies",
   DEMO_VIDEO: "https://www.youtube-nocookie.com/embed/hunAcThQbF4"
 } as const;
 

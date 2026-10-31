@@ -9,6 +9,17 @@ function assetPath(path: string): string {
 
 export default defineConfig({
   plugins: [react()],
+  build: {
+    rollupOptions: {
+      output: {
+        /* SAFEGUARD LIC-002 — see SAFEGUARDS.md */
+        assetFileNames: (asset) =>
+          asset.names.some((name) => name === "LICENSE")
+            ? "assets/[name]-[hash].txt"
+            : "assets/[name]-[hash][extname]"
+      }
+    }
+  },
   // Temporary local font trial; keep the source in Downloads until selected.
   resolve: {
     alias: Object.fromEntries(Object.entries(FONT_PATHS).map(([name, path]) => [name, assetPath(path)]))

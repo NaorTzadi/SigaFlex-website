@@ -1,0 +1,34 @@
+.privacy_storage_table {
+  width: 100%;
+  margin-block: var(--fa-space-6);
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: var(--fa-text-sm);
+}
+
+.privacy_storage_table caption {
+  margin-bottom: var(--fa-space-3);
+  color: var(--fa-color-text-secondary);
+  text-align: left;
+  font-weight: 600;
+}
+
+.privacy_storage_table th,
+.privacy_storage_table td {
+  padding: var(--fa-space-3);
+  border-bottom: var(--fa-border-width) solid var(--fa-color-border);
+  text-align: left;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+
+.privacy_storage_table thead {
+  background: var(--fa-color-surface);
+}
+
+.privacy_storage_type {
+  display: block;
+  margin-top: var(--fa-space-2);
+  color: var(--fa-color-text-muted);
+  font-weight: 400;
+}
