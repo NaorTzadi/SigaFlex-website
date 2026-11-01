@@ -5,7 +5,6 @@ import type { InfoCard } from "../InfoCardGrid";
 import Section from "../Section";
 import SupportedFormatSearch from "../format_search_section/SupportedFormatSearch";
 import FileSignatureExamples from "./FileSignatureExamples";
-
 const BEYOND_TEMPLATE: InfoCard[] = [
   {
     glyph: "eye",

@@ -88,7 +88,7 @@ const COMMAND_EXAMPLES: Array<{ command: string; does: string }> = [
 const SUPPORTED_AGENTS: Array<{ logo: string; name: string; upcoming?: boolean }> = [
   { logo: codexLogo, name: "Codex" },
   { logo: claudeLogo, name: "Claude Code" },
-  { logo: geminiLogo, name: "Gemini CLI", upcoming: true }
+  { logo: geminiLogo, name: "Gemini CLI" }
 ];
 
 const GIVES: Array<{ glyph: GlyphName; title: string; body: string }> = [

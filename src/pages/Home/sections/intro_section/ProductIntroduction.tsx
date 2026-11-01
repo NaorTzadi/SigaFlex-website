@@ -12,6 +12,7 @@ import { useGlobal } from "../../../../core/Globals";
 import FileFormatDetector from "./FileFormatDetector";
 import { FORMAT_TOTAL } from "../formatCatalog";
 import ScreenshotCarousel from "./ScreenshotCarousel";
+import ByteField from "./ByteField";
 import type { ScreenshotSlide } from "./ScreenshotCarousel";
 import "./productintroduction.css";
 
@@ -69,6 +70,7 @@ export default function ProductIntroduction() {
   return (
     <section className={className} id={HOME_SECTIONS.HERO} aria-labelledby="hero-heading">
       <div className={`${className}_backdrop`} aria-hidden="true" />
+      <ByteField />
 
       <div className={`${className}_inner`}>
         <div className={`${className}_copy`}>
