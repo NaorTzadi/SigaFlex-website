@@ -6,13 +6,13 @@
   pointer-events: none;
   color: var(--fa-color-text-muted);
   font-family: var(--fa-font-mono);
-  opacity: 0.6;
-  -webkit-mask-image: radial-gradient(75% 80% at 90% 30%, #000 0%, rgb(0 0 0 / 0.45) 50%, transparent 85%);
-  mask-image: radial-gradient(75% 80% at 90% 30%, #000 0%, rgb(0 0 0 / 0.45) 50%, transparent 85%);
+  -webkit-mask-image: radial-gradient(120% 60% at 70% 20%, #000 0%, rgb(0 0 0 / 0.45) 50%, transparent 85%);
+  mask-image: radial-gradient(120% 60% at 70% 20%, #000 0%, rgb(0 0 0 / 0.45) 50%, transparent 85%);
 }
 
 @media (min-width: 1024px) {
   .bytefield {
-    opacity: 1;
+    -webkit-mask-image: radial-gradient(75% 80% at 90% 30%, #000 0%, rgb(0 0 0 / 0.45) 50%, transparent 85%);
+    mask-image: radial-gradient(75% 80% at 90% 30%, #000 0%, rgb(0 0 0 / 0.45) 50%, transparent 85%);
   }
 }
