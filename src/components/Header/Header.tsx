@@ -229,7 +229,9 @@ export default function Header() {
         <div className={`${className}_actions`}>
           {!signedIn && (
             <NavLink
-              className={({ isActive }) => cx(`${className}_signin`, isActive && `${className}_signin-active`)}
+              className={({ isActive }) =>
+                cx(`${className}_signin`, `${className}_spare`, isActive && `${className}_signin-active`)
+              }
               to={ROUTES.LOGIN}
               onClick={closeMenus}
             >
@@ -238,7 +240,7 @@ export default function Header() {
           )}
 
           <Link
-            className={cx("fa_command fa_command-small", signedIn && "fa_command-ghost")}
+            className={cx("fa_command fa_command-small", signedIn && `fa_command-ghost ${className}_spare`)}
             to={ROUTES.DOWNLOAD}
             onClick={closeMenus}
           >
@@ -306,6 +308,16 @@ export default function Header() {
                 onClick={closeMenus}
               >
                 Pricing
+              </NavLink>
+            </li>
+
+            <li className={cx(`${className}_nav_item`, `${className}_nav_item-spare`)}>
+              <NavLink
+                className={({ isActive }) => cx(`${className}_nav_link`, isActive && `${className}_nav_link-active`)}
+                to={signedIn ? ROUTES.DOWNLOAD : ROUTES.LOGIN}
+                onClick={closeMenus}
+              >
+                {signedIn ? "Download" : "Sign in"}
               </NavLink>
             </li>
           </ul>

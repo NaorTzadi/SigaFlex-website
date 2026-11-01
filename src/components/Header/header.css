@@ -580,3 +580,17 @@
     padding: var(--fa-space-1);
   }
 }
+
+.header_nav_item-spare {
+  display: none;
+}
+
+@media (max-width: 479px) {
+  .header_actions .header_spare {
+    display: none;
+  }
+
+  .header_nav_item-spare {
+    display: block;
+  }
+}
