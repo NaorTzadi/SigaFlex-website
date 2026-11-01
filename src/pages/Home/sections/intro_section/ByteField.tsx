@@ -52,7 +52,7 @@ export default function ByteField() {
 
     function layout() {
       if (disposed) return;
-      const ratio = window.devicePixelRatio || 1;
+      const ratio = Math.min(window.devicePixelRatio || 1, 2);
       const { width, height } = canvas!.getBoundingClientRect();
       canvas!.width = Math.round(width * ratio);
       canvas!.height = Math.round(height * ratio);

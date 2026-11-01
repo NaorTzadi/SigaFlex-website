@@ -1,17 +1,20 @@
 .bytefield {
   position: absolute;
-  inset: 0;
+  inset: 0 0 auto 0;
   width: 100%;
-  height: 100%;
+  height: min(100%, 100svh);
   pointer-events: none;
-  color: var(--fa-color-text-muted);
+  color: var(--fa-color-text-secondary);
   font-family: var(--fa-font-mono);
-  -webkit-mask-image: radial-gradient(120% 60% at 70% 20%, #000 0%, rgb(0 0 0 / 0.45) 50%, transparent 85%);
-  mask-image: radial-gradient(120% 60% at 70% 20%, #000 0%, rgb(0 0 0 / 0.45) 50%, transparent 85%);
+  -webkit-mask-image: radial-gradient(140% 90% at 60% 30%, #000 0%, rgb(0 0 0 / 0.6) 55%, transparent 100%);
+  mask-image: radial-gradient(140% 90% at 60% 30%, #000 0%, rgb(0 0 0 / 0.6) 55%, transparent 100%);
 }
 
 @media (min-width: 1024px) {
   .bytefield {
+    inset: 0;
+    height: 100%;
+    color: var(--fa-color-text-muted);
     -webkit-mask-image: radial-gradient(75% 80% at 90% 30%, #000 0%, rgb(0 0 0 / 0.45) 50%, transparent 85%);
     mask-image: radial-gradient(75% 80% at 90% 30%, #000 0%, rgb(0 0 0 / 0.45) 50%, transparent 85%);
   }

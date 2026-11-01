@@ -594,3 +594,18 @@
     display: block;
   }
 }
+
+@media (max-width: 379px) {
+  .header_brand {
+    font-size: 0.8125rem;
+  }
+
+  .header_brand_mark {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  .header_actions .fa_command::after {
+    display: none;
+  }
+}
